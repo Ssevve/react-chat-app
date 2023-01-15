@@ -18,9 +18,13 @@ const userSchema = mongoose.Schema(
       default: [],
     },
     avatar: {
-      type: {
-        url: String,
-        cloudinaryId: String,
+      url: {
+        type: String,
+        default: '',
+      },
+      cloudinaryId: {
+        type: String,
+        default: '',
       },
     },
     statusText: {

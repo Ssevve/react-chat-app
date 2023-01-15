@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
+const verifyJWT = require('./middleware/verifyJWT');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
 // Routes
 app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
+app.use('/users', verifyJWT, require('./routes/users'));
 
 mongoose.connection.once('open', () => {
   console.log('MongoDB connected');
