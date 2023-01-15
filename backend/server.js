@@ -25,6 +25,9 @@ app.get('/', (req, res) => {
   res.json({ message: 'API' });
 });
 
+// Routes
+app.use('/auth', require('./routes/auth'));
+
 mongoose.connection.once('open', () => {
   console.log('MongoDB connected');
   app.listen(process.env.PORT, () => console.log(`Server listening on port ${process.env.PORT}`));
