@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
 
 // Routes
 app.use('/auth', require('./routes/auth'));
+app.use('/refresh', require('./routes/refresh'));
 
 mongoose.connection.once('open', () => {
   console.log('MongoDB connected');

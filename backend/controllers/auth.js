@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const generateAccessToken = require('../helpers/generateAccessToken');
+const generateRefreshToken = require('../helpers/generateRefreshToken');
 
 const handleSignup = async (req, res) => {
   const { username, password } = req.body;
@@ -30,28 +31,8 @@ const handleLogin = async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) return res.sendStatus(401);
 
-    const accessToken = jwt.sign(
-      {
-        _id: user._id,
-        username: user.username,
-        role: user.role,
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      {
-        expiresIn: '10s',
-      },
-    );
-
-    const refreshToken = jwt.sign(
-      {
-        _id: user._id,
-        username: user.username,
-      },
-      process.env.REFRESH_TOKEN_SECRET,
-      {
-        expiresIn: '7d',
-      },
-    );
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
 
     user.refreshToken = refreshToken;
     user.save();
