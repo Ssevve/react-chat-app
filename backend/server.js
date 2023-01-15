@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(
 );
 app.use(helmet());
 app.use(morgan('dev'));
+app.use(cookieParser());
 app.use(express.json());
 
 app.get('/', (req, res) => {
