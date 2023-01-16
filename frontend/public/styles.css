@@ -1,7 +1,9 @@
 :root {
-  --clr-light: hsl(0, 0%, 100%);
+  --clr-light-300: hsl(0, 0%, 95%);
+  --clr-light-400: hsl(0, 0%, 100%);
   --clr-dark: hsl(224, 39%, 11%);
   --clr-accent: hsl(220, 100%, 46%);
+  --clr-danger: hsl(350, 87%, 55%);
 
   --border-radius: 0.25rem;
 

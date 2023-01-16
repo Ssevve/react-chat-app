@@ -1,15 +1,16 @@
-import { useContext, useRef } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import breakpoints from '../breakpoints';
 import Container from '../components/Container';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
+import * as yup from 'yup';
+import ErrorBox from '../components/ErrorBox';
 
 const Main = styled.main`
-  background: var(--bg-light);
+  background: var(--clr-light-300);
   height: 100%;
-  background: #f2f2f2;
 `;
 
 const StyledContainer = styled(Container)`
@@ -61,7 +62,7 @@ const Form = styled.form`
   border-radius: var(--border-radius);
   display: grid;
   gap: 1rem;
-  background: var(--clr-light);
+  background: var(--clr-light-400);
   @media ${breakpoints.medium} {
     flex: 1;
   }
@@ -75,17 +76,25 @@ const Label = styled.label`
 
 const Input = styled.input`
   border-radius: var(--border-radius);
-  border: 1px solid currentColor;
   font-size: 1rem;
   padding: 0.75rem;
   color: var(--clr-dark);
   min-width: 100%;
   width: 0;
+  border: ${(props) =>
+    props.errorMessage ? '1px solid var(--clr-danger)' : '1px solid currentColor'};
+  outline: ${(props) => props.errorMessage && '1px solid var(--clr-danger)'};
+`;
+
+const ErrorMessage = styled.span`
+  color: var(--clr-danger);
+  font-size: 0.75rem;
+  height: 1.125rem;
 `;
 
 const Button = styled.button`
   background: var(--clr-accent);
-  color: var(--clr-light);
+  color: var(--clr-light-400);
   font-weight: 700;
   border-radius: var(--border-radius);
   border: none;
@@ -117,24 +126,47 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const loginSchema = yup.object({
+  username: yup
+    .string()
+    .matches(/^[a-zA-Z0-9]*$/, {
+      message: 'username can contain only alphanumeric characters',
+    })
+    .required()
+    .min(4)
+    .max(15)
+    .strict(),
+  password: yup.string().required().min(8).strict(),
+});
+
 function Login() {
   const { setAuth } = useContext(AuthContext);
-  const usernameRef = useRef();
-  const passwordRef = useRef();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isFetchError, setIsFetchError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const isValid = await loginSchema.isValid({ username, password });
+      if (!isValid) return setErrorMessage('Invalid username or password');
       const res = await axios.post('/auth/login', {
-        username: usernameRef.current.value,
-        password: passwordRef.current.value,
+        username,
+        password,
       });
-
       setAuth(res.data);
     } catch (err) {
-      console.error(err);
+      if (err.response.status === 400 || err.response.status === 401)
+        setErrorMessage('Invalid username or password');
+      else setIsFetchError(true);
     }
   };
+
+  useEffect(() => {
+    setErrorMessage('');
+    setIsFetchError(false);
+  }, [username, password]);
 
   return (
     <Main>
@@ -144,13 +176,30 @@ function Login() {
           <Paragraph>Stay connected with your friends. Anywhere, anytime.</Paragraph>
         </Section>
         <Form onSubmit={handleSubmit}>
+          {isFetchError && (
+            <ErrorBox>
+              <ErrorMessage>Something went wrong. Please try again.</ErrorMessage>
+            </ErrorBox>
+          )}
           <Label>
             Username
-            <Input ref={usernameRef} type="text" />
+            <Input
+              errorMessage={errorMessage}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              type="text"
+            />
+            <ErrorMessage>{errorMessage}</ErrorMessage>
           </Label>
           <Label>
             Password
-            <Input ref={passwordRef} type="password" />
+            <Input
+              errorMessage={errorMessage}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+            />
+            <ErrorMessage>{errorMessage}</ErrorMessage>
           </Label>
           <Button type="submit">Log in</Button>
           <Divider />
