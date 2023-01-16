@@ -8,9 +8,8 @@ const signupSchema = yup.object({
     })
     .required()
     .min(4)
-    .max(15)
-    .strict(),
-  password: yup.string().required().min(8).strict(),
+    .max(15),
+  password: yup.string().required().min(8),
 });
 
 const validateSignup = async (req, res, next) => {
