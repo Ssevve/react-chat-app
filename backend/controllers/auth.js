@@ -30,6 +30,7 @@ const handleLogin = async (req, res) => {
         username: user.username,
         role: user.role,
         avatar: user.avatar,
+        statusText: user.statusText,
       },
       accessToken,
     });
