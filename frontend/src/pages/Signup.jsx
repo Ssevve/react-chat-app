@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import breakpoints from '../breakpoints';
 import Container from '../components/Container';
@@ -7,6 +7,8 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import ErrorBox from '../components/ErrorBox';
+import Loader from '../components/Loader';
 
 const Main = styled.main`
   background: var(--bg-light);
@@ -67,6 +69,12 @@ const Form = styled.form`
   @media ${breakpoints.medium} {
     flex: 1;
   }
+`;
+
+const FormTitle = styled.h2`
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const Label = styled.label`
@@ -137,19 +145,52 @@ const schema = yup.object({
     .max(15)
     .label('Username'),
   password: yup.string().required().min(8).label('Password'),
-  repeatPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords do not match'),
+  repeatPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords do not match')
+    .required()
+    .label('Repeat password'),
 });
 
 function Signup() {
   const {
     register,
     handleSubmit,
+    watch,
+    setError,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'onChange',
   });
-  const onSubmit = (data) => console.log(data);
+  const navigate = useNavigate();
+  const [isFetchError, setIsFetchError] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+  const username = watch('username');
+  const password = watch('password');
+  const repeatPassword = watch('repeatPassword');
+
+  const onSubmit = async (data) => {
+    setIsFetching(true);
+    try {
+      await axios.post('/auth/signup', {
+        username: data.username,
+        password: data.password,
+      });
+      navigate('/login');
+    } catch (err) {
+      if (err.response.status === 409) {
+        return setError('username', { message: 'Username already taken' });
+      }
+      setIsFetchError(true);
+    } finally {
+      setIsFetching(false);
+    }
+  };
+
+  useEffect(() => {
+    setIsFetchError(false);
+  }, [username, password, repeatPassword]);
 
   return (
     <Main>
@@ -159,6 +200,12 @@ function Signup() {
           <Paragraph>Stay connected with your friends. Anywhere, anytime.</Paragraph>
         </Section>
         <Form onSubmit={handleSubmit(onSubmit)}>
+          <FormTitle>Sign up</FormTitle>
+          {isFetchError && (
+            <ErrorBox>
+              <ErrorMessage>Something went wrong. Please try again.</ErrorMessage>
+            </ErrorBox>
+          )}
           <Label>
             Username
             <Input
@@ -167,7 +214,9 @@ function Signup() {
               type="text"
               aria-invalid={errors.username ? true : false}
             />
-            <ErrorMessage role="alert">{errors.username?.message}</ErrorMessage>
+            {errors.username && (
+              <ErrorMessage role="alert">{errors.username?.message}</ErrorMessage>
+            )}
           </Label>
           <Label>
             Password
@@ -177,7 +226,9 @@ function Signup() {
               type="password"
               aria-invalid={errors.password ? true : false}
             />
-            <ErrorMessage role="alert">{errors.password?.message}</ErrorMessage>
+            {errors.password && (
+              <ErrorMessage role="alert">{errors.password?.message}</ErrorMessage>
+            )}
           </Label>
           <Label>
             Repeat password
@@ -187,9 +238,11 @@ function Signup() {
               type="password"
               aria-invalid={errors.repeatPassword ? true : false}
             />
-            <ErrorMessage role="alert">{errors.repeatPassword?.message}</ErrorMessage>
+            {errors.repeatPassword && (
+              <ErrorMessage role="alert">{errors.repeatPassword?.message}</ErrorMessage>
+            )}
           </Label>
-          <Button type="submit">Sign up</Button>
+          <Button type="submit">{isFetching ? <Loader /> : 'Sign up'}</Button>
           <Divider />
           <HaveAccount>
             Have an account?
