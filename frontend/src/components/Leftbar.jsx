@@ -41,14 +41,6 @@ const LogoText = styled.h1`
 
 const Chats = styled.section``;
 
-const user = {
-  username: 'Johnny',
-  avatar: {
-    url: 'https://i.pravatar.cc/150?img=52',
-  },
-  statusText: 'Something here',
-};
-
 function Leftbar({ expanded }) {
   return (
     <StyledLeftbar expanded={expanded}>
@@ -57,7 +49,7 @@ function Leftbar({ expanded }) {
         <LogoText>Chat App</LogoText>
       </Logo>
       <Chats />
-      <UserDropup user={user} />
+      <UserDropup />
     </StyledLeftbar>
   );
 }

@@ -82,6 +82,8 @@ const Avatar = styled.img`
   height: var(--size);
   width: var(--size);
   border-radius: 50%;
+  outline: ${(props) =>
+    props.showDropup ? '1px solid var(--clr-accent)' : '1px solid var(--clr-light-200)'};
 `;
 
 const Info = styled.div`
@@ -107,7 +109,7 @@ const Arrow = styled(FiChevronUp)`
 
 function UserDropup({ user }) {
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
   const [showDropup, setShowDropup] = useState(false);
 
   const handleLogout = async () => {
@@ -134,10 +136,10 @@ function UserDropup({ user }) {
         </DropupItem>
       </DropupMenu>
       <User>
-        <Avatar src={user.avatar.url} alt={user.username} />
+        <Avatar showDropup={showDropup} src={auth.user.avatar.url} alt={auth.user.username} />
         <Info>
-          <Username>{user.username}</Username>
-          <StatusText>{user.statusText}</StatusText>
+          <Username>{auth.user.username}</Username>
+          <StatusText>{auth.user.statusText}</StatusText>
         </Info>
       </User>
       <Arrow showDropup={showDropup} size="1.5rem" />
