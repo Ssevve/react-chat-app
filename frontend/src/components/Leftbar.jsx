@@ -1,16 +1,21 @@
+import { BsFillChatFill } from 'react-icons/bs';
 import styled from 'styled-components';
 import breakpoints from '../breakpoints';
 
+import UserDropup from '../components/UserDropup';
+
 const StyledLeftbar = styled.div`
-  padding: 1rem;
-  border-right: 1px solid var(--clr-dark);
-  height: 100%;
+  padding: var(--padding);
+  border-right: 1px solid var(--clr-light-200);
+  height: calc(100vh - 57px); // topbar height = 57px
   width: 90%;
   max-width: 300px;
   position: absolute;
   left: ${(props) => (props.expanded ? '0' : '-300px')};
   transition: left 0.1s ease-in-out;
   background: var(--clr-light-400);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 
   @media ${breakpoints.medium} {
     height: 100vh;
@@ -19,13 +24,22 @@ const StyledLeftbar = styled.div`
   }
 `;
 
-const BarHeader = styled.div``;
-const Logo = styled.h1`
-  font-size: 2rem;
-  text-transform: uppercase;
+const Logo = styled.div`
+  font-size: 1.5rem;
+  padding: var(--padding);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--clr-accent);
 `;
 
-const BarFooter = styled.div``;
+const LogoText = styled.h1`
+  color: var(--clr-dark);
+  font-size: 1.5rem;
+`;
+
+const Chats = styled.section``;
 
 const user = {
   username: 'Johnny',
@@ -38,13 +52,12 @@ const user = {
 function Leftbar({ expanded }) {
   return (
     <StyledLeftbar expanded={expanded}>
-      <BarHeader>
-        <Logo>Chat App</Logo>
-      </BarHeader>
-      <div></div>
-      <BarFooter>
-        <img src={user.avatar.url} alt={user.username} />
-      </BarFooter>
+      <Logo>
+        <BsFillChatFill />
+        <LogoText>Chat App</LogoText>
+      </Logo>
+      <Chats />
+      <UserDropup user={user} />
     </StyledLeftbar>
   );
 }

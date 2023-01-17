@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import breakpoints from '../breakpoints';
 
 const StyledRightbar = styled.div`
-  padding: 1rem;
-  border-left: 1px solid var(--clr-accent);
+  padding: var(--padding);
+  border-left: 1px solid var(--clr-light-200);
   height: 100%;
   width: 90%;
   max-width: 300px;
@@ -20,6 +20,7 @@ const StyledRightbar = styled.div`
 `;
 
 const Title = styled.h2`
+  padding: var(--padding);
   font-size: 1.5rem;
   line-height: 1;
 `;

@@ -5,8 +5,8 @@ import breakpoints from '../breakpoints';
 
 const Header = styled.header`
   width: 100vw;
-  border-bottom: 1px solid red;
-  padding: 0.5rem;
+  border-bottom: 1px solid var(--clr-light-200);
+  padding: var(--padding);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,9 +28,9 @@ const Button = styled.button`
   cursor: pointer;
   border: none;
   background: none;
-  padding: 0.5rem;
   display: flex;
   align-items: center;
+  padding: var(--padding);
 `;
 
 const LeftbarButton = styled(Button)`
@@ -48,6 +48,8 @@ const RightbarButton = styled(Button)`
 const CurrentChat = styled.span`
   font-size: 1.5rem;
   font-weight: bold;
+  line-height: 1;
+  padding: var(--padding);
 `;
 
 function Topbar({ setExpandLeftbar, setExpandRightbar }) {

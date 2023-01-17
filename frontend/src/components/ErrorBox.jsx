@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const StyledErrorBox = styled.div`
   border: 1px solid var(--clr-danger);
   border-radius: var(--border-radius);
-  padding: 1rem;
+  padding: var(--padding);
   color: var(--clr-danger);
 `;
 

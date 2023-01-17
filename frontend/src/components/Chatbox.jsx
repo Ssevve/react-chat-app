@@ -3,7 +3,7 @@ import breakpoints from '../breakpoints';
 
 const Section = styled.section`
   flex: 2.5;
-  padding: 1rem;
+  padding: var(--padding);
 
   @media ${breakpoints.medium} {
     position: relative;
