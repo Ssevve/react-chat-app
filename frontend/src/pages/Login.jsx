@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import ErrorBox from '../components/ErrorBox';
+import Loader from '../components/Loader';
 
 const Main = styled.main`
   background: var(--clr-light-300);
@@ -68,6 +69,12 @@ const Form = styled.form`
   @media ${breakpoints.medium} {
     flex: 1;
   }
+`;
+
+const FormTitle = styled.h2`
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const Label = styled.label`
@@ -153,11 +160,13 @@ function Login() {
     reValidateMode: 'onSubmit',
   });
   const [isFetchError, setIsFetchError] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [invalidCredentials, setInvalidCredentials] = useState(false);
   const username = watch('username');
   const password = watch('password');
 
   const onSubmit = async (data) => {
+    setIsFetching(true);
     try {
       const res = await axios.post('/auth/login', {
         username: data.username,
@@ -167,6 +176,8 @@ function Login() {
     } catch (err) {
       if (err.response.status === 400 || err.response.status === 401) setInvalidCredentials(true);
       else setIsFetchError(true);
+    } finally {
+      setIsFetching(false);
     }
   };
 
@@ -197,6 +208,7 @@ function Login() {
           <Paragraph>Stay connected with your friends. Anywhere, anytime.</Paragraph>
         </Section>
         <Form onSubmit={handleSubmit(onSubmit)}>
+          <FormTitle>Log in</FormTitle>
           {isFetchError && (
             <ErrorBox>
               <ErrorMessage>Something went wrong. Please try again.</ErrorMessage>
@@ -226,7 +238,7 @@ function Login() {
               <ErrorMessage>Invalid username or password</ErrorMessage>
             )}
           </Label>
-          <Button type="submit">Log in</Button>
+          <Button type="submit">{isFetching ? <Loader /> : 'Log in'}</Button>
           <Divider />
           <NeedAccount>
             Need an account?
