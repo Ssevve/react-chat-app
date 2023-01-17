@@ -5,6 +5,8 @@ import breakpoints from '../breakpoints';
 import Container from '../components/Container';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import ErrorBox from '../components/ErrorBox';
 
@@ -81,14 +83,13 @@ const Input = styled.input`
   color: var(--clr-dark);
   min-width: 100%;
   width: 0;
-  border: ${(props) =>
-    props.errorMessage ? '1px solid var(--clr-danger)' : '1px solid currentColor'};
-  outline: ${(props) => props.errorMessage && '1px solid var(--clr-danger)'};
+  border: ${(props) => (props.error ? '1px solid var(--clr-danger)' : '1px solid currentColor')};
+  outline: ${(props) => props.error && '1px solid var(--clr-danger)'};
 `;
 
 const ErrorMessage = styled.span`
   color: var(--clr-danger);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   height: 1.125rem;
 `;
 
@@ -126,47 +127,67 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const loginSchema = yup.object({
+const schema = yup.object({
   username: yup
     .string()
     .matches(/^[a-zA-Z0-9]*$/, {
-      message: 'username can contain only alphanumeric characters',
+      message: 'No special characters allowed',
     })
     .required()
     .min(4)
     .max(15)
-    .strict(),
-  password: yup.string().required().min(8).strict(),
+    .label('Username'),
+  password: yup.string().required().min(8).label('Password'),
 });
 
 function Login() {
   const { setAuth } = useContext(AuthContext);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const {
+    watch,
+    clearErrors,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    reValidateMode: 'onSubmit',
+  });
   const [isFetchError, setIsFetchError] = useState(false);
+  const [invalidCredentials, setInvalidCredentials] = useState(false);
+  const username = watch('username');
+  const password = watch('password');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     try {
-      const isValid = await loginSchema.isValid({ username, password });
-      if (!isValid) return setErrorMessage('Invalid username or password');
       const res = await axios.post('/auth/login', {
-        username,
-        password,
+        username: data.username,
+        password: data.password,
       });
       setAuth(res.data);
     } catch (err) {
-      if (err.response.status === 400 || err.response.status === 401)
-        setErrorMessage('Invalid username or password');
+      if (err.response.status === 400 || err.response.status === 401) setInvalidCredentials(true);
       else setIsFetchError(true);
     }
   };
 
   useEffect(() => {
-    setErrorMessage('');
+    if (errors.username) setInvalidCredentials(true);
+    if (errors.password) setInvalidCredentials(true);
+  }, [errors]);
+
+  useEffect(() => {
     setIsFetchError(false);
   }, [username, password]);
+
+  useEffect(() => {
+    clearErrors('username');
+    setInvalidCredentials(false);
+  }, [username, clearErrors]);
+
+  useEffect(() => {
+    clearErrors('password');
+    setInvalidCredentials(false);
+  }, [password, clearErrors]);
 
   return (
     <Main>
@@ -175,7 +196,7 @@ function Login() {
           <Heading>Chat app</Heading>
           <Paragraph>Stay connected with your friends. Anywhere, anytime.</Paragraph>
         </Section>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           {isFetchError && (
             <ErrorBox>
               <ErrorMessage>Something went wrong. Please try again.</ErrorMessage>
@@ -184,22 +205,26 @@ function Login() {
           <Label>
             Username
             <Input
-              errorMessage={errorMessage}
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              {...register('username')}
+              error={errors.username?.message || invalidCredentials}
+              aria-invalid={errors.password ? true : false}
               type="text"
             />
-            <ErrorMessage>{errorMessage}</ErrorMessage>
+            {(errors.username || invalidCredentials) && (
+              <ErrorMessage>Invalid username or password</ErrorMessage>
+            )}
           </Label>
           <Label>
             Password
             <Input
-              errorMessage={errorMessage}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              {...register('password')}
+              error={errors.password?.message || invalidCredentials}
+              aria-invalid={errors.password ? true : false}
               type="password"
             />
-            <ErrorMessage>{errorMessage}</ErrorMessage>
+            {(errors.password || invalidCredentials) && (
+              <ErrorMessage>Invalid username or password</ErrorMessage>
+            )}
           </Label>
           <Button type="submit">Log in</Button>
           <Divider />
