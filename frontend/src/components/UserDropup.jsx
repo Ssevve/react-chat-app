@@ -1,25 +1,33 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { FiChevronUp } from 'react-icons/fi';
 import { RiLogoutCircleLine } from 'react-icons/ri';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import useClickOutside from '../hooks/useClickOutside';
+
+import UserAvatar from './UserAvatar';
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+`;
 
 const StyledButton = styled.button`
-  position: relative;
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: space-between;
   padding: var(--padding);
   border-radius: var(--border-radius);
   border-top-left-radius: ${(props) => (props.showDropup ? 'initial' : 'var(--border-radius)')};
   border-top-right-radius: ${(props) => (props.showDropup ? 'initial' : 'var(--border-radius)')};
-  border: 1px solid var(--clr-light-300);
+  border: 1px solid ${(props) => (props.showDropup ? 'var(--clr-accent)' : 'var(--clr-light-300)')};
   background: ${(props) => (props.showDropup ? 'var(--clr-accent)' : 'var(--clr-light-400)')};
   color: ${(props) => (props.showDropup ? 'var(--clr-light-400)' : 'var(--clr-dark)')};
   cursor: pointer;
-  z-index: 1;
   &:hover {
     background: ${(props) => (props.showDropup ? 'var(--clr-accent)' : 'var(--clr-light-200)')};
   }
@@ -29,10 +37,6 @@ const DropupMenu = styled.ul`
   list-style: none;
   background: var(--clr-light-400);
   border: ${(props) => (props.showDropup ? '1px solid var(--clr-accent)' : 'none')};
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  right: 0;
   padding: ${(props) => (props.showDropup ? 'var(--padding)' : '0')};
   display: flex;
   flex-direction: column;
@@ -40,8 +44,6 @@ const DropupMenu = styled.ul`
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
   max-height: ${(props) => (props.showDropup ? 'auto' : '0')};
-  z-index: -1;
-  overflow: hidden;
 `;
 
 const DropupItem = styled.li`
@@ -77,15 +79,6 @@ const User = styled.div`
   align-items: center;
 `;
 
-const Avatar = styled.img`
-  --size: 3rem;
-  height: var(--size);
-  width: var(--size);
-  border-radius: 50%;
-  outline: ${(props) =>
-    props.showDropup ? '1px solid var(--clr-accent)' : '1px solid var(--clr-light-200)'};
-`;
-
 const Info = styled.div`
   display: flex;
   align-items: flex-start;
@@ -102,15 +95,17 @@ const StatusText = styled.span`
   font-size: 0.875rem;
 `;
 
-const Arrow = styled(FiChevronUp)`
+const Arrow = styled.span`
   transform: ${(props) => (props.showDropup ? 'rotate(180deg)' : 'rotate(0)')};
   transition: transform 0.1s ease-in-out;
 `;
 
 function UserDropup({ user }) {
+  const dropupRef = useRef(null);
   const navigate = useNavigate();
   const { auth, setAuth } = useContext(AuthContext);
   const [showDropup, setShowDropup] = useState(false);
+  useClickOutside(dropupRef, () => setShowDropup(false));
 
   const handleLogout = async () => {
     try {
@@ -122,11 +117,7 @@ function UserDropup({ user }) {
     }
   };
   return (
-    <StyledButton
-      onMouseLeave={() => setShowDropup(false)}
-      showDropup={showDropup}
-      onClick={() => setShowDropup((prev) => !prev)}
-    >
+    <Wrapper onMouseLeave={() => setShowDropup(false)} ref={dropupRef}>
       <DropupMenu showDropup={showDropup}>
         <DropupItem>
           <LogoutButton onClick={handleLogout}>
@@ -135,15 +126,19 @@ function UserDropup({ user }) {
           </LogoutButton>
         </DropupItem>
       </DropupMenu>
-      <User>
-        <Avatar showDropup={showDropup} src={auth.user.avatar.url} alt={auth.user.username} />
-        <Info>
-          <Username>{auth.user.username}</Username>
-          <StatusText>{auth.user.statusText}</StatusText>
-        </Info>
-      </User>
-      <Arrow showDropup={showDropup} size="1.5rem" />
-    </StyledButton>
+      <StyledButton showDropup={showDropup} onClick={() => setShowDropup((prev) => !prev)}>
+        <User>
+          <UserAvatar size="3rem" showDropup={showDropup} user={auth.user} />
+          <Info>
+            <Username>{auth.user.username}</Username>
+            <StatusText>{auth.user.statusText}</StatusText>
+          </Info>
+        </User>
+        <Arrow showDropup={showDropup}>
+          <FiChevronUp size="1.5rem" />
+        </Arrow>
+      </StyledButton>
+    </Wrapper>
   );
 }
 
