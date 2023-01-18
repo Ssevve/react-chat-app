@@ -90,8 +90,8 @@ const Input = styled.input`
   color: var(--clr-dark);
   min-width: 100%;
   width: 0;
-  border: ${(props) => (props.error ? '1px solid var(--clr-danger)' : '1px solid currentColor')};
-  outline: ${(props) => props.error && '1px solid var(--clr-danger)'};
+  border: ${({ error }) => (error ? '1px solid var(--clr-danger)' : '1px solid currentColor')};
+  outline: ${({ error }) => error && '1px solid var(--clr-danger)'};
 `;
 
 const Button = styled.button`

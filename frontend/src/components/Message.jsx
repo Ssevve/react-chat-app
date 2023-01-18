@@ -9,7 +9,7 @@ import UserAvatar from './UserAvatar';
 const StyledMessage = styled.div`
   display: flex;
   gap: 0.5rem;
-  justify-self: ${(props) => (props.own ? 'flex-end' : 'flex-start')};
+  justify-self: ${({ own }) => (own ? 'flex-end' : 'flex-start')};
   max-width: 75%; // change to large res.
   padding: var(--padding);
   z-index: -1;
@@ -36,8 +36,8 @@ const Time = styled.span`
 
 const Content = styled.p`
   border-radius: var(--border-radius);
-  background: ${(props) => (props.own ? 'var(--clr-accent)' : 'var(--clr-light-200)')};
-  color: ${(props) => (props.own ? 'var(--clr-light-400)' : 'inherit')};
+  background: ${({ own }) => (own ? 'var(--clr-accent)' : 'var(--clr-light-200)')};
+  color: ${({ own }) => (own ? 'var(--clr-light-400)' : 'inherit')};
   padding: var(--padding);
 `;
 

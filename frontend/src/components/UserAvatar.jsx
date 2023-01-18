@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import avatarPlaceholder from '../assets/no-avatar.jpg';
 
 const Avatar = styled.img`
-  --size: ${(props) => props.size};
+  --size: ${({ size }) => size};
   height: var(--size);
   width: var(--size);
   border-radius: 50%;

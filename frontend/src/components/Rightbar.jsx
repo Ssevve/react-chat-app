@@ -8,7 +8,7 @@ const StyledRightbar = styled.div`
   width: 90%;
   max-width: 300px;
   position: absolute;
-  right: ${(props) => (props.expanded ? '0' : '-300px')};
+  right: ${({ expanded }) => (expanded ? '0' : '-300px')};
   transition: right 0.1s ease-in-out;
   background: var(--clr-light-400);
 

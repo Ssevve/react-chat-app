@@ -11,7 +11,7 @@ const StyledLeftbar = styled.div`
   width: 90%;
   max-width: 300px;
   position: absolute;
-  left: ${(props) => (props.expanded ? '0' : '-300px')};
+  left: ${({ expanded }) => (expanded ? '0' : '-300px')};
   transition: left 0.1s ease-in-out;
   background: var(--clr-light-400);
   display: grid;

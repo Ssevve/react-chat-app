@@ -22,28 +22,29 @@ const StyledButton = styled.button`
   justify-content: space-between;
   padding: var(--padding);
   border-radius: var(--border-radius);
-  border-top-left-radius: ${(props) => (props.showDropup ? 'initial' : 'var(--border-radius)')};
-  border-top-right-radius: ${(props) => (props.showDropup ? 'initial' : 'var(--border-radius)')};
-  border: 1px solid ${(props) => (props.showDropup ? 'var(--clr-accent)' : 'var(--clr-light-300)')};
-  background: ${(props) => (props.showDropup ? 'var(--clr-accent)' : 'var(--clr-light-400)')};
-  color: ${(props) => (props.showDropup ? 'var(--clr-light-400)' : 'var(--clr-dark)')};
+  border-top-left-radius: ${({ showDropup }) => (showDropup ? 'initial' : 'var(--border-radius)')};
+  border-top-right-radius: ${({ showDropup }) => (showDropup ? 'initial' : 'var(--border-radius)')};
+  border: 1px solid
+    ${({ showDropup }) => (showDropup ? 'var(--clr-accent)' : 'var(--clr-light-300)')};
+  background: ${({ showDropup }) => (showDropup ? 'var(--clr-accent)' : 'var(--clr-light-400)')};
+  color: ${({ showDropup }) => (showDropup ? 'var(--clr-light-400)' : 'var(--clr-dark)')};
   cursor: pointer;
   &:hover {
-    background: ${(props) => (props.showDropup ? 'var(--clr-accent)' : 'var(--clr-light-200)')};
+    background: ${({ showDropup }) => (showDropup ? 'var(--clr-accent)' : 'var(--clr-light-200)')};
   }
 `;
 
 const DropupMenu = styled.ul`
   list-style: none;
   background: var(--clr-light-400);
-  border: ${(props) => (props.showDropup ? '1px solid var(--clr-accent)' : 'none')};
-  padding: ${(props) => (props.showDropup ? 'var(--padding)' : '0')};
+  border: ${({ showDropup }) => (showDropup ? '1px solid var(--clr-accent)' : 'none')};
+  padding: ${({ showDropup }) => (showDropup ? 'var(--padding)' : '0')};
   display: flex;
   flex-direction: column;
   gap: var(--padding);
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
-  max-height: ${(props) => (props.showDropup ? 'auto' : '0')};
+  max-height: ${({ showDropup }) => (showDropup ? 'auto' : '0')};
 `;
 
 const DropupItem = styled.li`
@@ -96,7 +97,7 @@ const StatusText = styled.span`
 `;
 
 const Arrow = styled.span`
-  transform: ${(props) => (props.showDropup ? 'rotate(180deg)' : 'rotate(0)')};
+  transform: ${({ showDropup }) => (showDropup ? 'rotate(180deg)' : 'rotate(0)')};
   transition: transform 0.1s ease-in-out;
 `;
 
