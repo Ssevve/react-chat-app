@@ -16,6 +16,7 @@ const StyledLeftbar = styled.div`
   background: var(--clr-light-400);
   display: grid;
   grid-template-rows: auto 1fr auto;
+  z-index: 1;
 
   @media ${breakpoints.medium} {
     height: 100vh;
