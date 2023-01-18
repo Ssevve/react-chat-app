@@ -4,6 +4,8 @@ import { AuthContext } from '../context/AuthContext';
 import { format } from 'timeago.js';
 import breakpoints from '../breakpoints';
 
+import UserAvatar from './UserAvatar';
+
 const StyledMessage = styled.div`
   display: flex;
   gap: 0.5rem;
@@ -15,14 +17,6 @@ const StyledMessage = styled.div`
   @media ${breakpoints.large} {
     max-width: 50%;
   }
-`;
-
-const UserAvatar = styled.img`
-  --size: 2.5rem;
-  width: var(--size);
-  height: var(--size);
-  border-radius: 50%;
-  outline: 1px solid var(--clr-light-200);
 `;
 
 const Meta = styled.div`
@@ -57,7 +51,7 @@ function Message({ message }) {
   });
   return (
     <StyledMessage own={message.senderId === auth.user._id}>
-      <UserAvatar src={sender.avatar.url} />
+      <UserAvatar size="2.5rem" user={sender} />
       <div>
         <Meta>
           <Username>{sender.username}</Username>
