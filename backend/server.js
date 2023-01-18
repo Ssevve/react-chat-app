@@ -32,6 +32,7 @@ app.get('/', (req, res) => {
 app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/users', verifyJWT, require('./routes/users'));
+app.use('/chats', verifyJWT, require('./routes/chats'));
 
 mongoose.connection.once('open', () => {
   console.log('MongoDB connected');
