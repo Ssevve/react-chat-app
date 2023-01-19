@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  gap: 0.5rem;
   padding: var(--padding);
 `;
 
@@ -26,6 +27,7 @@ const Button = styled.button`
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
+  margin-top: 1rem;
 `;
 
 const Arrow = styled.span`
@@ -35,10 +37,13 @@ const Arrow = styled.span`
   transform: ${({ expandChats }) => (expandChats ? 'rotate(0deg)' : 'rotate(-90deg)')};
 `;
 
-const Section = styled.section`
+const ChatsSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   max-height: ${({ expandChats }) => (expandChats ? '100%' : '0')};
   overflow: hidden;
-  transition: max-height 0.1s ease-in-out;
+  padding-left: var(--padding);
 `;
 
 function Chats() {
@@ -72,11 +77,11 @@ function Chats() {
         </Arrow>
         Direct Messages
       </Button>
-      <Section expandChats={expandChats}>
+      <ChatsSection expandChats={expandChats}>
         {chats.map((chat) => (
           <Chat key={chat._id} chat={chat} />
         ))}
-      </Section>
+      </ChatsSection>
     </Wrapper>
   );
 }
