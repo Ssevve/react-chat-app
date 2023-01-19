@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
 import Container from '../components/Container';
 import axios from 'axios';

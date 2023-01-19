@@ -1,7 +1,8 @@
 import { BsFillChatFill } from 'react-icons/bs';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
 
+import Chats from '../components/Chats';
 import UserDropup from '../components/UserDropup';
 
 const StyledLeftbar = styled.div`
@@ -39,8 +40,6 @@ const LogoText = styled.h1`
   color: var(--clr-dark);
   font-size: 1.5rem;
 `;
-
-const Chats = styled.section``;
 
 function Leftbar({ expanded }) {
   return (

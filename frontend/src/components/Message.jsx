@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { AuthContext } from '../context/AuthContext';
 import { format } from 'timeago.js';
 import breakpoints from '../breakpoints';

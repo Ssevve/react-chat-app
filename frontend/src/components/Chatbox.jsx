@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
 import Message from './Message';
 
@@ -31,8 +31,9 @@ const MessageForm = styled.form`
   display: flex;
   align-content: center;
   gap: 0.5rem;
-  padding: 0.5rem;
+  padding: var(--padding);
   border-top: 1px solid var(--clr-light-200);
+  height: 4rem;
 `;
 
 const Input = styled.input`
@@ -70,7 +71,7 @@ const messages = [
     _id: '2',
     content: 'Hi!',
     createdAt: Date.now(),
-    senderId: '63c41b2ffc26d8a23712c2cd',
+    senderId: '160a656b-adfa-4770-8507-217e387bad38',
   },
   {
     _id: '3',
@@ -82,13 +83,13 @@ const messages = [
     _id: '4',
     content: 'Hi!',
     createdAt: Date.now(),
-    senderId: '63c41b2ffc26d8a23712c2cd',
+    senderId: '160a656b-adfa-4770-8507-217e387bad38',
   },
   {
     _id: '5',
     content: 'Hi!',
     createdAt: Date.now(),
-    senderId: '63c41b2ffc26d8a23712c2cd',
+    senderId: '160a656b-adfa-4770-8507-217e387bad38',
   },
   {
     _id: '6',
@@ -106,7 +107,7 @@ const messages = [
     _id: '8',
     content: 'Hello hello Hello hello Hello hello Hello hello Hello hello Hello hello Hello hello',
     createdAt: Date.now(),
-    senderId: '63c41b2ffc26d8a23712c2cd',
+    senderId: '160a656b-adfa-4770-8507-217e387bad38',
   },
 ];
 

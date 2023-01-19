@@ -1,5 +1,5 @@
 import { AiOutlineWarning } from 'react-icons/ai';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const StyledErrorBox = styled.div`
   border: 1px solid var(--clr-danger);

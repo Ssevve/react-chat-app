@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
 import Container from '../components/Container';
 import { AuthContext } from '../context/AuthContext';

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 import avatarPlaceholder from '../assets/no-avatar.jpg';
 
@@ -14,8 +14,8 @@ function UserAvatar({ user, size, className, ...rest }) {
     <Avatar
       size={size}
       className={className}
-      src={user.avatar.url || avatarPlaceholder}
-      alt={user.username}
+      src={user?.avatar?.url || avatarPlaceholder}
+      alt={user?.username}
     />
   );
 }

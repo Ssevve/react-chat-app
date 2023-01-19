@@ -1,6 +1,6 @@
 import { useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { FiChevronUp } from 'react-icons/fi';
 import { RiLogoutCircleLine } from 'react-icons/ri';
 import axios from 'axios';
