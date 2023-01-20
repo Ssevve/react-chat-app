@@ -36,6 +36,7 @@ const Time = styled.span`
 `;
 
 const Content = styled.p`
+  margin-top: 0.25rem;
   border-radius: var(--border-radius);
   background: ${({ own }) => (own ? 'var(--clr-accent)' : 'var(--clr-light-200)')};
   color: ${({ own }) => (own ? 'var(--clr-light-400)' : 'inherit')};

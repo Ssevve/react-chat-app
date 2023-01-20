@@ -25,6 +25,8 @@ const Section = styled.section`
 const Messages = styled.section`
   padding: var(--padding);
   display: grid;
+  align-content: flex-start;
+  flex: 1;
   gap: 2rem;
   overflow-y: scroll;
   position: relative;
@@ -65,10 +67,11 @@ const Button = styled.button`
 
 function Chatbox({ socket, currentChatId }) {
   const { auth } = useContext(AuthContext);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState({});
 
   useEffect(() => {
     if (!currentChatId) return;
+    if (currentChatId in messages) return;
     const fetchMessages = async () => {
       try {
         const res = await axios.get(`/messages/chat/${currentChatId}`, {
@@ -76,7 +79,7 @@ function Chatbox({ socket, currentChatId }) {
             authorization: `Bearer ${auth.accessToken}`,
           },
         });
-        setMessages(res.data);
+        setMessages({ ...messages, [currentChatId]: res.data });
       } catch (err) {
         console.error(err);
       }
@@ -85,10 +88,14 @@ function Chatbox({ socket, currentChatId }) {
     fetchMessages();
   }, [currentChatId]);
 
+  useEffect(() => {
+    console.log(messages);
+  }, [messages]);
+
   return (
     <Section>
       <Messages>
-        {messages.map((message) => (
+        {messages[currentChatId]?.map((message) => (
           <Message key={message._id} message={message} />
         ))}
       </Messages>
