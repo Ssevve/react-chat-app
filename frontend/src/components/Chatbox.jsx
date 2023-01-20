@@ -1,6 +1,9 @@
+import axios from 'axios';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
 import Message from './Message';
+import { AuthContext } from '../context/AuthContext';
 
 const Section = styled.section`
   flex: 2.5;
@@ -60,58 +63,28 @@ const Button = styled.button`
   }
 `;
 
-const messages = [
-  {
-    _id: '1',
-    content: 'Hi!',
-    createdAt: Date.now(),
-    senderId: '123',
-  },
-  {
-    _id: '2',
-    content: 'Hi!',
-    createdAt: Date.now(),
-    senderId: '160a656b-adfa-4770-8507-217e387bad38',
-  },
-  {
-    _id: '3',
-    content: 'Hi!',
-    createdAt: Date.now(),
-    senderId: '123',
-  },
-  {
-    _id: '4',
-    content: 'Hi!',
-    createdAt: Date.now(),
-    senderId: '160a656b-adfa-4770-8507-217e387bad38',
-  },
-  {
-    _id: '5',
-    content: 'Hi!',
-    createdAt: Date.now(),
-    senderId: '160a656b-adfa-4770-8507-217e387bad38',
-  },
-  {
-    _id: '6',
-    content: 'Hi!',
-    createdAt: Date.now(),
-    senderId: '123',
-  },
-  {
-    _id: '7',
-    content: 'Hi!',
-    createdAt: Date.now(),
-    senderId: '123',
-  },
-  {
-    _id: '8',
-    content: 'Hello hello Hello hello Hello hello Hello hello Hello hello Hello hello Hello hello',
-    createdAt: Date.now(),
-    senderId: '160a656b-adfa-4770-8507-217e387bad38',
-  },
-];
+function Chatbox({ socket, currentChatId }) {
+  const { auth } = useContext(AuthContext);
+  const [messages, setMessages] = useState([]);
 
-function Chatbox() {
+  useEffect(() => {
+    if (!currentChatId) return;
+    const fetchMessages = async () => {
+      try {
+        const res = await axios.get(`/messages/chat/${currentChatId}`, {
+          headers: {
+            authorization: `Bearer ${auth.accessToken}`,
+          },
+        });
+        setMessages(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchMessages();
+  }, [currentChatId]);
+
   return (
     <Section>
       <Messages>

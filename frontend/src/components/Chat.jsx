@@ -51,7 +51,7 @@ const LastMessage = styled.span`
   width: 100px;
 `;
 
-function Chat({ chat }) {
+function Chat({ chat, setCurrentChatId }) {
   const { auth } = useContext(AuthContext);
   const [chatPartner, setChatPartner] = useState(null);
   const [lastMessage, setLastMessage] = useState(null);
@@ -65,7 +65,6 @@ function Chat({ chat }) {
             authorization: `Bearer ${auth.accessToken}`,
           },
         });
-        console.log(res.data);
         setChatPartner(res.data);
       } catch (err) {
         console.error(err);
@@ -76,12 +75,11 @@ function Chat({ chat }) {
 
     const fetchLastMessage = async () => {
       try {
-        const res = await axios.get(`/messages?id=${chat.lastMessageId}`, {
+        const res = await axios.get(`/messages/${chat.lastMessageId}`, {
           headers: {
             authorization: `Bearer ${auth.accessToken}`,
           },
         });
-        console.log(res.data);
         setLastMessage(res.data);
       } catch (err) {
         console.error(err);
@@ -92,7 +90,7 @@ function Chat({ chat }) {
   }, []); // Add messages to dependency array at take them as a prop, or use context
 
   return (
-    <Button>
+    <Button onClick={() => setCurrentChatId(chat._id)}>
       <UserAvatar user={chatPartner} size="2.5rem" />
       <Details>
         <Meta>

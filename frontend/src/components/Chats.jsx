@@ -46,7 +46,7 @@ const ChatsSection = styled.section`
   padding-left: var(--padding);
 `;
 
-function Chats() {
+function Chats({ setCurrentChatId }) {
   const { auth } = useContext(AuthContext);
   const [chats, setChats] = useState([]);
   const [expandChats, setExpandChats] = useState(true);
@@ -59,7 +59,6 @@ function Chats() {
             authorization: `Bearer ${auth.accessToken}`,
           },
         });
-        // console.log(res.data);
         setChats(res.data);
       } catch (err) {
         console.error(err);
@@ -79,7 +78,7 @@ function Chats() {
       </Button>
       <ChatsSection expandChats={expandChats}>
         {chats.map((chat) => (
-          <Chat key={chat._id} chat={chat} />
+          <Chat setCurrentChatId={setCurrentChatId} key={chat._id} chat={chat} />
         ))}
       </ChatsSection>
     </Wrapper>

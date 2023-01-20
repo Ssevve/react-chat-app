@@ -1,8 +1,9 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { AuthContext } from '../context/AuthContext';
 import { format } from 'timeago.js';
 import breakpoints from '../breakpoints';
+import axios from 'axios';
 
 import UserAvatar from './UserAvatar';
 
@@ -43,18 +44,31 @@ const Content = styled.p`
 
 function Message({ message }) {
   const { auth } = useContext(AuthContext);
-  const [sender, setSender] = useState({
-    avatar: {
-      url: 'https://i.pravatar.cc/150?img=14',
-    },
-    username: 'Mike',
-  });
+  const [sender, setSender] = useState(null);
+
+  useEffect(() => {
+    const fetchSender = async () => {
+      try {
+        const res = await axios.get(`/users/${message?.senderId}`, {
+          headers: {
+            authorization: `Bearer ${auth.accessToken}`,
+          },
+        });
+        setSender(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchSender();
+  }, [message]);
+
   return (
     <StyledMessage own={message.senderId === auth.user._id}>
       <UserAvatar size="2.5rem" user={sender} />
       <div>
         <Meta>
-          <Username>{sender.username}</Username>
+          <Username>{sender?.username}</Username>
           <Time>{format(message.createdAt)}</Time>
         </Meta>
         <Content own={message.senderId === auth.user._id}>{message.content}</Content>

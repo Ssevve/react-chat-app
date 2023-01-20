@@ -1,14 +1,17 @@
 const Message = require('../models/Message');
 
 const getMessageById = async (req, res) => {
-  const message = await Message.findOne({ _id: req.query.id });
-  console.log(message);
-  if (!message) return res.status(400).json({ message: 'Message with provided ID not found' });
-  res.status(200).json({
-    _id: message._id,
-    createdAt: message.createdAt,
-    content: message.content,
-  });
+  try {
+    const message = await Message.findOne({ _id: req.params.messageId });
+    if (!message) return res.status(400).json({ message: 'Message with provided ID not found' });
+    res.status(200).json({
+      _id: message._id,
+      createdAt: message.createdAt,
+      content: message.content,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 };
 
 const getMessagesByChatId = async (req, res) => {
