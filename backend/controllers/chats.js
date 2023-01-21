@@ -2,7 +2,19 @@ const Chat = require('../models/Chat');
 
 const getChatsForCurrentUser = async (req, res) => {
   try {
-    const chats = await Chat.find({ members: { $in: req.user._id } });
+    const chats = await Chat.find({ members: { $in: req.user._id } })
+      .populate([
+        {
+          path: 'lastMessage',
+          select: 'content sender createdAt',
+        },
+        {
+          path: 'members',
+          select: 'username avatar.url',
+        },
+      ])
+      .exec();
+    console.log(chats);
     res.status(200).json(chats);
   } catch (err) {
     res.status(500).json(err);

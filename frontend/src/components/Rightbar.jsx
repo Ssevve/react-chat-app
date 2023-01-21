@@ -25,7 +25,7 @@ const Title = styled.h2`
   line-height: 1;
 `;
 
-function Rightbar({ expanded }) {
+function Rightbar({ expanded, setCurrentChatId }) {
   return (
     <StyledRightbar expanded={expanded}>
       <Title>Friends</Title>

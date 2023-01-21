@@ -46,27 +46,8 @@ const ChatsSection = styled.section`
   padding-left: var(--padding);
 `;
 
-function Chats({ setCurrentChatId }) {
-  const { auth } = useContext(AuthContext);
-  const [chats, setChats] = useState([]);
+function Chats({ chats, setCurrentChatId }) {
   const [expandChats, setExpandChats] = useState(true);
-
-  useEffect(() => {
-    const fetchChats = async () => {
-      try {
-        const res = await axios.get('/chats', {
-          headers: {
-            authorization: `Bearer ${auth.accessToken}`,
-          },
-        });
-        setChats(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchChats();
-  }, []); // Add messages to dependency array at take them as a prop, or use context
 
   return (
     <Wrapper>
@@ -78,7 +59,7 @@ function Chats({ setCurrentChatId }) {
       </Button>
       <ChatsSection expandChats={expandChats}>
         {chats.map((chat) => (
-          <Chat setCurrentChatId={setCurrentChatId} key={chat._id} chat={chat} />
+          <Chat onClick={() => setCurrentChatId(chat._id)} key={chat._id} chat={chat} />
         ))}
       </ChatsSection>
     </Wrapper>

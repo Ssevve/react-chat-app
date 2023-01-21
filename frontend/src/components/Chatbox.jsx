@@ -65,37 +65,11 @@ const Button = styled.button`
   }
 `;
 
-function Chatbox({ socket, currentChatId }) {
-  const { auth } = useContext(AuthContext);
-  const [messages, setMessages] = useState({});
-
-  useEffect(() => {
-    if (!currentChatId) return;
-    if (currentChatId in messages) return;
-    const fetchMessages = async () => {
-      try {
-        const res = await axios.get(`/messages/chat/${currentChatId}`, {
-          headers: {
-            authorization: `Bearer ${auth.accessToken}`,
-          },
-        });
-        setMessages({ ...messages, [currentChatId]: res.data });
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchMessages();
-  }, [currentChatId]);
-
-  useEffect(() => {
-    console.log(messages);
-  }, [messages]);
-
+function Chatbox({ socket, messages }) {
   return (
     <Section>
       <Messages>
-        {messages[currentChatId]?.map((message) => (
+        {messages?.map((message) => (
           <Message key={message._id} message={message} />
         ))}
       </Messages>

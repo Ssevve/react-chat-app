@@ -45,34 +45,34 @@ const Content = styled.p`
 
 function Message({ message }) {
   const { auth } = useContext(AuthContext);
-  const [sender, setSender] = useState(null);
+  // const [sender, setSender] = useState(null);
 
-  useEffect(() => {
-    const fetchSender = async () => {
-      try {
-        const res = await axios.get(`/users/${message?.senderId}`, {
-          headers: {
-            authorization: `Bearer ${auth.accessToken}`,
-          },
-        });
-        setSender(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchSender = async () => {
+  //     try {
+  //       const res = await axios.get(`/users/${message?.senderId}`, {
+  //         headers: {
+  //           authorization: `Bearer ${auth.accessToken}`,
+  //         },
+  //       });
+  //       setSender(res.data);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   };
 
-    fetchSender();
-  }, [message]);
+  //   fetchSender();
+  // }, [message]);
 
   return (
-    <StyledMessage own={message.senderId === auth.user._id}>
-      <UserAvatar size="2.5rem" user={sender} />
+    <StyledMessage own={message.sender._id === auth.user._id}>
+      <UserAvatar size="2.5rem" user={message.sender} />
       <div>
         <Meta>
-          <Username>{sender?.username}</Username>
+          <Username>{message.sender.username}</Username>
           <Time>{format(message.createdAt)}</Time>
         </Meta>
-        <Content own={message.senderId === auth.user._id}>{message.content}</Content>
+        <Content own={message.sender._id === auth.user._id}>{message.content}</Content>
       </div>
     </StyledMessage>
   );

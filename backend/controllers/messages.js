@@ -14,11 +14,24 @@ const getMessageById = async (req, res) => {
   }
 };
 
-const getMessagesByChatId = async (req, res) => {
+const getMessagesForChats = async (req, res) => {
   try {
-    const messages = await Message.find({ chatId: req.params.chatId });
-    res.status(200).json(messages);
+    const messages = await Message.find({ members: { $in: req.user._id } })
+      .populate('sender', '_id username avatar.url')
+      .lean();
+
+    const chatMessagesMap = {};
+
+    for (const message of messages) {
+      if (message.chatId in chatMessagesMap) {
+        chatMessagesMap[message.chatId] = [...chatMessagesMap[message.chatId], message];
+      } else {
+        chatMessagesMap[message.chatId] = [message];
+      }
+    }
+    res.status(200).json(chatMessagesMap);
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 };
@@ -34,4 +47,4 @@ const createNewMessage = async (req, res) => {
   }
 };
 
-module.exports = { getMessageById, getMessagesByChatId, createNewMessage };
+module.exports = { getMessageById, getMessagesForChats, createNewMessage };

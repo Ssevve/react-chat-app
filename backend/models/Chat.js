@@ -8,10 +8,12 @@ const chatSchema = mongoose.Schema(
     },
     members: {
       type: [String],
+      ref: 'User',
       required: true,
     },
-    lastMessageId: {
+    lastMessage: {
       type: String,
+      ref: 'Message',
       required: true,
     },
   },
