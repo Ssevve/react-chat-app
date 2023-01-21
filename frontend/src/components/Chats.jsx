@@ -46,7 +46,7 @@ const ChatsSection = styled.section`
   padding-left: var(--padding);
 `;
 
-function Chats({ chats, setCurrentChatId }) {
+function Chats({ chats, setCurrentChat }) {
   const [expandChats, setExpandChats] = useState(true);
 
   return (
@@ -59,7 +59,7 @@ function Chats({ chats, setCurrentChatId }) {
       </Button>
       <ChatsSection expandChats={expandChats}>
         {chats.map((chat) => (
-          <Chat onClick={() => setCurrentChatId(chat._id)} key={chat._id} chat={chat} />
+          <Chat onClick={() => setCurrentChat(chat)} key={chat._id} chat={chat} />
         ))}
       </ChatsSection>
     </Wrapper>

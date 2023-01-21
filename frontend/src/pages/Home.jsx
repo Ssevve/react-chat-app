@@ -25,10 +25,10 @@ function Home() {
   const socket = useRef(null);
   const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState({});
-  const [currentChatId, setCurrentChatId] = useState(undefined);
+  const [currentChat, setCurrentChat] = useState(null);
 
   useEffect(() => {
-    socket.current = io('ws://localhost:5000');
+    socket.current = io('ws://localhost:5000', { query: `userId=${auth.user._id}` });
 
     return () => {
       socket.current.removeAllListeners();
@@ -77,9 +77,14 @@ function Home() {
     <Wrapper>
       <Topbar setExpandLeftbar={setExpandLeftbar} setExpandRightbar={setExpandRightbar} />
       <Main>
-        <Leftbar chats={chats} expanded={expandLeftbar} setCurrentChatId={setCurrentChatId} />
-        <Chatbox socket={socket} messages={messages[currentChatId]} />
-        <Rightbar expanded={expandRightbar} setCurrentChatId={setCurrentChatId} />
+        <Leftbar chats={chats} expanded={expandLeftbar} setCurrentChat={setCurrentChat} />
+        <Chatbox
+          currentUser={auth.user}
+          currentChat={currentChat}
+          socket={socket}
+          messages={messages[currentChat?._id]}
+        />
+        <Rightbar expanded={expandRightbar} setCurrentChat={setCurrentChat} />
       </Main>
     </Wrapper>
   );

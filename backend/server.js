@@ -3,12 +3,6 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-const { Server } = require('socket.io');
-const io = new Server(server, {
-  cors: {
-    origin: 'http://localhost:3000',
-  },
-});
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const helmet = require('helmet');
@@ -16,6 +10,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const verifyJWT = require('./middleware/verifyJWT');
+const initializeSocketEvents = require('./sockets');
 
 // Connect to MongoDB
 connectDB();
@@ -43,13 +38,7 @@ app.use('/chats', verifyJWT, require('./routes/chats'));
 app.use('/messages', verifyJWT, require('./routes/messages'));
 
 // Socket events
-io.on('connection', (socket) => {
-  console.log('user connected');
-
-  socket.on('disconnect', async () => {
-    console.log('user disconnected');
-  });
-});
+initializeSocketEvents(server);
 
 mongoose.connection.once('open', () => {
   console.log('MongoDB connected');

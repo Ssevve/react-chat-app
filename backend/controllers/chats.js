@@ -14,7 +14,6 @@ const getChatsForCurrentUser = async (req, res) => {
         },
       ])
       .exec();
-    console.log(chats);
     res.status(200).json(chats);
   } catch (err) {
     res.status(500).json(err);

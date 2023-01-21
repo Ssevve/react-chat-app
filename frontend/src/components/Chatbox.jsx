@@ -1,9 +1,8 @@
-import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { useRef } from 'react';
 import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
 import Message from './Message';
-import { AuthContext } from '../context/AuthContext';
+import { v4 as uuidv4 } from 'uuid';
 
 const Section = styled.section`
   flex: 2.5;
@@ -65,7 +64,26 @@ const Button = styled.button`
   }
 `;
 
-function Chatbox({ socket, messages }) {
+function Chatbox({ currentUser, currentChat, socket, messages }) {
+  const inputRef = useRef('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const date = new Date();
+
+    const message = {
+      _id: uuidv4(),
+      createdAt: date.toISOString(),
+      content: inputRef.current.value,
+      sender: currentUser._id,
+      chatId: currentChat._id,
+    };
+
+    const receiver = currentChat.members.find((member) => member._id !== currentUser._id);
+
+    socket.current.emit('sendMessage', { message, receiverId: receiver._id });
+  };
+
   return (
     <Section>
       <Messages>
@@ -73,8 +91,8 @@ function Chatbox({ socket, messages }) {
           <Message key={message._id} message={message} />
         ))}
       </Messages>
-      <MessageForm>
-        <Input type="text" placeholder="Write a message here..." />
+      <MessageForm onSubmit={handleSubmit}>
+        <Input ref={inputRef} type="text" placeholder="Write a message here..." />
         <Button type="submit">Send</Button>
       </MessageForm>
     </Section>
