@@ -82,6 +82,7 @@ function Home() {
       <Main>
         <Leftbar chats={chats} expanded={expandLeftbar} setCurrentChat={setCurrentChat} />
         <Chatbox
+          expandRightbar={expandRightbar}
           currentUser={auth.user}
           currentChat={currentChat}
           socket={socket}

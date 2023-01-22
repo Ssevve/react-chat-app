@@ -13,11 +13,10 @@ import Loader from '../components/Loader';
 
 const Main = styled.main`
   background: var(--clr-light-300);
-  height: 100%;
 `;
 
 const StyledContainer = styled(Container)`
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;

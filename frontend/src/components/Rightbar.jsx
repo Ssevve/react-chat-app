@@ -4,10 +4,11 @@ import breakpoints from '../breakpoints';
 const StyledRightbar = styled.div`
   padding: var(--padding);
   border-left: 1px solid var(--clr-light-200);
-  height: calc(100vh - 57px);
+  height: calc(100% - 57px);
   width: 90%;
   max-width: 300px;
   position: fixed;
+  top: 57px;
   right: ${({ expanded }) => (expanded ? '0' : '-300px')};
   transition: right 0.1s ease-in-out;
   background: var(--clr-light-400);

@@ -8,10 +8,11 @@ import UserDropup from '../components/UserDropup';
 const StyledLeftbar = styled.div`
   padding: var(--padding);
   border-right: 1px solid var(--clr-light-200);
-  height: calc(100vh - 57px); // topbar height = 57px
+  height: calc(100% - 57px); // topbar height = 57px
   width: 90%;
   max-width: 300px;
-  position: absolute;
+  position: fixed;
+  top: 57px;
   left: ${({ expanded }) => (expanded ? '0' : '-300px')};
   transition: left 0.1s ease-in-out;
   background: var(--clr-light-400);

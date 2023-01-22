@@ -9,15 +9,22 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   height: calc(100vh - 57px);
+  position: relative;
+  top: 57px;
 
   @media ${breakpoints.medium} {
-    position: relative;
-    max-width: calc(100vw - 300px);
+    max-width: ${({ expandRightbar }) =>
+      expandRightbar ? 'calc(100vw - 600px)' : 'calc(100vw - 300px)'};
     left: 300px;
+    right: ${({ expandRightbar }) => (expandRightbar ? '300px' : '0')};
+    top: 0;
+    transition: right 0.1s ease-in-out, max-width 0.1s ease-in-out;
   }
 
   @media ${breakpoints.large} {
     max-width: calc(100vw - 600px);
+    right: 300px;
+    transition: none;
   }
 `;
 
@@ -28,7 +35,12 @@ const Messages = styled.section`
   flex: 1;
   gap: 2rem;
   overflow-y: scroll;
-  position: relative;
+  width: 100%;
+  margin-bottom: 4rem;
+
+  @media ${breakpoints.medium} {
+    margin-bottom: 0;
+  }
 `;
 
 const MessageForm = styled.form`
@@ -38,6 +50,16 @@ const MessageForm = styled.form`
   padding: var(--padding);
   border-top: 1px solid var(--clr-light-200);
   height: 4rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: var(--clr-light-400);
+
+  @media ${breakpoints.medium} {
+    position: static;
+  }
 `;
 
 const Input = styled.input`
@@ -47,6 +69,7 @@ const Input = styled.input`
   flex: 1;
   font-size: 1rem;
   color: var(--clr-dark);
+  font-family: var(--font-family);
 `;
 
 const Button = styled.button`
@@ -54,6 +77,8 @@ const Button = styled.button`
   border: 1px solid var(--clr-accent);
   background: var(--clr-accent);
   color: var(--clr-light-400);
+  display: flex;
+  align-items: center;
   padding: 1rem;
   font-weight: 700;
   font-size: 0.875rem;
@@ -64,7 +89,7 @@ const Button = styled.button`
   }
 `;
 
-function Chatbox({ currentUser, currentChat, socket, messages, setMessages }) {
+function Chatbox({ currentUser, currentChat, socket, messages, setMessages, expandRightbar }) {
   const inputRef = useRef('');
   const [currentChatMessages, setCurrentChatMessages] = useState([]);
 
@@ -94,7 +119,7 @@ function Chatbox({ currentUser, currentChat, socket, messages, setMessages }) {
   };
 
   return (
-    <Section>
+    <Section expandRightbar={expandRightbar}>
       <Messages>
         {currentChatMessages?.map((message) => (
           <Message key={message._id} message={message} />

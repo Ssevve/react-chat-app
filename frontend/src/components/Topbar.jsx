@@ -10,6 +10,10 @@ const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
 
   @media ${breakpoints.medium} {
     width: calc(100vw - 300px);
