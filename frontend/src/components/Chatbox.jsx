@@ -7,9 +7,11 @@ import { v4 as uuidv4 } from 'uuid';
 const Section = styled.section`
   flex: 2.5;
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
-  height: calc(100vh - 57px);
-  position: relative;
+  position: fixed;
+  width: 100%;
+  height: calc(100% - 57px);
   top: 57px;
 
   @media ${breakpoints.medium} {
@@ -17,7 +19,6 @@ const Section = styled.section`
       expandRightbar ? 'calc(100vw - 600px)' : 'calc(100vw - 300px)'};
     left: 300px;
     right: ${({ expandRightbar }) => (expandRightbar ? '300px' : '0')};
-    top: 0;
     transition: right 0.1s ease-in-out, max-width 0.1s ease-in-out;
   }
 
@@ -30,17 +31,16 @@ const Section = styled.section`
 
 const Messages = styled.section`
   padding: var(--padding);
+  max-height: calc(100% - 4rem);
+  top: 57px;
+  left: 0;
+  right: 0;
+  bottom: 4rem;
   display: grid;
   align-content: flex-start;
   flex: 1;
   gap: 2rem;
   overflow-y: scroll;
-  width: 100%;
-  margin-bottom: 4rem;
-
-  @media ${breakpoints.medium} {
-    margin-bottom: 0;
-  }
 `;
 
 const MessageForm = styled.form`
@@ -50,16 +50,7 @@ const MessageForm = styled.form`
   padding: var(--padding);
   border-top: 1px solid var(--clr-light-200);
   height: 4rem;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
   background: var(--clr-light-400);
-
-  @media ${breakpoints.medium} {
-    position: static;
-  }
 `;
 
 const Input = styled.input`
