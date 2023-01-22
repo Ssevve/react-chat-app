@@ -2,6 +2,9 @@ import styled from 'styled-components/macro';
 import { HiMenu } from 'react-icons/hi';
 import { FaUserFriends } from 'react-icons/fa';
 import breakpoints from '../breakpoints';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import UserAvatar from './UserAvatar';
 
 const Header = styled.header`
   width: 100vw;
@@ -14,6 +17,7 @@ const Header = styled.header`
   top: 0;
   left: 0;
   z-index: 1;
+  height: 4rem;
 
   @media ${breakpoints.medium} {
     width: calc(100vw - 300px);
@@ -51,12 +55,22 @@ const RightbarButton = styled(Button)`
 
 const CurrentChat = styled.span`
   font-size: 1.5rem;
-  font-weight: bold;
   line-height: 1;
   padding: var(--padding);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 `;
 
-function Topbar({ setExpandLeftbar, setExpandRightbar }) {
+function Topbar({ currentChat, setExpandLeftbar, setExpandRightbar }) {
+  const { auth } = useContext(AuthContext);
+  const [chatPartner, setChatPartner] = useState(null);
+
+  useEffect(() => {
+    const partner = currentChat?.members.find((member) => member._id !== auth.user._id);
+    setChatPartner(partner);
+  }, [currentChat]);
+
   const handleLeftbarExpand = () => {
     setExpandRightbar(false);
     setExpandLeftbar((prev) => !prev);
@@ -72,7 +86,10 @@ function Topbar({ setExpandLeftbar, setExpandRightbar }) {
       <LeftbarButton type="button" onClick={handleLeftbarExpand}>
         <HiMenu size="1.5rem" />
       </LeftbarButton>
-      <CurrentChat>Current</CurrentChat>
+      <CurrentChat>
+        <UserAvatar user={chatPartner} size="2.5rem" />
+        {chatPartner?.username}
+      </CurrentChat>
       <RightbarButton type="button" onClick={handleRightbarExpand}>
         <FaUserFriends size="1.5rem" />
       </RightbarButton>

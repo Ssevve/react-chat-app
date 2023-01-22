@@ -78,12 +78,15 @@ function Home() {
 
   return (
     <Wrapper>
-      <Topbar setExpandLeftbar={setExpandLeftbar} setExpandRightbar={setExpandRightbar} />
+      <Topbar
+        currentChat={currentChat}
+        setExpandLeftbar={setExpandLeftbar}
+        setExpandRightbar={setExpandRightbar}
+      />
       <Main>
         <Leftbar chats={chats} expanded={expandLeftbar} setCurrentChat={setCurrentChat} />
         <Chatbox
           expandRightbar={expandRightbar}
-          currentUser={auth.user}
           currentChat={currentChat}
           socket={socket}
           messages={messages}

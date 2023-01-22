@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
 import Message from './Message';
 import { v4 as uuidv4 } from 'uuid';
+import { AuthContext } from '../context/AuthContext';
 
 const Section = styled.section`
   flex: 2.5;
@@ -11,8 +12,8 @@ const Section = styled.section`
   flex-direction: column;
   position: fixed;
   width: 100%;
-  height: calc(100% - 57px);
-  top: 57px;
+  height: calc(100% - 4rem);
+  top: 4rem;
 
   @media ${breakpoints.medium} {
     max-width: ${({ expandRightbar }) =>
@@ -32,7 +33,7 @@ const Section = styled.section`
 const Messages = styled.section`
   padding: var(--padding);
   max-height: calc(100% - 4rem);
-  top: 57px;
+  top: 4rem;
   left: 0;
   right: 0;
   bottom: 4rem;
@@ -80,8 +81,9 @@ const Button = styled.button`
   }
 `;
 
-function Chatbox({ currentUser, currentChat, socket, messages, setMessages, expandRightbar }) {
+function Chatbox({ currentChat, socket, messages, setMessages, expandRightbar }) {
   const inputRef = useRef('');
+  const { auth } = useContext(AuthContext);
   const [currentChatMessages, setCurrentChatMessages] = useState([]);
 
   useEffect(() => {
@@ -98,11 +100,11 @@ function Chatbox({ currentUser, currentChat, socket, messages, setMessages, expa
       _id: uuidv4(),
       createdAt: date.toISOString(),
       content: inputRef.current.value,
-      sender: currentUser._id,
+      sender: auth.user._id,
       chatId: currentChat._id,
     };
 
-    const receiver = currentChat.members.find((member) => member._id !== currentUser._id);
+    const receiver = currentChat.members.find((member) => member._id !== auth.user._id);
 
     socket.current.emit('sendMessage', { message, receiverId: receiver._id });
     setMessages((prevMessages) => [...prevMessages, message]);
