@@ -4,10 +4,10 @@ import breakpoints from '../breakpoints';
 const StyledRightbar = styled.div`
   padding: var(--padding);
   border-left: 1px solid var(--clr-light-200);
-  height: 100%;
+  height: calc(100vh - 57px);
   width: 90%;
   max-width: 300px;
-  position: absolute;
+  position: fixed;
   right: ${({ expanded }) => (expanded ? '0' : '-300px')};
   transition: right 0.1s ease-in-out;
   background: var(--clr-light-400);
@@ -25,7 +25,7 @@ const Title = styled.h2`
   line-height: 1;
 `;
 
-function Rightbar({ expanded, setCurrentChatId }) {
+function Rightbar({ expanded, setCurrentChat }) {
   return (
     <StyledRightbar expanded={expanded}>
       <Title>Friends</Title>

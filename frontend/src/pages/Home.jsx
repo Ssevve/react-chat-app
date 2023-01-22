@@ -19,8 +19,8 @@ const Main = styled.main`
 
 function Home() {
   const { auth } = useContext(AuthContext);
-  const [expandLeftbar, setExpandLeftbar] = useState('');
-  const [expandRightbar, setExpandRightbar] = useState('');
+  const [expandLeftbar, setExpandLeftbar] = useState(false);
+  const [expandRightbar, setExpandRightbar] = useState(false);
   const socket = useRef(null);
   const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);

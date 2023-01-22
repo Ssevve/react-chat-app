@@ -101,7 +101,7 @@ const Arrow = styled.span`
   transition: transform 0.1s ease-in-out;
 `;
 
-function UserDropup({ user }) {
+function UserDropup() {
   const dropupRef = useRef(null);
   const navigate = useNavigate();
   const { auth, setAuth } = useContext(AuthContext);
