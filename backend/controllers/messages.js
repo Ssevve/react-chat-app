@@ -16,20 +16,12 @@ const getMessageById = async (req, res) => {
 
 const getMessagesForChats = async (req, res) => {
   try {
-    const messages = await Message.find({ members: { $in: req.user._id } })
-      .populate('sender', '_id username avatar.url')
-      .lean();
+    const messages = await Message.find({ members: { $in: req.user._id } }).populate(
+      'sender',
+      '_id username avatar.url',
+    );
 
-    const chatMessagesMap = {};
-
-    for (const message of messages) {
-      if (message.chatId in chatMessagesMap) {
-        chatMessagesMap[message.chatId] = [...chatMessagesMap[message.chatId], message];
-      } else {
-        chatMessagesMap[message.chatId] = [message];
-      }
-    }
-    res.status(200).json(chatMessagesMap);
+    res.status(200).json(messages);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

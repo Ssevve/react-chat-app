@@ -18,13 +18,12 @@ const Main = styled.main`
 `;
 
 function Home() {
-  // TODO latest message state
   const { auth } = useContext(AuthContext);
   const [expandLeftbar, setExpandLeftbar] = useState('');
   const [expandRightbar, setExpandRightbar] = useState('');
   const socket = useRef(null);
   const [chats, setChats] = useState([]);
-  const [messages, setMessages] = useState({});
+  const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
 
   useEffect(() => {
@@ -38,9 +37,13 @@ function Home() {
 
   useEffect(() => {
     socket.current?.on('receiveMessage', (message) => {
-      console.log(message);
+      setMessages((prevMessages) => [...prevMessages, message]);
     });
   }, [socket]);
+
+  useEffect(() => {
+    console.log(messages);
+  }, [messages]);
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -82,7 +85,8 @@ function Home() {
           currentUser={auth.user}
           currentChat={currentChat}
           socket={socket}
-          messages={messages[currentChat?._id]}
+          messages={messages}
+          setMessages={setMessages}
         />
         <Rightbar expanded={expandRightbar} setCurrentChat={setCurrentChat} />
       </Main>

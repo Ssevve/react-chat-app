@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
 import Message from './Message';
@@ -64,11 +64,18 @@ const Button = styled.button`
   }
 `;
 
-function Chatbox({ currentUser, currentChat, socket, messages }) {
+function Chatbox({ currentUser, currentChat, socket, messages, setMessages }) {
   const inputRef = useRef('');
+  const [currentChatMessages, setCurrentChatMessages] = useState([]);
+
+  useEffect(() => {
+    const filteredMessages = messages.filter((msg) => msg.chatId === currentChat?._id);
+    setCurrentChatMessages(filteredMessages);
+  }, [currentChat, messages]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!inputRef.current.value) return;
     const date = new Date();
 
     const message = {
@@ -82,12 +89,14 @@ function Chatbox({ currentUser, currentChat, socket, messages }) {
     const receiver = currentChat.members.find((member) => member._id !== currentUser._id);
 
     socket.current.emit('sendMessage', { message, receiverId: receiver._id });
+    setMessages((prevMessages) => [...prevMessages, message]);
+    inputRef.current.value = '';
   };
 
   return (
     <Section>
       <Messages>
-        {messages?.map((message) => (
+        {currentChatMessages?.map((message) => (
           <Message key={message._id} message={message} />
         ))}
       </Messages>

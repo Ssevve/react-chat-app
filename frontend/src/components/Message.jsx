@@ -1,9 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components/macro';
 import { AuthContext } from '../context/AuthContext';
 import { format } from 'timeago.js';
 import breakpoints from '../breakpoints';
-import axios from 'axios';
 
 import UserAvatar from './UserAvatar';
 
@@ -11,9 +10,8 @@ const StyledMessage = styled.div`
   display: flex;
   gap: 0.5rem;
   justify-self: ${({ own }) => (own ? 'flex-end' : 'flex-start')};
-  max-width: 75%; // change to large res.
+  max-width: 75%;
   padding: var(--padding);
-  z-index: -1;
 
   @media ${breakpoints.large} {
     max-width: 50%;
@@ -22,8 +20,9 @@ const StyledMessage = styled.div`
 
 const Meta = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 0.25rem;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Username = styled.span`
@@ -32,7 +31,7 @@ const Username = styled.span`
 `;
 
 const Time = styled.span`
-  font-size: 0.875rem;
+  font-size: 0.75rem;
 `;
 
 const Content = styled.p`
@@ -45,34 +44,25 @@ const Content = styled.p`
 
 function Message({ message }) {
   const { auth } = useContext(AuthContext);
-  // const [sender, setSender] = useState(null);
+  const sender = message.sender._id ? message.sender : auth.user;
+  const scrollRef = useRef(null);
 
-  // useEffect(() => {
-  //   const fetchSender = async () => {
-  //     try {
-  //       const res = await axios.get(`/users/${message?.senderId}`, {
-  //         headers: {
-  //           authorization: `Bearer ${auth.accessToken}`,
-  //         },
-  //       });
-  //       setSender(res.data);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
-
-  //   fetchSender();
-  // }, [message]);
+  useEffect(() => {
+    scrollRef.current.parentNode.scrollTop = scrollRef.current.offsetTop;
+  }, []);
 
   return (
-    <StyledMessage own={message.sender._id === auth.user._id}>
-      <UserAvatar size="2.5rem" user={message.sender} />
+    <StyledMessage ref={scrollRef} own={sender._id === auth.user._id}>
+      <UserAvatar
+        size="2.5rem"
+        user={message.sender._id === auth.user._id ? auth.user : message.sender}
+      />
       <div>
         <Meta>
-          <Username>{message.sender.username}</Username>
+          <Username>{sender.username === auth.user.username ? 'You' : sender.username}</Username>
           <Time>{format(message.createdAt)}</Time>
         </Meta>
-        <Content own={message.sender._id === auth.user._id}>{message.content}</Content>
+        <Content own={sender._id === auth.user._id}>{message.content}</Content>
       </div>
     </StyledMessage>
   );

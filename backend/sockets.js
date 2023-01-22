@@ -21,18 +21,17 @@ const initializeSocketEvents = (server) => {
   io.on('connection', (socket) => {
     console.log('user connected');
     addUser(socket.handshake.query.userId, socket.id);
-    console.log(connectedUsers);
 
     socket.on('sendMessage', async ({ message, receiverId }) => {
       // console.log(receiverId);
-      await Message.create(message);
-      // console.log(connectedUsers.get(receiverId));
-      io.to(connectedUsers.get(receiverId)).emit('receiveMessage', message);
+      let newMessage = await Message.create(message);
+      newMessage = await newMessage.populate('sender', '_id username avatar.url');
+      io.to(connectedUsers.get(receiverId)).emit('receiveMessage', newMessage);
     });
 
     socket.on('disconnect', () => {
       removeUser(socket.handshake.query.userId);
-      console.log(connectedUsers);
+      console.log('user disconnected');
     });
   });
 };
