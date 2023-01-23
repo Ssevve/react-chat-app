@@ -1,4 +1,3 @@
-import axios from 'axios';
 import styled from 'styled-components/macro';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
@@ -51,6 +50,7 @@ const LastMessage = styled.span`
   text-overflow: ellipsis;
   overflow: hidden;
   width: 100px;
+  text-align: left;
 `;
 
 function Chat({ chat, onClick }) {

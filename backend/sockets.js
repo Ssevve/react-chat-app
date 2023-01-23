@@ -1,5 +1,6 @@
 const { Server } = require('socket.io');
 const Message = require('./models/Message');
+const Chat = require('./models/Chat');
 
 const connectedUsers = new Map();
 
@@ -26,6 +27,9 @@ const initializeSocketEvents = (server) => {
       // console.log(receiverId);
       let newMessage = await Message.create(message);
       newMessage = await newMessage.populate('sender', '_id username avatar.url');
+      const chat = await Chat.findOne({ _id: message.chatId });
+      chat.lastMessage = message._id;
+      chat.save();
       io.to(connectedUsers.get(receiverId)).emit('receiveMessage', newMessage);
     });
 
