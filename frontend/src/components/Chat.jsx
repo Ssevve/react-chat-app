@@ -64,7 +64,7 @@ function Chat({ chat, onClick }) {
 
   return (
     <Button type="button" onClick={onClick}>
-      <UserAvatar user={chatPartner?.avatar.url} size="2.5rem" />
+      <UserAvatar user={chatPartner} />
       <Details>
         <Meta>
           <Username>{chatPartner?.username}</Username>

@@ -87,7 +87,7 @@ function Topbar({ currentChat, setExpandLeftbar, setExpandRightbar }) {
         <HiMenu size="1.5rem" />
       </LeftbarButton>
       <CurrentChat>
-        <UserAvatar user={chatPartner} size="2.5rem" />
+        <UserAvatar user={chatPartner} />
         {chatPartner?.username}
       </CurrentChat>
       <RightbarButton type="button" onClick={handleRightbarExpand}>

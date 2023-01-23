@@ -131,7 +131,7 @@ function UserDropup() {
       </DropupMenu>
       <StyledButton showDropup={showDropup} onClick={() => setShowDropup((prev) => !prev)}>
         <User>
-          <UserAvatar size="3rem" showDropup={showDropup} user={auth.user} />
+          <UserAvatar showDropup={showDropup} user={auth.user} />
           <Info>
             <Username>{auth.user.username}</Username>
             <StatusText>{auth.user.statusText}</StatusText>
