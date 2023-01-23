@@ -42,7 +42,15 @@ function Friend({ chats, setCurrentChat, friend }) {
       (members) => members[0]._id === friendId || members[1]._id === friendId,
     );
 
-    if (indexOfChat === -1) return console.log('no chat with this user found');
+    if (indexOfChat === -1) {
+      //TODO
+      // Create new chat with:
+      // uuid
+      // members array
+      // set current chat to newly created chat
+
+      return console.log('no chat with this user found');
+    }
 
     setCurrentChat(chats[indexOfChat]);
   };

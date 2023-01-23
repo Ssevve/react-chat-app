@@ -81,7 +81,16 @@ const Button = styled.button`
   }
 `;
 
-function Chatbox({ currentChat, socket, messages, setMessages, expandRightbar }) {
+function Chatbox({
+  currentChat,
+  setCurrentChat,
+  chats,
+  setChats,
+  socket,
+  messages,
+  setMessages,
+  expandRightbar,
+}) {
   const scrollRef = useRef(null);
   const inputRef = useRef('');
   const { auth } = useContext(AuthContext);
@@ -110,9 +119,17 @@ function Chatbox({ currentChat, socket, messages, setMessages, expandRightbar })
     };
 
     const receiver = currentChat.members.find((member) => member._id !== auth.user._id);
-
     socket.current.emit('sendMessage', { message, receiverId: receiver._id });
+
     setMessages((prevMessages) => [...prevMessages, message]);
+    setCurrentChat({ ...currentChat, lastMessage: message });
+
+    const updatedChat = chats.find((chat) => chat._id === currentChat._id);
+    updatedChat.lastMessage = message;
+
+    const filteredChats = chats.filter((chat) => chat._id !== currentChat._id);
+    setChats([updatedChat, ...filteredChats]);
+
     inputRef.current.value = '';
   };
 

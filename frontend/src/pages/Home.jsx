@@ -37,14 +37,13 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    socket.current?.on('receiveMessage', (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
+    console.log(socket?.current);
+    socket.current?.on('receiveMessage', ({ newMessage, newChats }) => {
+      console.log(newMessage);
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      setChats(newChats);
     });
   }, [socket]);
-
-  useEffect(() => {
-    console.log(messages);
-  }, [messages]);
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -103,6 +102,9 @@ function Home() {
         <Chatbox
           expandRightbar={expandRightbar}
           currentChat={currentChat}
+          setCurrentChat={setCurrentChat}
+          chats={chats}
+          setChats={setChats}
           socket={socket}
           messages={messages}
           setMessages={setMessages}

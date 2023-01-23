@@ -45,7 +45,6 @@ const Content = styled.p`
 function Message({ message }) {
   const { auth } = useContext(AuthContext);
   const sender = message.sender._id ? message.sender : auth.user;
-  console.log(sender);
 
   return (
     <StyledMessage own={sender._id === auth.user._id}>

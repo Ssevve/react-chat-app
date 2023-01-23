@@ -20,17 +20,40 @@ const initializeSocketEvents = (server) => {
   });
 
   io.on('connection', (socket) => {
+    const { userId } = socket.handshake.query;
     console.log('user connected');
-    addUser(socket.handshake.query.userId, socket.id);
+    addUser(userId, socket.id);
 
     socket.on('sendMessage', async ({ message, receiverId }) => {
-      // console.log(receiverId);
-      let newMessage = await Message.create(message);
-      newMessage = await newMessage.populate('sender', '_id username avatar.url');
-      const chat = await Chat.findOne({ _id: message.chatId });
-      chat.lastMessage = message._id;
-      chat.save();
-      io.to(connectedUsers.get(receiverId)).emit('receiveMessage', newMessage);
+      const newMessage = await Message.create(message);
+      newMessage.populate('sender', '_id username avatar.url');
+      await Chat.findOneAndUpdate(
+        { _id: message.chatId },
+        {
+          lastMessage: message._id,
+        },
+        {
+          upsert: true,
+        },
+      );
+
+      console.log(userId);
+      const newChats = await Chat.find({ members: { $in: receiverId } })
+        .populate([
+          {
+            path: 'lastMessage',
+            select: 'content sender createdAt',
+          },
+          {
+            path: 'members',
+            select: 'username avatar.url',
+          },
+        ])
+        .exec();
+
+      console.log(newChats);
+
+      io.to(connectedUsers.get(receiverId)).emit('receiveMessage', { newMessage, newChats });
     });
 
     socket.on('disconnect', () => {

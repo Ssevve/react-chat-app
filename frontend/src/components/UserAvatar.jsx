@@ -9,7 +9,7 @@ const Avatar = styled.img`
   border-radius: 50%;
 `;
 
-function UserAvatar({ user, size, className, ...rest }) {
+function UserAvatar({ user, size, className }) {
   return (
     <Avatar
       size={size}
