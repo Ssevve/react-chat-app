@@ -7,12 +7,17 @@ const Wrapper = styled.section`
   margin-top: 1rem;
 `;
 
-function Chats({ chats, setCurrentChat }) {
+function Chats({ chats, currentChat, setCurrentChat }) {
   return (
     <Wrapper>
       <DropdownList title="Direct messages">
         {chats.map((chat) => (
-          <Chat key={chat._id} chat={chat} onClick={() => setCurrentChat(chat)} />
+          <Chat
+            key={chat._id}
+            chat={chat}
+            currentChat={currentChat}
+            onClick={() => setCurrentChat(chat)}
+          />
         ))}
       </DropdownList>
     </Wrapper>

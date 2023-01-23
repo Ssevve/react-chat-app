@@ -42,14 +42,14 @@ const LogoText = styled.h1`
   font-size: 1.5rem;
 `;
 
-function Leftbar({ chats, expanded, setCurrentChat }) {
+function Leftbar({ chats, expanded, currentChat, setCurrentChat }) {
   return (
     <StyledLeftbar expanded={expanded}>
       <Logo>
         <BsFillChatFill />
         <LogoText>Chat App</LogoText>
       </Logo>
-      <Chats chats={chats} setCurrentChat={setCurrentChat} />
+      <Chats chats={chats} currentChat={currentChat} setCurrentChat={setCurrentChat} />
       <UserDropup />
     </StyledLeftbar>
   );

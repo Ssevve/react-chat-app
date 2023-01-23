@@ -9,7 +9,8 @@ const Button = styled.button`
   display: flex;
   min-width: 100%;
   align-items: center;
-  background: none;
+  background: ${({ currentChat, chat }) =>
+    currentChat?._id === chat?._id ? 'var(--clr-light-200)' : 'var(--clr-light-400)'};
   border: none;
   gap: 1rem;
   padding: var(--padding);
@@ -53,7 +54,7 @@ const LastMessage = styled.span`
   text-align: left;
 `;
 
-function Chat({ chat, onClick }) {
+function Chat({ chat, currentChat, onClick }) {
   const { auth } = useContext(AuthContext);
   const [chatPartner, setChatPartner] = useState(null);
 
@@ -63,7 +64,7 @@ function Chat({ chat, onClick }) {
   }, [chat]);
 
   return (
-    <Button type="button" onClick={onClick}>
+    <Button currentChat={currentChat} chat={chat} type="button" onClick={onClick}>
       <UserAvatar user={chatPartner} />
       <Details>
         <Meta>
