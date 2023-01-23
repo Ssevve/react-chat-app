@@ -1,6 +1,8 @@
 import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
 
+import Friends from './Friends';
+
 const StyledRightbar = styled.div`
   padding: var(--padding);
   border-left: 1px solid var(--clr-light-200);
@@ -26,10 +28,11 @@ const Title = styled.h2`
   line-height: 1;
 `;
 
-function Rightbar({ expanded, setCurrentChat }) {
+function Rightbar({ expanded, friends, chats, setCurrentChat }) {
   return (
     <StyledRightbar expanded={expanded}>
       <Title>Friends</Title>
+      <Friends friends={friends} chats={chats} setCurrentChat={setCurrentChat} />
     </StyledRightbar>
   );
 }

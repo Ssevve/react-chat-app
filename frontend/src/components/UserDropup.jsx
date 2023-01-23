@@ -85,6 +85,7 @@ const Info = styled.div`
   align-items: flex-start;
   flex-direction: column;
   margin-left: 0.5rem;
+  gap: 0.25rem;
 `;
 
 const Username = styled.span`
@@ -93,7 +94,8 @@ const Username = styled.span`
 `;
 
 const StatusText = styled.span`
-  font-size: 0.875rem;
+  font-size: 0.8rem;
+  opacity: 0.6;
 `;
 
 const Arrow = styled.span`

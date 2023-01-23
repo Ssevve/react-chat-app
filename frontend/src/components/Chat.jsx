@@ -6,10 +6,12 @@ import { format } from 'timeago.js';
 
 import UserAvatar from './UserAvatar';
 
-const Button = styled.section`
+const Button = styled.button`
   display: flex;
-  max-width: 100%;
+  min-width: 100%;
   align-items: center;
+  background: none;
+  border: none;
   gap: 1rem;
   padding: var(--padding);
   transition: background 0.1s ease-in-out;
@@ -27,7 +29,7 @@ const Details = styled.section`
   gap: 0.25rem;
 `;
 
-const Meta = styled.div`
+const Meta = styled.section`
   display: flex;
   gap: 0.5rem;
   justify-content: space-between;
@@ -61,7 +63,7 @@ function Chat({ chat, onClick }) {
   }, [chat]);
 
   return (
-    <Button onClick={onClick}>
+    <Button type="button" onClick={onClick}>
       <UserAvatar user={chatPartner?.avatar.url} size="2.5rem" />
       <Details>
         <Meta>

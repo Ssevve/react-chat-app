@@ -22,7 +22,7 @@ const getFriendsByUserId = async (req, res) => {
 
     const friendsData = await Promise.all(
       user.friends.map((friendId) => {
-        return User.findOne({ _id: friendId }, 'username avatar.url');
+        return User.findOne({ _id: friendId }, 'username avatar.url statusText');
       }),
     );
     res.status(200).json(friendsData);

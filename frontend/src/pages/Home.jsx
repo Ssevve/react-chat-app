@@ -25,6 +25,7 @@ function Home() {
   const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
+  const [friends, setFriends] = useState([]);
 
   useEffect(() => {
     socket.current = io('ws://localhost:5000', { query: `userId=${auth.user._id}` });
@@ -72,8 +73,22 @@ function Home() {
       }
     };
 
+    const fetchFriends = async () => {
+      try {
+        const res = await axios.get(`/users/friends/${auth.user._id}`, {
+          headers: {
+            authorization: `Bearer ${auth.accessToken}`,
+          },
+        });
+        setFriends(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     fetchChats();
     fetchMessages();
+    fetchFriends();
   }, []);
 
   return (
@@ -92,7 +107,12 @@ function Home() {
           messages={messages}
           setMessages={setMessages}
         />
-        <Rightbar expanded={expandRightbar} setCurrentChat={setCurrentChat} />
+        <Rightbar
+          friends={friends}
+          expanded={expandRightbar}
+          chats={chats}
+          setCurrentChat={setCurrentChat}
+        />
       </Main>
     </Wrapper>
   );
