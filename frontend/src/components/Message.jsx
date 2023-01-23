@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components/macro';
 import { AuthContext } from '../context/AuthContext';
 import { format } from 'timeago.js';
@@ -45,14 +45,9 @@ const Content = styled.p`
 function Message({ message }) {
   const { auth } = useContext(AuthContext);
   const sender = message.sender._id ? message.sender : auth.user;
-  const scrollRef = useRef(null);
-
-  useEffect(() => {
-    scrollRef.current.parentNode.scrollTop = scrollRef.current.offsetTop;
-  }, []);
 
   return (
-    <StyledMessage ref={scrollRef} own={sender._id === auth.user._id}>
+    <StyledMessage own={sender._id === auth.user._id}>
       <UserAvatar
         size="2.5rem"
         user={message.sender._id === auth.user._id ? auth.user : message.sender}

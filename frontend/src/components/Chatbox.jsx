@@ -82,6 +82,7 @@ const Button = styled.button`
 `;
 
 function Chatbox({ currentChat, socket, messages, setMessages, expandRightbar }) {
+  const scrollRef = useRef(null);
   const inputRef = useRef('');
   const { auth } = useContext(AuthContext);
   const [currentChatMessages, setCurrentChatMessages] = useState([]);
@@ -90,6 +91,10 @@ function Chatbox({ currentChat, socket, messages, setMessages, expandRightbar })
     const filteredMessages = messages.filter((msg) => msg.chatId === currentChat?._id);
     setCurrentChatMessages(filteredMessages);
   }, [currentChat, messages]);
+
+  useEffect(() => {
+    scrollRef.current.scrollTo(0, scrollRef.current.scrollHeight);
+  }, [currentChatMessages]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -113,7 +118,7 @@ function Chatbox({ currentChat, socket, messages, setMessages, expandRightbar })
 
   return (
     <Section expandRightbar={expandRightbar}>
-      <Messages>
+      <Messages ref={scrollRef}>
         {currentChatMessages?.map((message) => (
           <Message key={message._id} message={message} />
         ))}

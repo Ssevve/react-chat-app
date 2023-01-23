@@ -99,7 +99,7 @@ function Home() {
         setExpandRightbar={setExpandRightbar}
       />
       <Main>
-        <Leftbar chats={chats} expanded={expandLeftbar} setCurrentChat={setCurrentChat} />
+        <Leftbar chats={chats} setCurrentChat={setCurrentChat} expanded={expandLeftbar} />
         <Chatbox
           expandRightbar={expandRightbar}
           currentChat={currentChat}
