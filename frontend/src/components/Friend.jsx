@@ -1,4 +1,7 @@
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import styled from 'styled-components/macro';
+import { v4 as uuidv4 } from 'uuid';
 
 import UserAvatar from './UserAvatar';
 
@@ -36,6 +39,7 @@ const StatusText = styled.span`
 `;
 
 function Friend({ chats, setCurrentChat, friend }) {
+  const { auth } = useContext(AuthContext);
   const handleFriendClick = (friendId) => {
     const chatsMembers = chats.map((chat) => chat.members);
     const indexOfChat = chatsMembers.findIndex(
@@ -43,13 +47,12 @@ function Friend({ chats, setCurrentChat, friend }) {
     );
 
     if (indexOfChat === -1) {
-      //TODO
-      // Create new chat with:
-      // uuid
-      // members array
-      // set current chat to newly created chat
+      const newChat = {
+        _id: uuidv4(),
+        members: [auth.user, friend],
+      };
 
-      return console.log('no chat with this user found');
+      return setCurrentChat(newChat);
     }
 
     setCurrentChat(chats[indexOfChat]);

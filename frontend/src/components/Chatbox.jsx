@@ -124,7 +124,8 @@ function Chatbox({
     setMessages((prevMessages) => [...prevMessages, message]);
     setCurrentChat({ ...currentChat, lastMessage: message });
 
-    const updatedChat = chats.find((chat) => chat._id === currentChat._id);
+    let updatedChat = chats.find((chat) => chat._id === currentChat._id);
+    if (!updatedChat) updatedChat = currentChat;
     updatedChat.lastMessage = message;
 
     const filteredChats = chats.filter((chat) => chat._id !== currentChat._id);

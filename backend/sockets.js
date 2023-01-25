@@ -27,15 +27,16 @@ const initializeSocketEvents = (server) => {
     socket.on('sendMessage', async ({ message, receiverId }) => {
       const newMessage = await Message.create(message);
       newMessage.populate('sender', '_id username avatar.url');
-      await Chat.findOneAndUpdate(
-        { _id: message.chatId },
-        {
-          lastMessage: message._id,
-        },
-        {
-          upsert: true,
-        },
-      );
+      let chat = await Chat.findOne({ _id: message.chatId });
+      if (!chat) {
+        chat = new Chat({
+          _id: message.chatId,
+          members: [message.sender, receiverId],
+        });
+      }
+
+      chat.lastMessage = newMessage._id;
+      await chat.save();
 
       console.log(userId);
       const newChats = await Chat.find({ members: { $in: receiverId } })
