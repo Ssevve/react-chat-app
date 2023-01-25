@@ -3,6 +3,7 @@ const Chat = require('../models/Chat');
 const getChatsForCurrentUser = async (req, res) => {
   try {
     const chats = await Chat.find({ members: { $in: req.user._id } })
+      .sort({ createdAt: 1 })
       .populate([
         {
           path: 'lastMessage',

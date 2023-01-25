@@ -40,6 +40,7 @@ const initializeSocketEvents = (server) => {
 
       console.log(userId);
       const newChats = await Chat.find({ members: { $in: receiverId } })
+        .sort({ createdAt: 1 })
         .populate([
           {
             path: 'lastMessage',
