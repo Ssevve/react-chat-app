@@ -78,7 +78,9 @@ function Rightbar({ expanded, friends, chats, setCurrentChat }) {
   const [isSearching, setIsSearching] = useState(false);
 
   const handleChange = async () => {
-    if (!queryRef.current.value) return;
+    if (queryRef.current.value.length < 3) {
+      return setResults([]);
+    }
     try {
       const res = await axios.get(`/users/search/${queryRef.current.value}`, {
         headers: {
