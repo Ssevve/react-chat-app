@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { GrFormClose } from 'react-icons/gr';
 import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
+import axios from 'axios';
+import useAuth from '../hooks/useAuth';
 
 import Friends from './Friends';
 import SearchResults from './SearchResults';
+import Searchbar from './Searchbar';
 
 const StyledRightbar = styled.div`
   padding: var(--padding);
@@ -68,23 +71,37 @@ const SearchToggleButton = styled.button`
   }
 `;
 
-const Searchbar = styled.input`
-  padding: 1rem;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--clr-light-200);
-  font-size: 1rem;
-  color: var(--clr-dark);
-`;
-
 function Rightbar({ expanded, friends, chats, setCurrentChat }) {
+  const { auth } = useAuth();
   const [results, setResults] = useState([]);
+  const queryRef = useRef('');
   const [isSearching, setIsSearching] = useState(false);
+
+  const handleChange = async () => {
+    if (!queryRef.current.value) return;
+    try {
+      const res = await axios.get(`/users/search/${queryRef.current.value}`, {
+        headers: {
+          authorization: `Bearer ${auth.accessToken}`,
+        },
+      });
+      setResults(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleCloseSearch = () => {
+    setIsSearching(false);
+    setResults([]);
+  };
+
   return (
     <StyledRightbar expanded={expanded}>
       <Title isSearching={isSearching}>
         {isSearching ? (
           <>
-            <CloseButton type="button" onClick={() => setIsSearching(false)}>
+            <CloseButton type="button" onClick={handleCloseSearch}>
               <GrFormClose size="2rem" />
             </CloseButton>
           </>
@@ -100,11 +117,7 @@ function Rightbar({ expanded, friends, chats, setCurrentChat }) {
         )}
       </Section>
       {isSearching ? (
-        <Searchbar
-          aria-label="Search for a new friend by username"
-          placeholder="Search by username"
-          autoFocus
-        />
+        <Searchbar forwardRef={queryRef} onChange={handleChange} />
       ) : (
         <SearchToggleButton type="button" onClick={() => setIsSearching(true)}>
           Add new friend

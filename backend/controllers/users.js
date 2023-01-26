@@ -31,4 +31,16 @@ const getFriendsByUserId = async (req, res) => {
   }
 };
 
-module.exports = { getFriendsByUserId, getUserById };
+const getUsersByQuery = async (req, res) => {
+  const { query } = req.params;
+  const regex = new RegExp(query, 'i');
+  console.log(query);
+  try {
+    const users = await User.find({ username: regex });
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+module.exports = { getFriendsByUserId, getUserById, getUsersByQuery };
