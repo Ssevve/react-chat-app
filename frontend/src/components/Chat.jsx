@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
-import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { useEffect, useState } from 'react';
+import useAuth from '../hooks/useAuth';
 import { format } from 'timeago.js';
 
 import UserAvatar from './UserAvatar';
@@ -55,7 +55,7 @@ const LastMessage = styled.span`
 `;
 
 function Chat({ chat, currentChat, onClick }) {
-  const { auth } = useContext(AuthContext);
+  const { auth } = useAuth();
   const [chatPartner, setChatPartner] = useState(null);
 
   useEffect(() => {

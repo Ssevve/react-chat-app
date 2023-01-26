@@ -1,13 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
 import Container from '../components/Container';
-import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import useAuth from '../hooks/useAuth';
+
 import ErrorBox from '../components/ErrorBox';
 import Loader from '../components/Loader';
 
@@ -147,7 +148,7 @@ const schema = yup.object({
 });
 
 function Login() {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
   const {
     watch,
     clearErrors,

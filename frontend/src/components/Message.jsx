@@ -1,8 +1,7 @@
-import { useContext } from 'react';
 import styled from 'styled-components/macro';
-import { AuthContext } from '../context/AuthContext';
 import { format } from 'timeago.js';
 import breakpoints from '../breakpoints';
+import useAuth from '../hooks/useAuth';
 
 import UserAvatar from './UserAvatar';
 
@@ -43,7 +42,7 @@ const Content = styled.p`
 `;
 
 function Message({ message }) {
-  const { auth } = useContext(AuthContext);
+  const { auth } = useAuth();
   const sender = message.sender._id ? message.sender : auth.user;
 
   return (

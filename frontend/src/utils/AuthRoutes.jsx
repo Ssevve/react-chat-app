@@ -1,9 +1,8 @@
-import { useContext } from 'react';
+import useAuth from '../hooks/useAuth';
 import { Outlet, Navigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
 
 function AuthRoutes() {
-  const { auth } = useContext(AuthContext);
+  const { auth } = useAuth();
   return auth ? <Outlet /> : <Navigate to="/login" />;
 }
 

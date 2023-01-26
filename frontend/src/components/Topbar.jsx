@@ -2,9 +2,10 @@ import styled from 'styled-components/macro';
 import { HiMenu } from 'react-icons/hi';
 import { FaUserFriends } from 'react-icons/fa';
 import breakpoints from '../breakpoints';
-import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import UserAvatar from './UserAvatar';
+import { useEffect, useState } from 'react';
+import useAuth from '../hooks/useAuth';
+
+import User from '../components/User';
 
 const Header = styled.header`
   width: 100vw;
@@ -56,14 +57,14 @@ const RightbarButton = styled(Button)`
 const CurrentChat = styled.span`
   font-size: 1.5rem;
   line-height: 1;
-  padding: var(--padding);
+  padding-block: var(--padding);
   display: flex;
   align-items: center;
   gap: 1rem;
 `;
 
 function Topbar({ currentChat, setExpandLeftbar, setExpandRightbar }) {
-  const { auth } = useContext(AuthContext);
+  const { auth } = useAuth();
   const [chatPartner, setChatPartner] = useState(null);
 
   useEffect(() => {
@@ -86,10 +87,7 @@ function Topbar({ currentChat, setExpandLeftbar, setExpandRightbar }) {
       <LeftbarButton type="button" onClick={handleLeftbarExpand}>
         <HiMenu size="1.5rem" />
       </LeftbarButton>
-      <CurrentChat>
-        <UserAvatar user={chatPartner} />
-        {chatPartner?.username}
-      </CurrentChat>
+      <CurrentChat>{currentChat && <User user={chatPartner} events={false} />}</CurrentChat>
       <RightbarButton type="button" onClick={handleRightbarExpand}>
         <FaUserFriends size="1.5rem" />
       </RightbarButton>

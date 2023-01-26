@@ -1,10 +1,10 @@
-import { useState, useContext, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { FiChevronUp } from 'react-icons/fi';
 import { RiLogoutCircleLine } from 'react-icons/ri';
 import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
+import useAuth from '../hooks/useAuth';
 import useClickOutside from '../hooks/useClickOutside';
 
 import UserAvatar from './UserAvatar';
@@ -106,7 +106,7 @@ const Arrow = styled.span`
 function UserDropup() {
   const dropupRef = useRef(null);
   const navigate = useNavigate();
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth, setAuth } = useAuth();
   const [showDropup, setShowDropup] = useState(false);
   useClickOutside(dropupRef, () => setShowDropup(false));
 

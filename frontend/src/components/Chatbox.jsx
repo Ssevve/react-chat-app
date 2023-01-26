@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState, useContext } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
 import Message from './Message';
 import { v4 as uuidv4 } from 'uuid';
-import { AuthContext } from '../context/AuthContext';
+import useAuth from '../hooks/useAuth';
 
 const Section = styled.section`
   flex: 2.5;
@@ -41,7 +41,7 @@ const Messages = styled.section`
   align-content: flex-start;
   flex: 1;
   gap: 2rem;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const MessageForm = styled.form`
@@ -49,7 +49,6 @@ const MessageForm = styled.form`
   align-content: center;
   gap: 0.5rem;
   padding: var(--padding);
-  border-top: 1px solid var(--clr-light-200);
   height: 4rem;
   background: var(--clr-light-400);
 `;
@@ -93,7 +92,7 @@ function Chatbox({
 }) {
   const scrollRef = useRef(null);
   const inputRef = useRef('');
-  const { auth } = useContext(AuthContext);
+  const { auth } = useAuth();
   const [currentChatMessages, setCurrentChatMessages] = useState([]);
 
   useEffect(() => {
@@ -102,7 +101,7 @@ function Chatbox({
   }, [currentChat, messages]);
 
   useEffect(() => {
-    scrollRef.current.scrollTo(0, scrollRef.current.scrollHeight);
+    scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight);
   }, [currentChatMessages]);
 
   const handleSubmit = async (e) => {
@@ -136,15 +135,24 @@ function Chatbox({
 
   return (
     <Section expandRightbar={expandRightbar}>
-      <Messages ref={scrollRef}>
-        {currentChatMessages?.map((message) => (
-          <Message key={message._id} message={message} />
-        ))}
-      </Messages>
-      <MessageForm onSubmit={handleSubmit}>
-        <Input ref={inputRef} type="text" placeholder="Write a message here..." />
-        <Button type="submit">Send</Button>
-      </MessageForm>
+      {currentChat && (
+        <>
+          <Messages ref={scrollRef}>
+            {currentChatMessages?.map((message) => (
+              <Message key={message._id} message={message} />
+            ))}
+          </Messages>
+          <MessageForm onSubmit={handleSubmit}>
+            <Input
+              ref={inputRef}
+              type="text"
+              aria-label="Write new message"
+              placeholder="Write a message here..."
+            />
+            <Button type="submit">Send</Button>
+          </MessageForm>
+        </>
+      )}
     </Section>
   );
 }

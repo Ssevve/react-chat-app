@@ -11,7 +11,7 @@ const getChatsForCurrentUser = async (req, res) => {
         },
         {
           path: 'members',
-          select: 'username avatar.url',
+          select: 'username avatar.url statusText',
         },
       ])
       .exec();

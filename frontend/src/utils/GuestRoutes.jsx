@@ -1,9 +1,8 @@
-import { useContext } from 'react';
+import useAuth from '../hooks/useAuth';
 import { Outlet, Navigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
 
 function GuestRoutes() {
-  const { auth } = useContext(AuthContext);
+  const { auth } = useAuth();
   return auth ? <Navigate to="/" /> : <Outlet />;
 }
 

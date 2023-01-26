@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components/macro';
+import useAuth from '../hooks/useAuth';
+import { v4 as uuidv4 } from 'uuid';
 
 import DropdownList from './DropdownList';
-import Friend from './Friend';
-
-const Wrapper = styled.section`
-  margin-top: 1rem;
-`;
+import User from './User';
 
 function Friends({ friends, chats, setCurrentChat }) {
+  const { auth } = useAuth();
   const [onlineFriends, setOnlineFriends] = useState(null);
   const [offlineFriends, setOfflineFriends] = useState(null);
 
@@ -18,19 +16,37 @@ function Friends({ friends, chats, setCurrentChat }) {
     console.log(friends);
   }, [friends]);
 
+  const handleFriendClick = (friend) => {
+    const chatsMembers = chats.map((chat) => chat.members);
+    const indexOfChat = chatsMembers.findIndex(
+      (members) => members[0]._id === friend._id || members[1]._id === friend._id,
+    );
+
+    if (indexOfChat === -1) {
+      const newChat = {
+        _id: uuidv4(),
+        members: [auth.user, friend],
+      };
+
+      return setCurrentChat(newChat);
+    }
+
+    setCurrentChat(chats[indexOfChat]);
+  };
+
   return (
-    <Wrapper>
+    <>
       <DropdownList title="Online">
         {onlineFriends?.map((friend) => (
-          <Friend key={friend._id} chats={chats} setCurrentChat={setCurrentChat} friend={friend} />
+          <User onClick={() => handleFriendClick(friend)} key={friend._id} user={friend} />
         ))}
       </DropdownList>
       <DropdownList title="Offline">
         {offlineFriends?.map((friend) => (
-          <Friend key={friend._id} chats={chats} setCurrentChat={setCurrentChat} friend={friend} />
+          <User onClick={() => handleFriendClick(friend)} key={friend._id} user={friend} />
         ))}
       </DropdownList>
-    </Wrapper>
+    </>
   );
 }
 

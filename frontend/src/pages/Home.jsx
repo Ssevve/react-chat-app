@@ -1,13 +1,13 @@
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components/macro';
 import { io } from 'socket.io-client';
+import useAuth from '../hooks/useAuth';
 import axios from 'axios';
 
 import Topbar from '../components/Topbar';
 import Leftbar from '../components/Leftbar';
 import Chatbox from '../components/Chatbox';
 import Rightbar from '../components/Rightbar';
-import { AuthContext } from '../context/AuthContext';
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -18,7 +18,7 @@ const Main = styled.main`
 `;
 
 function Home() {
-  const { auth } = useContext(AuthContext);
+  const { auth } = useAuth();
   const [expandLeftbar, setExpandLeftbar] = useState(false);
   const [expandRightbar, setExpandRightbar] = useState(false);
   const socket = useRef(null);
