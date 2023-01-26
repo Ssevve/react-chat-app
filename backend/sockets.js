@@ -12,12 +12,15 @@ const removeUser = (userId) => {
   connectedUsers.delete(userId);
 };
 
-const initializeSocketEvents = (server) => {
+const initializeSocketEvents = (server, app) => {
   const io = new Server(server, {
     cors: {
       origin: 'http://localhost:3000',
     },
   });
+
+  app.set('socketio', io);
+  app.set('connectedUsers', connectedUsers);
 
   io.on('connection', (socket) => {
     const { userId } = socket.handshake.query;

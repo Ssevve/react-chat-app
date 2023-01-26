@@ -11,6 +11,7 @@
   --padding: 0.5rem;
 
   --hover-opacity: 0.9;
+  --hover-accent: hsl(221, 40%, 80%);
 
   --font-family: 'Open Sans', sans-serif;
 }
@@ -23,7 +24,6 @@
 
 ::-webkit-scrollbar {
   width: 0.5rem;
-
 }
 
 ::-webkit-scrollbar-track {
@@ -42,5 +42,4 @@ body {
 
 #root {
   min-height: 100vh;
-
 }

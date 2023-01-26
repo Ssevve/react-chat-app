@@ -36,9 +36,10 @@ app.use('/refresh', require('./routes/refresh'));
 app.use('/users', verifyJWT, require('./routes/users'));
 app.use('/chats', verifyJWT, require('./routes/chats'));
 app.use('/messages', verifyJWT, require('./routes/messages'));
+app.use('/invites', verifyJWT, require('./routes/invites'));
 
 // Socket events
-initializeSocketEvents(server);
+initializeSocketEvents(server, app);
 
 mongoose.connection.once('open', () => {
   console.log('MongoDB connected');

@@ -4,7 +4,7 @@ import UserAvatar from './UserAvatar';
 
 const Button = styled.button`
   display: flex;
-  min-width: 100%;
+  width: 100%;
   align-items: center;
   background: none;
   border: none;

@@ -43,6 +43,10 @@ function Home() {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setChats(newChats);
     });
+
+    socket.current?.on('receiveFriendInvite', () => {
+      console.log('You have a new friend invite!');
+    });
   }, [socket]);
 
   useEffect(() => {

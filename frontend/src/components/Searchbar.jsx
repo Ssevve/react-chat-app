@@ -7,11 +7,12 @@ const Wrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  padding: var(--padding);
 `;
 
 const SearchIcon = styled.span`
   position: absolute;
-  left: var(--padding);
+  left: 1rem;
   height: 1.5rem;
 `;
 

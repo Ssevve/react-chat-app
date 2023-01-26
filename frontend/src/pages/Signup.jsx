@@ -11,13 +11,11 @@ import ErrorBox from '../components/ErrorBox';
 import Loader from '../components/Loader';
 
 const Main = styled.main`
-  background: var(--bg-light);
-  height: 100%;
-  background: #f2f2f2;
+  background: var(--clr-light-300);
 `;
 
 const StyledContainer = styled(Container)`
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
