@@ -29,7 +29,7 @@ const initializeSocketEvents = (server, app) => {
 
     socket.on('sendMessage', async ({ message, receiverId }) => {
       const newMessage = await Message.create(message);
-      newMessage.populate('sender', '_id username avatar.url');
+      newMessage.populate('sender', 'username avatar.url');
       let chat = await Chat.findOne({ _id: message.chatId });
       if (!chat) {
         chat = new Chat({

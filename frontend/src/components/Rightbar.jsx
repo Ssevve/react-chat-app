@@ -72,7 +72,15 @@ const SearchToggleButton = styled.button`
   }
 `;
 
-function Rightbar({ expanded, friends, chats, setCurrentChat, friendInvites }) {
+function Rightbar({
+  expanded,
+  friends,
+  setFriends,
+  chats,
+  setCurrentChat,
+  friendInvites,
+  setFriendInvites,
+}) {
   const { auth } = useAuth();
   const [results, setResults] = useState([]);
   const queryRef = useRef('');
@@ -117,7 +125,11 @@ function Rightbar({ expanded, friends, chats, setCurrentChat, friendInvites }) {
           <SearchResults results={results} />
         ) : (
           <>
-            <FriendInvites friendInvites={friendInvites} />
+            <FriendInvites
+              friendInvites={friendInvites}
+              setFriends={setFriends}
+              setFriendInvites={setFriendInvites}
+            />
             <Friends friends={friends} chats={chats} setCurrentChat={setCurrentChat} />
           </>
         )}

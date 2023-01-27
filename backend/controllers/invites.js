@@ -38,11 +38,24 @@ const createNewFriendInvite = async (req, res) => {
     if (duplicate) return res.status(409).json({ message: 'Duplicate invite' });
 
     const newFriendInvite = await FriendInvite.create(friendInvite);
-    io.to(connectedUsers.get(friendInvite.receiver)).emit('receiveFriendInvite');
+    await newFriendInvite.populate([
+      { path: 'sender', select: 'username avatar.url' },
+      { path: 'receiver', select: 'username avatar.url' },
+    ]);
+    io.to(connectedUsers.get(friendInvite.receiver)).emit('receiveFriendInvite', newFriendInvite);
     res.status(201).json(newFriendInvite);
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-module.exports = { getFriendInvitesForCurrentUser, createNewFriendInvite };
+const deleteFriendInvite = async (req, res) => {
+  try {
+    await FriendInvite.findOneAndDelete({ _id: req.params.id });
+    res.sendStatus(204);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+module.exports = { getFriendInvitesForCurrentUser, createNewFriendInvite, deleteFriendInvite };

@@ -45,8 +45,15 @@ function Home() {
       setChats(newChats);
     });
 
-    socket.current?.on('receiveFriendInvite', () => {
-      console.log('You have a new friend invite!');
+    socket.current?.on('receiveFriendInvite', (newFriendInvite) => {
+      console.log(newFriendInvite);
+      setFriendInvites((prevInvites) => [newFriendInvite, ...prevInvites]);
+    });
+
+    socket.current?.on('friendInviteAccepted', ({ newFriends, friendInviteId }) => {
+      setFriends(newFriends);
+      const newFriendInvites = friendInvites.filter((inv) => inv._id !== friendInviteId);
+      setFriendInvites(newFriendInvites);
     });
   }, [socket]);
 
@@ -135,10 +142,12 @@ function Home() {
         />
         <Rightbar
           friends={friends}
+          setFriends={setFriends}
           expanded={expandRightbar}
           chats={chats}
           setCurrentChat={setCurrentChat}
           friendInvites={friendInvites}
+          setFriendInvites={setFriendInvites}
         />
       </Main>
     </Wrapper>

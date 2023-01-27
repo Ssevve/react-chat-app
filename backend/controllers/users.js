@@ -31,6 +31,43 @@ const getFriendsByUserId = async (req, res) => {
   }
 };
 
+const addFriend = async (req, res) => {
+  const io = req.app.get('socketio');
+  const connectedUsers = req.app.get('connectedUsers');
+  const { senderId } = req.params;
+  const { inviteId } = req.body;
+  try {
+    const acceptingUser = await User.findOne({ _id: req.user._id });
+    acceptingUser.friends.push(senderId);
+    await acceptingUser.save();
+
+    const sender = await User.findOne({ _id: senderId });
+    sender.friends.push(req.user._id);
+    await sender.save();
+
+    const newAcceptingUserFriends = await Promise.all(
+      acceptingUser.friends.map((friendId) => {
+        return User.findOne({ _id: friendId }, 'username avatar.url statusText');
+      }),
+    );
+
+    const newSenderFriends = await Promise.all(
+      sender.friends.map((friendId) => {
+        return User.findOne({ _id: friendId }, 'username avatar.url statusText');
+      }),
+    );
+
+    io.to(connectedUsers.get(senderId)).emit('friendInviteAccepted', {
+      newFriends: newSenderFriends,
+      friendInviteId: inviteId,
+    });
+
+    res.status(200).json(newAcceptingUserFriends);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 const getUsersByQuery = async (req, res) => {
   const { query } = req.params;
   const regex = new RegExp(query, 'i');
@@ -43,4 +80,4 @@ const getUsersByQuery = async (req, res) => {
   }
 };
 
-module.exports = { getFriendsByUserId, getUserById, getUsersByQuery };
+module.exports = { getFriendsByUserId, getUserById, getUsersByQuery, addFriend };

@@ -41,7 +41,7 @@ function SearchResults({ results }) {
     };
 
     try {
-      const res = await axios.post(
+      await axios.post(
         '/invites',
         {
           friendInvite,
@@ -52,7 +52,6 @@ function SearchResults({ results }) {
           },
         },
       );
-      console.log(res.data);
     } catch (err) {
       console.error(err);
     }

@@ -41,22 +41,52 @@ const DeclineButton = styled(Button)`
   }
 `;
 
-function FriendInvites({ friendInvites }) {
+function FriendInvites({ friendInvites, setFriends, setFriendInvites }) {
   const { auth } = useAuth();
+
+  const acceptInvite = async (invite) => {
+    const newFriendId =
+      invite.receiver._id === auth.user._id ? invite.sender._id : invite.receiver._id;
+
+    try {
+      const res = await axios.put(
+        `/users/addFriend/${newFriendId}`,
+        { inviteId: invite._id },
+        {
+          headers: {
+            authorization: `Bearer ${auth.accessToken}`,
+          },
+        },
+      );
+
+      setFriends(res.data);
+
+      const newFriendInvites = friendInvites.filter((inv) => inv._id !== invite._id);
+      setFriendInvites(newFriendInvites);
+
+      if (res.status === 200)
+        await axios.delete(`/invites/${invite._id}`, {
+          headers: {
+            authorization: `Bearer ${auth.accessToken}`,
+          },
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <>
       <DropdownList title="Friend invites">
         {friendInvites?.map((invite) => (
-          <Wrapper>
+          <Wrapper key={invite._id}>
             <User
               events={false}
-              key={invite._id}
               user={invite.receiver._id === auth.user._id ? invite.sender : invite.receiver}
             />
             <Wrapper>
               {invite.sender._id !== auth.user._id && (
-                <AcceptButton type="button">
+                <AcceptButton type="button" onClick={() => acceptInvite(invite)}>
                   <BsCheck size="1.5rem" />
                 </AcceptButton>
               )}
