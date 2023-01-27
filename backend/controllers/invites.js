@@ -1,7 +1,20 @@
 const FriendInvite = require('../models/FriendInvite');
 
-const getFriendInvitesForCurrentUser = (req, res) => {
+const getFriendInvitesForCurrentUser = async (req, res) => {
   try {
+    const friendInvites = await FriendInvite.find({
+      $or: [{ sender: req.user._id }, { receiver: req.user._id }],
+    }).populate([
+      {
+        path: 'sender',
+        select: 'avatar.url username',
+      },
+      {
+        path: 'receiver',
+        select: 'avatar.url username',
+      },
+    ]);
+    res.status(200).json(friendInvites);
   } catch (err) {
     res.status(500).json(err);
   }

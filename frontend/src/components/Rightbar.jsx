@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { GrFormClose } from 'react-icons/gr';
+import { IoMdClose } from 'react-icons/io';
 import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
 import axios from 'axios';
@@ -8,6 +8,7 @@ import useAuth from '../hooks/useAuth';
 import Friends from './Friends';
 import SearchResults from './SearchResults';
 import Searchbar from './Searchbar';
+import FriendInvites from './FriendInvites';
 
 const StyledRightbar = styled.div`
   padding: var(--padding);
@@ -71,7 +72,7 @@ const SearchToggleButton = styled.button`
   }
 `;
 
-function Rightbar({ expanded, friends, chats, setCurrentChat }) {
+function Rightbar({ expanded, friends, chats, setCurrentChat, friendInvites }) {
   const { auth } = useAuth();
   const [results, setResults] = useState([]);
   const queryRef = useRef('');
@@ -104,7 +105,7 @@ function Rightbar({ expanded, friends, chats, setCurrentChat }) {
         {isSearching ? (
           <>
             <CloseButton type="button" onClick={handleCloseSearch}>
-              <GrFormClose size="2rem" />
+              <IoMdClose size="2rem" />
             </CloseButton>
           </>
         ) : (
@@ -115,7 +116,10 @@ function Rightbar({ expanded, friends, chats, setCurrentChat }) {
         {isSearching ? (
           <SearchResults results={results} />
         ) : (
-          <Friends friends={friends} chats={chats} setCurrentChat={setCurrentChat} />
+          <>
+            <FriendInvites friendInvites={friendInvites} />
+            <Friends friends={friends} chats={chats} setCurrentChat={setCurrentChat} />
+          </>
         )}
       </Section>
       {isSearching ? (
