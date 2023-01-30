@@ -2,8 +2,9 @@ import styled from 'styled-components/macro';
 import { HiMenu } from 'react-icons/hi';
 import { FaUserFriends } from 'react-icons/fa';
 import breakpoints from '../breakpoints';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import useAuth from '../hooks/useAuth';
+import { ChatsContext } from '../context/ChatsContext';
 
 import User from '../components/User';
 
@@ -63,8 +64,9 @@ const CurrentChat = styled.span`
   gap: 1rem;
 `;
 
-function Topbar({ currentChat, setExpandLeftbar, setExpandRightbar }) {
+function Topbar({ setExpandLeftbar, setExpandRightbar }) {
   const { auth } = useAuth();
+  const { currentChat } = useContext(ChatsContext);
   const [chatPartner, setChatPartner] = useState(null);
 
   useEffect(() => {

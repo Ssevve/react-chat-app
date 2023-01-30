@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import useAuth from '../hooks/useAuth';
 import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
 import Message from './Message';
 import { v4 as uuidv4 } from 'uuid';
-import useAuth from '../hooks/useAuth';
+import { ChatsContext } from '../context/ChatsContext';
 
 const Section = styled.section`
   flex: 2.5;
@@ -80,19 +81,11 @@ const Button = styled.button`
   }
 `;
 
-function Chatbox({
-  currentChat,
-  setCurrentChat,
-  chats,
-  setChats,
-  socket,
-  messages,
-  setMessages,
-  expandRightbar,
-}) {
+function Chatbox({ socket, messages, setMessages, expandRightbar }) {
   const scrollRef = useRef(null);
   const inputRef = useRef('');
   const { auth } = useAuth();
+  const { chats, setChats, currentChat, setCurrentChat } = useContext(ChatsContext);
   const [currentChatMessages, setCurrentChatMessages] = useState([]);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
@@ -9,6 +9,7 @@ import Friends from './Friends';
 import SearchResults from './SearchResults';
 import Searchbar from './Searchbar';
 import FriendInvites from './FriendInvites';
+import { ChatsContext } from '../context/ChatsContext';
 
 const StyledRightbar = styled.div`
   padding: var(--padding);
@@ -72,16 +73,9 @@ const SearchToggleButton = styled.button`
   }
 `;
 
-function Rightbar({
-  expanded,
-  friends,
-  setFriends,
-  chats,
-  setCurrentChat,
-  friendInvites,
-  setFriendInvites,
-}) {
+function Rightbar({ expanded, friends, setFriends, friendInvites, setFriendInvites }) {
   const { auth } = useAuth();
+  const { chats, setCurrentChat } = useContext(ChatsContext);
   const [results, setResults] = useState([]);
   const queryRef = useRef('');
   const [isSearching, setIsSearching] = useState(false);

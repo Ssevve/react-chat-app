@@ -1,8 +1,9 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import styled from 'styled-components/macro';
 import { io } from 'socket.io-client';
 import useAuth from '../hooks/useAuth';
 import axios from 'axios';
+import { ChatsContext } from '../context/ChatsContext';
 
 import Topbar from '../components/Topbar';
 import Leftbar from '../components/Leftbar';
@@ -19,12 +20,11 @@ const Main = styled.main`
 
 function Home() {
   const { auth } = useAuth();
+  const { setChats } = useContext(ChatsContext);
   const [expandLeftbar, setExpandLeftbar] = useState(false);
   const [expandRightbar, setExpandRightbar] = useState(false);
   const socket = useRef(null);
-  const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);
-  const [currentChat, setCurrentChat] = useState(null);
   const [friends, setFriends] = useState([]);
   const [friendInvites, setFriendInvites] = useState([]);
 
@@ -58,19 +58,6 @@ function Home() {
   }, [socket]);
 
   useEffect(() => {
-    const fetchChats = async () => {
-      try {
-        const res = await axios.get('/chats', {
-          headers: {
-            authorization: `Bearer ${auth.accessToken}`,
-          },
-        });
-        setChats(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
     const fetchMessages = async () => {
       try {
         const res = await axios.get(`/messages/chats`, {
@@ -110,7 +97,6 @@ function Home() {
       }
     };
 
-    fetchChats();
     fetchMessages();
     fetchFriends();
     fetchFriendInvites();
@@ -118,24 +104,11 @@ function Home() {
 
   return (
     <Wrapper>
-      <Topbar
-        currentChat={currentChat}
-        setExpandLeftbar={setExpandLeftbar}
-        setExpandRightbar={setExpandRightbar}
-      />
+      <Topbar setExpandLeftbar={setExpandLeftbar} setExpandRightbar={setExpandRightbar} />
       <Main>
-        <Leftbar
-          chats={chats}
-          currentChat={currentChat}
-          setCurrentChat={setCurrentChat}
-          expanded={expandLeftbar}
-        />
+        <Leftbar expanded={expandLeftbar} />
         <Chatbox
           expandRightbar={expandRightbar}
-          currentChat={currentChat}
-          setCurrentChat={setCurrentChat}
-          chats={chats}
-          setChats={setChats}
           socket={socket}
           messages={messages}
           setMessages={setMessages}
@@ -144,8 +117,6 @@ function Home() {
           friends={friends}
           setFriends={setFriends}
           expanded={expandRightbar}
-          chats={chats}
-          setCurrentChat={setCurrentChat}
           friendInvites={friendInvites}
           setFriendInvites={setFriendInvites}
         />

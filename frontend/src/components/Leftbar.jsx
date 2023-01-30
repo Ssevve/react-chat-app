@@ -1,9 +1,11 @@
+import { useContext } from 'react';
 import { BsFillChatFill } from 'react-icons/bs';
 import styled from 'styled-components/macro';
 import breakpoints from '../breakpoints';
 
 import Chats from '../components/Chats';
 import UserDropup from '../components/UserDropup';
+import { ChatsContext } from '../context/ChatsContext';
 
 const StyledLeftbar = styled.div`
   padding: var(--padding);
@@ -42,7 +44,8 @@ const LogoText = styled.h1`
   font-size: 1.5rem;
 `;
 
-function Leftbar({ chats, expanded, currentChat, setCurrentChat }) {
+function Leftbar({ expanded }) {
+  const { chats, currentChat, setCurrentChat } = useContext(ChatsContext);
   return (
     <StyledLeftbar expanded={expanded}>
       <Logo>
