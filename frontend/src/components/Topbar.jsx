@@ -1,10 +1,10 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { HiMenu } from 'react-icons/hi';
 import { FaUserFriends } from 'react-icons/fa';
-import breakpoints from '../breakpoints';
-import { useEffect, useState, useContext } from 'react';
 import useAuth from '../hooks/useAuth';
-import { ChatsContext } from '../context/ChatsContext';
+import useChats from '../hooks/useChats';
+import breakpoints from '../breakpoints';
 
 import User from '../components/User';
 
@@ -66,7 +66,7 @@ const CurrentChat = styled.span`
 
 function Topbar({ setExpandLeftbar, setExpandRightbar }) {
   const { auth } = useAuth();
-  const { currentChat } = useContext(ChatsContext);
+  const { currentChat } = useChats();
   const [chatPartner, setChatPartner] = useState(null);
 
   useEffect(() => {

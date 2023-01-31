@@ -1,9 +1,9 @@
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components/macro';
 import { io } from 'socket.io-client';
-import useAuth from '../hooks/useAuth';
 import axios from 'axios';
-import { ChatsContext } from '../context/ChatsContext';
+import useAuth from '../hooks/useAuth';
+import useChats from '../hooks/useChats';
 
 import Topbar from '../components/Topbar';
 import Leftbar from '../components/Leftbar';
@@ -20,7 +20,7 @@ const Main = styled.main`
 
 function Home() {
   const { auth } = useAuth();
-  const { setChats } = useContext(ChatsContext);
+  const { setChats } = useChats();
   const [expandLeftbar, setExpandLeftbar] = useState(false);
   const [expandRightbar, setExpandRightbar] = useState(false);
   const socket = useRef(null);
