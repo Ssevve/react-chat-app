@@ -31,7 +31,7 @@ const InviteButton = styled.button`
   }
 `;
 
-function SearchResults({ results }) {
+function SearchResults({ results, setFriendInvites }) {
   const { auth } = useAuth();
   const handleClick = async (resultId) => {
     // Send friend invite to the user
@@ -41,7 +41,7 @@ function SearchResults({ results }) {
     };
 
     try {
-      await axios.post(
+      const res = await axios.post(
         '/invites',
         {
           friendInvite,
@@ -52,6 +52,7 @@ function SearchResults({ results }) {
           },
         },
       );
+      setFriendInvites((prevInvites) => [res.data, ...prevInvites]);
     } catch (err) {
       console.error(err);
     }

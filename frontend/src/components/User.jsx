@@ -54,15 +54,13 @@ const StatusText = styled.span`
   opacity: 0.6;
 `;
 
-function User({ user, events, onClick }) {
+function User({ user, events = true, onClick }) {
   const { connectedUsers } = useConnectedUsers();
   const [isOnline, setIsOnline] = useState(false);
   const usersLoaded = user && connectedUsers;
 
   useEffect(() => {
-    console.log('changed');
     setIsOnline(user._id in connectedUsers);
-    console.log(user._id in connectedUsers);
   }, [connectedUsers, user._id]);
 
   return (
@@ -80,9 +78,5 @@ function User({ user, events, onClick }) {
     )
   );
 }
-
-User.defaultProps = {
-  events: true,
-};
 
 export default User;

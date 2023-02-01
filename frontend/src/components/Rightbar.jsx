@@ -116,13 +116,13 @@ function Rightbar({ expanded, friends, setFriends, friendInvites, setFriendInvit
       </Title>
       <Section>
         {isSearching ? (
-          <SearchResults results={results} />
+          <SearchResults results={results} setFriendInvites={setFriendInvites} />
         ) : (
           <>
             <FriendInvites
               friendInvites={friendInvites}
-              setFriends={setFriends}
               setFriendInvites={setFriendInvites}
+              setFriends={setFriends}
             />
             <Friends friends={friends} chats={chats} setCurrentChat={setCurrentChat} />
           </>
