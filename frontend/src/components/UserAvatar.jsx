@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro';
-import useConnectedUsers from '../hooks/useConnectedUsers';
 
 import avatarPlaceholder from '../assets/no-avatar.jpg';
 

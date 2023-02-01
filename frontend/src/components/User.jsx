@@ -60,8 +60,9 @@ function User({ user, events = true, onClick }) {
   const usersLoaded = user && connectedUsers;
 
   useEffect(() => {
+    if (!user) return;
     setIsOnline(user._id in connectedUsers);
-  }, [connectedUsers, user._id]);
+  }, [connectedUsers, user]);
 
   return (
     usersLoaded && (
