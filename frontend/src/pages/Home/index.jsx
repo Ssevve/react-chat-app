@@ -1,15 +1,18 @@
 import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components/macro';
 import { io } from 'socket.io-client';
-import axios from 'axios';
-import useAuth from '../hooks/useAuth';
-import useChats from '../hooks/useChats';
-import useConnectedUsers from '../hooks/useConnectedUsers';
+import useAuth from '../../hooks/useAuth';
+import useChats from '../../hooks/useChats';
+import useConnectedUsers from '../../hooks/useConnectedUsers';
 
-import Topbar from '../components/Topbar';
-import Leftbar from '../components/Leftbar';
-import Chatbox from '../components/Chatbox';
-import Rightbar from '../components/Rightbar';
+import fetchMessages from './api/fetchMessages';
+import fetchFriends from './api/fetchFriends';
+import fetchFriendInvites from './api/fetchFriendInvites';
+
+import Topbar from '../../components/Topbar';
+import Leftbar from '../../components/Leftbar';
+import Chatbox from '../../components/Chatbox';
+import Rightbar from '../../components/Rightbar';
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -63,48 +66,9 @@ function Home() {
   }, [socket]);
 
   useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const res = await axios.get(`/messages/chats`, {
-          headers: {
-            authorization: `Bearer ${auth.accessToken}`,
-          },
-        });
-        setMessages(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    const fetchFriends = async () => {
-      try {
-        const res = await axios.get(`/users/friends/${auth.user._id}`, {
-          headers: {
-            authorization: `Bearer ${auth.accessToken}`,
-          },
-        });
-        setFriends(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    const fetchFriendInvites = async () => {
-      try {
-        const res = await axios.get(`/invites`, {
-          headers: {
-            authorization: `Bearer ${auth.accessToken}`,
-          },
-        });
-        setFriendInvites(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchMessages();
-    fetchFriends();
-    fetchFriendInvites();
+    fetchMessages(auth.accessToken).then(setMessages);
+    fetchFriends(auth.accessToken, auth.user._id).then(setFriends);
+    fetchFriendInvites(auth.accessToken).then(setFriendInvites);
   }, []);
 
   return (
