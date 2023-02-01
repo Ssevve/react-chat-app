@@ -58,7 +58,7 @@ const initializeSocketEvents = (server, app) => {
 
       console.log(newChats);
 
-      io.to(connectedUsers.get(receiverId)).emit('receiveMessage', { newMessage, newChats });
+      io.to(connectedUsers[receiverId]).emit('receiveMessage', { newMessage, newChats });
     });
 
     socket.on('disconnect', () => {
