@@ -42,7 +42,7 @@ const createNewFriendInvite = async (req, res) => {
       { path: 'sender', select: 'username avatar.url' },
       { path: 'receiver', select: 'username avatar.url' },
     ]);
-    io.to(connectedUsers.get(friendInvite.receiver)).emit('receiveFriendInvite', newFriendInvite);
+    io.to(connectedUsers[friendInvite.receiver]).emit('receiveFriendInvite', newFriendInvite);
     res.status(201).json(newFriendInvite);
   } catch (err) {
     res.status(500).json(err);

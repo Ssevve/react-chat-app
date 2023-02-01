@@ -1,20 +1,25 @@
 import { useEffect, useState } from 'react';
-import useAuth from '../hooks/useAuth';
 import { v4 as uuidv4 } from 'uuid';
+import useAuth from '../hooks/useAuth';
+import useConnectedUsers from '../hooks/useConnectedUsers';
 
 import DropdownList from './DropdownList';
 import User from './User';
 
 function Friends({ friends, chats, setCurrentChat }) {
   const { auth } = useAuth();
+  const { connectedUsers } = useConnectedUsers();
   const [onlineFriends, setOnlineFriends] = useState(null);
   const [offlineFriends, setOfflineFriends] = useState(null);
 
   useEffect(() => {
-    setOnlineFriends(friends);
-    setOfflineFriends(friends);
-    console.log(friends);
-  }, [friends]);
+    if (!friends) return;
+    const online = friends.filter((friend) => friend._id in connectedUsers);
+    const offline = friends.filter((friend) => !(friend._id in connectedUsers));
+
+    setOnlineFriends(online);
+    setOfflineFriends(offline);
+  }, [friends, connectedUsers]);
 
   const handleFriendClick = (friend) => {
     const chatsMembers = chats.map((chat) => chat.members);

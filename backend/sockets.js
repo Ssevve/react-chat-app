@@ -2,14 +2,14 @@ const { Server } = require('socket.io');
 const Message = require('./models/Message');
 const Chat = require('./models/Chat');
 
-const connectedUsers = new Map();
+const connectedUsers = {};
 
 const addUser = (userId, socketId) => {
-  connectedUsers.set(userId, socketId);
+  connectedUsers[userId] = socketId;
 };
 
 const removeUser = (userId) => {
-  connectedUsers.delete(userId);
+  delete connectedUsers[userId];
 };
 
 const initializeSocketEvents = (server, app) => {
@@ -24,8 +24,8 @@ const initializeSocketEvents = (server, app) => {
 
   io.on('connection', (socket) => {
     const { userId } = socket.handshake.query;
-    console.log('user connected');
     addUser(userId, socket.id);
+    io.emit('receiveConnectedUsers', { users: connectedUsers });
 
     socket.on('sendMessage', async ({ message, receiverId }) => {
       const newMessage = await Message.create(message);
@@ -63,7 +63,7 @@ const initializeSocketEvents = (server, app) => {
 
     socket.on('disconnect', () => {
       removeUser(socket.handshake.query.userId);
-      console.log('user disconnected');
+      io.emit('receiveConnectedUsers', { users: connectedUsers });
     });
   });
 };

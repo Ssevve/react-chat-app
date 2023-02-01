@@ -57,7 +57,7 @@ const addFriend = async (req, res) => {
       }),
     );
 
-    io.to(connectedUsers.get(senderId)).emit('friendInviteAccepted', {
+    io.to(connectedUsers[senderId]).emit('friendInviteAccepted', {
       newFriends: newSenderFriends,
       friendInviteId: inviteId,
     });

@@ -4,6 +4,7 @@ import { io } from 'socket.io-client';
 import axios from 'axios';
 import useAuth from '../hooks/useAuth';
 import useChats from '../hooks/useChats';
+import useConnectedUsers from '../hooks/useConnectedUsers';
 
 import Topbar from '../components/Topbar';
 import Leftbar from '../components/Leftbar';
@@ -21,6 +22,7 @@ const Main = styled.main`
 function Home() {
   const { auth } = useAuth();
   const { setChats } = useChats();
+  const { setConnectedUsers } = useConnectedUsers();
   const [expandLeftbar, setExpandLeftbar] = useState(false);
   const [expandRightbar, setExpandRightbar] = useState(false);
   const socket = useRef(null);
@@ -38,19 +40,22 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    console.log(socket?.current);
-    socket.current?.on('receiveMessage', ({ newMessage, newChats }) => {
-      console.log(newMessage);
+    if (!socket.current) return;
+    socket.current.on('receiveMessage', ({ newMessage, newChats }) => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setChats(newChats);
     });
 
-    socket.current?.on('receiveFriendInvite', (newFriendInvite) => {
-      console.log(newFriendInvite);
+    socket.current.on('receiveConnectedUsers', ({ users }) => {
+      console.log(users);
+      setConnectedUsers(users);
+    });
+
+    socket.current.on('receiveFriendInvite', (newFriendInvite) => {
       setFriendInvites((prevInvites) => [newFriendInvite, ...prevInvites]);
     });
 
-    socket.current?.on('friendInviteAccepted', ({ newFriends, friendInviteId }) => {
+    socket.current.on('friendInviteAccepted', ({ newFriends, friendInviteId }) => {
       setFriends(newFriends);
       const newFriendInvites = friendInvites.filter((inv) => inv._id !== friendInviteId);
       setFriendInvites(newFriendInvites);

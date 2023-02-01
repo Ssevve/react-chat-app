@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
+import useConnectedUsers from '../hooks/useConnectedUsers';
 
 import UserAvatar from './UserAvatar';
 
@@ -19,6 +21,22 @@ const Button = styled.button`
   }
 `;
 
+const AvatarWrapper = styled.div`
+  position: relative;
+`;
+
+const ConnectionStatus = styled.span`
+  --size: 1rem;
+  height: var(--size);
+  width: var(--size);
+  border-radius: 50%;
+  border: 2px solid var(--clr-light-400);
+  background: ${({ online }) => (online ? 'green' : 'red')};
+  position: absolute;
+  bottom: 0;
+  right: 0;
+`;
+
 const Details = styled.section`
   display: flex;
   flex-direction: column;
@@ -37,13 +55,26 @@ const StatusText = styled.span`
 `;
 
 function User({ user, events, onClick }) {
+  const { connectedUsers } = useConnectedUsers();
+  const [isOnline, setIsOnline] = useState(false);
+  const usersLoaded = user && connectedUsers;
+
+  useEffect(() => {
+    console.log('changed');
+    setIsOnline(user._id in connectedUsers);
+    console.log(user._id in connectedUsers);
+  }, [connectedUsers, user._id]);
+
   return (
-    user && (
+    usersLoaded && (
       <Button type="button" onClick={onClick} events={events}>
-        <UserAvatar user={user} />
+        <AvatarWrapper>
+          <UserAvatar user={user} />
+          <ConnectionStatus online={isOnline} />
+        </AvatarWrapper>
         <Details>
           <Username>{user.username}</Username>
-          <StatusText>{user.statusText}</StatusText>
+          {user.statusText && <StatusText>{user.statusText}</StatusText>}
         </Details>
       </Button>
     )
