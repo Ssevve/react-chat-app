@@ -128,10 +128,10 @@ function Chatbox({ socket, messages, setMessages, expandRightbar }) {
 
   return (
     <Section expandRightbar={expandRightbar}>
-      {currentChat && (
+      {currentChatMessages && (
         <>
           <Messages ref={scrollRef}>
-            {currentChatMessages?.map((message) => (
+            {currentChatMessages.map((message) => (
               <Message key={message._id} message={message} />
             ))}
           </Messages>

@@ -61,19 +61,23 @@ function Chat({ chat, currentChat, onClick }) {
   useEffect(() => {
     const partner = chat.members.find((member) => member._id !== auth.user._id);
     setChatPartner(partner);
-  }, [chat]);
+  }, []);
 
   return (
-    <Button currentChat={currentChat} chat={chat} type="button" onClick={onClick}>
-      <UserAvatar user={chatPartner} />
-      <Details>
-        <Meta>
-          <Username>{chatPartner?.username}</Username>
-          <Time>{format(chat.lastMessage.createdAt)}</Time>
-        </Meta>
-        <LastMessage>{chat.lastMessage.content}</LastMessage>
-      </Details>
-    </Button>
+    chatPartner && (
+      <>
+        <Button currentChat={currentChat} chat={chat} type="button" onClick={onClick}>
+          <UserAvatar user={chatPartner} />
+          <Details>
+            <Meta>
+              <Username>{chatPartner.username}</Username>
+              <Time>{format(chat.lastMessage.createdAt)}</Time>
+            </Meta>
+            <LastMessage>{chat.lastMessage.content}</LastMessage>
+          </Details>
+        </Button>
+      </>
+    )
   );
 }
 

@@ -59,14 +59,15 @@ function SearchResults({ results }) {
 
   return (
     <Results>
-      {results?.map((result) => (
-        <Result key={result._id}>
-          <User events={false} user={result} />
-          <InviteButton type="button" onClick={() => handleClick(result._id)}>
-            <IoMdAdd size="1.5rem" />
-          </InviteButton>
-        </Result>
-      ))}
+      {results &&
+        results.map((result) => (
+          <Result key={result._id}>
+            <User events={false} user={result} />
+            <InviteButton type="button" onClick={() => handleClick(result._id)}>
+              <IoMdAdd size="1.5rem" />
+            </InviteButton>
+          </Result>
+        ))}
     </Results>
   );
 }

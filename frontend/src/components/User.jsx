@@ -38,13 +38,15 @@ const StatusText = styled.span`
 
 function User({ user, events, onClick }) {
   return (
-    <Button type="button" onClick={onClick} events={events}>
-      <UserAvatar user={user} />
-      <Details>
-        <Username>{user?.username}</Username>
-        <StatusText>{user?.statusText}</StatusText>
-      </Details>
-    </Button>
+    user && (
+      <Button type="button" onClick={onClick} events={events}>
+        <UserAvatar user={user} />
+        <Details>
+          <Username>{user.username}</Username>
+          <StatusText>{user.statusText}</StatusText>
+        </Details>
+      </Button>
+    )
   );
 }
 

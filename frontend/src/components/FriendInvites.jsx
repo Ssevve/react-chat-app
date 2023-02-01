@@ -78,24 +78,25 @@ function FriendInvites({ friendInvites, setFriends, setFriendInvites }) {
   return (
     <>
       <DropdownList title="Friend invites">
-        {friendInvites?.map((invite) => (
-          <Wrapper key={invite._id}>
-            <User
-              events={false}
-              user={invite.receiver._id === auth.user._id ? invite.sender : invite.receiver}
-            />
-            <Wrapper>
-              {invite.sender._id !== auth.user._id && (
-                <AcceptButton type="button" onClick={() => acceptInvite(invite)}>
-                  <BsCheck size="1.5rem" />
-                </AcceptButton>
-              )}
-              <DeclineButton type="button">
-                <IoMdClose size="1.5rem" />
-              </DeclineButton>
+        {friendInvites &&
+          friendInvites.map((invite) => (
+            <Wrapper key={invite._id}>
+              <User
+                events={false}
+                user={invite.receiver._id === auth.user._id ? invite.sender : invite.receiver}
+              />
+              <Wrapper>
+                {invite.sender._id !== auth.user._id && (
+                  <AcceptButton type="button" onClick={() => acceptInvite(invite)}>
+                    <BsCheck size="1.5rem" />
+                  </AcceptButton>
+                )}
+                <DeclineButton type="button">
+                  <IoMdClose size="1.5rem" />
+                </DeclineButton>
+              </Wrapper>
             </Wrapper>
-          </Wrapper>
-        ))}
+          ))}
       </DropdownList>
     </>
   );

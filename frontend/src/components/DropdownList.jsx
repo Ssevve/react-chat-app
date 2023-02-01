@@ -54,7 +54,7 @@ function DropdownList({ title, children }) {
       </Button>
       <List expand={expand}>
         {React.Children.map(children, (child) => (
-          <li>{child}</li>
+          <li>{child}</li> // Does not need a key, because the children have their own keys already
         ))}
       </List>
     </Wrapper>

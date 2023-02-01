@@ -37,14 +37,16 @@ function Friends({ friends, chats, setCurrentChat }) {
   return (
     <>
       <DropdownList title="Online">
-        {onlineFriends?.map((friend) => (
-          <User onClick={() => handleFriendClick(friend)} key={friend._id} user={friend} />
-        ))}
+        {onlineFriends &&
+          onlineFriends.map((friend) => (
+            <User onClick={() => handleFriendClick(friend)} key={friend._id} user={friend} />
+          ))}
       </DropdownList>
       <DropdownList title="Offline">
-        {offlineFriends?.map((friend) => (
-          <User onClick={() => handleFriendClick(friend)} key={friend._id} user={friend} />
-        ))}
+        {offlineFriends &&
+          offlineFriends.map((friend) => (
+            <User onClick={() => handleFriendClick(friend)} key={friend._id} user={friend} />
+          ))}
       </DropdownList>
     </>
   );

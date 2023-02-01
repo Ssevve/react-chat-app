@@ -70,7 +70,8 @@ function Topbar({ setExpandLeftbar, setExpandRightbar }) {
   const [chatPartner, setChatPartner] = useState(null);
 
   useEffect(() => {
-    const partner = currentChat?.members.find((member) => member._id !== auth.user._id);
+    if (!currentChat) return;
+    const partner = currentChat.members.find((member) => member._id !== auth.user._id);
     setChatPartner(partner);
   }, [currentChat]);
 

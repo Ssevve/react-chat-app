@@ -11,14 +11,15 @@ function Chats({ chats, currentChat, setCurrentChat }) {
   return (
     <Wrapper>
       <DropdownList title="Direct messages">
-        {chats.map((chat) => (
-          <Chat
-            key={chat._id}
-            chat={chat}
-            currentChat={currentChat}
-            onClick={() => setCurrentChat(chat)}
-          />
-        ))}
+        {chats &&
+          chats.map((chat) => (
+            <Chat
+              key={chat._id}
+              chat={chat}
+              currentChat={currentChat}
+              onClick={() => setCurrentChat(chat)}
+            />
+          ))}
       </DropdownList>
     </Wrapper>
   );

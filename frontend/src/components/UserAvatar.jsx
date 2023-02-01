@@ -11,12 +11,14 @@ const Avatar = styled.img`
 
 function UserAvatar({ user, size, className }) {
   return (
-    <Avatar
-      size={size}
-      className={className}
-      src={user?.avatar?.url || avatarPlaceholder}
-      alt={user?.username}
-    />
+    user && (
+      <Avatar
+        size={size}
+        className={className}
+        src={user.avatar.url || avatarPlaceholder}
+        alt={user.username}
+      />
+    )
   );
 }
 
