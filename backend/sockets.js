@@ -23,7 +23,7 @@ const initializeSocketEvents = (server, app) => {
   app.set('connectedUsers', connectedUsers);
 
   io.on('connection', (socket) => {
-    const { userId } = socket.handshake.query;
+    const { userId } = socket.handshake.auth;
     addUser(userId, socket.id);
     io.emit('receiveConnectedUsers', { users: connectedUsers });
 

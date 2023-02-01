@@ -8,6 +8,7 @@ import useConnectedUsers from '../../hooks/useConnectedUsers';
 import fetchMessages from './api/fetchMessages';
 import fetchFriends from './api/fetchFriends';
 import fetchFriendInvites from './api/fetchFriendInvites';
+import subscribeToSocketEvents from './subscribeToSocketEvents';
 
 import Topbar from '../../components/Topbar';
 import Leftbar from '../../components/Leftbar';
@@ -28,47 +29,31 @@ function Home() {
   const { setConnectedUsers } = useConnectedUsers();
   const [expandLeftbar, setExpandLeftbar] = useState(false);
   const [expandRightbar, setExpandRightbar] = useState(false);
-  const socket = useRef(null);
   const [messages, setMessages] = useState([]);
+  const socket = useRef(null);
   const [friends, setFriends] = useState([]);
   const [friendInvites, setFriendInvites] = useState([]);
 
   useEffect(() => {
-    socket.current = io('ws://localhost:5000', { query: `userId=${auth.user._id}` });
-
-    return () => {
-      socket.current.removeAllListeners();
-      socket.current.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!socket.current) return;
-    socket.current.on('receiveMessage', ({ newMessage, newChats }) => {
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-      setChats(newChats);
+    socket.current = io('ws://localhost:5000', { auth: { userId: auth.user._id } });
+    subscribeToSocketEvents({
+      socket: socket.current,
+      setMessages,
+      friendInvites,
+      setFriendInvites,
+      setFriends,
+      setChats,
+      setConnectedUsers,
     });
 
-    socket.current.on('receiveConnectedUsers', ({ users }) => {
-      console.log(users);
-      setConnectedUsers(users);
-    });
-
-    socket.current.on('receiveFriendInvite', (newFriendInvite) => {
-      setFriendInvites((prevInvites) => [newFriendInvite, ...prevInvites]);
-    });
-
-    socket.current.on('friendInviteAccepted', ({ newFriends, friendInviteId }) => {
-      setFriends(newFriends);
-      const newFriendInvites = friendInvites.filter((inv) => inv._id !== friendInviteId);
-      setFriendInvites(newFriendInvites);
-    });
-  }, [socket]);
-
-  useEffect(() => {
     fetchMessages(auth.accessToken).then(setMessages);
     fetchFriends(auth.accessToken, auth.user._id).then(setFriends);
     fetchFriendInvites(auth.accessToken).then(setFriendInvites);
+
+    return () => {
+      socket.current.off();
+      socket.current.disconnect();
+    };
   }, []);
 
   return (
