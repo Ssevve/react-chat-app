@@ -30,9 +30,9 @@ function Home() {
   const [expandLeftbar, setExpandLeftbar] = useState(false);
   const [expandRightbar, setExpandRightbar] = useState(false);
   const [messages, setMessages] = useState([]);
-  const socket = useRef(null);
   const [friends, setFriends] = useState([]);
   const [friendInvites, setFriendInvites] = useState([]);
+  const socket = useRef(null);
 
   useEffect(() => {
     socket.current = io('ws://localhost:5000', { auth: { userId: auth.user._id } });
