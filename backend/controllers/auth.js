@@ -3,20 +3,25 @@ const bcrypt = require('bcrypt');
 const generateAccessToken = require('../helpers/generateAccessToken');
 const generateRefreshToken = require('../helpers/generateRefreshToken');
 
+function return401Error(res) {
+  return res.status(401).json('Invalid username or password');
+}
+
 const handleLogin = async (req, res) => {
   const { username, password } = req.body;
+  if (!username || !password) return401Error(res);
   try {
     const user = await User.findOne({ username });
-    if (!user) return res.sendStatus(401);
+    if (!user) return401Error(res);
 
     const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) return res.sendStatus(401);
+    if (!passwordMatch) return401Error(res);
 
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
 
     user.refreshToken = refreshToken;
-    user.save();
+    await user.save();
 
     res.cookie('refreshToken', refreshToken, {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
