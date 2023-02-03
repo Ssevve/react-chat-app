@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import useAuth from '../hooks/useAuth';
 import useChats from '../hooks/useChats';
 import styled from 'styled-components/macro';
-import breakpoints from '../breakpoints';
+import breakpoints from '../lib/breakpoints';
 import Message from './Message';
 
 const Section = styled.section`

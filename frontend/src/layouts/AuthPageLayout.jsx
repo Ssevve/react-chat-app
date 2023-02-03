@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import breakpoints from '../breakpoints';
+import breakpoints from '../lib/breakpoints';
 
 import Container from '../components/Container';
 

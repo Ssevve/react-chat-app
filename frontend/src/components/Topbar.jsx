@@ -4,7 +4,7 @@ import { HiMenu } from 'react-icons/hi';
 import { FaUserFriends } from 'react-icons/fa';
 import useAuth from '../hooks/useAuth';
 import useChats from '../hooks/useChats';
-import breakpoints from '../breakpoints';
+import breakpoints from '../lib/breakpoints';
 
 import User from '../components/User';
 
