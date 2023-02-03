@@ -1,9 +1,9 @@
 import styled from 'styled-components/macro';
 import { IoMdAdd } from 'react-icons/io';
-import useAuth from '../hooks/useAuth';
+import useAuth from 'hooks/useAuth';
 import axios from 'axios';
 
-import User from './User';
+import User from './common/User';
 
 const Results = styled.ul`
   overflow: hidden;

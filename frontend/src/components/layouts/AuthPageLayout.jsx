@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import breakpoints from '../lib/breakpoints';
+import breakpoints from '../../lib/breakpoints';
 
-import Container from '../components/common/Container';
+import Container from '../common/Container';
 
 const Main = styled.main`
   background: var(--clr-light-300);

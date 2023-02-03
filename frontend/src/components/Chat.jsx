@@ -1,9 +1,9 @@
 import styled from 'styled-components/macro';
 import { useEffect, useState } from 'react';
-import useAuth from '../hooks/useAuth';
+import useAuth from 'hooks/useAuth';
 import { format } from 'timeago.js';
 
-import UserAvatar from './UserAvatar';
+import UserAvatar from './common/UserAvatar';
 
 const Button = styled.button`
   display: flex;

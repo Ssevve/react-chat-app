@@ -1,9 +1,9 @@
 import styled from 'styled-components/macro';
 import { format } from 'timeago.js';
-import breakpoints from '../lib/breakpoints';
-import useAuth from '../hooks/useAuth';
+import breakpoints from 'lib/breakpoints';
+import useAuth from 'hooks/useAuth';
 
-import UserAvatar from './UserAvatar';
+import UserAvatar from './common/UserAvatar';
 
 const StyledMessage = styled.div`
   display: flex;

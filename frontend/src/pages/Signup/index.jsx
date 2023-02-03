@@ -7,7 +7,7 @@ import signupSchema from './signupSchema';
 import useSignup from './useSignup';
 
 import AuthPageLayout from '../../layouts/AuthPageLayout';
-import ErrorBox from '../../components/ErrorBox';
+import ErrorBox from '../../components/form/ErrorBox';
 import Form from '../../components/form/Form';
 import FormTitle from '../../components/form/FormTitle';
 import Label from '../../components/form/Label';

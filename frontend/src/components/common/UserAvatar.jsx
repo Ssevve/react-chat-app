@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-import avatarPlaceholder from '../assets/no-avatar.jpg';
+import avatarPlaceholder from 'assets/no-avatar.jpg';
 
 const Avatar = styled.img`
   --size: ${({ size }) => size || '2.5rem'};

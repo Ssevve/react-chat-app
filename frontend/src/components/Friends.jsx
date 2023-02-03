@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import useAuth from '../hooks/useAuth';
-import useConnectedUsers from '../hooks/useConnectedUsers';
+import useAuth from 'hooks/useAuth';
+import useConnectedUsers from 'hooks/useConnectedUsers';
 
-import DropdownList from './DropdownList';
-import User from './User';
+import DropdownList from './common/DropdownList';
+import User from './common/User';
 
 function Friends({ friends, chats, setCurrentChat }) {
   const { auth } = useAuth();

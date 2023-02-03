@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { HiMenu } from 'react-icons/hi';
 import { FaUserFriends } from 'react-icons/fa';
-import useAuth from '../hooks/useAuth';
-import useChats from '../hooks/useChats';
-import breakpoints from '../lib/breakpoints';
+import useAuth from 'hooks/useAuth';
+import useChats from 'hooks/useChats';
+import breakpoints from 'lib/breakpoints';
 
-import User from '../components/User';
+import User from './common/User';
 
 const Header = styled.header`
   width: 100vw;

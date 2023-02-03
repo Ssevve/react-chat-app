@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import Loader from '../Loader';
+import Loader from '../common/Loader';
 
 const Button = styled.button`
   background: var(--clr-accent);

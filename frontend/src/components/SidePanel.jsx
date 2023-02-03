@@ -1,7 +1,7 @@
 import { BsFillChatFill } from 'react-icons/bs';
+import useChats from 'hooks/useChats';
 import styled from 'styled-components/macro';
 import breakpoints from 'lib/breakpoints';
-import useChats from 'hooks/useChats';
 
 import Chats from './Chats';
 import UserDropup from './UserDropup';

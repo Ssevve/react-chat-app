@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
-import useConnectedUsers from '../hooks/useConnectedUsers';
+import useConnectedUsers from 'hooks/useConnectedUsers';
 
 import UserAvatar from './UserAvatar';
 

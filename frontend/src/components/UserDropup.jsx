@@ -4,10 +4,10 @@ import styled from 'styled-components/macro';
 import { FiChevronUp } from 'react-icons/fi';
 import { RiLogoutCircleLine } from 'react-icons/ri';
 import axios from 'axios';
-import useAuth from '../hooks/useAuth';
-import useClickOutside from '../hooks/useClickOutside';
+import useAuth from 'hooks/useAuth';
+import useClickOutside from 'hooks/useClickOutside';
 
-import UserAvatar from './UserAvatar';
+import UserAvatar from './common/UserAvatar';
 
 const Wrapper = styled.div`
   display: flex;

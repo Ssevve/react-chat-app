@@ -2,9 +2,9 @@ import { useRef, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import axios from 'axios';
 import styled from 'styled-components/macro';
-import useAuth from '../hooks/useAuth';
-import useChats from '../hooks/useChats';
-import breakpoints from '../lib/breakpoints';
+import useAuth from 'hooks/useAuth';
+import useChats from 'hooks/useChats';
+import breakpoints from 'lib/breakpoints';
 
 import Friends from './Friends';
 import SearchResults from './SearchResults';
