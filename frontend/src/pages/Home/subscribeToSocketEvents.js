@@ -13,7 +13,6 @@ const subscribeToSocketEvents = ({
   });
 
   socket.on('receiveConnectedUsers', ({ users }) => {
-    console.log(users);
     setConnectedUsers(users);
   });
 
