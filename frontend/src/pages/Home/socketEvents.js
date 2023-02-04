@@ -1,21 +1,17 @@
-const subscribeToSocketEvents = ({
-  socket,
-  setMessages,
-  friendInvites,
-  setFriendInvites,
-  setFriends,
-  setChats,
-  setConnectedUsers,
-}) => {
+const subscribeToMessageEvents = ({ socket, setMessages, setChats }) => {
   socket.on('receiveMessage', ({ newMessage, newChats }) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
     setChats(newChats);
   });
+};
 
+const subscribeToUserEvents = ({ socket, setConnectedUsers }) => {
   socket.on('receiveConnectedUsers', ({ users }) => {
     setConnectedUsers(users);
   });
+};
 
+const subscribeToFriendEvents = ({ socket, setFriendInvites, setFriends, friendInvites }) => {
   socket.on('receiveFriendInvite', (newFriendInvite) => {
     setFriendInvites((prevInvites) => [newFriendInvite, ...prevInvites]);
   });
@@ -27,4 +23,4 @@ const subscribeToSocketEvents = ({
   });
 };
 
-export default subscribeToSocketEvents;
+export { subscribeToMessageEvents, subscribeToUserEvents, subscribeToFriendEvents };

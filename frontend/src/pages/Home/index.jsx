@@ -8,7 +8,11 @@ import useConnectedUsers from 'hooks/useConnectedUsers';
 import fetchMessages from './api/fetchMessages';
 import fetchFriends from './api/fetchFriends';
 import fetchFriendInvites from './api/fetchFriendInvites';
-import subscribeToSocketEvents from './subscribeToSocketEvents';
+import {
+  subscribeToMessageEvents,
+  subscribeToUserEvents,
+  subscribeToFriendEvents,
+} from './socketEvents';
 
 import Topbar from 'components/Topbar';
 import LeftPanel from 'components/LeftPanel';
@@ -36,19 +40,26 @@ function Home() {
 
   useEffect(() => {
     socket.current = io('ws://localhost:5000', { auth: { userId: auth.user._id } });
-    subscribeToSocketEvents({
+    subscribeToMessageEvents({ socket: socket.current, setMessages, setChats });
+    subscribeToUserEvents({ socket: socket.current, setConnectedUsers });
+    subscribeToFriendEvents({
       socket: socket.current,
-      setMessages,
-      friendInvites,
       setFriendInvites,
       setFriends,
-      setChats,
-      setConnectedUsers,
+      friendInvites,
     });
 
-    fetchMessages(auth.accessToken).then(setMessages);
-    fetchFriends(auth.accessToken, auth.user._id).then(setFriends);
-    fetchFriendInvites(auth.accessToken).then(setFriendInvites);
+    fetchMessages(auth.accessToken)
+      .then(setMessages)
+      .catch((err) => console.error(err));
+
+    fetchFriends(auth.accessToken, auth.user._id)
+      .then(setFriends)
+      .catch((err) => console.error(err));
+
+    fetchFriendInvites(auth.accessToken)
+      .then(setFriendInvites)
+      .catch((err) => console.error(err));
 
     return () => {
       socket.current.off();
