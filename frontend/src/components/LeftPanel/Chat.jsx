@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import useAuth from 'hooks/useAuth';
 import { format } from 'timeago.js';
 
-import UserAvatar from '../common/UserAvatar';
+import UserAvatarWithStatus from '../UserAvatarWithStatus';
 
 const Button = styled.button`
   display: flex;
@@ -63,22 +63,20 @@ function Chat({ chat, currentChat, onClick }) {
     setChatPartner(partner);
   }, []);
 
-  return (
-    chatPartner && (
-      <>
-        <Button currentChat={currentChat} chat={chat} type="button" onClick={onClick}>
-          <UserAvatar user={chatPartner} />
-          <Details>
-            <Meta>
-              <Username>{chatPartner.username}</Username>
-              <Time>{format(chat.lastMessage.createdAt)}</Time>
-            </Meta>
-            <LastMessage>{chat.lastMessage.content}</LastMessage>
-          </Details>
-        </Button>
-      </>
-    )
-  );
+  return chatPartner ? (
+    <>
+      <Button currentChat={currentChat} chat={chat} type="button" onClick={onClick}>
+        <UserAvatarWithStatus user={chatPartner} />
+        <Details>
+          <Meta>
+            <Username>{chatPartner.username}</Username>
+            <Time>{format(chat.lastMessage.createdAt)}</Time>
+          </Meta>
+          <LastMessage>{chat.lastMessage.content}</LastMessage>
+        </Details>
+      </Button>
+    </>
+  ) : null;
 }
 
 export default Chat;

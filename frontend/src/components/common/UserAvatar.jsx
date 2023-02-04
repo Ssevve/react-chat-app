@@ -10,16 +10,14 @@ const Avatar = styled.img`
 `;
 
 function UserAvatar({ user, size, className }) {
-  return (
-    user && (
-      <Avatar
-        size={size}
-        className={className}
-        src={user.avatar.url || avatarPlaceholder}
-        alt={user.username}
-      />
-    )
-  );
+  return user ? (
+    <Avatar
+      size={size}
+      className={className}
+      src={user.avatar.url || avatarPlaceholder}
+      alt={user.username}
+    />
+  ) : null;
 }
 
 export default UserAvatar;

@@ -7,7 +7,7 @@ const Wrapper = styled.section`
   margin-top: 1rem;
 `;
 
-function Chats({ chats, currentChat, setCurrentChat }) {
+function ChatList({ chats, currentChat, setCurrentChat }) {
   return (
     <Wrapper>
       <DropdownList title="Direct messages">
@@ -25,4 +25,4 @@ function Chats({ chats, currentChat, setCurrentChat }) {
   );
 }
 
-export default Chats;
+export default ChatList;

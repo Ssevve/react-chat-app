@@ -4,7 +4,7 @@ import useChats from 'hooks/useChats';
 import breakpoints from 'lib/breakpoints';
 
 import SidePanel from '../SidePanel';
-import Chats from './Chats';
+import ChatList from './ChatList';
 import UserDropup from './UserDropup';
 
 const StyledSidePanel = styled(SidePanel)`
@@ -38,7 +38,7 @@ function LeftPanel({ expanded }) {
         <BsFillChatFill />
         <LogoText>Chat App</LogoText>
       </Logo>
-      <Chats chats={chats} currentChat={currentChat} setCurrentChat={setCurrentChat} />
+      <ChatList chats={chats} currentChat={currentChat} setCurrentChat={setCurrentChat} />
       <UserDropup />
     </StyledSidePanel>
   );
