@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import useAuth from '../hooks/useAuth';
+import useAuth from 'hooks/useAuth';
 
 export const ChatsContext = createContext(null);
 

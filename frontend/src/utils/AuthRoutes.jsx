@@ -1,6 +1,6 @@
-import useAuth from '../hooks/useAuth';
 import { Outlet, Navigate } from 'react-router-dom';
-import { ChatsContextProvider } from '../context/ChatsContext';
+import { ChatsContextProvider } from 'context/ChatsContext';
+import useAuth from 'hooks/useAuth';
 
 function AuthRoutes() {
   const { auth } = useAuth();

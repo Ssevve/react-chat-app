@@ -6,7 +6,7 @@ import useAuth from 'hooks/useAuth';
 import useChats from 'hooks/useChats';
 import breakpoints from 'utils/breakpoints';
 
-import SidePanel from '../../../../components/SidePanel';
+import SidePanel from 'components/SidePanel';
 import FriendsList from './FriendsList';
 import SearchResults from './SearchResults';
 import Searchbar from './Searchbar';

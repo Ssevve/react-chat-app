@@ -4,8 +4,8 @@ import { IoMdClose } from 'react-icons/io';
 import useAuth from 'hooks/useAuth';
 import axios from 'axios';
 
-import DropdownList from '../../../../components/common/DropdownList';
-import User from '../../../../components/common/UserAvatarWithStatus';
+import DropdownList from 'components/common/DropdownList';
+import User from 'components/common/UserAvatarWithStatus';
 
 const Wrapper = styled.div`
   display: flex;

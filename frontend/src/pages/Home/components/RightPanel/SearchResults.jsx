@@ -3,7 +3,7 @@ import { IoMdAdd } from 'react-icons/io';
 import useAuth from 'hooks/useAuth';
 import axios from 'axios';
 
-import User from '../../../../components/common/UserAvatarWithStatus';
+import User from 'components/common/UserAvatarWithStatus';
 
 const Results = styled.ul`
   overflow: hidden;

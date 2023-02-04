@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import useChats from 'hooks/useChats';
 import breakpoints from 'utils/breakpoints';
 
-import SidePanel from '../../../../components/SidePanel';
+import SidePanel from 'components/SidePanel';
 import ChatList from './ChatList';
 import UserDropup from './UserDropup';
 

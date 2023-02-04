@@ -6,7 +6,7 @@ import useAuth from 'hooks/useAuth';
 import useChats from 'hooks/useChats';
 import breakpoints from 'utils/breakpoints';
 
-import User from '../../../components/common/UserAvatarWithStatus';
+import User from 'components/common/UserAvatarWithStatus';
 
 const Header = styled.header`
   width: 100vw;
