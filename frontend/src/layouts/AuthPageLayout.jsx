@@ -1,13 +1,14 @@
 import styled from 'styled-components';
-import breakpoints from '../lib/breakpoints';
-
-import Container from '../components/common/Container';
+import breakpoints from '../utils/breakpoints';
 
 const Main = styled.main`
   background: var(--clr-light-300);
 `;
 
-const StyledContainer = styled(Container)`
+const Container = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  max-width: 1150px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -51,13 +52,13 @@ const Paragraph = styled.p`
 function AuthPageLayout({ children }) {
   return (
     <Main>
-      <StyledContainer>
+      <Container>
         <Section>
           <Heading>Chat app</Heading>
           <Paragraph>Stay connected with your friends. Anywhere, anytime.</Paragraph>
         </Section>
         {children}
-      </StyledContainer>
+      </Container>
     </Main>
   );
 }

@@ -7,14 +7,14 @@ import useLogin from './useLogin';
 import loginSchema from './loginSchema';
 
 import AuthPageLayout from 'layouts/AuthPageLayout';
-import ErrorBox from 'components/form/ErrorBox';
-import FormTitle from 'components/form/FormTitle';
-import Form from 'components/form/Form';
-import Label from 'components/form/Label';
-import Input from 'components/form/Input';
-import ErrorMessage from 'components/form/ErrorMessage';
-import SubmitButton from 'components/form/SubmitButton';
-import Divider from 'components/form/Divider';
+import ErrorBox from 'components/AuthForm/ErrorBox';
+import FormTitle from 'components/AuthForm/FormTitle';
+import Form from 'components/AuthForm/Form';
+import Label from 'components/AuthForm/Label';
+import Input from 'components/AuthForm/Input';
+import ErrorMessage from 'components/AuthForm/ErrorMessage';
+import SubmitButton from 'components/AuthForm/SubmitButton';
+import Divider from 'components/AuthForm/Divider';
 
 const NeedAccount = styled.p`
   font-size: 0.875rem;

@@ -4,9 +4,9 @@ import { HiMenu } from 'react-icons/hi';
 import { FaUserFriends } from 'react-icons/fa';
 import useAuth from 'hooks/useAuth';
 import useChats from 'hooks/useChats';
-import breakpoints from 'lib/breakpoints';
+import breakpoints from 'utils/breakpoints';
 
-import User from './common/User';
+import User from '../../../components/common/UserAvatarWithStatus';
 
 const Header = styled.header`
   width: 100vw;

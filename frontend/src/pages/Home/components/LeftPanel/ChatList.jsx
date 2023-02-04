@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import DropdownList from '../common/DropdownList';
+import DropdownList from '../../../../components/common/DropdownList';
 import Chat from './Chat';
 
 const Wrapper = styled.section`

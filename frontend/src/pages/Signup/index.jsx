@@ -7,14 +7,14 @@ import signupSchema from './signupSchema';
 import useSignup from './useSignup';
 
 import AuthPageLayout from 'layouts/AuthPageLayout';
-import ErrorBox from 'components/form/ErrorBox';
-import Form from 'components/form/Form';
-import FormTitle from 'components/form/FormTitle';
-import Label from 'components/form/Label';
-import Input from 'components/form/Input';
-import ErrorMessage from 'components/form/ErrorMessage';
-import SubmitButton from 'components/form/SubmitButton';
-import Divider from 'components/form/Divider';
+import ErrorBox from 'components/AuthForm/ErrorBox';
+import Form from 'components/AuthForm/Form';
+import FormTitle from 'components/AuthForm/FormTitle';
+import Label from 'components/AuthForm/Label';
+import Input from 'components/AuthForm/Input';
+import ErrorMessage from 'components/AuthForm/ErrorMessage';
+import SubmitButton from 'components/AuthForm/SubmitButton';
+import Divider from 'components/AuthForm/Divider';
 
 const HaveAccount = styled.p`
   font-size: 0.875rem;

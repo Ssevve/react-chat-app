@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import UserAvatar from '../common/UserAvatar';
+import UserAvatar from '../UserAvatar';
 
 import ConnectionStatus from './ConnectionStatus';
 

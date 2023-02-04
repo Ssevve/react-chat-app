@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-import UserAvatarWithStatus from '../UserAvatarWithStatus';
+import UserAvatarWithStatus from './UserAvatarWithStatus';
 
 const Button = styled.button`
   display: flex;

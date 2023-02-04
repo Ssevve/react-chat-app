@@ -1,12 +1,14 @@
 import styled from 'styled-components/macro';
 import { format } from 'timeago.js';
-import breakpoints from 'lib/breakpoints';
+import breakpoints from 'utils/breakpoints';
 import useAuth from 'hooks/useAuth';
 
-import UserAvatar from '../common/UserAvatar';
+import UserAvatar from 'components/common/UserAvatar';
+import UserAvatarWithStatus from 'components/common/UserAvatarWithStatus';
 
 const StyledMessage = styled.div`
   display: flex;
+  flex-direction: ${({ own }) => (own ? 'row-reverse' : 'row')};
   gap: 0.5rem;
   justify-self: ${({ own }) => (own ? 'flex-end' : 'flex-start')};
   max-width: 75%;
@@ -45,15 +47,17 @@ function Message({ message }) {
   const { auth } = useAuth();
   const sender = message.sender._id ? message.sender : auth.user;
 
+  const ownMessage = sender._id === auth.user._id;
+
   return (
-    <StyledMessage own={sender._id === auth.user._id}>
-      <UserAvatar size="2.5rem" user={sender} />
+    <StyledMessage own={ownMessage}>
+      {ownMessage ? <UserAvatar user={sender} /> : <UserAvatarWithStatus user={sender} />}
       <div>
         <Meta>
-          <Username>{sender.username === auth.user.username ? 'You' : sender.username}</Username>
+          <Username>{ownMessage ? 'You' : sender.username}</Username>
           <Time>{format(message.createdAt)}</Time>
         </Meta>
-        <Content own={sender._id === auth.user._id}>{message.content}</Content>
+        <Content own={ownMessage}>{message.content}</Content>
       </div>
     </StyledMessage>
   );

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import useAuth from 'hooks/useAuth';
 import { format } from 'timeago.js';
 
-import UserAvatarWithStatus from '../UserAvatarWithStatus';
+import UserAvatarWithStatus from '../../../../components/common/UserAvatarWithStatus';
 
 const Button = styled.button`
   display: flex;

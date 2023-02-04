@@ -4,9 +4,9 @@ import axios from 'axios';
 import styled from 'styled-components/macro';
 import useAuth from 'hooks/useAuth';
 import useChats from 'hooks/useChats';
-import breakpoints from 'lib/breakpoints';
+import breakpoints from 'utils/breakpoints';
 
-import SidePanel from '../SidePanel';
+import SidePanel from '../../../../components/SidePanel';
 import FriendsList from './FriendsList';
 import SearchResults from './SearchResults';
 import Searchbar from './Searchbar';

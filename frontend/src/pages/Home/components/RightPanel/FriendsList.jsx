@@ -3,8 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import useAuth from 'hooks/useAuth';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 
-import DropdownList from '../common/DropdownList';
-import User from '../common/User';
+import DropdownList from 'components/common/DropdownList';
+import User from 'components/common/User';
 
 function FriendsList({ friends, chats, setCurrentChat }) {
   const { auth } = useAuth();

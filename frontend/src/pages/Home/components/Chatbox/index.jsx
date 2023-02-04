@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import useAuth from 'hooks/useAuth';
 import useChats from 'hooks/useChats';
 import styled from 'styled-components/macro';
-import breakpoints from 'lib/breakpoints';
+import breakpoints from 'utils/breakpoints';
 
 import Message from './Message';
 
