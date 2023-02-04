@@ -1,19 +1,19 @@
 import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components/macro';
 import { io } from 'socket.io-client';
-import useAuth from '../../hooks/useAuth';
-import useChats from '../../hooks/useChats';
-import useConnectedUsers from '../../hooks/useConnectedUsers';
+import useAuth from 'hooks/useAuth';
+import useChats from 'hooks/useChats';
+import useConnectedUsers from 'hooks/useConnectedUsers';
 
 import fetchMessages from './api/fetchMessages';
 import fetchFriends from './api/fetchFriends';
 import fetchFriendInvites from './api/fetchFriendInvites';
 import subscribeToSocketEvents from './subscribeToSocketEvents';
 
-import Topbar from '../../components/Topbar';
-import Leftbar from '../../components/Leftbar';
-import Chatbox from '../../components/Chatbox';
-import Rightbar from '../../components/Rightbar';
+import Topbar from 'components/Topbar';
+import LeftPanel from 'components/LeftPanel';
+import Chatbox from 'components/Chatbox';
+import RightPanel from 'components/RightPanel';
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -60,14 +60,14 @@ function Home() {
     <Wrapper>
       <Topbar setExpandLeftbar={setExpandLeftbar} setExpandRightbar={setExpandRightbar} />
       <Main>
-        <Leftbar expanded={expandLeftbar} />
+        <LeftPanel expanded={expandLeftbar} />
         <Chatbox
           expandRightbar={expandRightbar}
           socket={socket}
           messages={messages}
           setMessages={setMessages}
         />
-        <Rightbar
+        <RightPanel
           friends={friends}
           setFriends={setFriends}
           expanded={expandRightbar}

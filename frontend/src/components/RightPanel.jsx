@@ -6,25 +6,13 @@ import useAuth from 'hooks/useAuth';
 import useChats from 'hooks/useChats';
 import breakpoints from 'lib/breakpoints';
 
+import SidePanel from './SidePanel';
 import Friends from './Friends';
 import SearchResults from './SearchResults';
 import Searchbar from './Searchbar';
 import FriendInvites from './FriendInvites';
 
-const StyledRightbar = styled.div`
-  padding: var(--padding);
-  border-left: 1px solid var(--clr-light-200);
-  height: calc(100% - 4rem);
-  width: 90%;
-  max-width: 300px;
-  position: fixed;
-  top: 4rem;
-  right: ${({ expanded }) => (expanded ? '0' : '-300px')};
-  transition: right 0.1s ease-in-out;
-  background: var(--clr-light-400);
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-
+const StyledSidePanel = styled(SidePanel)`
   @media ${breakpoints.large} {
     height: 100vh;
     top: 0;
@@ -55,7 +43,7 @@ const Section = styled.section`
   margin-top: 1rem;
 `;
 
-const SearchToggleButton = styled.button`
+const SearchToggle = styled.button`
   height: var(--bottom-row-height);
   background: var(--clr-light-400);
   color: var(--clr-accent);
@@ -73,7 +61,7 @@ const SearchToggleButton = styled.button`
   }
 `;
 
-function Rightbar({ expanded, friends, setFriends, friendInvites, setFriendInvites }) {
+function RightPanel({ expanded, friends, setFriends, friendInvites, setFriendInvites }) {
   const { auth } = useAuth();
   const { chats, setCurrentChat } = useChats();
   const [results, setResults] = useState([]);
@@ -102,7 +90,7 @@ function Rightbar({ expanded, friends, setFriends, friendInvites, setFriendInvit
   };
 
   return (
-    <StyledRightbar expanded={expanded}>
+    <StyledSidePanel anchor="right" expanded={expanded}>
       <Title isSearching={isSearching}>
         {isSearching ? (
           <>
@@ -131,12 +119,12 @@ function Rightbar({ expanded, friends, setFriends, friendInvites, setFriendInvit
       {isSearching ? (
         <Searchbar forwardRef={queryRef} onChange={handleChange} />
       ) : (
-        <SearchToggleButton type="button" onClick={() => setIsSearching(true)}>
+        <SearchToggle type="button" onClick={() => setIsSearching(true)}>
           Add new friend
-        </SearchToggleButton>
+        </SearchToggle>
       )}
-    </StyledRightbar>
+    </StyledSidePanel>
   );
 }
 
-export default Rightbar;
+export default RightPanel;
