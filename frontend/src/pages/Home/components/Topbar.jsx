@@ -22,6 +22,7 @@ const Header = styled.header`
   height: 4rem;
 
   @media ${breakpoints.medium} {
+    justify-content: flex-end;
     width: calc(100vw - 300px);
     position: relative;
     left: 300px;
@@ -43,13 +44,13 @@ const Button = styled.button`
   padding: var(--padding);
 `;
 
-const LeftbarButton = styled(Button)`
+const LeftPanelButton = styled(Button)`
   @media ${breakpoints.medium} {
     display: none;
   }
 `;
 
-const RightbarButton = styled(Button)`
+const RightPanelButton = styled(Button)`
   @media ${breakpoints.large} {
     display: none;
   }
@@ -64,7 +65,7 @@ const CurrentChat = styled.span`
   gap: 1rem;
 `;
 
-function Topbar({ setExpandLeftbar, setExpandRightbar }) {
+function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
   const { auth } = useAuth();
   const { currentChat } = useChats();
   const [chatPartner, setChatPartner] = useState(null);
@@ -73,27 +74,31 @@ function Topbar({ setExpandLeftbar, setExpandRightbar }) {
     if (!currentChat) return;
     const partner = currentChat.members.find((member) => member._id !== auth.user._id);
     setChatPartner(partner);
-  }, [currentChat]);
+  }, [currentChat, auth.user._id]);
 
-  const handleLeftbarExpand = () => {
-    setExpandRightbar(false);
-    setExpandLeftbar((prev) => !prev);
+  const handleLeftPanelExpand = () => {
+    setExpandRightPanel(false);
+    setExpandLeftPanel((prev) => !prev);
   };
 
-  const handleRightbarExpand = () => {
-    setExpandLeftbar(false);
-    setExpandRightbar((prev) => !prev);
+  const handleRightPanelExpand = () => {
+    setExpandLeftPanel(false);
+    setExpandRightPanel((prev) => !prev);
   };
 
   return (
     <Header>
-      <LeftbarButton type="button" onClick={handleLeftbarExpand}>
+      <LeftPanelButton type="button" onClick={handleLeftPanelExpand}>
         <HiMenu size="1.5rem" />
-      </LeftbarButton>
-      <CurrentChat>{currentChat && <User user={chatPartner} events={false} />}</CurrentChat>
-      <RightbarButton type="button" onClick={handleRightbarExpand}>
+      </LeftPanelButton>
+      {currentChat ? (
+        <CurrentChat>
+          <User user={chatPartner} events={false} />
+        </CurrentChat>
+      ) : null}
+      <RightPanelButton type="button" onClick={handleRightPanelExpand}>
         <FaUserFriends size="1.5rem" />
-      </RightbarButton>
+      </RightPanelButton>
     </Header>
   );
 }

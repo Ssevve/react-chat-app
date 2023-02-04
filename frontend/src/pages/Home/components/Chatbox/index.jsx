@@ -18,10 +18,10 @@ const Section = styled.section`
   top: 4rem;
 
   @media ${breakpoints.medium} {
-    max-width: ${({ expandRightbar }) =>
-      expandRightbar ? 'calc(100vw - 600px)' : 'calc(100vw - 300px)'};
+    max-width: ${({ expandRightPanel }) =>
+      expandRightPanel ? 'calc(100vw - 600px)' : 'calc(100vw - 300px)'};
     left: 300px;
-    right: ${({ expandRightbar }) => (expandRightbar ? '300px' : '0')};
+    right: ${({ expandRightPanel }) => (expandRightPanel ? '300px' : '0')};
     transition: right 0.1s ease-in-out, max-width 0.1s ease-in-out;
   }
 
@@ -82,7 +82,7 @@ const Button = styled.button`
   }
 `;
 
-function Chatbox({ socket, messages, setMessages, expandRightbar }) {
+function Chatbox({ socket, messages, setMessages, expandRightPanel }) {
   const scrollRef = useRef(null);
   const inputRef = useRef('');
   const { auth } = useAuth();
@@ -128,7 +128,7 @@ function Chatbox({ socket, messages, setMessages, expandRightbar }) {
   };
 
   return (
-    <Section expandRightbar={expandRightbar}>
+    <Section expandRightPanel={expandRightPanel}>
       {currentChatMessages && (
         <>
           <Messages ref={scrollRef}>

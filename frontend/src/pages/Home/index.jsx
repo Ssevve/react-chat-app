@@ -31,8 +31,8 @@ function Home() {
   const { auth } = useAuth();
   const { setChats } = useChats();
   const { setConnectedUsers } = useConnectedUsers();
-  const [expandLeftbar, setExpandLeftbar] = useState(false);
-  const [expandRightbar, setExpandRightbar] = useState(false);
+  const [expandLeftPanel, setExpandLeftPanel] = useState(false);
+  const [expandRightPanel, setExpandRightPanel] = useState(false);
   const [messages, setMessages] = useState([]);
   const [friends, setFriends] = useState([]);
   const [friendInvites, setFriendInvites] = useState([]);
@@ -69,11 +69,11 @@ function Home() {
 
   return (
     <Wrapper>
-      <Topbar setExpandLeftbar={setExpandLeftbar} setExpandRightbar={setExpandRightbar} />
+      <Topbar setExpandLeftPanel={setExpandLeftPanel} setExpandRightPanel={setExpandRightPanel} />
       <Main>
-        <LeftPanel expanded={expandLeftbar} />
+        <LeftPanel expanded={expandLeftPanel} />
         <Chatbox
-          expandRightbar={expandRightbar}
+          expandRightPanel={expandRightPanel}
           socket={socket}
           messages={messages}
           setMessages={setMessages}
@@ -81,7 +81,7 @@ function Home() {
         <RightPanel
           friends={friends}
           setFriends={setFriends}
-          expanded={expandRightbar}
+          expanded={expandRightPanel}
           friendInvites={friendInvites}
           setFriendInvites={setFriendInvites}
         />
