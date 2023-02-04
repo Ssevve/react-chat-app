@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
-import AuthRoutes from './utils/AuthRoutes';
-import GuestRoutes from './utils/GuestRoutes';
+import AuthRoutes from 'utils/AuthRoutes';
+import GuestRoutes from 'utils/GuestRoutes';
 
-import Login from './pages/Login';
-import Home from './pages/Home';
-import Signup from './pages/Signup';
+import Login from 'pages/Login';
+import Home from 'pages/Home';
+import Signup from 'pages/Signup';
 
 const StyledApp = styled.div`
   min-height: 100vh;

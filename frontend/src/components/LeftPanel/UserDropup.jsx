@@ -7,7 +7,7 @@ import axios from 'axios';
 import useAuth from 'hooks/useAuth';
 import useClickOutside from 'hooks/useClickOutside';
 
-import UserAvatar from './common/UserAvatar';
+import UserAvatar from '../common/UserAvatar';
 
 const Wrapper = styled.div`
   display: flex;

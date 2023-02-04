@@ -3,10 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 import useAuth from 'hooks/useAuth';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 
-import DropdownList from './common/DropdownList';
-import User from './common/User';
+import DropdownList from '../common/DropdownList';
+import User from '../common/User';
 
-function Friends({ friends, chats, setCurrentChat }) {
+function FriendsList({ friends, chats, setCurrentChat }) {
   const { auth } = useAuth();
   const { connectedUsers } = useConnectedUsers();
   const [onlineFriends, setOnlineFriends] = useState(null);
@@ -57,4 +57,4 @@ function Friends({ friends, chats, setCurrentChat }) {
   );
 }
 
-export default Friends;
+export default FriendsList;

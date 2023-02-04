@@ -3,7 +3,7 @@ import { format } from 'timeago.js';
 import breakpoints from 'lib/breakpoints';
 import useAuth from 'hooks/useAuth';
 
-import UserAvatar from './common/UserAvatar';
+import UserAvatar from '../common/UserAvatar';
 
 const StyledMessage = styled.div`
   display: flex;

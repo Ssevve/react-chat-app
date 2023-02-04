@@ -6,8 +6,8 @@ import useAuth from 'hooks/useAuth';
 import useChats from 'hooks/useChats';
 import breakpoints from 'lib/breakpoints';
 
-import SidePanel from './SidePanel';
-import Friends from './Friends';
+import SidePanel from '../SidePanel';
+import FriendsList from './FriendsList';
 import SearchResults from './SearchResults';
 import Searchbar from './Searchbar';
 import FriendInvites from './FriendInvites';
@@ -112,7 +112,7 @@ function RightPanel({ expanded, friends, setFriends, friendInvites, setFriendInv
               setFriendInvites={setFriendInvites}
               setFriends={setFriends}
             />
-            <Friends friends={friends} chats={chats} setCurrentChat={setCurrentChat} />
+            <FriendsList friends={friends} chats={chats} setCurrentChat={setCurrentChat} />
           </>
         )}
       </Section>
