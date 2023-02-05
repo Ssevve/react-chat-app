@@ -32,7 +32,6 @@ app.get('/', (req, res) => {
 
 // Routes
 app.use('/auth', require('./routes/auth'));
-app.use('/refresh', require('./routes/refresh'));
 app.use('/users', verifyJWT, require('./routes/users'));
 app.use('/chats', verifyJWT, require('./routes/chats'));
 app.use('/messages', verifyJWT, require('./routes/messages'));
