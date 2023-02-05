@@ -5,14 +5,14 @@ import useAuth from 'hooks/useAuth';
 import useChats from 'hooks/useChats';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 
-import fetchMessages from './utils/fetchMessages';
-import fetchFriends from './utils/fetchFriends';
-import fetchFriendInvites from './utils/fetchFriendInvites';
+import fetchMessages from './api/fetchMessages';
+import fetchFriends from './api/fetchFriends';
+import fetchFriendInvites from './api/fetchFriendInvites';
 import {
   subscribeToMessageEvents,
   subscribeToUserEvents,
   subscribeToFriendEvents,
-} from './utils/socketEvents';
+} from './socketEvents';
 
 import Topbar from './components/Topbar';
 import LeftPanel from './components/LeftPanel';
