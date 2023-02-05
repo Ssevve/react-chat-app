@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setChats,
+  updateLastMessage,
+  setCurrentChat,
+  selectAllChats,
+  selectCurrentChat,
+} from 'features/chats/chatsSlice';
 import useAuth from 'hooks/useAuth';
-import useChats from 'hooks/useChats';
 import styled from 'styled-components/macro';
 import breakpoints from 'utils/breakpoints';
 
@@ -83,10 +90,12 @@ const Button = styled.button`
 `;
 
 function Chatbox({ socket, messages, setMessages, expandRightPanel }) {
+  const dispatch = useDispatch();
+  const chats = useSelector(selectAllChats);
+  const currentChat = useSelector(selectCurrentChat);
   const scrollRef = useRef(null);
   const inputRef = useRef('');
   const { auth } = useAuth();
-  const { chats, setChats, currentChat, setCurrentChat } = useChats();
   const [currentChatMessages, setCurrentChatMessages] = useState([]);
 
   useEffect(() => {
@@ -115,14 +124,14 @@ function Chatbox({ socket, messages, setMessages, expandRightPanel }) {
     socket.current.emit('sendMessage', { message, receiverId: receiver._id });
 
     setMessages((prevMessages) => [...prevMessages, message]);
-    setCurrentChat({ ...currentChat, lastMessage: message });
+    dispatch(setCurrentChat({ ...currentChat, lastMessage: message }));
 
     let updatedChat = chats.find((chat) => chat._id === currentChat._id);
     if (!updatedChat) updatedChat = currentChat;
-    updatedChat.lastMessage = message;
+    dispatch(updateLastMessage(updatedChat, message));
 
     const filteredChats = chats.filter((chat) => chat._id !== currentChat._id);
-    setChats([updatedChat, ...filteredChats]);
+    dispatch(setChats([...filteredChats, updatedChat]));
 
     inputRef.current.value = '';
   };

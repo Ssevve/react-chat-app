@@ -1,10 +1,9 @@
 import { BsFillChatFill } from 'react-icons/bs';
 import styled from 'styled-components/macro';
-import useChats from 'hooks/useChats';
 import breakpoints from 'utils/breakpoints';
 
 import SidePanel from 'components/SidePanel';
-import ChatList from './ChatList';
+import ChatsList from 'features/chats/ChatsList';
 import UserDropup from './UserDropup';
 
 const StyledSidePanel = styled(SidePanel)`
@@ -31,14 +30,13 @@ const LogoText = styled.h1`
 `;
 
 function LeftPanel({ expanded }) {
-  const { chats, currentChat, setCurrentChat } = useChats();
   return (
     <StyledSidePanel anchor="left" expanded={expanded}>
       <Logo>
         <BsFillChatFill />
         <LogoText>Chat App</LogoText>
       </Logo>
-      <ChatList chats={chats} currentChat={currentChat} setCurrentChat={setCurrentChat} />
+      <ChatsList />
       <UserDropup />
     </StyledSidePanel>
   );

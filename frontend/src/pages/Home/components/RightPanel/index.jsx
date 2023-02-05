@@ -3,7 +3,6 @@ import { IoMdClose } from 'react-icons/io';
 import axios from 'axios';
 import styled from 'styled-components/macro';
 import useAuth from 'hooks/useAuth';
-import useChats from 'hooks/useChats';
 import breakpoints from 'utils/breakpoints';
 
 import SidePanel from 'components/SidePanel';
@@ -63,7 +62,6 @@ const SearchToggle = styled.button`
 
 function RightPanel({ expanded, friends, setFriends, friendInvites, setFriendInvites }) {
   const { auth } = useAuth();
-  const { chats, setCurrentChat } = useChats();
   const [results, setResults] = useState([]);
   const queryRef = useRef('');
   const [isSearching, setIsSearching] = useState(false);
@@ -112,7 +110,7 @@ function RightPanel({ expanded, friends, setFriends, friendInvites, setFriendInv
               setFriendInvites={setFriendInvites}
               setFriends={setFriends}
             />
-            <FriendsList friends={friends} chats={chats} setCurrentChat={setCurrentChat} />
+            <FriendsList friends={friends} />
           </>
         )}
       </Section>

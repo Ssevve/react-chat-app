@@ -62,7 +62,7 @@ const initializeSocketEvents = (server, app) => {
     });
 
     socket.on('disconnect', () => {
-      removeUser(socket.handshake.query.userId);
+      removeUser(userId);
       io.emit('receiveConnectedUsers', { users: connectedUsers });
     });
   });

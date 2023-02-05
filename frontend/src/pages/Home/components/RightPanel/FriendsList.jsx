@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrentChat, selectAllChats } from 'features/chats/chatsSlice';
 import useAuth from 'hooks/useAuth';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 
 import DropdownList from 'components/common/DropdownList';
 import User from 'components/common/User';
 
-function FriendsList({ friends, chats, setCurrentChat }) {
+function FriendsList({ friends }) {
+  const dispatch = useDispatch();
+  const chats = useSelector(selectAllChats);
   const { auth } = useAuth();
   const { connectedUsers } = useConnectedUsers();
   const [onlineFriends, setOnlineFriends] = useState(null);
@@ -22,21 +26,22 @@ function FriendsList({ friends, chats, setCurrentChat }) {
   }, [friends, connectedUsers]);
 
   const handleFriendClick = (friend) => {
+    if (!chats.length) return;
     const chatsMembers = chats.map((chat) => chat.members);
-    const indexOfChat = chatsMembers.findIndex(
+    const chatIndex = chatsMembers.findIndex(
       (members) => members[0]._id === friend._id || members[1]._id === friend._id,
     );
 
-    if (indexOfChat === -1) {
+    if (chatIndex === -1) {
       const newChat = {
         _id: uuidv4(),
         members: [auth.user, friend],
       };
 
-      return setCurrentChat(newChat);
+      return dispatch(setCurrentChat(newChat));
     }
 
-    setCurrentChat(chats[indexOfChat]);
+    dispatch(setCurrentChat(chats[chatIndex]));
   };
 
   return (

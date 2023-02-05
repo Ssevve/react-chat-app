@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components/macro';
 import { HiMenu } from 'react-icons/hi';
 import { FaUserFriends } from 'react-icons/fa';
+import { selectCurrentChat } from 'features/chats/chatsSlice';
 import useAuth from 'hooks/useAuth';
-import useChats from 'hooks/useChats';
 import breakpoints from 'utils/breakpoints';
 
 import User from 'components/common/UserAvatarWithStatus';
@@ -55,25 +56,27 @@ const RightPanelButton = styled(Button)`
   }
 `;
 
-const CurrentChat = styled.span`
-  font-size: 1.5rem;
-  line-height: 1;
-  padding-block: var(--padding);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-`;
+// const CurrentChat = styled.span`
+//   font-size: 1.5rem;
+//   line-height: 1;
+//   padding-block: var(--padding);
+//   display: flex;
+//   align-items: center;
+//   gap: 1rem;
+// `;
 
 function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
   const { auth } = useAuth();
-  const { currentChat } = useChats();
-  const [chatPartner, setChatPartner] = useState(null);
+  const currentChat = useSelector(selectCurrentChat);
+  const [friend, setFriend] = useState(null);
 
   useEffect(() => {
     if (!currentChat) return;
-    const partner = currentChat.members.find((member) => member._id !== auth.user._id);
-    setChatPartner(partner);
+    const chatPartner = currentChat.members.find((member) => member._id !== auth.user._id);
+    setFriend(chatPartner);
   }, [currentChat, auth.user._id]);
+
+  console.log(friend);
 
   const handleLeftPanelExpand = () => {
     setExpandRightPanel(false);
@@ -91,10 +94,10 @@ function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
         <HiMenu size="1.5rem" />
       </LeftPanelButton>
       {currentChat ? (
-        <CurrentChat>
-          <User user={chatPartner} events={false} />
-        </CurrentChat>
-      ) : null}
+        // <CurrentChat>
+        <User user={friend} events={false} />
+      ) : // </CurrentChat>
+      null}
       <RightPanelButton type="button" onClick={handleRightPanelExpand}>
         <FaUserFriends size="1.5rem" />
       </RightPanelButton>

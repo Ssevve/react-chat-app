@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components/macro';
 import { io } from 'socket.io-client';
+import { setChats } from 'features/chats/chatsSlice';
 import useAuth from 'hooks/useAuth';
-import useChats from 'hooks/useChats';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 
 import fetchMessages from './api/fetchMessages';
@@ -29,7 +29,6 @@ const Main = styled.main`
 
 function Home() {
   const { auth } = useAuth();
-  const { setChats } = useChats();
   const { setConnectedUsers } = useConnectedUsers();
   const [expandLeftPanel, setExpandLeftPanel] = useState(false);
   const [expandRightPanel, setExpandRightPanel] = useState(false);
