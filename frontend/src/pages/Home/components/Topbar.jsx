@@ -22,7 +22,6 @@ const Header = styled.header`
   height: 4rem;
 
   @media ${breakpoints.medium} {
-    justify-content: flex-end;
     width: calc(100vw - 300px);
     position: relative;
     left: 300px;
