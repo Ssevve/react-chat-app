@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const StyledInput = styled.input`
   border-radius: var(--border-radius);

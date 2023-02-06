@@ -6,7 +6,7 @@ import { FaUserFriends } from 'react-icons/fa';
 import { selectCurrentChat } from 'features/chats/chatsSlice';
 import breakpoints from 'utils/breakpoints';
 
-import User from 'components/common/UserAvatarWithStatus';
+import User from 'components/common/User';
 
 const Header = styled.header`
   width: 100vw;
@@ -55,27 +55,18 @@ const RightPanelButton = styled(Button)`
   }
 `;
 
-// const CurrentChat = styled.span`
-//   font-size: 1.5rem;
-//   line-height: 1;
-//   padding-block: var(--padding);
-//   display: flex;
-//   align-items: center;
-//   gap: 1rem;
-// `;
-
 function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
   const auth = useSelector((state) => state.auth);
   const currentChat = useSelector(selectCurrentChat);
-  const [friend, setFriend] = useState(null);
+  const [chatPartner, setChatPartner] = useState(null);
 
   useEffect(() => {
     if (!currentChat) return;
-    const chatPartner = currentChat.members.find((member) => member._id !== auth.user._id);
-    setFriend(chatPartner);
+    const partner = currentChat.members.find((member) => member._id !== auth.user._id);
+    setChatPartner(partner);
   }, [currentChat, auth.user._id]);
 
-  console.log(friend);
+  console.log(chatPartner);
 
   const handleLeftPanelExpand = () => {
     setExpandRightPanel(false);
@@ -93,10 +84,10 @@ function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
         <HiMenu size="1.5rem" />
       </LeftPanelButton>
       {currentChat ? (
-        // <CurrentChat>
-        <User user={friend} events={false} />
-      ) : // </CurrentChat>
-      null}
+        <span>
+          <User user={chatPartner} events={false} />
+        </span>
+      ) : null}
       <RightPanelButton type="button" onClick={handleRightPanelExpand}>
         <FaUserFriends size="1.5rem" />
       </RightPanelButton>

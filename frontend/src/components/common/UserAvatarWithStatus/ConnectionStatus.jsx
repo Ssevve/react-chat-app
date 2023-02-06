@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 
 const StyledSpan = styled.span`

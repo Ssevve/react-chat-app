@@ -36,9 +36,9 @@ const StatusText = styled.span`
   opacity: 0.6;
 `;
 
-function User({ user, events = true, onClick }) {
+function User({ user, events = true, onClick, className }) {
   return user ? (
-    <Button type="button" onClick={onClick} events={events}>
+    <Button type="button" onClick={onClick} events={events} className={className}>
       <UserAvatarWithStatus user={user} />
       <Details>
         <Username>{user.username}</Username>

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchChats, setCurrentChat, selectAllChats, selectCurrentChat } from './chatsSlice';
 
