@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import { useEffect, useState } from 'react';
-import useAuth from 'hooks/useAuth';
 import { format } from 'timeago.js';
+import { useSelector } from 'react-redux';
 
 import UserAvatarWithStatus from 'components/common/UserAvatarWithStatus';
 
@@ -55,7 +55,7 @@ const LastMessage = styled.span`
 `;
 
 function Chat({ chat, currentChat, onClick }) {
-  const { auth } = useAuth();
+  const auth = useSelector((state) => state.auth);
   const [chatPartner, setChatPartner] = useState(null);
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import { BsCheck } from 'react-icons/bs';
 import { IoMdClose } from 'react-icons/io';
-import useAuth from 'hooks/useAuth';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 import DropdownList from 'components/common/DropdownList';
@@ -42,7 +42,7 @@ const DeclineButton = styled(Button)`
 `;
 
 function FriendInvites({ friendInvites, setFriends, setFriendInvites }) {
-  const { auth } = useAuth();
+  const auth = useSelector((state) => state.auth);
 
   const acceptInvite = async (invite) => {
     const newFriendId =

@@ -1,9 +1,9 @@
 import { Outlet, Navigate } from 'react-router-dom';
-import useAuth from 'hooks/useAuth';
+import { useSelector } from 'react-redux';
 
 function AuthRoutes() {
-  const { auth } = useAuth();
-  return auth ? <Outlet /> : <Navigate to="/login" />;
+  const auth = useSelector((state) => state.auth);
+  return auth.user ? <Outlet /> : <Navigate to="/login" />;
 }
 
 export default AuthRoutes;

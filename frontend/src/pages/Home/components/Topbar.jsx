@@ -4,7 +4,6 @@ import styled from 'styled-components/macro';
 import { HiMenu } from 'react-icons/hi';
 import { FaUserFriends } from 'react-icons/fa';
 import { selectCurrentChat } from 'features/chats/chatsSlice';
-import useAuth from 'hooks/useAuth';
 import breakpoints from 'utils/breakpoints';
 
 import User from 'components/common/UserAvatarWithStatus';
@@ -66,7 +65,7 @@ const RightPanelButton = styled(Button)`
 // `;
 
 function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
-  const { auth } = useAuth();
+  const auth = useSelector((state) => state.auth);
   const currentChat = useSelector(selectCurrentChat);
   const [friend, setFriend] = useState(null);
 

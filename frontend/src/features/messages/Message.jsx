@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import { format } from 'timeago.js';
 import breakpoints from 'utils/breakpoints';
-import useAuth from 'hooks/useAuth';
+import { useSelector } from 'react-redux';
 
 import UserAvatar from 'components/common/UserAvatar';
 import UserAvatarWithStatus from 'components/common/UserAvatarWithStatus';
@@ -44,7 +44,7 @@ const Content = styled.p`
 `;
 
 function Message({ message }) {
-  const { auth } = useAuth();
+  const auth = useSelector((state) => state.auth);
   const sender = message.sender._id ? message.sender : auth.user;
 
   const ownMessage = sender._id === auth.user._id;

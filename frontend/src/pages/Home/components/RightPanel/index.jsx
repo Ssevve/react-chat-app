@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import axios from 'axios';
 import styled from 'styled-components/macro';
-import useAuth from 'hooks/useAuth';
 import breakpoints from 'utils/breakpoints';
 
 import SidePanel from 'components/SidePanel';
@@ -10,6 +9,7 @@ import FriendsList from './FriendsList';
 import SearchResults from './SearchResults';
 import Searchbar from './Searchbar';
 import FriendInvites from './FriendInvites';
+import { useSelector } from 'react-redux';
 
 const StyledSidePanel = styled(SidePanel)`
   @media ${breakpoints.large} {
@@ -61,7 +61,7 @@ const SearchToggle = styled.button`
 `;
 
 function RightPanel({ expanded, friends, setFriends, friendInvites, setFriendInvites }) {
-  const { auth } = useAuth();
+  const auth = useSelector((state) => state.auth);
   const [results, setResults] = useState([]);
   const queryRef = useRef('');
   const [isSearching, setIsSearching] = useState(false);

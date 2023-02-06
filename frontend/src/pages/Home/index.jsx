@@ -2,10 +2,10 @@ import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components/macro';
 import { io } from 'socket.io-client';
 import { setChats } from 'features/chats/chatsSlice';
-import useAuth from 'hooks/useAuth';
 import useConnectedUsers from 'hooks/useConnectedUsers';
+import { useSelector } from 'react-redux';
 
-import fetchMessages from './api/fetchMessages';
+import fetchMessages from 'features/messages/fetchMessages';
 import fetchFriends from './api/fetchFriends';
 import fetchFriendInvites from './api/fetchFriendInvites';
 import {
@@ -28,7 +28,7 @@ const Main = styled.main`
 `;
 
 function Home() {
-  const { auth } = useAuth();
+  const auth = useSelector((state) => state.auth);
   const { setConnectedUsers } = useConnectedUsers();
   const [expandLeftPanel, setExpandLeftPanel] = useState(false);
   const [expandRightPanel, setExpandRightPanel] = useState(false);

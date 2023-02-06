@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { IoMdAdd } from 'react-icons/io';
-import useAuth from 'hooks/useAuth';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 import User from 'components/common/UserAvatarWithStatus';
@@ -32,7 +32,7 @@ const InviteButton = styled.button`
 `;
 
 function SearchResults({ results, setFriendInvites }) {
-  const { auth } = useAuth();
+  const auth = useSelector((state) => state.auth);
   const handleClick = async (resultId) => {
     // Send friend invite to the user
     const friendInvite = {

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -8,11 +8,10 @@ import {
   selectAllChats,
   selectCurrentChat,
 } from 'features/chats/chatsSlice';
-import useAuth from 'hooks/useAuth';
 import styled from 'styled-components/macro';
 import breakpoints from 'utils/breakpoints';
 
-import Message from './Message';
+import Message from 'features/messages/Message';
 
 const Section = styled.section`
   flex: 2.5;
@@ -95,17 +94,13 @@ function Chatbox({ socket, messages, setMessages, expandRightPanel }) {
   const currentChat = useSelector(selectCurrentChat);
   const scrollRef = useRef(null);
   const inputRef = useRef('');
-  const { auth } = useAuth();
-  const [currentChatMessages, setCurrentChatMessages] = useState([]);
+  const auth = useSelector((state) => state.auth);
+  const currentChatMessages = messages.filter((msg) => msg.chatId === currentChat?._id);
 
   useEffect(() => {
-    const filteredMessages = messages.filter((msg) => msg.chatId === currentChat?._id);
-    setCurrentChatMessages(filteredMessages);
-  }, [currentChat, messages]);
-
-  useEffect(() => {
-    scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight);
-  }, [currentChatMessages]);
+    if (!scrollRef.current) return;
+    scrollRef.current.scrollTo(0, scrollRef.current.scrollHeight);
+  }, [messages, currentChat]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

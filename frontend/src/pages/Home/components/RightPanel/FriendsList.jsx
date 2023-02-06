@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentChat, selectAllChats } from 'features/chats/chatsSlice';
-import useAuth from 'hooks/useAuth';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 
 import DropdownList from 'components/common/DropdownList';
@@ -10,8 +9,8 @@ import User from 'components/common/User';
 
 function FriendsList({ friends }) {
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
   const chats = useSelector(selectAllChats);
-  const { auth } = useAuth();
   const { connectedUsers } = useConnectedUsers();
   const [onlineFriends, setOnlineFriends] = useState(null);
   const [offlineFriends, setOfflineFriends] = useState(null);

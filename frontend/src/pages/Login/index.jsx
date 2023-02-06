@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import useLogin from './useLogin';
 import loginSchema from './loginSchema';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from 'features/auth/authSlice';
 
 import AuthPageLayout from 'layouts/AuthPageLayout';
 import ErrorBox from 'components/AuthForm/ErrorBox';
@@ -31,6 +32,10 @@ const StyledLink = styled(Link)`
 `;
 
 function Login() {
+  const [unauthorized, setUnauthorized] = useState(false);
+  const [loginError, setLoginError] = useState(null);
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const {
     watch,
     register,
@@ -41,26 +46,37 @@ function Login() {
     resolver: yupResolver(loginSchema),
     reValidateMode: 'onSubmit',
   });
-  const { error, setError, unauthorized, setUnauthorized, isLoading, login } = useLogin();
+
   const username = watch('username');
   const password = watch('password');
 
   useEffect(() => {
-    setUnauthorized(false);
-    setError(null);
     clearErrors();
-  }, [username, password, setUnauthorized, clearErrors, setError]);
+    setUnauthorized(false);
+    setLoginError(false);
+  }, [username, password, clearErrors]);
+
+  const onSubmit = async (data) => {
+    // Making a copy to avoid a TypeError: Cannot assign to read only property 'x' of object '#<Object>
+    const credentials = { ...data };
+    const res = await dispatch(login(credentials));
+    if (res.error) {
+      setUnauthorized(res.payload.unauthorized);
+      setLoginError(res);
+    }
+  };
 
   const invalidCredentials = errors.password || errors.username || unauthorized;
+  const fetchError = loginError && !unauthorized;
   return (
     <AuthPageLayout>
-      <Form onSubmit={handleSubmit(login)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <FormTitle title="Log in" />
-        {error && (
+        {fetchError ? (
           <ErrorBox>
             <ErrorMessage message="Something went wrong. Please try again." />
           </ErrorBox>
-        )}
+        ) : null}
         <Label label="Username">
           <Input error={invalidCredentials} name="username" register={register} />
           {invalidCredentials && <ErrorMessage message="Invalid username or password" />}
@@ -69,7 +85,7 @@ function Login() {
           <Input error={invalidCredentials} name="password" register={register} type="password" />
           {invalidCredentials && <ErrorMessage message="Invalid username or password" />}
         </Label>
-        <SubmitButton text="Log in" isLoading={isLoading} />
+        <SubmitButton text="Log in" isLoading={auth.loading} />
         <Divider />
         <NeedAccount>
           Need an account?

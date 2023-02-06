@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchChats, setCurrentChat, selectAllChats, selectCurrentChat } from './chatsSlice';
-import useAuth from 'hooks/useAuth';
 
 import DropdownList from 'components/common/DropdownList';
 import Chat from './Chat';
@@ -12,30 +11,31 @@ const Wrapper = styled.section`
 `;
 
 function ChatsList() {
-  const { auth } = useAuth();
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
   const chats = useSelector(selectAllChats);
   const currentChat = useSelector(selectCurrentChat);
 
   useEffect(() => {
     dispatch(fetchChats(auth.accessToken));
-  }, []);
+  }, [auth.accessToken, dispatch]);
 
   return (
     <Wrapper>
-      <DropdownList title="Direct messages">
-        {chats.length
-          ? chats.map((chat) => (
-              <Chat
-                key={chat._id}
-                chat={chat}
-                currentChat={currentChat}
-                onClick={() => dispatch(setCurrentChat(chat))}
-              />
-            ))
-          : null}
-        {chats.error ? <p>{chats.error}</p> : null}
-      </DropdownList>
+      {chats.length ? (
+        <DropdownList title="Direct messages">
+          {chats.map((chat) => (
+            <Chat
+              key={chat._id}
+              chat={chat}
+              currentChat={currentChat}
+              onClick={() => dispatch(setCurrentChat(chat))}
+            />
+          ))}
+        </DropdownList>
+      ) : (
+        <p>You have no chats.</p>
+      )}
     </Wrapper>
   );
 }
