@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const generateAccessToken = require('../helpers/generateAccessToken');
-const generateRefreshToken = require('../helpers/generateRefreshToken');
 
 function login401Error(res) {
   return res.status(401).json('Invalid username or password');
@@ -18,16 +17,6 @@ const handleLogin = async (req, res) => {
     if (!passwordMatch) return login401Error(res);
 
     const accessToken = generateAccessToken(user);
-    const refreshToken = generateRefreshToken(user);
-
-    user.refreshToken = refreshToken;
-    await user.save();
-
-    res.cookie('refreshToken', refreshToken, {
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      httpOnly: true,
-      secure: true,
-    });
 
     res.status(200).json({
       user: {
@@ -63,28 +52,4 @@ const handleSignup = async (req, res) => {
   }
 };
 
-const handleLogout = async (req, res) => {
-  const cookies = req.cookies;
-  if (!cookies.refreshToken) return res.sendStatus(204);
-  const refreshToken = cookies.refreshToken;
-
-  // Check if the token is in the DB
-  const user = await User.findOne({ refreshToken });
-  if (!user) {
-    res.clearCookie('refreshToken', { httpOnly: true, secure: true });
-    return res.sendStatus(204);
-  }
-
-  // Delete refresh token from the db
-  user.refreshToken = '';
-  await user.save();
-
-  res.clearCookie('refreshToken', { httpOnly: true, secure: true });
-  res.sendStatus(204);
-  try {
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
-
-module.exports = { handleSignup, handleLogin, handleLogout };
+module.exports = { handleSignup, handleLogin };

@@ -66,8 +66,6 @@ function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
     setChatPartner(partner);
   }, [currentChat, auth.user._id]);
 
-  console.log(chatPartner);
-
   const handleLeftPanelExpand = () => {
     setExpandRightPanel(false);
     setExpandLeftPanel((prev) => !prev);
