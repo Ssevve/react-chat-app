@@ -25,22 +25,15 @@ function FriendsList({ friends }) {
   }, [friends, connectedUsers]);
 
   const handleFriendClick = (friend) => {
-    if (!chats.length) return;
-    const chatsMembers = chats.map((chat) => chat.members);
-    const chatIndex = chatsMembers.findIndex(
-      (members) => members[0]._id === friend._id || members[1]._id === friend._id,
-    );
+    let selectedChat = {};
 
-    if (chatIndex === -1) {
-      const newChat = {
-        _id: uuidv4(),
-        members: [auth.user, friend],
-      };
-
-      return dispatch(setCurrentChat(newChat));
+    if (chats.length) {
+      selectedChat = chats.find((chat) => chat.members.includes(friend._id));
     }
 
-    dispatch(setCurrentChat(chats[chatIndex]));
+    if (!selectedChat.members) selectedChat.members = [auth.user._id, friend._id];
+
+    dispatch(setCurrentChat(selectedChat));
   };
 
   return (

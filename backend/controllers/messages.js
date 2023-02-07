@@ -1,4 +1,5 @@
 const Message = require('../models/Message');
+const Chat = require('../models/Chat');
 
 const getMessageById = async (req, res) => {
   try {
@@ -14,29 +15,61 @@ const getMessageById = async (req, res) => {
   }
 };
 
-const getMessagesForChats = async (req, res) => {
+const getMessagesByUserId = async (req, res) => {
   try {
-    const messages = await Message.find({ members: { $in: req.user._id } }).populate(
+    const messages = await Message.find({ members: { $in: req.params.userId } }).populate(
       'sender',
       '_id username avatar.url',
     );
 
     res.status(200).json(messages);
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 };
 
 const createNewMessage = async (req, res) => {
+  const io = req.app.get('socketio');
+  const connectedUsers = req.app.get('connectedUsers');
   try {
-    const { message } = req.body;
-    message.senderId = req.user._id;
-    const newMessage = await Message.create(message);
-    res.status(201).json(newMessage);
+    const { chatId, content, receiverId } = req.body;
+
+    const newMessage = await Message.create({
+      content,
+      chatId,
+      sender: req.user._id,
+    });
+    await newMessage.populate('sender', '_id username avatar.url');
+
+    // update chat
+    const updatedChat = await Chat.findOneAndUpdate(
+      { members: { $all: [req.user._id, receiverId] } },
+      {
+        lastMessage: newMessage._id,
+      },
+      {
+        upsert: true,
+        new: true,
+      },
+    );
+    await updatedChat.populate('lastMessage', 'content sender createdAt');
+    await updatedChat.populate('members', 'username avatar.url statusText');
+
+    if (!newMessage.chatId) {
+      newMessage.chatId = updatedChat._id;
+      await newMessage.save();
+    }
+
+    const responseData = {
+      newMessage,
+      updatedChat,
+    };
+
+    io.to(connectedUsers[receiverId]).emit('receiveMessage', responseData);
+    res.status(201).json(responseData);
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-module.exports = { getMessageById, getMessagesForChats, createNewMessage };
+module.exports = { getMessageById, getMessagesByUserId, createNewMessage };

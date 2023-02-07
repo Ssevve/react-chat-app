@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components/macro';
 import { io } from 'socket.io-client';
-import { setChats } from 'features/chats/chatsSlice';
+import { updateChat } from 'features/chats/chatsSlice';
+import { addMessage } from 'features/messages/messagesSlice';
 import useConnectedUsers from 'hooks/useConnectedUsers';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import fetchMessages from 'features/messages/fetchMessages';
 import fetchFriends from './api/fetchFriends';
 import fetchFriendInvites from './api/fetchFriendInvites';
 import {
@@ -18,6 +18,7 @@ import Topbar from './components/Topbar';
 import LeftPanel from './components/LeftPanel';
 import Chatbox from './components/Chatbox';
 import RightPanel from './components/RightPanel';
+import { getMessagesByUserId } from 'features/messages/messagesSlice';
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -28,18 +29,18 @@ const Main = styled.main`
 `;
 
 function Home() {
+  const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const { setConnectedUsers } = useConnectedUsers();
   const [expandLeftPanel, setExpandLeftPanel] = useState(false);
   const [expandRightPanel, setExpandRightPanel] = useState(false);
-  const [messages, setMessages] = useState([]);
   const [friends, setFriends] = useState([]);
   const [friendInvites, setFriendInvites] = useState([]);
   const socket = useRef(null);
 
   useEffect(() => {
     socket.current = io('ws://localhost:5000', { auth: { userId: auth.user._id } });
-    subscribeToMessageEvents({ socket: socket.current, setMessages, setChats });
+    subscribeToMessageEvents({ socket: socket.current, dispatch, addMessage, updateChat });
     subscribeToUserEvents({ socket: socket.current, setConnectedUsers });
     subscribeToFriendEvents({
       socket: socket.current,
@@ -48,9 +49,7 @@ function Home() {
       friendInvites,
     });
 
-    fetchMessages(auth.accessToken)
-      .then(setMessages)
-      .catch((err) => console.error(err));
+    dispatch(getMessagesByUserId(auth));
 
     fetchFriends(auth.accessToken, auth.user._id)
       .then(setFriends)
@@ -71,12 +70,7 @@ function Home() {
       <Topbar setExpandLeftPanel={setExpandLeftPanel} setExpandRightPanel={setExpandRightPanel} />
       <Main>
         <LeftPanel expanded={expandLeftPanel} />
-        <Chatbox
-          expandRightPanel={expandRightPanel}
-          socket={socket}
-          messages={messages}
-          setMessages={setMessages}
-        />
+        <Chatbox expandRightPanel={expandRightPanel} />
         <RightPanel
           friends={friends}
           setFriends={setFriends}

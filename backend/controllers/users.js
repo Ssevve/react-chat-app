@@ -71,7 +71,6 @@ const addFriend = async (req, res) => {
 const getUsersByQuery = async (req, res) => {
   const { query } = req.params;
   const regex = new RegExp(query, 'i');
-  console.log(query);
   try {
     const users = await User.find({ username: regex });
     res.status(200).json(users);

@@ -22,7 +22,7 @@ function ChatsList() {
 
   return (
     <Wrapper>
-      {chats.length ? (
+      {chats ? (
         <DropdownList title="Direct messages">
           {chats.map((chat) => (
             <Chat

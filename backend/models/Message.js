@@ -1,18 +1,15 @@
 const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid');
 
 const messageSchema = mongoose.Schema(
   {
     _id: {
       type: String,
-      required: true,
+      default: uuidv4,
     },
     sender: {
       type: String,
       ref: 'User',
-      required: true,
-    },
-    createdAt: {
-      type: Date,
       required: true,
     },
     content: {
@@ -21,11 +18,11 @@ const messageSchema = mongoose.Schema(
     },
     chatId: {
       type: String,
-      required: true,
+      default: undefined,
     },
   },
   {
-    timestamps: { createdAt: false, updatedAt: true },
+    timestamps: true,
   },
 );
 

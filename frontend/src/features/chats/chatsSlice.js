@@ -8,14 +8,13 @@ const initialState = {
   error: '',
 };
 
-export const fetchChats = createAsyncThunk('chats/fetchChats', (accessToken) => {
-  return axios
-    .get('/chats', {
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-      },
-    })
-    .then((res) => res.data);
+export const fetchChats = createAsyncThunk('chats/fetchChats', async (accessToken) => {
+  const res = await axios.get('/chats', {
+    headers: {
+      authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return res.data;
 });
 
 export const chatsSlice = createSlice({
@@ -25,10 +24,9 @@ export const chatsSlice = createSlice({
     setChats(state, action) {
       state.chats = action.payload;
     },
-    updateLastMessage(state, action) {
-      const updatedChat = { ...action.payload.chat, lastMessage: action.payload.message };
-      const filteredChats = state.chats.filter((chat) => chat._id !== updatedChat._id);
-      state.chats = [...filteredChats, updatedChat];
+    updateChat(state, action) {
+      const filteredChats = state.chats.filter((chat) => chat._id !== action.payload._id);
+      state.chats = [...filteredChats, action.payload];
     },
     setCurrentChat(state, action) {
       state.currentChat = action.payload;
@@ -54,6 +52,6 @@ export const chatsSlice = createSlice({
 export const selectAllChats = (state) => state.chats.chats;
 export const selectCurrentChat = (state) => state.chats.currentChat;
 
-export const { setChats, updateLastMessage, setCurrentChat } = chatsSlice.actions;
+export const { setChats, updateChat, setCurrentChat } = chatsSlice.actions;
 
 export default chatsSlice.reducer;

@@ -1,7 +1,7 @@
-const subscribeToMessageEvents = ({ socket, setMessages, setChats }) => {
-  socket.on('receiveMessage', ({ newMessage, newChats }) => {
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
-    setChats(newChats);
+const subscribeToMessageEvents = ({ socket, dispatch, addMessage, updateChat }) => {
+  socket.on('receiveMessage', ({ newMessage, updatedChat }) => {
+    dispatch(addMessage(newMessage));
+    dispatch(updateChat(updatedChat));
   });
 };
 

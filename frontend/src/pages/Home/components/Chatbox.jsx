@@ -1,17 +1,18 @@
 import { useEffect, useRef } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setChats,
-  updateLastMessage,
+  updateChat,
   setCurrentChat,
   selectAllChats,
   selectCurrentChat,
 } from 'features/chats/chatsSlice';
+import { createNewMessage } from 'features/messages/messagesSlice';
 import styled from 'styled-components/macro';
 import breakpoints from 'utils/breakpoints';
 
 import Message from 'features/messages/Message';
+import { addMessage, selectMessages } from 'features/messages/messagesSlice';
 
 const Section = styled.section`
   flex: 2.5;
@@ -88,9 +89,9 @@ const Button = styled.button`
   }
 `;
 
-function Chatbox({ socket, messages, setMessages, expandRightPanel }) {
+function Chatbox({ expandRightPanel }) {
   const dispatch = useDispatch();
-  const chats = useSelector(selectAllChats);
+  const { messages } = useSelector(selectMessages);
   const currentChat = useSelector(selectCurrentChat);
   const scrollRef = useRef(null);
   const inputRef = useRef('');
@@ -105,28 +106,20 @@ function Chatbox({ socket, messages, setMessages, expandRightPanel }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!inputRef.current.value) return;
-    const date = new Date();
-
-    const message = {
-      _id: uuidv4(),
-      createdAt: date.toISOString(),
-      content: inputRef.current.value,
-      sender: auth.user._id,
-      chatId: currentChat._id,
-    };
 
     const receiver = currentChat.members.find((member) => member._id !== auth.user._id);
-    socket.current.emit('sendMessage', { message, receiverId: receiver._id });
+    const data = {
+      content: inputRef.current.value,
+      chatId: currentChat._id,
+      receiverId: receiver._id,
+      accessToken: auth.accessToken,
+    };
 
-    setMessages((prevMessages) => [...prevMessages, message]);
-    dispatch(setCurrentChat({ ...currentChat, lastMessage: message }));
+    const { payload } = await dispatch(createNewMessage(data));
 
-    let updatedChat = chats.find((chat) => chat._id === currentChat._id);
-    if (!updatedChat) updatedChat = currentChat;
-    dispatch(updateLastMessage(updatedChat, message));
-
-    const filteredChats = chats.filter((chat) => chat._id !== currentChat._id);
-    dispatch(setChats([...filteredChats, updatedChat]));
+    dispatch(addMessage(payload.newMessage));
+    dispatch(updateChat(payload.updatedChat));
+    // dispatch(setCurrentChat(payload.updatedChat));
 
     inputRef.current.value = '';
   };

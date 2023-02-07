@@ -1,13 +1,12 @@
 import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { FiChevronUp } from 'react-icons/fi';
 import { RiLogoutCircleLine } from 'react-icons/ri';
-import axios from 'axios';
 import useClickOutside from 'hooks/useClickOutside';
+import { logout } from 'features/auth/authSlice';
 
 import UserAvatar from 'components/common/UserAvatar';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Wrapper = styled.div`
   display: flex;
@@ -105,15 +104,14 @@ const Arrow = styled.span`
 
 function UserDropup() {
   const dropupRef = useRef(null);
-  const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const [showDropup, setShowDropup] = useState(false);
   useClickOutside(dropupRef, () => setShowDropup(false));
 
   const handleLogout = async () => {
     try {
-      await axios.get('/auth/logout');
-      navigate('/login');
+      dispatch(logout());
     } catch (err) {
       console.error(err);
     }

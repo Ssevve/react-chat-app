@@ -41,7 +41,6 @@ const initializeSocketEvents = (server, app) => {
       chat.lastMessage = newMessage._id;
       await chat.save();
 
-      console.log(userId);
       const newChats = await Chat.find({ members: { $in: receiverId } })
         .sort({ createdAt: 1 })
         .populate([
@@ -55,8 +54,6 @@ const initializeSocketEvents = (server, app) => {
           },
         ])
         .exec();
-
-      console.log(newChats);
 
       io.to(connectedUsers[receiverId]).emit('receiveMessage', { newMessage, newChats });
     });
