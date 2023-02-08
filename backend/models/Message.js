@@ -18,7 +18,6 @@ const messageSchema = mongoose.Schema(
     },
     chatId: {
       type: String,
-      default: undefined,
     },
   },
   {

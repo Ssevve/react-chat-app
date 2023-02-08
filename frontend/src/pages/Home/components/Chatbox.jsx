@@ -1,18 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setChats,
-  updateChat,
-  setCurrentChat,
-  selectAllChats,
-  selectCurrentChat,
-} from 'features/chats/chatsSlice';
+import { updateChat, selectCurrentChat } from 'features/chats/chatsSlice';
 import { createNewMessage } from 'features/messages/messagesSlice';
+import { selectUser, selectAccessToken } from 'features/auth/authSlice';
 import styled from 'styled-components/macro';
 import breakpoints from 'utils/breakpoints';
-
+import { selectCurrentChatMessages } from 'features/messages/messagesSlice';
 import Message from 'features/messages/Message';
-import { addMessage, selectMessages } from 'features/messages/messagesSlice';
+import { setCurrentChat } from 'features/chats/chatsSlice';
 
 const Section = styled.section`
   flex: 2.5;
@@ -91,39 +86,40 @@ const Button = styled.button`
 
 function Chatbox({ expandRightPanel }) {
   const dispatch = useDispatch();
-  const { messages } = useSelector(selectMessages);
   const currentChat = useSelector(selectCurrentChat);
+  const loggedInUser = useSelector(selectUser);
+  const accessToken = useSelector(selectAccessToken);
+  const currentChatMessages = useSelector((state) =>
+    state.messages.messages.filter((message) => message.chatId === currentChat?._id),
+  );
   const scrollRef = useRef(null);
   const inputRef = useRef('');
-  const auth = useSelector((state) => state.auth);
-  const currentChatMessages = messages.filter((msg) => msg.chatId === currentChat?._id);
 
   useEffect(() => {
     if (!scrollRef.current) return;
     scrollRef.current.scrollTo(0, scrollRef.current.scrollHeight);
-  }, [messages, currentChat]);
+  }, [currentChatMessages, currentChat]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!inputRef.current.value) return;
 
-    const receiver = currentChat.members.find((member) => member._id !== auth.user._id);
+    const receiver = currentChat.members.find((member) => member._id !== loggedInUser._id);
     const data = {
       content: inputRef.current.value,
       chatId: currentChat._id,
       receiverId: receiver._id,
-      accessToken: auth.accessToken,
+      accessToken,
     };
 
     const { payload } = await dispatch(createNewMessage(data));
+    const { updatedChat } = payload;
 
-    dispatch(addMessage(payload.newMessage));
-    dispatch(updateChat(payload.updatedChat));
-    // dispatch(setCurrentChat(payload.updatedChat));
+    dispatch(updateChat(updatedChat));
+    dispatch(setCurrentChat(updatedChat));
 
     inputRef.current.value = '';
   };
-
   return (
     <Section expandRightPanel={expandRightPanel}>
       {currentChatMessages && (

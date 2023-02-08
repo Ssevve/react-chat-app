@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
+import { selectUser } from 'features/auth/authSlice';
 import { setCurrentChat, selectAllChats } from 'features/chats/chatsSlice';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 
@@ -9,7 +9,7 @@ import User from 'components/common/User';
 
 function FriendsList({ friends }) {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+  const loggedInUser = useSelector(selectUser);
   const chats = useSelector(selectAllChats);
   const { connectedUsers } = useConnectedUsers();
   const [onlineFriends, setOnlineFriends] = useState(null);
@@ -25,13 +25,17 @@ function FriendsList({ friends }) {
   }, [friends, connectedUsers]);
 
   const handleFriendClick = (friend) => {
-    let selectedChat = {};
+    let selectedChat;
 
     if (chats.length) {
-      selectedChat = chats.find((chat) => chat.members.includes(friend._id));
+      const chatsMembers = chats.map((chat) => chat.members);
+      const chatIndex = chatsMembers.findIndex(
+        (members) => members[0]._id === friend._id || members[1]._id === friend._id,
+      );
+      selectedChat = chats[chatIndex];
     }
 
-    if (!selectedChat.members) selectedChat.members = [auth.user._id, friend._id];
+    if (!selectedChat) selectedChat = { members: [loggedInUser, friend] };
 
     dispatch(setCurrentChat(selectedChat));
   };
