@@ -5,7 +5,7 @@ import styled from 'styled-components/macro';
 import breakpoints from 'utils/breakpoints';
 
 import SidePanel from 'components/SidePanel';
-import FriendsList from './FriendsList';
+import FriendsList from 'features/friends/FriendsList';
 import SearchResults from './SearchResults';
 import Searchbar from './Searchbar';
 import FriendInvites from './FriendInvites';
@@ -60,7 +60,7 @@ const SearchToggle = styled.button`
   }
 `;
 
-function RightPanel({ expanded, friends, setFriends, friendInvites, setFriendInvites }) {
+function RightPanel({ expanded, friendInvites, setFriendInvites }) {
   const auth = useSelector((state) => state.auth);
   const [results, setResults] = useState([]);
   const queryRef = useRef('');
@@ -105,12 +105,8 @@ function RightPanel({ expanded, friends, setFriends, friendInvites, setFriendInv
           <SearchResults results={results} setFriendInvites={setFriendInvites} />
         ) : (
           <>
-            <FriendInvites
-              friendInvites={friendInvites}
-              setFriendInvites={setFriendInvites}
-              setFriends={setFriends}
-            />
-            <FriendsList friends={friends} />
+            <FriendInvites friendInvites={friendInvites} setFriendInvites={setFriendInvites} />
+            <FriendsList />
           </>
         )}
       </Section>

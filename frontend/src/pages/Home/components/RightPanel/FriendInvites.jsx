@@ -1,12 +1,13 @@
 import styled from 'styled-components/macro';
 import { BsCheck } from 'react-icons/bs';
 import { IoMdClose } from 'react-icons/io';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import DropdownList from 'components/common/DropdownList';
-import User from 'components/common/UserAvatarWithStatus';
+import User from 'components/common/User';
 import { selectUser, selectAccessToken } from 'features/auth/authSlice';
+import { setFriends } from 'features/friends/friendsSlice';
 
 const Wrapper = styled.div`
   display: flex;
@@ -42,7 +43,8 @@ const DeclineButton = styled(Button)`
   }
 `;
 
-function FriendInvites({ friendInvites, setFriends, setFriendInvites }) {
+function FriendInvites({ friendInvites, setFriendInvites }) {
+  const dispatch = useDispatch();
   const loggedInUser = useSelector(selectUser);
   const accessToken = useSelector(selectAccessToken);
 
@@ -61,7 +63,7 @@ function FriendInvites({ friendInvites, setFriends, setFriendInvites }) {
         },
       );
 
-      setFriends(res.data);
+      dispatch(setFriends(res.data));
 
       const newFriendInvites = friendInvites.filter((inv) => inv._id !== invite._id);
       setFriendInvites(newFriendInvites);
@@ -80,25 +82,26 @@ function FriendInvites({ friendInvites, setFriends, setFriendInvites }) {
   return (
     <>
       <DropdownList title="Friend invites">
-        {friendInvites &&
-          friendInvites.map((invite) => (
-            <Wrapper key={invite._id}>
-              <User
-                events={false}
-                user={invite.receiver._id === loggedInUser._id ? invite.sender : invite.receiver}
-              />
-              <Wrapper>
-                {invite.sender._id !== loggedInUser._id && (
-                  <AcceptButton type="button" onClick={() => acceptInvite(invite)}>
-                    <BsCheck size="1.5rem" />
-                  </AcceptButton>
-                )}
-                <DeclineButton type="button">
-                  <IoMdClose size="1.5rem" />
-                </DeclineButton>
+        {friendInvites.length
+          ? friendInvites.map((invite) => (
+              <Wrapper key={invite._id}>
+                <User
+                  events={false}
+                  user={invite.receiver._id === loggedInUser._id ? invite.sender : invite.receiver}
+                />
+                <Wrapper>
+                  {invite.sender._id !== loggedInUser._id && (
+                    <AcceptButton type="button" onClick={() => acceptInvite(invite)}>
+                      <BsCheck size="1.5rem" />
+                    </AcceptButton>
+                  )}
+                  <DeclineButton type="button">
+                    <IoMdClose size="1.5rem" />
+                  </DeclineButton>
+                </Wrapper>
               </Wrapper>
-            </Wrapper>
-          ))}
+            ))
+          : null}
       </DropdownList>
     </>
   );

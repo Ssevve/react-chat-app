@@ -5,8 +5,11 @@ import { updateChat } from 'features/chats/chatsSlice';
 import { addMessage } from 'features/messages/messagesSlice';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 import { useSelector, useDispatch } from 'react-redux';
+import { getMessagesByUserId } from 'features/messages/messagesSlice';
+import { selectAccessToken, selectUser } from 'features/auth/authSlice';
+import { selectFriends, getFriendsByUserId, setFriends } from 'features/friends/friendsSlice';
 
-import fetchFriends from './api/fetchFriends';
+// import fetchFriends from './api/fetchFriends';
 import fetchFriendInvites from './api/fetchFriendInvites';
 import {
   subscribeToMessageEvents,
@@ -18,8 +21,6 @@ import Topbar from './components/Topbar';
 import LeftPanel from './components/LeftPanel';
 import Chatbox from './components/Chatbox';
 import RightPanel from './components/RightPanel';
-import { getMessagesByUserId } from 'features/messages/messagesSlice';
-import { selectAccessToken, selectUser } from 'features/auth/authSlice';
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -33,10 +34,10 @@ function Home() {
   const dispatch = useDispatch();
   const accessToken = useSelector(selectAccessToken);
   const loggedInUser = useSelector(selectUser);
+  const friends = useSelector(selectFriends);
   const { setConnectedUsers } = useConnectedUsers();
   const [expandLeftPanel, setExpandLeftPanel] = useState(false);
   const [expandRightPanel, setExpandRightPanel] = useState(false);
-  const [friends, setFriends] = useState([]);
   const [friendInvites, setFriendInvites] = useState([]);
   const socket = useRef(null);
 
@@ -47,15 +48,13 @@ function Home() {
     subscribeToFriendEvents({
       socket: socket.current,
       setFriendInvites,
+      dispatch,
       setFriends,
       friendInvites,
     });
 
     dispatch(getMessagesByUserId({ userId: loggedInUser._id, accessToken }));
-
-    fetchFriends(accessToken, loggedInUser._id)
-      .then(setFriends)
-      .catch((err) => console.error(err));
+    dispatch(getFriendsByUserId({ userId: loggedInUser._id, accessToken }));
 
     fetchFriendInvites(accessToken)
       .then(setFriendInvites)
@@ -75,7 +74,6 @@ function Home() {
         <Chatbox expandRightPanel={expandRightPanel} />
         <RightPanel
           friends={friends}
-          setFriends={setFriends}
           expanded={expandRightPanel}
           friendInvites={friendInvites}
           setFriendInvites={setFriendInvites}
