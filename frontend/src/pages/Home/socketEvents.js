@@ -11,21 +11,13 @@ const subscribeToUserEvents = ({ socket, setConnectedUsers }) => {
   });
 };
 
-const subscribeToFriendEvents = ({
-  socket,
-  dispatch,
-  setFriendInvites,
-  setFriends,
-  friendInvites,
-}) => {
+const subscribeToFriendEvents = ({ socket, dispatch, addFriend, addFriendInvite }) => {
   socket.on('receiveFriendInvite', (newFriendInvite) => {
-    setFriendInvites((prevInvites) => [newFriendInvite, ...prevInvites]);
+    dispatch(addFriendInvite(newFriendInvite));
   });
 
-  socket.on('friendInviteAccepted', ({ newFriends, friendInviteId }) => {
-    dispatch(setFriends(newFriends));
-    const newFriendInvites = friendInvites.filter((inv) => inv._id !== friendInviteId);
-    setFriendInvites(newFriendInvites);
+  socket.on('addFriend', (acceptingUser) => {
+    dispatch(addFriend(acceptingUser));
   });
 };
 

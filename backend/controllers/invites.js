@@ -1,9 +1,9 @@
 const FriendInvite = require('../models/FriendInvite');
 
-const getFriendInvitesForCurrentUser = async (req, res) => {
+const getFriendInvitesByUserId = async (req, res) => {
   try {
     const friendInvites = await FriendInvite.find({
-      $or: [{ sender: req.user._id }, { receiver: req.user._id }],
+      $or: [{ sender: req.params.userId }, { receiver: req.params.userId }],
     }).populate([
       {
         path: 'sender',
@@ -58,4 +58,4 @@ const deleteFriendInvite = async (req, res) => {
   }
 };
 
-module.exports = { getFriendInvitesForCurrentUser, createNewFriendInvite, deleteFriendInvite };
+module.exports = { getFriendInvitesByUserId, createNewFriendInvite, deleteFriendInvite };

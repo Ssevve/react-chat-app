@@ -2,12 +2,11 @@ import styled from 'styled-components/macro';
 import { BsCheck } from 'react-icons/bs';
 import { IoMdClose } from 'react-icons/io';
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
 
 import DropdownList from 'components/common/DropdownList';
 import User from 'components/common/User';
 import { selectUser, selectAccessToken } from 'features/auth/authSlice';
-import { setFriends } from 'features/friends/friendsSlice';
+import { selectFriendInvites, addFriendById } from 'features/friends/friendsSlice';
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,40 +42,17 @@ const DeclineButton = styled(Button)`
   }
 `;
 
-function FriendInvites({ friendInvites, setFriendInvites }) {
+function FriendInvites() {
   const dispatch = useDispatch();
   const loggedInUser = useSelector(selectUser);
   const accessToken = useSelector(selectAccessToken);
+  const friendInvites = useSelector(selectFriendInvites);
 
   const acceptInvite = async (invite) => {
-    const newFriendId =
+    const friendId =
       invite.receiver._id === loggedInUser._id ? invite.sender._id : invite.receiver._id;
 
-    try {
-      const res = await axios.put(
-        `/users/addFriend/${newFriendId}`,
-        { inviteId: invite._id },
-        {
-          headers: {
-            authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-
-      dispatch(setFriends(res.data));
-
-      const newFriendInvites = friendInvites.filter((inv) => inv._id !== invite._id);
-      setFriendInvites(newFriendInvites);
-
-      if (res.status === 200)
-        await axios.delete(`/invites/${invite._id}`, {
-          headers: {
-            authorization: `Bearer ${accessToken}`,
-          },
-        });
-    } catch (err) {
-      console.error(err);
-    }
+    dispatch(addFriendById({ inviteId: invite._id, friendId, accessToken }));
   };
 
   return (

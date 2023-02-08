@@ -60,7 +60,7 @@ const SearchToggle = styled.button`
   }
 `;
 
-function RightPanel({ expanded, friendInvites, setFriendInvites }) {
+function RightPanel({ expanded }) {
   const auth = useSelector((state) => state.auth);
   const [results, setResults] = useState([]);
   const queryRef = useRef('');
@@ -102,10 +102,10 @@ function RightPanel({ expanded, friendInvites, setFriendInvites }) {
       </Title>
       <Section>
         {isSearching ? (
-          <SearchResults results={results} setFriendInvites={setFriendInvites} />
+          <SearchResults results={results} />
         ) : (
           <>
-            <FriendInvites friendInvites={friendInvites} setFriendInvites={setFriendInvites} />
+            <FriendInvites />
             <FriendsList />
           </>
         )}
