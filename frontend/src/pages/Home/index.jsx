@@ -19,6 +19,7 @@ import LeftPanel from './components/LeftPanel';
 import Chatbox from './components/Chatbox';
 import RightPanel from './components/RightPanel';
 import { getMessagesByUserId } from 'features/messages/messagesSlice';
+import { selectAccessToken, selectUser } from 'features/auth/authSlice';
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -30,7 +31,8 @@ const Main = styled.main`
 
 function Home() {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+  const accessToken = useSelector(selectAccessToken);
+  const loggedInUser = useSelector(selectUser);
   const { setConnectedUsers } = useConnectedUsers();
   const [expandLeftPanel, setExpandLeftPanel] = useState(false);
   const [expandRightPanel, setExpandRightPanel] = useState(false);
@@ -39,7 +41,7 @@ function Home() {
   const socket = useRef(null);
 
   useEffect(() => {
-    socket.current = io('ws://localhost:5000', { auth: { userId: auth.user._id } });
+    socket.current = io('ws://localhost:5000', { auth: { userId: loggedInUser._id } });
     subscribeToMessageEvents({ socket: socket.current, dispatch, addMessage, updateChat });
     subscribeToUserEvents({ socket: socket.current, setConnectedUsers });
     subscribeToFriendEvents({
@@ -49,13 +51,13 @@ function Home() {
       friendInvites,
     });
 
-    dispatch(getMessagesByUserId(auth));
+    dispatch(getMessagesByUserId({ userId: loggedInUser._id, accessToken }));
 
-    fetchFriends(auth.accessToken, auth.user._id)
+    fetchFriends(accessToken, loggedInUser._id)
       .then(setFriends)
       .catch((err) => console.error(err));
 
-    fetchFriendInvites(auth.accessToken)
+    fetchFriendInvites(accessToken)
       .then(setFriendInvites)
       .catch((err) => console.error(err));
 

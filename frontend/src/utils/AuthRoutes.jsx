@@ -1,9 +1,10 @@
 import { Outlet, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { selectUser } from 'features/auth/authSlice';
 
 function AuthRoutes() {
-  const auth = useSelector((state) => state.auth);
-  return auth.user ? <Outlet /> : <Navigate to="/login" />;
+  const loggedInUser = useSelector(selectUser);
+  return loggedInUser ? <Outlet /> : <Navigate to="/login" />;
 }
 
 export default AuthRoutes;

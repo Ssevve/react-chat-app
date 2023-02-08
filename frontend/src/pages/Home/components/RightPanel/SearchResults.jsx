@@ -2,8 +2,9 @@ import styled from 'styled-components/macro';
 import { IoMdAdd } from 'react-icons/io';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { selectUser, selectAccessToken } from 'features/auth/authSlice';
 
-import User from 'components/common/UserAvatarWithStatus';
+import User from 'components/common/User';
 
 const Results = styled.ul`
   overflow: hidden;
@@ -32,11 +33,12 @@ const InviteButton = styled.button`
 `;
 
 function SearchResults({ results, setFriendInvites }) {
-  const auth = useSelector((state) => state.auth);
+  const loggedInUser = useSelector(selectUser);
+  const accessToken = useSelector(selectAccessToken);
   const handleClick = async (resultId) => {
     // Send friend invite to the user
     const friendInvite = {
-      sender: auth.user._id,
+      sender: loggedInUser._id,
       receiver: resultId,
     };
 
@@ -48,7 +50,7 @@ function SearchResults({ results, setFriendInvites }) {
         },
         {
           headers: {
-            authorization: `Bearer ${auth.accessToken}`,
+            authorization: `Bearer ${accessToken}`,
           },
         },
       );

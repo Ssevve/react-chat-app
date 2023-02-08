@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
+import { selectAccessToken } from 'features/auth/authSlice';
 import { fetchChats, setCurrentChat, selectAllChats, selectCurrentChat } from './chatsSlice';
 
 import DropdownList from 'components/common/DropdownList';
@@ -12,17 +13,18 @@ const Wrapper = styled.section`
 
 function ChatsList() {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+  const accessToken = useSelector(selectAccessToken);
   const chats = useSelector(selectAllChats);
   const currentChat = useSelector(selectCurrentChat);
 
   useEffect(() => {
-    dispatch(fetchChats(auth.accessToken));
-  }, [auth.accessToken, dispatch]);
+    if (!accessToken) return;
+    dispatch(fetchChats(accessToken));
+  }, [accessToken, dispatch]);
 
   return (
     <Wrapper>
-      {chats ? (
+      {chats?.length ? (
         <DropdownList title="Direct messages">
           {chats.map((chat) => (
             <Chat

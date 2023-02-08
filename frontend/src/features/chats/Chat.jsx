@@ -4,6 +4,8 @@ import { format } from 'timeago.js';
 import { useSelector } from 'react-redux';
 
 import UserAvatarWithStatus from 'components/common/UserAvatarWithStatus';
+import { selectUser } from 'features/auth/authSlice';
+import { selectCurrentChat } from './chatsSlice';
 
 const Button = styled.button`
   display: flex;
@@ -54,14 +56,15 @@ const LastMessage = styled.span`
   text-align: left;
 `;
 
-function Chat({ chat, currentChat, onClick }) {
-  const auth = useSelector((state) => state.auth);
+function Chat({ chat, onClick }) {
+  const currentChat = useSelector(selectCurrentChat);
+  const loggedInUser = useSelector(selectUser);
   const [chatPartner, setChatPartner] = useState(null);
 
   useEffect(() => {
-    const partner = chat.members.find((member) => member._id !== auth.user._id);
+    const partner = chat.members.find((member) => member._id !== loggedInUser._id);
     setChatPartner(partner);
-  }, []);
+  }, [chat, loggedInUser._id]);
 
   return chatPartner ? (
     <>

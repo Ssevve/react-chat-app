@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import DropdownList from 'components/common/DropdownList';
 import User from 'components/common/UserAvatarWithStatus';
+import { selectUser, selectAccessToken } from 'features/auth/authSlice';
 
 const Wrapper = styled.div`
   display: flex;
@@ -42,11 +43,12 @@ const DeclineButton = styled(Button)`
 `;
 
 function FriendInvites({ friendInvites, setFriends, setFriendInvites }) {
-  const auth = useSelector((state) => state.auth);
+  const loggedInUser = useSelector(selectUser);
+  const accessToken = useSelector(selectAccessToken);
 
   const acceptInvite = async (invite) => {
     const newFriendId =
-      invite.receiver._id === auth.user._id ? invite.sender._id : invite.receiver._id;
+      invite.receiver._id === loggedInUser._id ? invite.sender._id : invite.receiver._id;
 
     try {
       const res = await axios.put(
@@ -54,7 +56,7 @@ function FriendInvites({ friendInvites, setFriends, setFriendInvites }) {
         { inviteId: invite._id },
         {
           headers: {
-            authorization: `Bearer ${auth.accessToken}`,
+            authorization: `Bearer ${accessToken}`,
           },
         },
       );
@@ -67,7 +69,7 @@ function FriendInvites({ friendInvites, setFriends, setFriendInvites }) {
       if (res.status === 200)
         await axios.delete(`/invites/${invite._id}`, {
           headers: {
-            authorization: `Bearer ${auth.accessToken}`,
+            authorization: `Bearer ${accessToken}`,
           },
         });
     } catch (err) {
@@ -83,10 +85,10 @@ function FriendInvites({ friendInvites, setFriends, setFriendInvites }) {
             <Wrapper key={invite._id}>
               <User
                 events={false}
-                user={invite.receiver._id === auth.user._id ? invite.sender : invite.receiver}
+                user={invite.receiver._id === loggedInUser._id ? invite.sender : invite.receiver}
               />
               <Wrapper>
-                {invite.sender._id !== auth.user._id && (
+                {invite.sender._id !== loggedInUser._id && (
                   <AcceptButton type="button" onClick={() => acceptInvite(invite)}>
                     <BsCheck size="1.5rem" />
                   </AcceptButton>

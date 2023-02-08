@@ -3,10 +3,10 @@ import styled from 'styled-components/macro';
 import { FiChevronUp } from 'react-icons/fi';
 import { RiLogoutCircleLine } from 'react-icons/ri';
 import useClickOutside from 'hooks/useClickOutside';
-import { logout } from 'features/auth/authSlice';
 
 import UserAvatar from 'components/common/UserAvatar';
 import { useSelector, useDispatch } from 'react-redux';
+import { selectUser } from 'features/auth/authSlice';
 
 const Wrapper = styled.div`
   display: flex;
@@ -104,14 +104,15 @@ const Arrow = styled.span`
 
 function UserDropup() {
   const dropupRef = useRef(null);
-  const auth = useSelector((state) => state.auth);
+  const loggedInUser = useSelector(selectUser);
   const dispatch = useDispatch();
   const [showDropup, setShowDropup] = useState(false);
   useClickOutside(dropupRef, () => setShowDropup(false));
 
   const handleLogout = async () => {
     try {
-      dispatch(logout());
+      // Reset whole app state
+      dispatch({ type: 'store/reset' });
     } catch (err) {
       console.error(err);
     }
@@ -128,10 +129,10 @@ function UserDropup() {
       </DropupMenu>
       <StyledButton showDropup={showDropup} onClick={() => setShowDropup((prev) => !prev)}>
         <User>
-          <UserAvatar showDropup={showDropup} user={auth.user} />
+          <UserAvatar showDropup={showDropup} user={loggedInUser} />
           <Info>
-            <Username>{auth.user.username}</Username>
-            <StatusText>{auth.user.statusText}</StatusText>
+            <Username>{loggedInUser.username}</Username>
+            <StatusText>{loggedInUser.statusText}</StatusText>
           </Info>
         </User>
         <Arrow showDropup={showDropup}>

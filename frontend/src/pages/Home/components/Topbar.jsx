@@ -7,6 +7,7 @@ import { selectCurrentChat } from 'features/chats/chatsSlice';
 import breakpoints from 'utils/breakpoints';
 
 import User from 'components/common/User';
+import { selectUser } from 'features/auth/authSlice';
 
 const Header = styled.header`
   width: 100vw;
@@ -56,15 +57,15 @@ const RightPanelButton = styled(Button)`
 `;
 
 function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
-  const auth = useSelector((state) => state.auth);
+  const loggedInUser = useSelector(selectUser);
   const currentChat = useSelector(selectCurrentChat);
   const [chatPartner, setChatPartner] = useState(null);
 
   useEffect(() => {
     if (!currentChat) return;
-    const partner = currentChat.members.find((member) => member._id !== auth.user._id);
+    const partner = currentChat.members.find((member) => member._id !== loggedInUser._id);
     setChatPartner(partner);
-  }, [currentChat, auth.user._id]);
+  }, [currentChat, loggedInUser._id]);
 
   const handleLeftPanelExpand = () => {
     setExpandRightPanel(false);
