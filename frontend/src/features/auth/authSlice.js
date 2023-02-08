@@ -9,6 +9,23 @@ const initialState = {
   signupSuccess: false,
 };
 
+export const signup = createAsyncThunk(
+  'auth/signup',
+  async ({ username, password }, { rejectWithValue }) => {
+    try {
+      const res = await axios.post('/auth/signup', { username, password });
+      return res.data;
+    } catch (err) {
+      if (!err.response) {
+        throw err;
+      }
+
+      const usernameTaken = err.response.status === 409;
+      return rejectWithValue({ usernameTaken });
+    }
+  },
+);
+
 export const login = createAsyncThunk(
   'auth/login',
   async ({ username, password }, { rejectWithValue }) => {
@@ -46,6 +63,19 @@ export const authSlice = createSlice({
       state.error = action;
       state.user = null;
       state.accessToken = null;
+      state.signupSuccess = false;
+    });
+    builder.addCase(signup.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(signup.fulfilled, (state) => {
+      state.loading = false;
+      state.error = null;
+      state.signupSuccess = true;
+    });
+    builder.addCase(signup.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action;
       state.signupSuccess = false;
     });
   },

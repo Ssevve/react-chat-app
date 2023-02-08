@@ -35,6 +35,7 @@ const handleLogin = async (req, res) => {
 
 const handleSignup = async (req, res) => {
   const { username, password } = req.body;
+  if (!username || !password) return res.status(400).json('Username and password are required');
   try {
     const duplicate = await User.findOne({ username });
     if (duplicate) return res.status(409).json({ message: 'Username already taken' });

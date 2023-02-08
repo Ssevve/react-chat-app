@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import loginSchema from './loginSchema';
+import loginSchema from 'features/auth/schemas/loginSchema';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from 'features/auth/authSlice';
 

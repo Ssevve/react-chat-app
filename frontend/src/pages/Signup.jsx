@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import { useSelector, useDispatch } from 'react-redux';
+import { signup } from 'features/auth/authSlice';
 import styled from 'styled-components/macro';
-import signupSchema from './signupSchema';
-import useSignup from './useSignup';
+import signupSchema from 'features/auth/schemas/signupSchema';
 
 import AuthPageLayout from 'layouts/AuthPageLayout';
 import ErrorBox from 'components/AuthForm/ErrorBox';
@@ -31,26 +32,35 @@ const StyledLink = styled(Link)`
 `;
 
 function Signup() {
-  const { error, usernameTaken, isLoading, signup } = useSignup();
+  const [usernameTaken, setUsernameTaken] = useState(false);
+  const signupError = useSelector((state) => state.auth.error);
+  const isLoading = useSelector((state) => state.auth.loading);
+  const dispatch = useDispatch();
   const {
     register,
-    handleSubmit,
     setError,
+    handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(signupSchema),
     mode: 'onChange',
   });
 
-  useEffect(() => {
-    if (usernameTaken) setError('username', { message: 'Username already taken' });
-  }, [usernameTaken, setError]);
+  const onSubmit = async (data) => {
+    // Making a copy to avoid a TypeError: Cannot assign to read only property 'x' of object '#<Object>
+    const credentials = { ...data };
+    const res = await dispatch(signup(credentials));
+    if (res.error) {
+      setUsernameTaken(res.payload.usernameTaken);
+      setError('username', { message: 'Username already taken' });
+    }
+  };
 
-  const fetchError = error && !usernameTaken;
+  const fetchError = !usernameTaken && signupError;
 
   return (
     <AuthPageLayout>
-      <Form onSubmit={handleSubmit(signup)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <FormTitle title="Sign up" />
         {fetchError && (
           <ErrorBox>
