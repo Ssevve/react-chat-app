@@ -33,32 +33,28 @@ const createNewMessage = async (req, res) => {
   const connectedUsers = req.app.get('connectedUsers');
   try {
     const { chatId, content, receiverId } = req.body;
-
     const newMessage = await Message.create({
       content,
-      chatId,
       sender: req.user._id,
     });
-    await newMessage.populate('sender', '_id username avatar.url');
 
-    // update chat
-    const updatedChat = await Chat.findOneAndUpdate(
-      { members: { $all: [req.user._id, receiverId] } },
-      {
+    let updatedChat;
+    if (chatId) {
+      const chat = await Chat.findById(chatId);
+      chat.lastMessage = newMessage._id;
+      updatedChat = await chat.save();
+    } else {
+      updatedChat = await Chat.create({
+        members: [req.user._id, receiverId],
         lastMessage: newMessage._id,
-      },
-      {
-        upsert: true,
-        new: true,
-      },
-    );
-    await updatedChat.populate('lastMessage', 'content sender createdAt');
-    await updatedChat.populate('members', 'username avatar.url statusText');
-
-    if (!newMessage.chatId) {
-      newMessage.chatId = updatedChat._id;
+      });
       await newMessage.save();
     }
+    newMessage.chatId = updatedChat._id;
+    await newMessage.save();
+    await newMessage.populate('sender', 'username avatar.url');
+    await updatedChat.populate('lastMessage', 'content sender createdAt');
+    await updatedChat.populate('members', 'username avatar.url statusText');
 
     const responseData = {
       newMessage,

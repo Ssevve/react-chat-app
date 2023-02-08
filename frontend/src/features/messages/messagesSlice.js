@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
@@ -25,8 +25,8 @@ export const createNewMessage = createAsyncThunk(
 
 export const getMessagesByUserId = createAsyncThunk(
   'messages/getMessagesByUserId',
-  async ({ user, accessToken }) => {
-    const res = await axios.get(`/messages/user/${user._id}`, {
+  async ({ userId, accessToken }) => {
+    const res = await axios.get(`/messages/user/${userId}`, {
       headers: {
         authorization: `Bearer ${accessToken}`,
       },
@@ -65,7 +65,7 @@ export const messagesSlice = createSlice({
     builder.addCase(createNewMessage.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-      state.messages.push(action.payload);
+      state.messages.push(action.payload.newMessage);
     });
     builder.addCase(createNewMessage.rejected, (state, action) => {
       state.loading = false;
