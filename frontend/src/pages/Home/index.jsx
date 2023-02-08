@@ -19,7 +19,7 @@ import {
 
 import Topbar from './components/Topbar';
 import LeftPanel from './components/LeftPanel';
-import Chatbox from './components/Chatbox';
+import Chatbox from 'features/messages/MessagesBox';
 import RightPanel from './components/RightPanel';
 
 const Wrapper = styled.div`
