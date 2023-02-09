@@ -40,6 +40,7 @@ const CloseButton = styled.button`
 
 const Section = styled.section`
   margin-top: 1rem;
+  overflow-y: scroll;
 `;
 
 const SearchToggle = styled.button`
