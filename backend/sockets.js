@@ -27,37 +27,6 @@ const initializeSocketEvents = (server, app) => {
     addUser(userId, socket.id);
     io.emit('receiveConnectedUsers', { users: connectedUsers });
 
-    socket.on('sendMessage', async ({ message, receiverId }) => {
-      const newMessage = await Message.create(message);
-      newMessage.populate('sender', 'username avatar.url');
-      let chat = await Chat.findOne({ _id: message.chatId });
-      if (!chat) {
-        chat = new Chat({
-          _id: message.chatId,
-          members: [message.sender, receiverId],
-        });
-      }
-
-      chat.lastMessage = newMessage._id;
-      await chat.save();
-
-      const newChats = await Chat.find({ members: { $in: receiverId } })
-        .sort({ createdAt: 1 })
-        .populate([
-          {
-            path: 'lastMessage',
-            select: 'content sender createdAt',
-          },
-          {
-            path: 'members',
-            select: 'username avatar.url',
-          },
-        ])
-        .exec();
-
-      io.to(connectedUsers[receiverId]).emit('receiveMessage', { newMessage, newChats });
-    });
-
     socket.on('disconnect', () => {
       removeUser(userId);
       io.emit('receiveConnectedUsers', { users: connectedUsers });
