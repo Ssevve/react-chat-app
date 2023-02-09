@@ -6,7 +6,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import DropdownList from 'components/common/DropdownList';
 import User from 'components/common/User';
 import { selectUser, selectAccessToken } from 'features/auth/authSlice';
-import { selectFriendInvites, addFriendById } from 'features/friends/friendsSlice';
+import {
+  selectFriendInvites,
+  addFriendById,
+  deleteFriendInviteById,
+} from 'features/friends/friendsSlice';
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,6 +51,11 @@ function FriendInvites() {
   const loggedInUser = useSelector(selectUser);
   const accessToken = useSelector(selectAccessToken);
   const friendInvites = useSelector(selectFriendInvites);
+  const isLoading = useSelector((state) => state.friends.loading);
+
+  const cancelInvite = async (invite) => {
+    dispatch(deleteFriendInviteById({ inviteId: invite._id, accessToken }));
+  };
 
   const acceptInvite = async (invite) => {
     const friendId =
@@ -66,14 +75,18 @@ function FriendInvites() {
                   user={invite.receiver._id === loggedInUser._id ? invite.sender : invite.receiver}
                 />
                 <Wrapper>
-                  {invite.sender._id !== loggedInUser._id && (
+                  {invite.sender._id !== loggedInUser._id ? (
                     // Multi click, loading
                     // Disable on click
-                    <AcceptButton type="button" onClick={() => acceptInvite(invite)}>
+                    <AcceptButton
+                      type="button"
+                      disabled={isLoading}
+                      onClick={() => acceptInvite(invite)}
+                    >
                       <BsCheck size="1.5rem" />
                     </AcceptButton>
-                  )}
-                  <DeclineButton type="button">
+                  ) : null}
+                  <DeclineButton type="button" onClick={() => cancelInvite(invite)}>
                     <IoMdClose size="1.5rem" />
                   </DeclineButton>
                 </Wrapper>

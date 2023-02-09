@@ -66,17 +66,17 @@ export const createFriendInvite = createAsyncThunk(
   },
 );
 
-// export const deleteFriendInviteById = createAsyncThunk(
-//   'friends/deleteFriendInviteByUserId',
-//   async ({ inviteId, accessToken }) => {
-//     const res = await axios.delete(`/invites/${inviteId}`, {
-//       headers: {
-//         authorization: `Bearer ${accessToken}`,
-//       },
-//     });
-//     if (res.status === 204) return inviteId;
-//   },
-// );
+export const deleteFriendInviteById = createAsyncThunk(
+  'friends/deleteFriendInviteByUserId',
+  async ({ inviteId, accessToken }) => {
+    const res = await axios.delete(`/invites/${inviteId}`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    });
+    if (res.status === 204) return inviteId;
+  },
+);
 
 export const friendsSlice = createSlice({
   name: 'friends',
@@ -138,19 +138,19 @@ export const friendsSlice = createSlice({
       state.loading = false;
       state.error = action.error.message;
     });
-    // builder.addCase(deleteFriendInviteById.pending, (state) => {
-    //   state.loading = true;
-    //   state.error = null;
-    // });
-    // builder.addCase(deleteFriendInviteById.fulfilled, (state, action) => {
-    //   state.loading = false;
-    //   state.error = null;
-    //   state.friendInvites = state.friendInvites.filter((invite) => invite._id !== action.payload);
-    // });
-    // builder.addCase(deleteFriendInviteById.rejected, (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.error.message;
-    // });
+    builder.addCase(deleteFriendInviteById.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(deleteFriendInviteById.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.friendInvites = state.friendInvites.filter((invite) => invite._id !== action.payload);
+    });
+    builder.addCase(deleteFriendInviteById.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    });
     builder.addCase(addFriendById.pending, (state) => {
       state.loading = true;
       state.error = null;

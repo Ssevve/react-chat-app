@@ -55,8 +55,14 @@ const createNewFriendInvite = async (req, res) => {
 };
 
 const deleteFriendInvite = async (req, res) => {
+  const io = req.app.get('socketio');
+  const connectedUsers = req.app.get('connectedUsers');
+  const { id } = req.params;
   try {
-    await FriendInvite.findOneAndDelete({ _id: req.params.id });
+    const deletedInvite = await FriendInvite.findOneAndDelete({ _id: id });
+    const emitTo =
+      deletedInvite.sender === req.user._id ? deletedInvite.receiver : deletedInvite.sender;
+    io.to(connectedUsers[emitTo]).emit('cancelFriendInvite', id);
     res.sendStatus(204);
   } catch (err) {
     res.status(500).json(err);
