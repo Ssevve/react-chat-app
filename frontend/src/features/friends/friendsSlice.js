@@ -94,8 +94,17 @@ export const friendsSlice = createSlice({
   name: 'friends',
   initialState,
   reducers: {
-    setFriends(state, action) {
-      state.friends = action.payload;
+    addFriend(state, action) {
+      state.friends.push(action.payload);
+      state.friendInvites = state.friendInvites.filter(
+        (invite) => invite.sender !== action.payload._id,
+      );
+    },
+    addFriendInvite(state, action) {
+      state.friendInvites.push(action.payload);
+    },
+    removeFriendInvite(state, action) {
+      state.friendInvites = state.friendInvites.filter((invite) => invite._id !== action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -112,6 +121,49 @@ export const friendsSlice = createSlice({
       state.loading = false;
       state.error = action.error.message;
       state.friends = [];
+    });
+    builder.addCase(getFriendInvitesByUserId.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getFriendInvitesByUserId.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.friendInvites = action.payload;
+    });
+    builder.addCase(getFriendInvitesByUserId.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+      state.friendInvites = [];
+    });
+    // builder.addCase(deleteFriendInviteById.pending, (state) => {
+    //   state.loading = true;
+    //   state.error = null;
+    // });
+    // builder.addCase(deleteFriendInviteById.fulfilled, (state, action) => {
+    //   state.loading = false;
+    //   state.error = null;
+    //   state.friendInvites = state.friendInvites.filter((invite) => invite._id !== action.payload);
+    // });
+    // builder.addCase(deleteFriendInviteById.rejected, (state, action) => {
+    //   state.loading = false;
+    //   state.error = action.error.message;
+    // });
+    builder.addCase(addFriendById.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(addFriendById.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.friends.push(action.payload);
+      state.friendInvites = state.friendInvites.filter(
+        (invite) => invite.sender._id !== action.payload._id,
+      );
+    });
+    builder.addCase(addFriendById.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
     });
   },
 });
