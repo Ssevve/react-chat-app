@@ -8,18 +8,6 @@ const initialState = {
   error: null,
 };
 
-// export const deleteFriendInviteById = createAsyncThunk(
-//   'friends/deleteFriendInviteByUserId',
-//   async ({ inviteId, accessToken }) => {
-//     const res = await axios.delete(`/invites/${inviteId}`, {
-//       headers: {
-//         authorization: `Bearer ${accessToken}`,
-//       },
-//     });
-//     if (res.status === 204) return inviteId;
-//   },
-// );
-
 export const getFriendInvitesByUserId = createAsyncThunk(
   'friends/getFriendInvitesByUserId',
   async ({ userId, accessToken }) => {
@@ -96,9 +84,10 @@ export const friendsSlice = createSlice({
   reducers: {
     addFriend(state, action) {
       state.friends.push(action.payload);
-      state.friendInvites = state.friendInvites.filter(
-        (invite) => invite.sender !== action.payload._id,
-      );
+
+      const inviteIndex = state.friends.indexOf((invite) => invite.sender === action.payload._id);
+
+      state.friendInvites.splice(inviteIndex, 1);
     },
     addFriendInvite(state, action) {
       state.friendInvites.push(action.payload);
@@ -135,6 +124,19 @@ export const friendsSlice = createSlice({
       state.loading = false;
       state.error = action.error.message;
       state.friendInvites = [];
+    });
+    builder.addCase(createFriendInvite.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(createFriendInvite.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.friendInvites.push(action.payload);
+    });
+    builder.addCase(createFriendInvite.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
     });
     // builder.addCase(deleteFriendInviteById.pending, (state) => {
     //   state.loading = true;
