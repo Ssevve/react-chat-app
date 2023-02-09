@@ -17,12 +17,12 @@ import {
   subscribeToMessageEvents,
   subscribeToUserEvents,
   subscribeToFriendEvents,
-} from './socketEvents';
+} from 'socketEvents';
 
-import Topbar from './components/Topbar';
-import LeftPanel from './components/LeftPanel';
+import Topbar from 'components/Topbar';
+import LeftPanel from 'components/LeftPanel';
 import Chatbox from 'features/messages/MessagesBox';
-import RightPanel from './components/RightPanel';
+import RightPanel from 'components/RightPanel';
 import { getFriendInvitesByUserId } from 'features/friends/friendsSlice';
 
 const Wrapper = styled.div`

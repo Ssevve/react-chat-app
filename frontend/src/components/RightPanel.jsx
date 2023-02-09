@@ -6,8 +6,8 @@ import breakpoints from 'utils/breakpoints';
 
 import SidePanel from 'components/SidePanel';
 import FriendsList from 'features/friends/FriendsList';
-import SearchResults from './SearchResults';
-import Searchbar from './Searchbar';
+import SearchResults from '../features/search/SearchResults';
+import Searchbar from '../features/search/Searchbar';
 import FriendInvites from 'features/friends/FriendInvites';
 import { useSelector } from 'react-redux';
 
