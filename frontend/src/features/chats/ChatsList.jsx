@@ -9,6 +9,7 @@ import Chat from './Chat';
 
 const Wrapper = styled.section`
   margin-top: 1rem;
+  overflow-y: scroll;
 `;
 
 function ChatsList() {
