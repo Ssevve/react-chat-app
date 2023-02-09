@@ -1,8 +1,8 @@
 import styled from 'styled-components/macro';
 import { IoMdAdd } from 'react-icons/io';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import { selectUser, selectAccessToken } from 'features/auth/authSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAccessToken } from 'features/auth/authSlice';
+import { createFriendInvite } from 'features/friends/friendsSlice';
 
 import User from 'components/common/User';
 
@@ -32,32 +32,11 @@ const InviteButton = styled.button`
   }
 `;
 
-function SearchResults({ results, setFriendInvites }) {
-  const loggedInUser = useSelector(selectUser);
+function SearchResults({ results }) {
+  const dispatch = useDispatch();
   const accessToken = useSelector(selectAccessToken);
   const handleClick = async (resultId) => {
-    // Send friend invite to the user
-    const friendInvite = {
-      sender: loggedInUser._id,
-      receiver: resultId,
-    };
-
-    try {
-      const res = await axios.post(
-        '/invites',
-        {
-          friendInvite,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-      setFriendInvites((prevInvites) => [res.data, ...prevInvites]);
-    } catch (err) {
-      console.error(err);
-    }
+    dispatch(createFriendInvite({ friendId: resultId, accessToken }));
   };
 
   return (

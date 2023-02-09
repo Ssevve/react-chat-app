@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const FriendInvite = require('../models/FriendInvite');
 
 const getUserById = async (req, res) => {
   try {
@@ -22,7 +23,7 @@ const getFriendsByUserId = async (req, res) => {
 
     const friendsData = await Promise.all(
       user.friends.map((friendId) => {
-        return User.findOne({ _id: friendId }, 'username avatar.url statusText');
+        return User.findOne({ _id: friendId }, 'username statusText avatar.url');
       }),
     );
     res.status(200).json(friendsData);
@@ -35,35 +36,28 @@ const addFriend = async (req, res) => {
   const io = req.app.get('socketio');
   const connectedUsers = req.app.get('connectedUsers');
   const { senderId } = req.params;
-  const { inviteId } = req.body;
   try {
-    const acceptingUser = await User.findOne({ _id: req.user._id });
+    const acceptingUser = await User.findOne(
+      { _id: req.user._id },
+      'username statusText avatar.url friends',
+    );
     acceptingUser.friends.push(senderId);
     await acceptingUser.save();
+    delete acceptingUser.friends; // Don't need friends in the response
 
-    const sender = await User.findOne({ _id: senderId });
-    sender.friends.push(req.user._id);
-    await sender.save();
-
-    const newAcceptingUserFriends = await Promise.all(
-      acceptingUser.friends.map((friendId) => {
-        return User.findOne({ _id: friendId }, 'username avatar.url statusText');
-      }),
+    const newFriend = await User.findOne(
+      { _id: senderId },
+      'username statusText avatar.url friends',
     );
+    newFriend.friends.push(req.user._id);
+    await newFriend.save();
 
-    const newSenderFriends = await Promise.all(
-      sender.friends.map((friendId) => {
-        return User.findOne({ _id: friendId }, 'username avatar.url statusText');
-      }),
-    );
+    await FriendInvite.findOneAndDelete({ _id: req.body.inviteId });
 
-    io.to(connectedUsers[senderId]).emit('friendInviteAccepted', {
-      newFriends: newSenderFriends,
-      friendInviteId: inviteId,
-    });
-
-    res.status(200).json(newAcceptingUserFriends);
+    io.to(connectedUsers[senderId]).emit('addFriend', acceptingUser);
+    res.status(200).json(newFriend);
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 };

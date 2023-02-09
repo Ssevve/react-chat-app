@@ -1,9 +1,9 @@
 const FriendInvite = require('../models/FriendInvite');
 
-const getFriendInvitesForCurrentUser = async (req, res) => {
+const getFriendInvitesByUserId = async (req, res) => {
   try {
     const friendInvites = await FriendInvite.find({
-      $or: [{ sender: req.user._id }, { receiver: req.user._id }],
+      $or: [{ sender: req.params.userId }, { receiver: req.params.userId }],
     }).populate([
       {
         path: 'sender',
@@ -21,29 +21,34 @@ const getFriendInvitesForCurrentUser = async (req, res) => {
 };
 
 const createNewFriendInvite = async (req, res) => {
-  const { friendInvite } = req.body;
   const io = req.app.get('socketio'); // use the exported socketio module
   const connectedUsers = req.app.get('connectedUsers');
+
+  const invite = {
+    sender: req.user._id,
+    receiver: req.body.friendId,
+  };
+
   try {
     const duplicate = await FriendInvite.findOne({
       $or: [
-        { sender: friendInvite.sender, receiver: friendInvite.receiver },
+        { sender: invite.sender, receiver: invite.receiver },
         {
-          sender: friendInvite.receiver,
-          receiver: friendInvite.sender,
+          sender: invite.receiver,
+          receiver: invite.sender,
         },
       ],
     });
 
-    if (duplicate) return res.status(409).json({ message: 'Duplicate invite' });
+    if (duplicate) return res.status(409).json({ message: 'Duplicate friend invite' });
 
-    const newFriendInvite = await FriendInvite.create(friendInvite);
-    await newFriendInvite.populate([
+    const newInvite = await FriendInvite.create(invite);
+    await newInvite.populate([
       { path: 'sender', select: 'username avatar.url' },
       { path: 'receiver', select: 'username avatar.url' },
     ]);
-    io.to(connectedUsers[friendInvite.receiver]).emit('receiveFriendInvite', newFriendInvite);
-    res.status(201).json(newFriendInvite);
+    io.to(connectedUsers[newInvite.receiver._id]).emit('receiveFriendInvite', newInvite);
+    res.status(201).json(newInvite);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -58,4 +63,4 @@ const deleteFriendInvite = async (req, res) => {
   }
 };
 
-module.exports = { getFriendInvitesForCurrentUser, createNewFriendInvite, deleteFriendInvite };
+module.exports = { getFriendInvitesByUserId, createNewFriendInvite, deleteFriendInvite };

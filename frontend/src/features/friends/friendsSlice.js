@@ -3,9 +3,51 @@ import axios from 'axios';
 
 const initialState = {
   friends: [],
+  friendInvites: [],
   loading: false,
   error: null,
 };
+
+// export const deleteFriendInviteById = createAsyncThunk(
+//   'friends/deleteFriendInviteByUserId',
+//   async ({ inviteId, accessToken }) => {
+//     const res = await axios.delete(`/invites/${inviteId}`, {
+//       headers: {
+//         authorization: `Bearer ${accessToken}`,
+//       },
+//     });
+//     if (res.status === 204) return inviteId;
+//   },
+// );
+
+export const getFriendInvitesByUserId = createAsyncThunk(
+  'friends/getFriendInvitesByUserId',
+  async ({ userId, accessToken }) => {
+    const res = await axios.get(`/invites/${userId}`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return res.data;
+  },
+);
+
+export const addFriendById = createAsyncThunk(
+  'friends/addFriendById',
+  async ({ friendId, inviteId, accessToken }) => {
+    const res = await axios.put(
+      `/users/addFriend/${friendId}`,
+      { inviteId },
+      {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+
+    return res.data;
+  },
+);
 
 export const getFriendsByUserId = createAsyncThunk(
   'friends/getFriendsByUserId',
@@ -18,6 +60,35 @@ export const getFriendsByUserId = createAsyncThunk(
     return res.data;
   },
 );
+
+export const createFriendInvite = createAsyncThunk(
+  'friends/createFriendInvite',
+  async ({ friendId, accessToken }) => {
+    const res = await axios.post(
+      `/invites`,
+      { friendId },
+      {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+
+    return res.data;
+  },
+);
+
+// export const deleteFriendInviteById = createAsyncThunk(
+//   'friends/deleteFriendInviteByUserId',
+//   async ({ inviteId, accessToken }) => {
+//     const res = await axios.delete(`/invites/${inviteId}`, {
+//       headers: {
+//         authorization: `Bearer ${accessToken}`,
+//       },
+//     });
+//     if (res.status === 204) return inviteId;
+//   },
+// );
 
 export const friendsSlice = createSlice({
   name: 'friends',
@@ -46,7 +117,8 @@ export const friendsSlice = createSlice({
 });
 
 export const selectFriends = (state) => state.friends.friends;
+export const selectFriendInvites = (state) => state.friends.friendInvites;
 
-export const { setFriends } = friendsSlice.actions;
+export const { addFriendInvite, addFriend, removeFriendInvite } = friendsSlice.actions;
 
 export default friendsSlice.reducer;

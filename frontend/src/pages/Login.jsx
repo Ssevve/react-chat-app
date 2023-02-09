@@ -8,14 +8,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { login } from 'features/auth/authSlice';
 
 import AuthPageLayout from 'layouts/AuthPageLayout';
-import ErrorBox from 'components/AuthForm/ErrorBox';
-import FormTitle from 'components/AuthForm/FormTitle';
-import Form from 'components/AuthForm/Form';
-import Label from 'components/AuthForm/Label';
-import Input from 'components/AuthForm/Input';
-import ErrorMessage from 'components/AuthForm/ErrorMessage';
-import SubmitButton from 'components/AuthForm/SubmitButton';
-import Divider from 'components/AuthForm/Divider';
+import ErrorBox from 'features/auth/form/ErrorBox';
+import FormTitle from 'features/auth/form/FormTitle';
+import Form from 'features/auth/form/Form';
+import Label from 'features/auth/form/Label';
+import Input from 'features/auth/form/Input';
+import ErrorMessage from 'features/auth/form/ErrorMessage';
+import SubmitButton from 'features/auth/form/SubmitButton';
+import Divider from 'features/auth/form/Divider';
 
 const NeedAccount = styled.p`
   font-size: 0.875rem;

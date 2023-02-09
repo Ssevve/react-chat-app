@@ -8,14 +8,14 @@ import styled from 'styled-components/macro';
 import signupSchema from 'features/auth/schemas/signupSchema';
 
 import AuthPageLayout from 'layouts/AuthPageLayout';
-import ErrorBox from 'components/AuthForm/ErrorBox';
-import Form from 'components/AuthForm/Form';
-import FormTitle from 'components/AuthForm/FormTitle';
-import Label from 'components/AuthForm/Label';
-import Input from 'components/AuthForm/Input';
-import ErrorMessage from 'components/AuthForm/ErrorMessage';
-import SubmitButton from 'components/AuthForm/SubmitButton';
-import Divider from 'components/AuthForm/Divider';
+import ErrorBox from 'features/auth/form/ErrorBox';
+import Form from 'features/auth/form/Form';
+import FormTitle from 'features/auth/form/FormTitle';
+import Label from 'features/auth/form/Label';
+import Input from 'features/auth/form/Input';
+import ErrorMessage from 'features/auth/form/ErrorMessage';
+import SubmitButton from 'features/auth/form/SubmitButton';
+import Divider from 'features/auth/form/Divider';
 
 const HaveAccount = styled.p`
   font-size: 0.875rem;
