@@ -16,6 +16,13 @@ const Section = styled.section`
   width: 100%;
   height: calc(100% - 4rem);
   top: 4rem;
+  transition: all 0.1s ease-in-out;
+
+  ${({ sidePanelExpanded }) =>
+    sidePanelExpanded && {
+      opacity: '0.5',
+      filter: 'blur(0.1rem)',
+    }};
 
   @media ${breakpoints.medium} {
     max-width: ${({ expandRightPanel }) =>
@@ -46,7 +53,7 @@ const Messages = styled.section`
   overflow-y: auto;
 `;
 
-function MessagesBox({ expandRightPanel }) {
+function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
   const currentChat = useSelector(selectCurrentChat);
 
   const currentChatMessages = useSelector((state) =>
@@ -60,7 +67,7 @@ function MessagesBox({ expandRightPanel }) {
   }, [currentChatMessages, currentChat]);
 
   return (
-    <Section expandRightPanel={expandRightPanel}>
+    <Section sidePanelExpanded={sidePanelExpanded} expandRightPanel={expandRightPanel}>
       {currentChatMessages && (
         <>
           <Messages ref={scrollRef}>

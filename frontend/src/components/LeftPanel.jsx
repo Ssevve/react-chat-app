@@ -11,6 +11,7 @@ const StyledSidePanel = styled(SidePanel)`
     height: 100vh;
     top: 0;
     left: 0;
+    border-bottom: 1px solid var(--clr-light-200);
   }
 `;
 
@@ -22,7 +23,9 @@ const Logo = styled.div`
   align-items: center;
   gap: 0.5rem;
   color: var(--clr-accent);
-  border-bottom: 1px solid var(--clr-light-200);
+  @media ${breakpoints.medium} {
+    border-bottom: 1px solid var(--clr-light-200);
+  }
 `;
 
 const LogoText = styled.h1`

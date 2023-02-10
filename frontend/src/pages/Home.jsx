@@ -21,7 +21,7 @@ import {
 
 import Topbar from 'components/Topbar';
 import LeftPanel from 'components/LeftPanel';
-import Chatbox from 'features/messages/MessagesBox';
+import MessagesBox from 'features/messages/MessagesBox';
 import RightPanel from 'components/RightPanel';
 import { getFriendInvitesByUserId } from 'features/friends/friendsSlice';
 
@@ -70,12 +70,14 @@ function Home() {
     };
   }, []);
 
+  const sidePanelExpanded = expandLeftPanel || expandRightPanel;
+
   return (
     <Wrapper>
       <Topbar setExpandLeftPanel={setExpandLeftPanel} setExpandRightPanel={setExpandRightPanel} />
       <Main>
         <LeftPanel expanded={expandLeftPanel} />
-        <Chatbox expandRightPanel={expandRightPanel} />
+        <MessagesBox sidePanelExpanded={sidePanelExpanded} expandRightPanel={expandRightPanel} />
         <RightPanel expanded={expandRightPanel} />
       </Main>
     </Wrapper>
