@@ -1,5 +1,4 @@
-import { useRef, useState } from 'react';
-import { IoMdClose } from 'react-icons/io';
+import { useEffect, useRef, useState } from 'react';
 import { get } from 'utils/api';
 import styled from 'styled-components/macro';
 import breakpoints from 'utils/breakpoints';
@@ -30,74 +29,22 @@ const Title = styled.h2`
   gap: 1rem;
 `;
 
-const CloseButton = styled.button`
-  background: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  cursor: pointer;
-`;
-
 const Section = styled.section`
-  margin-top: 1rem;
+  padding: 1rem 0 0.5rem;
   overflow-y: auto;
-`;
-
-const SearchToggle = styled.button`
-  height: var(--bottom-row-height);
-  background: var(--clr-light-400);
-  color: var(--clr-accent);
-  font-weight: 700;
-  border-radius: var(--border-radius);
-  font-size: 1rem;
-  padding: 1rem;
-  width: 100%;
-  border: 1px solid currentColor;
-  cursor: pointer;
-  transition: all 0.1s ease-in-out;
-  &:hover {
-    background: var(--clr-accent);
-    color: var(--clr-light-400);
-  }
+  display: grid;
+  row-gap: 1rem;
+  align-content: start;
 `;
 
 function RightPanel({ expanded }) {
-  const accessToken = useSelector(selectAccessToken);
   const [results, setResults] = useState([]);
-  const queryRef = useRef('');
   const [isSearching, setIsSearching] = useState(false);
-
-  const handleChange = async () => {
-    if (queryRef.current.value.length < 3) {
-      return setResults([]);
-    }
-    try {
-      const res = await get(`/users/search/${queryRef.current.value}`, accessToken);
-      setResults(res.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleCloseSearch = () => {
-    setIsSearching(false);
-    setResults([]);
-  };
+  const [loading, setLoading] = useState(false);
 
   return (
     <StyledSidePanel anchor="right" expanded={expanded}>
-      <Title isSearching={isSearching}>
-        {isSearching ? (
-          <>
-            <CloseButton type="button" onClick={handleCloseSearch}>
-              <IoMdClose size="2rem" />
-            </CloseButton>
-          </>
-        ) : (
-          'Friends'
-        )}
-      </Title>
+      <Title>Friends</Title>
       <Section>
         {isSearching ? (
           <SearchResults results={results} />
@@ -108,13 +55,7 @@ function RightPanel({ expanded }) {
           </>
         )}
       </Section>
-      {isSearching ? (
-        <Searchbar forwardRef={queryRef} onChange={handleChange} />
-      ) : (
-        <SearchToggle type="button" onClick={() => setIsSearching(true)}>
-          Add new friend
-        </SearchToggle>
-      )}
+      <Searchbar setIsSearching={setIsSearching} setResults={setResults} />
     </StyledSidePanel>
   );
 }

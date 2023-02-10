@@ -45,16 +45,18 @@ function FriendsList() {
   return (
     <>
       <DropdownList title="Online">
-        {onlineFriends &&
-          onlineFriends.map((friend) => (
-            <User onClick={() => handleFriendClick(friend)} key={friend._id} user={friend} />
-          ))}
+        {onlineFriends?.length
+          ? onlineFriends.map((friend) => (
+              <User onClick={() => handleFriendClick(friend)} key={friend._id} user={friend} />
+            ))
+          : null}
       </DropdownList>
       <DropdownList title="Offline">
-        {offlineFriends &&
-          offlineFriends.map((friend) => (
-            <User onClick={() => handleFriendClick(friend)} key={friend._id} user={friend} />
-          ))}
+        {offlineFriends?.length
+          ? offlineFriends.map((friend) => (
+              <User onClick={() => handleFriendClick(friend)} key={friend._id} user={friend} />
+            ))
+          : null}
       </DropdownList>
     </>
   );
