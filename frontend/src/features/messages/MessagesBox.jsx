@@ -22,6 +22,7 @@ const Section = styled.section`
     sidePanelExpanded && {
       opacity: '0.5',
       filter: 'blur(0.1rem)',
+      pointerEvents: 'none',
     }};
 
   @media ${breakpoints.medium} {

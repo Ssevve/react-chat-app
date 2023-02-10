@@ -11,7 +11,6 @@ const StyledSidePanel = styled(SidePanel)`
     height: 100vh;
     top: 0;
     left: 0;
-    border-bottom: 1px solid var(--clr-light-200);
   }
 `;
 

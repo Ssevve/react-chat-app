@@ -35,7 +35,7 @@ const StyledButton = styled.button`
 const DropupMenu = styled.ul`
   position: absolute;
   width: 100%;
-  bottom: ${({ showDropup }) => (showDropup ? '4rem' : '-4rem')};
+  bottom: ${({ showDropup }) => (showDropup ? '4rem' : '0')};
   list-style: none;
   padding: var(--padding);
   display: flex;
