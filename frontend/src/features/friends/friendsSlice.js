@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { get, post, put, destroy } from 'utils/api';
 
 const initialState = {
   friends: [],
@@ -11,11 +11,7 @@ const initialState = {
 export const getFriendInvitesByUserId = createAsyncThunk(
   'friends/getFriendInvitesByUserId',
   async ({ userId, accessToken }) => {
-    const res = await axios.get(`/invites/${userId}`, {
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const res = await get(`/invites/${userId}`, accessToken);
     return res.data;
   },
 );
@@ -23,16 +19,7 @@ export const getFriendInvitesByUserId = createAsyncThunk(
 export const addFriendById = createAsyncThunk(
   'friends/addFriendById',
   async ({ friendId, inviteId, accessToken }) => {
-    const res = await axios.put(
-      `/users/addFriend/${friendId}`,
-      { inviteId },
-      {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
-
+    const res = await put(`/users/addFriend/${friendId}`, { inviteId }, accessToken);
     return res.data;
   },
 );
@@ -40,11 +27,7 @@ export const addFriendById = createAsyncThunk(
 export const getFriendsByUserId = createAsyncThunk(
   'friends/getFriendsByUserId',
   async ({ userId, accessToken }) => {
-    const res = await axios.get(`/users/friends/${userId}`, {
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const res = await get(`/users/friends/${userId}`, accessToken);
     return res.data;
   },
 );
@@ -52,16 +35,7 @@ export const getFriendsByUserId = createAsyncThunk(
 export const createFriendInvite = createAsyncThunk(
   'friends/createFriendInvite',
   async ({ friendId, accessToken }) => {
-    const res = await axios.post(
-      `/invites`,
-      { friendId },
-      {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
-
+    const res = await post(`/invites`, { friendId }, accessToken);
     return res.data;
   },
 );
@@ -69,11 +43,7 @@ export const createFriendInvite = createAsyncThunk(
 export const deleteFriendInviteById = createAsyncThunk(
   'friends/deleteFriendInviteByUserId',
   async ({ inviteId, accessToken }) => {
-    const res = await axios.delete(`/invites/${inviteId}`, {
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const res = await destroy(`/invites/${inviteId}`, accessToken);
     if (res.status === 204) return inviteId;
   },
 );

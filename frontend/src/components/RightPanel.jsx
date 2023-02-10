@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
-import axios from 'axios';
+import { get } from 'utils/api';
 import styled from 'styled-components/macro';
 import breakpoints from 'utils/breakpoints';
 
@@ -10,6 +10,7 @@ import SearchResults from '../features/search/SearchResults';
 import Searchbar from '../features/search/Searchbar';
 import FriendInvites from 'features/friends/FriendInvites';
 import { useSelector } from 'react-redux';
+import { selectAccessToken } from 'features/auth/authSlice';
 
 const StyledSidePanel = styled(SidePanel)`
   @media ${breakpoints.large} {
@@ -62,7 +63,7 @@ const SearchToggle = styled.button`
 `;
 
 function RightPanel({ expanded }) {
-  const auth = useSelector((state) => state.auth);
+  const accessToken = useSelector(selectAccessToken);
   const [results, setResults] = useState([]);
   const queryRef = useRef('');
   const [isSearching, setIsSearching] = useState(false);
@@ -72,11 +73,7 @@ function RightPanel({ expanded }) {
       return setResults([]);
     }
     try {
-      const res = await axios.get(`/users/search/${queryRef.current.value}`, {
-        headers: {
-          authorization: `Bearer ${auth.accessToken}`,
-        },
-      });
+      const res = await get(`/users/search/${queryRef.current.value}`, accessToken);
       setResults(res.data);
     } catch (err) {
       console.error(err);

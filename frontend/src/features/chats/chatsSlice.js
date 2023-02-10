@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { get } from 'utils/api';
 
 const initialState = {
   chats: [],
@@ -9,11 +9,7 @@ const initialState = {
 };
 
 export const fetchChats = createAsyncThunk('chats/fetchChats', async (accessToken) => {
-  const res = await axios.get('/chats', {
-    headers: {
-      authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const res = await get('/chats', accessToken);
   return res.data;
 });
 

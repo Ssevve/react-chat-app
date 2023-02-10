@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { get, post } from 'utils/api';
 
 const initialState = {
   messages: [],
@@ -10,15 +10,7 @@ const initialState = {
 export const createNewMessage = createAsyncThunk(
   'messages/createNewMessage',
   async ({ chatId, content, receiverId, accessToken }) => {
-    const res = await axios.post(
-      `/messages`,
-      { chatId, content, receiverId },
-      {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const res = await post(`/messages`, { chatId, content, receiverId }, accessToken);
     return res.data;
   },
 );
@@ -26,11 +18,7 @@ export const createNewMessage = createAsyncThunk(
 export const getMessagesByUserId = createAsyncThunk(
   'messages/getMessagesByUserId',
   async ({ userId, accessToken }) => {
-    const res = await axios.get(`/messages/user/${userId}`, {
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const res = await get(`/messages/user/${userId}`, accessToken);
     return res.data;
   },
 );
