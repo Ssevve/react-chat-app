@@ -8,8 +8,8 @@ import DropdownList from 'components/common/DropdownList';
 import Chat from './Chat';
 
 const Wrapper = styled.section`
-  margin-top: 1rem;
   overflow-y: auto;
+  padding: 1rem 0 0.5rem;
 `;
 
 function ChatsList() {

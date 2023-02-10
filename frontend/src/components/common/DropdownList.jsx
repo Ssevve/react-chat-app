@@ -12,8 +12,7 @@ const Wrapper = styled.section`
 
 const Button = styled.button`
   text-align: left;
-  padding: var(--padding);
-  padding-left: 0;
+  padding-left: var(--padding);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -33,12 +32,12 @@ const Arrow = styled.span`
 `;
 
 const List = styled.ul`
+  list-style: none;
   flex-direction: column;
   gap: 1rem;
   display: ${({ expand }) => (expand ? 'flex' : 'none')};
   overflow: hidden;
-  padding-left: var(--padding);
-  margin-bottom: 1rem;
+  padding: 0 1rem;
 `;
 
 function DropdownList({ title, children }) {

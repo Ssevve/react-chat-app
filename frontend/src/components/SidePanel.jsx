@@ -6,7 +6,6 @@ const borderMap = {
 };
 
 const StyledDiv = styled.div`
-  padding: var(--padding);
   height: calc(100% - 4rem); // topbar height = 4rem
   width: 90%;
   max-width: 300px;
@@ -17,7 +16,7 @@ const StyledDiv = styled.div`
   ${({ anchor, expanded }) => `${anchor}: ${expanded ? '0' : '-300px'}`};
   transition: ${({ anchor }) => `${anchor} 0.1s ease-in-out`};
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 4rem 1fr 4rem;
   z-index: 1;
 `;
 

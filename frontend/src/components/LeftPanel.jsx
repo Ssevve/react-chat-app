@@ -22,6 +22,7 @@ const Logo = styled.div`
   align-items: center;
   gap: 0.5rem;
   color: var(--clr-accent);
+  border-bottom: 1px solid var(--clr-light-200);
 `;
 
 const LogoText = styled.h1`
