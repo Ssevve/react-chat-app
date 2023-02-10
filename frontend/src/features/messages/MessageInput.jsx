@@ -6,6 +6,8 @@ import { selectUser } from 'features/auth/authSlice';
 import { selectCurrentChat, setCurrentChat, updateChat } from 'features/chats/chatsSlice';
 import { createNewMessage } from './messagesSlice';
 
+import SubmitButton from 'components/common/SubmitButton';
+
 const MessageForm = styled.form`
   display: flex;
   align-content: center;
@@ -23,23 +25,6 @@ const Input = styled.input`
   font-size: 1rem;
   color: var(--clr-dark);
   font-family: var(--font-family);
-`;
-
-const Button = styled.button`
-  border-radius: var(--border-radius);
-  border: 1px solid var(--clr-accent);
-  background: var(--clr-accent);
-  color: var(--clr-light-400);
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  font-weight: 700;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: opacity 0.1s ease-in-out;
-  &:hover {
-    opacity: var(--hover-opacity);
-  }
 `;
 
 function MessageInput() {
@@ -75,10 +60,10 @@ function MessageInput() {
       <Input
         ref={inputRef}
         type="text"
-        aria-label="Write new message"
+        aria-label="Write a new message here"
         placeholder="Write a message here..."
       />
-      <Button type="submit">Send</Button>
+      <SubmitButton>Send</SubmitButton>
     </MessageForm>
   );
 }

@@ -46,7 +46,11 @@ export const login = createAsyncThunk(
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    clearFetchError(state) {
+      state.error = false;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {
       state.loading = true;
@@ -67,6 +71,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(signup.pending, (state) => {
       state.loading = true;
+      state.signupSuccess = false;
     });
     builder.addCase(signup.fulfilled, (state) => {
       state.loading = false;
@@ -77,11 +82,14 @@ export const authSlice = createSlice({
       state.loading = false;
       state.error = action;
       state.signupSuccess = false;
+      state.signupSuccess = false;
     });
   },
 });
 
 export const selectUser = (state) => state.auth.user;
 export const selectAccessToken = (state) => state.auth.accessToken;
+
+export const { clearFetchError, resetSignupSuccess } = authSlice.actions;
 
 export default authSlice.reducer;

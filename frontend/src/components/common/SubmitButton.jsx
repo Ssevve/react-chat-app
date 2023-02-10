@@ -16,8 +16,12 @@ const Button = styled.button`
   }
 `;
 
-function SubmitButton({ text, isLoading }) {
-  return <Button type="submit">{isLoading ? <Loader /> : text}</Button>;
+function SubmitButton({ isLoading, children }) {
+  return (
+    <Button type="submit" disabled={isLoading}>
+      {isLoading ? <Loader /> : children}
+    </Button>
+  );
 }
 
 export default SubmitButton;

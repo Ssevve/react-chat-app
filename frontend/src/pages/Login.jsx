@@ -8,13 +8,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { login } from 'features/auth/authSlice';
 
 import AuthPageLayout from 'layouts/AuthPageLayout';
-import ErrorBox from 'features/auth/form/ErrorBox';
+import AlertBox from 'features/auth/form/AlertBox';
 import FormTitle from 'features/auth/form/FormTitle';
 import Form from 'features/auth/form/Form';
 import Label from 'features/auth/form/Label';
 import Input from 'features/auth/form/Input';
 import ErrorMessage from 'features/auth/form/ErrorMessage';
-import SubmitButton from 'features/auth/form/SubmitButton';
+import SubmitButton from 'components/common/SubmitButton';
 import Divider from 'features/auth/form/Divider';
 
 const NeedAccount = styled.p`
@@ -34,7 +34,8 @@ const StyledLink = styled(Link)`
 function Login() {
   const [unauthorized, setUnauthorized] = useState(false);
   const [loginError, setLoginError] = useState(null);
-  const auth = useSelector((state) => state.auth);
+  const signupSuccess = useSelector((state) => state.auth.signupSuccess);
+  const isLoading = useSelector((state) => state.auth.loading);
   const dispatch = useDispatch();
   const {
     watch,
@@ -68,15 +69,16 @@ function Login() {
 
   const invalidCredentials = errors.password || errors.username || unauthorized;
   const fetchError = loginError && !unauthorized;
+  const showAlertBox = fetchError || signupSuccess;
+  const alertBoxType = fetchError ? 'error' : 'success';
+  const alertMessage = fetchError
+    ? 'Something went wrong. Please try again.'
+    : 'Account created successfully. You can now log in.';
   return (
     <AuthPageLayout>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormTitle title="Log in" />
-        {fetchError ? (
-          <ErrorBox>
-            <ErrorMessage message="Something went wrong. Please try again." />
-          </ErrorBox>
-        ) : null}
+        {showAlertBox ? <AlertBox type={alertBoxType}>{alertMessage}</AlertBox> : null}
         <Label label="Username">
           <Input error={invalidCredentials} name="username" register={register} />
           {invalidCredentials && <ErrorMessage message="Invalid username or password" />}
@@ -85,7 +87,7 @@ function Login() {
           <Input error={invalidCredentials} name="password" register={register} type="password" />
           {invalidCredentials && <ErrorMessage message="Invalid username or password" />}
         </Label>
-        <SubmitButton text="Log in" isLoading={auth.loading} />
+        <SubmitButton isLoading={isLoading}>Log in</SubmitButton>
         <Divider />
         <NeedAccount>
           Need an account?
