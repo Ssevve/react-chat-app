@@ -13,9 +13,12 @@ const Header = styled.header`
   width: 100vw;
   border-bottom: 1px solid var(--clr-light-200);
   padding: var(--padding);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* align-items: center; */
   position: fixed;
   top: 0;
   left: 0;
@@ -23,6 +26,7 @@ const Header = styled.header`
   height: 4rem;
 
   @media ${breakpoints.medium} {
+    grid-template-columns: auto 1fr auto;
     width: calc(100vw - 300px);
     position: relative;
     left: 300px;
@@ -45,12 +49,15 @@ const Button = styled.button`
 `;
 
 const LeftPanelButton = styled(Button)`
+  justify-self: start;
   @media ${breakpoints.medium} {
     display: none;
   }
 `;
 
 const RightPanelButton = styled(Button)`
+  grid-column: 3/4;
+  justify-self: end;
   @media ${breakpoints.large} {
     display: none;
   }
@@ -83,9 +90,9 @@ function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
         <HiMenu size="1.5rem" />
       </LeftPanelButton>
       {currentChat ? (
-        <span>
+        <div>
           <User user={chatPartner} events={false} />
-        </span>
+        </div>
       ) : null}
       <RightPanelButton type="button" onClick={handleRightPanelExpand}>
         <FaUserFriends size="1.5rem" />
