@@ -53,6 +53,7 @@ function MessageInput() {
     dispatch(setCurrentChat(updatedChat));
 
     inputRef.current.value = '';
+    inputRef.current.focus();
   };
 
   return (
