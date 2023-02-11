@@ -11,17 +11,18 @@ const Button = styled.button`
   display: flex;
   min-width: 100%;
   align-items: center;
-  background: ${({ currentChat, chat }) =>
-    currentChat?._id === chat?._id ? 'var(--clr-light-200)' : 'var(--clr-light-400)'};
+  background: inherit;
   border: none;
   gap: 1rem;
-  padding: var(--padding);
-  transition: background 0.1s ease-in-out;
-  border-radius: var(--border-radius);
+  padding: 1rem var(--padding);
+  transition: all 0.1s ease-in-out;
   cursor: pointer;
-  &:hover {
-    background: var(--clr-light-200);
-  }
+
+  ${({ currentChat, chat }) =>
+    currentChat?._id === chat?._id && {
+      background: 'var(--clr-light-300)',
+      borderLeft: '6px solid var(--clr-accent)',
+    }};
 `;
 
 const Details = styled.section`

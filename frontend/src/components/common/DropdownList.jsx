@@ -34,10 +34,17 @@ const Arrow = styled.span`
 const List = styled.ul`
   list-style: none;
   flex-direction: column;
-  gap: 1rem;
   display: ${({ expand }) => (expand ? 'flex' : 'none')};
   overflow: hidden;
-  padding: 0 1rem;
+`;
+
+const ListItem = styled.li`
+  background: var(--clr-light-400);
+  transition: background 0.1s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    background: var(--clr-light-300);
+  }
 `;
 
 function DropdownList({ title, children }) {
@@ -54,7 +61,7 @@ function DropdownList({ title, children }) {
       {children && (
         <List expand={expand}>
           {React.Children.map(children, (child) => (
-            <li>{child}</li> // Does not need a key, because the children have their own keys already
+            <ListItem>{child}</ListItem> // Does not need a key, because the children have their own keys already
           ))}
         </List>
       )}

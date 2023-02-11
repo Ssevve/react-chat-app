@@ -9,14 +9,14 @@ import Chat from './Chat';
 
 const Wrapper = styled.section`
   overflow-y: auto;
-  padding: 1rem 0 0.5rem;
+  padding-top: 1rem;
 `;
 
 function ChatsList() {
   const dispatch = useDispatch();
   const accessToken = useSelector(selectAccessToken);
   const chats = useSelector(selectAllChats);
-  const sortedChats = chats.slice().sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+  // const sortedChats = chats.slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   const currentChat = useSelector(selectCurrentChat);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function ChatsList() {
     <Wrapper>
       {chats?.length ? (
         <DropdownList title="Direct messages">
-          {sortedChats.map((chat) => (
+          {chats.map((chat) => (
             <Chat
               key={chat._id}
               chat={chat}
