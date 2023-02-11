@@ -15,7 +15,7 @@ const StyledMessage = styled.div`
   max-width: 75%;
   padding: var(--padding);
 
-  @media ${breakpoints.large} {
+  @media ${breakpoints.xl} {
     max-width: 50%;
   }
 `;

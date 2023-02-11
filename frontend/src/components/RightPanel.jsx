@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
-import { get } from 'utils/api';
+import { useState } from 'react';
 import styled from 'styled-components/macro';
 import breakpoints from 'utils/breakpoints';
 
@@ -8,11 +7,9 @@ import FriendsList from 'features/friends/FriendsList';
 import SearchResults from '../features/search/SearchResults';
 import Searchbar from '../features/search/Searchbar';
 import FriendInvites from 'features/friends/FriendInvites';
-import { useSelector } from 'react-redux';
-import { selectAccessToken } from 'features/auth/authSlice';
 
 const StyledSidePanel = styled(SidePanel)`
-  @media ${breakpoints.large} {
+  @media ${breakpoints.xl} {
     height: 100vh;
     top: 0;
     right: 0;

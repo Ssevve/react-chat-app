@@ -16,9 +16,6 @@ const Header = styled.header`
   display: grid;
   align-content: center;
   justify-items: center;
-  /* display: flex; */
-  /* justify-content: space-between; */
-  /* align-items: center; */
   position: fixed;
   top: 0;
   left: 0;
@@ -32,7 +29,7 @@ const Header = styled.header`
     left: 300px;
   }
 
-  @media ${breakpoints.large} {
+  @media ${breakpoints.xl} {
     width: calc(100vw - 600px);
     position: relative;
     left: 300px;
@@ -58,7 +55,7 @@ const LeftPanelButton = styled(Button)`
 const RightPanelButton = styled(Button)`
   grid-column: 3/4;
   justify-self: end;
-  @media ${breakpoints.large} {
+  @media ${breakpoints.xl} {
     display: none;
   }
 `;

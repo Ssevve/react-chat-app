@@ -29,11 +29,20 @@ const Section = styled.section`
     max-width: ${({ expandRightPanel }) =>
       expandRightPanel ? 'calc(100vw - 600px)' : 'calc(100vw - 300px)'};
     left: 300px;
-    right: ${({ expandRightPanel }) => (expandRightPanel ? '300px' : '0')};
     transition: right 0.1s ease-in-out, max-width 0.1s ease-in-out;
   }
 
   @media ${breakpoints.large} {
+    right: ${({ expandRightPanel }) => (expandRightPanel ? '300px' : '0')};
+    ${({ sidePanelExpanded }) =>
+      sidePanelExpanded && {
+        opacity: '1',
+        filter: 'blur(0)',
+        pointerEvents: 'initial',
+      }};
+  }
+
+  @media ${breakpoints.xl} {
     max-width: calc(100vw - 600px);
     right: 300px;
     transition: none;
