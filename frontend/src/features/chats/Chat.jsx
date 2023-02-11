@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { format } from 'timeago.js';
 import { useSelector } from 'react-redux';
 
-import UserAvatarWithStatus from 'components/common/UserAvatarWithStatus';
+import UserAvatarWithStatus from 'components/common/UserAvatarWithConnectionStatus';
 import { selectUser } from 'features/auth/authSlice';
 import { selectCurrentChat } from './chatsSlice';
 

@@ -1,22 +1,17 @@
 import styled from 'styled-components/macro';
 
-import UserAvatarWithStatus from './UserAvatarWithStatus';
+import UserAvatarWithStatus from './UserAvatarWithConnectionStatus';
 
 const Button = styled.button`
   display: flex;
-  width: 100%;
+  flex: 1;
   align-items: center;
   background: none;
   border: none;
   gap: 1rem;
   padding: var(--padding);
   transition: background 0.1s ease-in-out;
-  border-radius: var(--border-radius);
   pointer-events: ${({ events }) => (events ? 'auto' : 'none')};
-  cursor: pointer;
-  &:hover {
-    background: var(--clr-light-200);
-  }
 `;
 
 const Details = styled.section`

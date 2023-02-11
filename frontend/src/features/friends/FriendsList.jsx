@@ -1,61 +1,26 @@
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectUser } from 'features/auth/authSlice';
-import { setCurrentChat, selectAllChats } from 'features/chats/chatsSlice';
+import { useSelector } from 'react-redux';
 import { selectFriends } from 'features/friends/friendsSlice';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 
 import DropdownList from 'components/common/DropdownList';
-import User from 'components/common/User';
+import Friend from 'features/friends/Friend';
 
 function FriendsList() {
-  const dispatch = useDispatch();
-  const loggedInUser = useSelector(selectUser);
-  const chats = useSelector(selectAllChats);
   const friends = useSelector(selectFriends);
   const { connectedUsers } = useConnectedUsers();
-  const [onlineFriends, setOnlineFriends] = useState(null);
-  const [offlineFriends, setOfflineFriends] = useState(null);
-
-  useEffect(() => {
-    if (!friends.length) return;
-    const online = friends.filter((friend) => friend._id in connectedUsers);
-    const offline = friends.filter((friend) => !(friend._id in connectedUsers));
-
-    setOnlineFriends(online);
-    setOfflineFriends(offline);
-  }, [friends, connectedUsers]);
-
-  const handleFriendClick = (friend) => {
-    let selectedChat;
-
-    if (chats.length) {
-      const chatsMembers = chats.map((chat) => chat.members);
-      const chatIndex = chatsMembers.findIndex(
-        (members) => members[0]._id === friend._id || members[1]._id === friend._id,
-      );
-      selectedChat = chats[chatIndex];
-    }
-
-    if (!selectedChat) selectedChat = { members: [loggedInUser, friend] };
-
-    dispatch(setCurrentChat(selectedChat));
-  };
+  const online = friends.length ? friends.filter((friend) => friend._id in connectedUsers) : [];
+  const offline = friends.length ? friends.filter((friend) => !(friend._id in connectedUsers)) : [];
 
   return (
     <>
       <DropdownList title="Online">
-        {onlineFriends?.length
-          ? onlineFriends.map((friend) => (
-              <User onClick={() => handleFriendClick(friend)} key={friend._id} user={friend} />
-            ))
+        {online.length
+          ? online.map((friend) => <Friend key={friend._id} friend={friend}></Friend>)
           : null}
       </DropdownList>
       <DropdownList title="Offline">
-        {offlineFriends?.length
-          ? offlineFriends.map((friend) => (
-              <User onClick={() => handleFriendClick(friend)} key={friend._id} user={friend} />
-            ))
+        {offline.length
+          ? offline.map((friend) => <Friend key={friend._id} friend={friend}></Friend>)
           : null}
       </DropdownList>
     </>

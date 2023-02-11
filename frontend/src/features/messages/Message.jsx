@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
 
 import UserAvatar from 'components/common/UserAvatar';
-import UserAvatarWithStatus from 'components/common/UserAvatarWithStatus';
+import UserAvatarWithStatus from 'components/common/UserAvatarWithConnectionStatus';
 
 const StyledMessage = styled.div`
   display: flex;

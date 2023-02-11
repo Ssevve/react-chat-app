@@ -27,7 +27,7 @@ const Title = styled.h2`
 `;
 
 const Section = styled.section`
-  padding: 1rem 0 0.5rem;
+  padding: 1rem 0 0;
   overflow-y: auto;
   display: grid;
   row-gap: 1rem;
@@ -37,7 +37,7 @@ const Section = styled.section`
 function RightPanel({ expanded }) {
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   return (
     <StyledSidePanel anchor="right" expanded={expanded}>

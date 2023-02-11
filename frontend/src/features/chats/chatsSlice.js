@@ -34,8 +34,9 @@ export const chatsSlice = createSlice({
     });
     builder.addCase(fetchChats.fulfilled, (state, action) => {
       state.loading = false;
+      state.error = null;
       state.chats = action.payload;
-      state.error = '';
+      // state.chats.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
     });
     builder.addCase(fetchChats.rejected, (state, action) => {
       state.loading = false;

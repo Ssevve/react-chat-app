@@ -41,7 +41,6 @@ const List = styled.ul`
 const ListItem = styled.li`
   background: var(--clr-light-400);
   transition: background 0.1s ease-in-out;
-  cursor: pointer;
   &:hover {
     background: var(--clr-light-300);
   }
