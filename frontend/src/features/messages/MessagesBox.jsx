@@ -30,16 +30,17 @@ const Section = styled.section`
       expandRightPanel ? 'calc(100vw - 600px)' : 'calc(100vw - 300px)'};
     left: 300px;
     transition: right 0.1s ease-in-out, max-width 0.1s ease-in-out;
-  }
 
-  @media ${breakpoints.large} {
-    right: ${({ expandRightPanel }) => (expandRightPanel ? '300px' : '0')};
     ${({ sidePanelExpanded }) =>
       sidePanelExpanded && {
         opacity: '1',
         filter: 'blur(0)',
         pointerEvents: 'initial',
       }};
+  }
+
+  @media ${breakpoints.large} {
+    right: ${({ expandRightPanel }) => (expandRightPanel ? '300px' : '0')};
   }
 
   @media ${breakpoints.xl} {
