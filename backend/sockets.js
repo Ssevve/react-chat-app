@@ -13,7 +13,7 @@ const removeUser = (userId) => {
 const initializeSocketEvents = (server, app) => {
   const io = new Server(server, {
     cors: {
-      origin: 'http://localhost:3000',
+      origins: ['https://example.com', 'https://react-chat-app-khaki.vercel.app'],
     },
   });
 
