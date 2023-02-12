@@ -16,7 +16,7 @@ const initializeSocketEvents = require('./sockets');
 connectDB();
 
 // Middleware
-const allowedOrigins = ['http://localhost:3000', 'https://react-chat-app-khaki.vercel.app'];
+const allowedOrigins = ['http://localhost:3000', 'https://react-chat-app-khaki.vercel.app/'];
 const corsOptions = {
   origin: (origin, callback) => {
     if (allowedOrigins.indexOf(origin) !== -1) {
