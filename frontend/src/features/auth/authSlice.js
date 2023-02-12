@@ -13,7 +13,7 @@ export const signup = createAsyncThunk(
   'auth/signup',
   async ({ username, password }, { rejectWithValue }) => {
     try {
-      const res = await post('auth/signup', { username, password });
+      const res = await post('/auth/signup', { username, password });
       return res.data;
     } catch (err) {
       if (!err.response) {
@@ -30,7 +30,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async ({ username, password }, { rejectWithValue }) => {
     try {
-      const res = await post('auth/login', { username, password });
+      const res = await post('/auth/login', { username, password });
       return res.data;
     } catch (err) {
       if (!err.response) {
