@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
-import AuthRoutes from 'utils/AuthRoutes';
-import GuestRoutes from 'utils/GuestRoutes';
+import AuthRoutes from 'components/AuthRoutes';
+import GuestRoutes from 'components/GuestRoutes';
 
 import Login from 'pages/Login';
 import Home from 'pages/Home';
