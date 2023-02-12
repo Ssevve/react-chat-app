@@ -11,12 +11,15 @@ const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const verifyJWT = require('./middleware/verifyJWT');
 const initializeSocketEvents = require('./sockets');
+const corsHeader = require('./middleware/corsHeader');
 
 // Connect to MongoDB
+
 connectDB();
+app.use(corsHeader());
 app.use(
   cors({
-    origin: 'https://react-chat-app-khaki.vercel.app/',
+    origin: 'https://react-chat-app-khaki.vercel.app',
   }),
 );
 app.use(helmet());
