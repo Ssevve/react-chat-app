@@ -40,9 +40,8 @@ app.use('/invites', verifyJWT, require('./routes/invites'));
 // Socket events
 initializeSocketEvents(server, app);
 
+const port = process.env.PORT || 5000;
 mongoose.connection.once('open', () => {
   console.log('MongoDB connected');
-  server.listen(process.env.PORT, () =>
-    console.log(`Server listening on port ${process.env.PORT}`),
-  );
+  server.listen(port, () => console.log(`Server listening on port ${port}`));
 });
