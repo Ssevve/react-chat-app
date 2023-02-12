@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const get = (url, accessToken = '') => {
-  return axios.get(url, {
+  return axios.get(process.env.REACT_APP_API_URL + url, {
     headers: {
       authorization: `Bearer ${accessToken}`,
     },
@@ -9,7 +9,7 @@ const get = (url, accessToken = '') => {
 };
 
 const post = (url, data, accessToken = '') => {
-  return axios.post(url, data, {
+  return axios.post(process.env.REACT_APP_API_URL + url, data, {
     headers: {
       authorization: `Bearer ${accessToken}`,
     },
@@ -17,7 +17,7 @@ const post = (url, data, accessToken = '') => {
 };
 
 const put = (url, data, accessToken = '') => {
-  return axios.put(url, data, {
+  return axios.put(process.env.REACT_APP_API_URL + url, data, {
     headers: {
       authorization: `Bearer ${accessToken}`,
     },
@@ -25,7 +25,7 @@ const put = (url, data, accessToken = '') => {
 };
 
 const destroy = (url, accessToken = '') => {
-  return axios.delete(url, {
+  return axios.delete(process.env.REACT_APP_API_URL + url, {
     headers: {
       authorization: `Bearer ${accessToken}`,
     },
