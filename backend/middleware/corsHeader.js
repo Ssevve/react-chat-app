@@ -13,4 +13,4 @@ const corsHeader = (req, res, next) => {
   next();
 };
 
-export default corsHeader;
+module.exports = corsHeader;
