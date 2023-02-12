@@ -14,19 +14,11 @@ const initializeSocketEvents = require('./sockets');
 
 // Connect to MongoDB
 connectDB();
-
-// Middleware
-const allowedOrigins = ['http://localhost:3000', 'https://react-chat-app-khaki.vercel.app/'];
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-};
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: 'https://react-chat-app-khaki.vercel.app/',
+  }),
+);
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(cookieParser());
