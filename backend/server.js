@@ -16,7 +16,7 @@ const corsHeader = require('./middleware/corsHeader');
 // Connect to MongoDB
 
 connectDB();
-app.use(corsHeader());
+app.use(corsHeader);
 app.use(
   cors({
     origin: 'https://react-chat-app-khaki.vercel.app',
