@@ -34,9 +34,7 @@ function Searchbar({ setLoading, setIsSearching, setResults }) {
     setIsSearching(true);
     const timeout = setTimeout(searchFriends, 250);
 
-    return () => {
-      clearTimeout(timeout);
-    };
+    return () => clearTimeout(timeout);
   }, [query]);
 
   const clearInput = () => setQuery('');
