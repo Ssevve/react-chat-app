@@ -37,14 +37,14 @@ const Section = styled.section`
 function RightPanel({ expanded }) {
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   return (
     <StyledSidePanel anchor="right" expanded={expanded}>
       <Title>Friends</Title>
       <Section>
         {isSearching ? (
-          <SearchResults results={results} />
+          <SearchResults loading={loading} results={results} />
         ) : (
           <>
             <FriendInvites />
@@ -52,7 +52,7 @@ function RightPanel({ expanded }) {
           </>
         )}
       </Section>
-      <Searchbar setIsSearching={setIsSearching} setResults={setResults} />
+      <Searchbar setLoading={setLoading} setIsSearching={setIsSearching} setResults={setResults} />
     </StyledSidePanel>
   );
 }

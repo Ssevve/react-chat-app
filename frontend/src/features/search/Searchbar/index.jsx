@@ -2,21 +2,26 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { BiSearch } from 'react-icons/bi';
 import { MdClear } from 'react-icons/md';
-import { selectAccessToken } from 'features/auth/authSlice';
+import { selectAccessToken, selectUser } from 'features/auth/authSlice';
 import { get } from 'utils/api';
 
 import { Wrapper, SearchIcon, StyledInput, ClearButton } from './styles';
 
-function Searchbar({ setIsSearching, setResults }) {
+function Searchbar({ setLoading, setIsSearching, setResults }) {
   const accessToken = useSelector(selectAccessToken);
+  const loggedInUser = useSelector(selectUser);
   const [query, setQuery] = useState('');
 
   const searchFriends = async () => {
+    setLoading(true);
     try {
       const res = await get(`/users/search/${query}`, accessToken);
-      setResults(res.data);
+      const filteredResults = res.data.filter((user) => user._id !== loggedInUser._id);
+      setResults(filteredResults);
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
