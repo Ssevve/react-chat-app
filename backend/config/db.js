@@ -4,7 +4,9 @@ mongoose.set('strictQuery', true);
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.DB_CONNECTION_STRING);
+    await mongoose.connect(
+      `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.mkuarps.mongodb.net/chat-app?retryWrites=true/`,
+    );
   } catch (err) {
     console.error(err);
   }
