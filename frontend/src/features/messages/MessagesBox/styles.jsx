@@ -1,13 +1,7 @@
-import { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { selectCurrentChat } from 'features/chats/chatsSlice';
 import styled from 'styled-components/macro';
 import breakpoints from 'utils/breakpoints';
 
-import Message from 'features/messages/Message';
-import MessageInput from './MessageInput';
-
-const Section = styled.section`
+export const Section = styled.section`
   flex: 2.5;
   display: flex;
   justify-content: space-between;
@@ -50,7 +44,7 @@ const Section = styled.section`
   }
 `;
 
-const Messages = styled.section`
+export const Messages = styled.section`
   padding: var(--padding);
   max-height: calc(100% - 4rem);
   top: 4rem;
@@ -63,34 +57,3 @@ const Messages = styled.section`
   gap: 2rem;
   overflow-y: auto;
 `;
-
-function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
-  const currentChat = useSelector(selectCurrentChat);
-
-  const currentChatMessages = useSelector((state) =>
-    state.messages.messages.filter((message) => message.chatId === currentChat?._id),
-  );
-  const scrollRef = useRef(null);
-
-  useEffect(() => {
-    if (!scrollRef.current) return;
-    scrollRef.current.scrollTo(0, scrollRef.current.scrollHeight);
-  }, [currentChatMessages, currentChat]);
-
-  return (
-    <Section sidePanelExpanded={sidePanelExpanded} expandRightPanel={expandRightPanel}>
-      {currentChatMessages && (
-        <>
-          <Messages ref={scrollRef}>
-            {currentChatMessages.map((message) => (
-              <Message key={message._id} message={message} />
-            ))}
-          </Messages>
-          <MessageInput />
-        </>
-      )}
-    </Section>
-  );
-}
-
-export default MessagesBox;

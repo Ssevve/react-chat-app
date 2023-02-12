@@ -28,8 +28,8 @@ const Input = styled.input`
 `;
 
 function MessageInput() {
-  const currentChat = useSelector(selectCurrentChat);
   const dispatch = useDispatch();
+  const currentChat = useSelector(selectCurrentChat);
   const loggedInUser = useSelector(selectUser);
   const accessToken = useSelector(selectAccessToken);
   const inputRef = useRef('');
