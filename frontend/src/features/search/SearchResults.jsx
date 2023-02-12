@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectAccessToken } from 'features/auth/authSlice';
 import { createFriendInvite } from 'features/friends/friendsSlice';
 
+import { ReactComponent as Loader } from 'assets/loader.svg';
+// import Loader from 'components/common/Loader';
 import User from 'components/common/User';
 
 const Results = styled.ul`
@@ -32,24 +34,34 @@ const InviteButton = styled.button`
   }
 `;
 
-function SearchResults({ results }) {
+const StyledLoader = styled(Loader)`
+  width: 100%;
+  height: 2rem;
+`;
+
+function SearchResults({ loading, results }) {
   const dispatch = useDispatch();
   const accessToken = useSelector(selectAccessToken);
+
   const handleClick = async (resultId) => {
     dispatch(createFriendInvite({ friendId: resultId, accessToken }));
   };
 
+  const resultsReady = results.length && !loading;
+
   return (
     <Results>
-      {results &&
-        results.map((result) => (
-          <Result key={result._id}>
-            <User events={false} user={result} />
-            <InviteButton type="button" onClick={() => handleClick(result._id)}>
-              <IoMdAdd size="1.5rem" />
-            </InviteButton>
-          </Result>
-        ))}
+      {loading ? <StyledLoader stroke="var(--clr-light-200)" /> : null}
+      {resultsReady
+        ? results.map((result) => (
+            <Result key={result._id}>
+              <User events={false} user={result} />
+              <InviteButton type="button" onClick={() => handleClick(result._id)}>
+                <IoMdAdd size="1.5rem" />
+              </InviteButton>
+            </Result>
+          ))
+        : null}
     </Results>
   );
 }
