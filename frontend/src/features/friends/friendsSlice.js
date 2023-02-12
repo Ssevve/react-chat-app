@@ -8,8 +8,8 @@ const initialState = {
   error: null,
 };
 
-export const getFriendInvitesByUserId = createAsyncThunk(
-  'friends/getFriendInvitesByUserId',
+export const fetchFriendInvites = createAsyncThunk(
+  'friends/fetchFriendInvites',
   async ({ userId, accessToken }) => {
     const res = await get(`/invites/${userId}`, accessToken);
     return res.data;
@@ -24,8 +24,8 @@ export const addFriendById = createAsyncThunk(
   },
 );
 
-export const getFriendsByUserId = createAsyncThunk(
-  'friends/getFriendsByUserId',
+export const fetchFriends = createAsyncThunk(
+  'friends/fetchFriends',
   async ({ userId, accessToken }) => {
     const res = await get(`/users/friends/${userId}`, accessToken);
     return res.data;
@@ -67,30 +67,30 @@ export const friendsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getFriendsByUserId.pending, (state) => {
+    builder.addCase(fetchFriends.pending, (state) => {
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(getFriendsByUserId.fulfilled, (state, action) => {
+    builder.addCase(fetchFriends.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
       state.friends = action.payload;
     });
-    builder.addCase(getFriendsByUserId.rejected, (state, action) => {
+    builder.addCase(fetchFriends.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
       state.friends = [];
     });
-    builder.addCase(getFriendInvitesByUserId.pending, (state) => {
+    builder.addCase(fetchFriendInvites.pending, (state) => {
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(getFriendInvitesByUserId.fulfilled, (state, action) => {
+    builder.addCase(fetchFriendInvites.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
       state.friendInvites = action.payload;
     });
-    builder.addCase(getFriendInvitesByUserId.rejected, (state, action) => {
+    builder.addCase(fetchFriendInvites.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
       state.friendInvites = [];

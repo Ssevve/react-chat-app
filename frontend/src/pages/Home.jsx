@@ -5,14 +5,8 @@ import { updateChat } from 'features/chats/chatsSlice';
 import { addMessage } from 'features/messages/messagesSlice';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 import { useSelector, useDispatch } from 'react-redux';
-import { getMessagesByUserId } from 'features/messages/messagesSlice';
-import { selectAccessToken, selectUser } from 'features/auth/authSlice';
-import {
-  getFriendsByUserId,
-  addFriend,
-  addFriendInvite,
-  removeFriendInvite,
-} from 'features/friends/friendsSlice';
+import { selectUser } from 'features/auth/authSlice';
+import { addFriend, addFriendInvite, removeFriendInvite } from 'features/friends/friendsSlice';
 import {
   subscribeToMessageEvents,
   subscribeToUserEvents,
@@ -23,7 +17,6 @@ import Topbar from 'components/Topbar';
 import LeftPanel from 'components/LeftPanel';
 import MessagesBox from 'features/messages/MessagesBox';
 import RightPanel from 'components/RightPanel';
-import { getFriendInvitesByUserId } from 'features/friends/friendsSlice';
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -35,7 +28,6 @@ const Main = styled.main`
 
 function Home() {
   const dispatch = useDispatch();
-  const accessToken = useSelector(selectAccessToken);
   const loggedInUser = useSelector(selectUser);
   const { setConnectedUsers } = useConnectedUsers();
   const [expandLeftPanel, setExpandLeftPanel] = useState(false);
@@ -46,7 +38,6 @@ function Home() {
     socket.current = io('ws://localhost:5000', { auth: { userId: loggedInUser._id } });
     subscribeToMessageEvents({ socket: socket.current, dispatch, addMessage, updateChat });
     subscribeToUserEvents({ socket: socket.current, setConnectedUsers });
-    // Move to friends list
     subscribeToFriendEvents({
       socket: socket.current,
       dispatch,
@@ -54,15 +45,6 @@ function Home() {
       addFriendInvite,
       removeFriendInvite,
     });
-
-    const authData = {
-      userId: loggedInUser._id,
-      accessToken,
-    };
-
-    dispatch(getMessagesByUserId(authData));
-    dispatch(getFriendsByUserId(authData));
-    dispatch(getFriendInvitesByUserId(authData));
 
     return () => {
       socket.current.off();

@@ -15,8 +15,8 @@ export const createNewMessage = createAsyncThunk(
   },
 );
 
-export const getMessagesByUserId = createAsyncThunk(
-  'messages/getMessagesByUserId',
+export const fetchMessages = createAsyncThunk(
+  'messages/fetchMessages',
   async ({ userId, accessToken }) => {
     const res = await get(`/messages/user/${userId}`, accessToken);
     return res.data;
@@ -32,16 +32,16 @@ export const messagesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getMessagesByUserId.pending, (state) => {
+    builder.addCase(fetchMessages.pending, (state) => {
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(getMessagesByUserId.fulfilled, (state, action) => {
+    builder.addCase(fetchMessages.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
       state.messages = action.payload;
     });
-    builder.addCase(getMessagesByUserId.rejected, (state, action) => {
+    builder.addCase(fetchMessages.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
       state.messages = [];

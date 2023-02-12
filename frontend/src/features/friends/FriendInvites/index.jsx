@@ -1,50 +1,19 @@
-import styled from 'styled-components/macro';
+import { useEffect } from 'react';
 import { BsCheck } from 'react-icons/bs';
 import { IoMdClose } from 'react-icons/io';
 import { useSelector, useDispatch } from 'react-redux';
-
-import DropdownList from 'components/common/DropdownList';
-import User from 'components/common/User';
 import { selectUser, selectAccessToken } from 'features/auth/authSlice';
 import {
   selectFriendInvites,
   addFriendById,
   deleteFriendInviteById,
+  fetchFriendInvites,
 } from 'features/friends/friendsSlice';
 
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--padding);
-  padding-right: var(--padding);
-`;
+import DropdownList from 'components/common/DropdownList';
+import User from 'components/common/User';
 
-const Button = styled.button`
-  background: none;
-  border-radius: var(--border-radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid currentColor;
-  cursor: pointer;
-  transition: background 0.1s ease-in-out;
-  padding: 0.15rem;
-`;
-
-const AcceptButton = styled(Button)`
-  color: green;
-  &:hover {
-    background: var(--hover-success);
-  }
-`;
-
-const DeclineButton = styled(Button)`
-  color: var(--clr-danger);
-  &:hover {
-    background: var(--hover-danger);
-  }
-`;
+import { Wrapper, AcceptButton, DeclineButton } from './styles';
 
 function FriendInvites() {
   const dispatch = useDispatch();
@@ -52,6 +21,10 @@ function FriendInvites() {
   const accessToken = useSelector(selectAccessToken);
   const friendInvites = useSelector(selectFriendInvites);
   const isLoading = useSelector((state) => state.friends.loading);
+
+  useEffect(() => {
+    dispatch(fetchFriendInvites({ userId: loggedInUser._id, accessToken }));
+  }, []);
 
   const cancelInvite = async (invite) => {
     dispatch(deleteFriendInviteById({ inviteId: invite._id, accessToken }));
