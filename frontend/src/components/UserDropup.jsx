@@ -2,7 +2,6 @@ import { useState, useRef } from 'react';
 import styled from 'styled-components/macro';
 import { FiChevronUp } from 'react-icons/fi';
 import { RiLogoutCircleLine } from 'react-icons/ri';
-import useClickOutside from 'hooks/useClickOutside';
 
 import UserAvatar from 'components/common/UserAvatar';
 import { useSelector, useDispatch } from 'react-redux';
@@ -22,14 +21,20 @@ const StyledButton = styled.button`
   justify-content: space-between;
   padding: var(--padding);
   border: none;
-  border-top: 1px solid
-    ${({ showDropup }) => (showDropup ? 'var(--clr-accent)' : 'var(--clr-light-200)')};
-  background: ${({ showDropup }) => (showDropup ? 'var(--clr-accent)' : 'var(--clr-light-400)')};
-  color: ${({ showDropup }) => (showDropup ? 'var(--clr-light-400)' : 'var(--clr-dark)')};
+  border-top: 1px solid var(--clr-light-200);
+  background: var(--clr-light-400);
+  color: var(--clr-dark);
   cursor: pointer;
   &:hover {
     background: ${({ showDropup }) => (showDropup ? 'var(--clr-accent)' : 'var(--clr-light-200)')};
   }
+
+  ${({ showDropup }) =>
+    showDropup && {
+      borderTop: '1px solid var(--clr-accent)',
+      background: 'var(--clr-accent)',
+      color: 'var(--clr-light-400)',
+    }};
 `;
 
 const DropupMenu = styled.ul`
@@ -104,11 +109,9 @@ const Arrow = styled.span`
 `;
 
 function UserDropup() {
-  const dropupRef = useRef(null);
   const loggedInUser = useSelector(selectUser);
   const dispatch = useDispatch();
   const [showDropup, setShowDropup] = useState(false);
-  useClickOutside(dropupRef, () => setShowDropup(false));
 
   const handleLogout = async () => {
     try {
@@ -119,7 +122,7 @@ function UserDropup() {
     }
   };
   return (
-    <Wrapper onMouseLeave={() => setShowDropup(false)} ref={dropupRef}>
+    <Wrapper onMouseLeave={() => setShowDropup(false)}>
       <DropupMenu showDropup={showDropup}>
         <DropupItem>
           <LogoutButton onClick={handleLogout}>
