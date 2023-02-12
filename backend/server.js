@@ -11,14 +11,15 @@ const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const verifyJWT = require('./middleware/verifyJWT');
 const initializeSocketEvents = require('./sockets');
+const corsHeader = require('./middleware/corsHeader');
 
 // Connect to MongoDB
-connectDB();
 
-// Middleware
+connectDB();
+app.use(corsHeader);
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://react-chat-app-khaki.vercel.app',
   }),
 );
 app.use(helmet());
@@ -40,9 +41,8 @@ app.use('/invites', verifyJWT, require('./routes/invites'));
 // Socket events
 initializeSocketEvents(server, app);
 
+const port = process.env.PORT || 5000;
 mongoose.connection.once('open', () => {
   console.log('MongoDB connected');
-  server.listen(process.env.PORT, () =>
-    console.log(`Server listening on port ${process.env.PORT}`),
-  );
+  server.listen(port, () => console.log(`Server listening on port ${port}`));
 });
