@@ -35,7 +35,7 @@ function Home() {
   const socket = useRef(null);
 
   useEffect(() => {
-    socket.current = io('ws://localhost:5000', { auth: { userId: loggedInUser._id } });
+    socket.current = io(process.env.REACT_APP_SOCKET_URL, { auth: { userId: loggedInUser._id } });
     subscribeToMessageEvents({ socket: socket.current, dispatch, addMessage, updateChat });
     subscribeToUserEvents({ socket: socket.current, setConnectedUsers });
     subscribeToFriendEvents({
