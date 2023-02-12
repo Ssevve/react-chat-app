@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components/macro';
 import { FiChevronUp } from 'react-icons/fi';
 import { RiLogoutCircleLine } from 'react-icons/ri';
