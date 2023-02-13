@@ -21,13 +21,11 @@ function FriendsList() {
   return (
     <>
       <DropdownList title="Online">
-        {online.length
-          ? online.map((friend) => <Friend key={friend._id} friend={friend}></Friend>)
-          : null}
+        {online.length ? online.map((friend) => <Friend key={friend._id} friend={friend} />) : null}
       </DropdownList>
       <DropdownList title="Offline">
         {offline.length
-          ? offline.map((friend) => <Friend key={friend._id} friend={friend}></Friend>)
+          ? offline.map((friend) => <Friend key={friend._id} friend={friend} />)
           : null}
       </DropdownList>
     </>
