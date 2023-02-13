@@ -17,7 +17,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'https://react-chat-app-clhf.vercel.app'],
+    origin: ['http://localhost:3000', 'https://react-chat-app-khaki.vercel.app'],
     credentials: true,
   }),
 );
