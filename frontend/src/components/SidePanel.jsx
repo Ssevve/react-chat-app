@@ -1,19 +1,19 @@
 import styled from 'styled-components/macro';
 
 const borderMap = {
-  left: 'right',
-  right: 'left',
+  left: 'border-right',
+  right: 'border-left',
 };
 
 const StyledDiv = styled.div`
   height: calc(100% - 4rem); // topbar height = 4rem
   width: 90%;
-  max-width: 300px;
+  max-width: 18.75rem;
   position: fixed;
   top: 4rem;
   background: var(--clr-light-400);
-  ${({ anchor }) => `border-${borderMap[anchor]}: 1px solid var(--clr-light-200)}`};
-  ${({ anchor, expanded }) => `${anchor}: ${expanded ? '0' : '-300px'}`};
+  ${({ anchor }) => `${borderMap[anchor]}: 1px solid var(--clr-light-200)}`};
+  ${({ anchor, expanded }) => `${anchor}: ${expanded ? '0' : '-18.75rem'}`};
   transition: ${({ anchor }) => `${anchor} 0.1s ease-in-out`};
   display: grid;
   grid-template-rows: 4rem 1fr 4rem;

@@ -24,15 +24,15 @@ const Header = styled.header`
 
   @media ${breakpoints.medium} {
     grid-template-columns: auto 1fr auto;
-    width: calc(100vw - 300px);
+    width: calc(100vw - 18.75rem);
     position: relative;
-    left: 300px;
+    left: 18.75rem;
   }
 
   @media ${breakpoints.xl} {
-    width: calc(100vw - 600px);
+    width: calc(100vw - 37.5rem);
     position: relative;
-    left: 300px;
+    left: 18.75rem;
   }
 `;
 

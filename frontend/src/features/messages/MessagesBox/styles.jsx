@@ -20,10 +20,18 @@ export const Section = styled.section`
     }};
 
   @media ${breakpoints.medium} {
-    max-width: ${({ expandRightPanel }) =>
-      expandRightPanel ? 'calc(100vw - 600px)' : 'calc(100vw - 300px)'};
-    left: 300px;
+    left: 18.75rem;
+    max-width: calc(100vw - 18.75rem);
+  }
+
+  @media ${breakpoints.large} {
+    right: 0;
     transition: right 0.1s ease-in-out, max-width 0.1s ease-in-out;
+
+    ${({ expandRightPanel }) =>
+      expandRightPanel && {
+        maxWidth: 'calc(100vw - 37.5rem)',
+      }};
 
     ${({ sidePanelExpanded }) =>
       sidePanelExpanded && {
@@ -33,13 +41,9 @@ export const Section = styled.section`
       }};
   }
 
-  @media ${breakpoints.large} {
-    right: ${({ expandRightPanel }) => (expandRightPanel ? '300px' : '0')};
-  }
-
   @media ${breakpoints.xl} {
-    max-width: calc(100vw - 600px);
-    right: 300px;
+    max-width: calc(100vw - 37.5rem);
+    right: 18.75rem;
     transition: none;
   }
 `;
@@ -48,9 +52,8 @@ export const Messages = styled.section`
   padding: var(--padding);
   max-height: calc(100% - 4rem);
   top: 4rem;
-  left: 0;
-  right: 0;
   bottom: 4rem;
+  width: 100%;
   display: grid;
   align-content: flex-start;
   flex: 1;
