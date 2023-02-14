@@ -1,14 +1,19 @@
-import { AiOutlineWarning, AiOutlineCheckCircle } from 'react-icons/ai';
+import { FiInfo, FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
 import styled from 'styled-components/macro';
 
 const types = {
+  info: {
+    icon: <FiInfo size="1.25rem" />,
+    title: 'Info',
+    color: 'var(--clr-accent)',
+  },
   success: {
-    icon: <AiOutlineCheckCircle size="1.25rem" />,
+    icon: <FiCheckCircle size="1.25rem" />,
     title: 'Success',
     color: 'var(--clr-success)',
   },
   error: {
-    icon: <AiOutlineWarning size="1.25rem" />,
+    icon: <FiAlertCircle size="1.25rem" />,
     title: 'Error',
     color: 'var(--clr-danger)',
   },
@@ -24,7 +29,7 @@ const Div = styled.div`
 const Header = styled.header`
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.5rem;
   line-height: 1;
   margin-bottom: var(--padding);
 `;

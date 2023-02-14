@@ -15,6 +15,7 @@ import Label from './form/Label';
 import Input from './form/Input';
 import ErrorMessage from './form/ErrorMessage';
 import Divider from './form/Divider';
+import DemoUserInfo from './DemoUserInfo';
 
 const NeedAccount = styled.p`
   font-size: 0.875rem;
@@ -78,6 +79,7 @@ function LoginForm() {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormTitle title="Log in" />
       {showAlertBox ? <AlertBox type={alertBoxType}>{alertMessage}</AlertBox> : null}
+      <DemoUserInfo />
       <Label label="Username">
         <Input error={invalidCredentials} name="username" register={register} />
         {invalidCredentials && <ErrorMessage message="Invalid username or password" />}
