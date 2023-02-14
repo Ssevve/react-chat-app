@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import breakpoints from 'utils/breakpoints';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectUser, selectAccessToken } from 'features/auth/authSlice';
+import { fetchFriendInvites, fetchFriends } from 'features/friends/friendsSlice';
 
 import SidePanel from 'components/SidePanel';
 import FriendsList from 'features/friends/FriendsList';
@@ -35,9 +38,22 @@ const Section = styled.section`
 `;
 
 function RightPanel({ expanded }) {
+  const dispatch = useDispatch();
+  const loggedInUser = useSelector(selectUser);
+  const accessToken = useSelector(selectAccessToken);
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const authData = {
+    userId: loggedInUser._id,
+    accessToken,
+  };
+
+  useEffect(() => {
+    dispatch(fetchFriendInvites(authData));
+    dispatch(fetchFriends(authData));
+  }, []);
 
   return (
     <StyledSidePanel anchor="right" expanded={expanded}>

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { BsCheck } from 'react-icons/bs';
 import { IoMdClose } from 'react-icons/io';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,7 +6,6 @@ import {
   selectFriendInvites,
   addFriendById,
   deleteFriendInviteById,
-  fetchFriendInvites,
 } from 'features/friends/friendsSlice';
 
 import DropdownList from 'components/common/DropdownList';
@@ -21,10 +19,6 @@ function FriendInvites() {
   const accessToken = useSelector(selectAccessToken);
   const friendInvites = useSelector(selectFriendInvites);
   const isLoading = useSelector((state) => state.friends.loading);
-
-  useEffect(() => {
-    dispatch(fetchFriendInvites({ userId: loggedInUser._id, accessToken }));
-  }, []);
 
   const cancelInvite = async (invite) => {
     dispatch(deleteFriendInviteById({ inviteId: invite._id, accessToken }));
