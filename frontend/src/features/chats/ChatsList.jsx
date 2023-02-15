@@ -19,27 +19,27 @@ function ChatsList() {
   // const sortedChats = chats.slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   const currentChat = useSelector(selectCurrentChat);
 
+  console.log(chats.length);
   useEffect(() => {
     if (!accessToken) return;
-    dispatch(fetchChats(accessToken));
+
+    if (!chats.length) {
+      dispatch(fetchChats(accessToken));
+    }
   }, [accessToken, dispatch]);
 
   return (
     <Wrapper>
-      {chats?.length ? (
-        <DropdownList title="Direct messages">
-          {chats.map((chat) => (
-            <Chat
-              key={chat._id}
-              chat={chat}
-              currentChat={currentChat}
-              onClick={() => dispatch(setCurrentChat(chat))}
-            />
-          ))}
-        </DropdownList>
-      ) : (
-        <p>You have no chats.</p>
-      )}
+      <DropdownList title="Direct messages">
+        {chats.map((chat) => (
+          <Chat
+            key={chat._id}
+            chat={chat}
+            currentChat={currentChat}
+            onClick={() => dispatch(setCurrentChat(chat))}
+          />
+        ))}
+      </DropdownList>
     </Wrapper>
   );
 }

@@ -1,8 +1,11 @@
+import { useSelector } from 'react-redux';
 import { BsFillChatFill } from 'react-icons/bs';
 import styled from 'styled-components/macro';
 import breakpoints from 'utils/breakpoints';
+import { selectAllChats } from 'features/chats/chatsSlice';
 
 import SidePanel from 'components/SidePanel';
+import Spinner from 'components/common/Spinner';
 import ChatsList from 'features/chats/ChatsList';
 import UserDropup from './UserDropup';
 
@@ -33,13 +36,14 @@ const LogoText = styled.h1`
 `;
 
 function LeftPanel({ expanded }) {
+  const isLoading = useSelector((state) => state.chats.loading);
   return (
     <StyledSidePanel anchor="left" expanded={expanded}>
       <Logo>
         <BsFillChatFill />
         <LogoText>Chat App</LogoText>
       </Logo>
-      <ChatsList />
+      {isLoading ? <Spinner text="Loading chats..." /> : <ChatsList />}
       <UserDropup />
     </StyledSidePanel>
   );
