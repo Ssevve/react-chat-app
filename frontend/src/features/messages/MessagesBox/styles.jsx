@@ -15,7 +15,6 @@ export const Section = styled.section`
   ${({ sidePanelExpanded }) =>
     sidePanelExpanded && {
       opacity: '0.5',
-      filter: 'blur(0.1rem)',
       pointerEvents: 'none',
     }};
 
@@ -36,7 +35,6 @@ export const Section = styled.section`
     ${({ sidePanelExpanded }) =>
       sidePanelExpanded && {
         opacity: '1',
-        filter: 'blur(0)',
         pointerEvents: 'initial',
       }};
   }
