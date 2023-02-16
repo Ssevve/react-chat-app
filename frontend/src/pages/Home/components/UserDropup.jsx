@@ -6,12 +6,16 @@ import { RiLogoutCircleLine } from 'react-icons/ri';
 import UserAvatar from 'components/common/UserAvatar';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
+import breakpoints from 'utils/breakpoints';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 1;
   position: relative;
+  @media ${breakpoints.medium} {
+    border-right: 1px solid var(--clr-light-200);
+  }
 `;
 
 const StyledButton = styled.button`

@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import breakpoints from 'utils/breakpoints';
 
 const borderMap = {
   left: 'border-right',
@@ -18,6 +19,9 @@ const StyledDiv = styled.div`
   display: grid;
   grid-template-rows: 4rem 1fr 4rem;
   z-index: 1;
+  @media ${breakpoints.xl} {
+    ${({ anchor }) => `${anchor}: 0`};
+  }
 `;
 
 function SidePanel({ anchor, expanded, className, children }) {

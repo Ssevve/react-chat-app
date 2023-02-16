@@ -7,13 +7,13 @@ import { get } from 'utils/api';
 
 import { Wrapper, SearchIcon, StyledInput, ClearButton } from './styles';
 
-function Searchbar({ setLoading, setIsSearching, setResults }) {
+function Searchbar({ setIsSearching, setIsTyping, setResults }) {
   const accessToken = useSelector(selectAccessToken);
   const loggedInUser = useSelector(selectUser);
   const [query, setQuery] = useState('');
 
   const searchFriends = async () => {
-    setLoading(true);
+    setIsSearching(true);
     try {
       const res = await get(`/users/search/${query}`, accessToken);
       const filteredResults = res.data.filter((user) => user._id !== loggedInUser._id);
@@ -21,17 +21,17 @@ function Searchbar({ setLoading, setIsSearching, setResults }) {
     } catch (err) {
       console.error(err);
     } finally {
-      setLoading(false);
+      setIsSearching(false);
     }
   };
 
   // Debounce search
   useEffect(() => {
     if (!query) {
-      setIsSearching(false);
+      setIsTyping(false);
       return setResults([]);
     }
-    setIsSearching(true);
+    setIsTyping(true);
     const timeout = setTimeout(searchFriends, 250);
 
     return () => clearTimeout(timeout);

@@ -10,8 +10,8 @@ import User from 'components/common/User';
 import { selectUser } from 'features/auth/authSlice';
 
 const Header = styled.header`
+  height: 4rem;
   width: 100vw;
-  border-bottom: 1px solid var(--clr-light-200);
   padding: var(--padding);
   display: grid;
   align-content: center;
@@ -20,7 +20,7 @@ const Header = styled.header`
   top: 0;
   left: 0;
   z-index: 1;
-  height: 4rem;
+  background: var(--clr-accent);
 
   @media ${breakpoints.medium} {
     grid-template-columns: auto 1fr auto;
@@ -30,7 +30,6 @@ const Header = styled.header`
   }
 
   @media ${breakpoints.xl} {
-    width: calc(100vw - 37.5rem);
     position: relative;
     left: 18.75rem;
   }
@@ -43,6 +42,7 @@ const Button = styled.button`
   display: flex;
   align-items: center;
   padding: var(--padding);
+  color: var(--clr-light-400);
 `;
 
 const LeftPanelButton = styled(Button)`
@@ -61,16 +61,6 @@ const RightPanelButton = styled(Button)`
 `;
 
 function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
-  const loggedInUser = useSelector(selectUser);
-  const currentChat = useSelector(selectCurrentChat);
-  const [chatPartner, setChatPartner] = useState(null);
-
-  useEffect(() => {
-    if (!currentChat) return;
-    const partner = currentChat.members.find((member) => member._id !== loggedInUser._id);
-    setChatPartner(partner);
-  }, [currentChat, loggedInUser._id]);
-
   const handleLeftPanelExpand = () => {
     setExpandRightPanel(false);
     setExpandLeftPanel((prev) => !prev);
@@ -86,11 +76,6 @@ function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
       <LeftPanelButton type="button" onClick={handleLeftPanelExpand}>
         <HiMenu size="1.5rem" />
       </LeftPanelButton>
-      {currentChat ? (
-        <div>
-          <User user={chatPartner} events={false} />
-        </div>
-      ) : null}
       <RightPanelButton type="button" onClick={handleRightPanelExpand}>
         <FaUserFriends size="1.5rem" />
       </RightPanelButton>

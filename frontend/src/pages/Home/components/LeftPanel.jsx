@@ -14,6 +14,7 @@ const StyledSidePanel = styled(SidePanel)`
     height: 100vh;
     top: 0;
     left: 0;
+    border: none;
   }
 `;
 
@@ -26,13 +27,17 @@ const Logo = styled.div`
   gap: 0.5rem;
   color: var(--clr-accent);
   @media ${breakpoints.medium} {
-    border-bottom: 1px solid var(--clr-light-200);
+    color: var(--clr-light-400);
+    background: var(--clr-accent);
   }
 `;
 
 const LogoText = styled.h1`
   color: var(--clr-dark);
   font-size: 1.5rem;
+  @media ${breakpoints.medium} {
+    color: var(--clr-light-400);
+  }
 `;
 
 function LeftPanel({ expanded }) {
@@ -40,8 +45,8 @@ function LeftPanel({ expanded }) {
   return (
     <StyledSidePanel anchor="left" expanded={expanded}>
       <Logo>
-        <BsFillChatFill />
         <LogoText>Chat App</LogoText>
+        <BsFillChatFill />
       </Logo>
       {isLoading ? <Spinner text="Loading chats..." /> : <ChatsList />}
       <UserDropup />

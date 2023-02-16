@@ -1,17 +1,27 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentChat } from 'features/chats/chatsSlice';
 import { fetchMessages } from 'features/messages/messagesSlice';
+import { selectUser, selectAccessToken } from 'features/auth/authSlice';
 
 import Message from 'features/messages/Message';
 import MessageInput from '../MessageInput';
+import User from 'components/common/User';
 
-import { Section, Messages } from './styles';
+import { Section, CurrentChatInfo, Messages } from './styles';
 
 function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
   const dispatch = useDispatch();
   const currentChat = useSelector(selectCurrentChat);
-  const auth = useSelector((state) => state.auth);
+  const accessToken = useSelector(selectAccessToken);
+  const loggedInUser = useSelector(selectUser);
+  const [chatPartner, setChatPartner] = useState(null);
+
+  useEffect(() => {
+    if (!currentChat) return;
+    const partner = currentChat.members.find((member) => member._id !== loggedInUser._id);
+    setChatPartner(partner);
+  }, [currentChat, loggedInUser._id]);
 
   const currentChatMessages = useSelector((state) =>
     state.messages.messages.filter((message) => message.chatId === currentChat?._id),
@@ -19,7 +29,7 @@ function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    dispatch(fetchMessages({ userId: auth.user._id, accessToken: auth.accessToken }));
+    dispatch(fetchMessages({ userId: loggedInUser, accessToken }));
   }, []);
 
   useEffect(() => {
@@ -29,6 +39,11 @@ function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
 
   return (
     <Section sidePanelExpanded={sidePanelExpanded} expandRightPanel={expandRightPanel}>
+      {currentChat && (
+        <CurrentChatInfo>
+          <User user={chatPartner} events={false} />
+        </CurrentChatInfo>
+      )}
       {currentChatMessages && (
         <>
           <Messages ref={scrollRef}>

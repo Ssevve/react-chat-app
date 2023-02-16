@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectAccessToken } from 'features/auth/authSlice';
 import { createFriendInvite } from 'features/friends/friendsSlice';
 
+import Spinner from 'components/common/Spinner';
 import User from 'components/common/User';
 
-import { Results, Result, InviteButton, StyledLoader } from './styles';
+import { Results, Result, InviteButton } from './styles';
 
-function SearchResults({ loading, results }) {
+function SearchResults({ isSearching, results }) {
   const dispatch = useDispatch();
   const accessToken = useSelector(selectAccessToken);
 
@@ -15,21 +16,18 @@ function SearchResults({ loading, results }) {
     dispatch(createFriendInvite({ friendId: resultId, accessToken }));
   };
 
-  const resultsReady = results.length && !loading;
-
+  if (isSearching) return <Spinner text="Searching" />;
+  if (results.length === 0) return <p>No users found.</p>;
   return (
     <Results>
-      {loading ? <StyledLoader stroke="var(--clr-light-200)" /> : null}
-      {resultsReady
-        ? results.map((result) => (
-            <Result key={result._id}>
-              <User events={false} user={result} />
-              <InviteButton type="button" onClick={() => handleClick(result._id)}>
-                <IoMdAdd size="1.5rem" />
-              </InviteButton>
-            </Result>
-          ))
-        : null}
+      {results.map((result) => (
+        <Result key={result._id}>
+          <User events={false} user={result} />
+          <InviteButton type="button" onClick={() => handleClick(result._id)}>
+            <IoMdAdd size="1.5rem" />
+          </InviteButton>
+        </Result>
+      ))}
     </Results>
   );
 }

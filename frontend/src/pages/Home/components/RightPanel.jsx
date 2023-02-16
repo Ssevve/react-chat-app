@@ -1,23 +1,15 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
-import breakpoints from 'utils/breakpoints';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser, selectAccessToken } from 'features/auth/authSlice';
 import { fetchFriendInvites, fetchFriends } from 'features/friends/friendsSlice';
 
+import Spinner from 'components/common/Spinner';
 import SidePanel from 'components/SidePanel';
 import FriendsList from 'features/friends/FriendsList';
-import SearchResults from '../features/search/SearchResults';
-import Searchbar from '../features/search/Searchbar';
+import SearchResults from 'features/search/SearchResults';
+import Searchbar from 'features/search/Searchbar';
 import FriendInvites from 'features/friends/FriendInvites';
-
-const StyledSidePanel = styled(SidePanel)`
-  @media ${breakpoints.xl} {
-    height: 100vh;
-    top: 0;
-    right: 0;
-  }
-`;
 
 const Title = styled.h2`
   padding: var(--padding);
@@ -42,8 +34,8 @@ function RightPanel({ expanded }) {
   const loggedInUser = useSelector(selectUser);
   const accessToken = useSelector(selectAccessToken);
   const [results, setResults] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const authData = {
     userId: loggedInUser._id,
@@ -56,11 +48,11 @@ function RightPanel({ expanded }) {
   }, []);
 
   return (
-    <StyledSidePanel anchor="right" expanded={expanded}>
+    <SidePanel anchor="right" expanded={expanded}>
       <Title>Friends</Title>
       <Section>
-        {isSearching ? (
-          <SearchResults loading={loading} results={results} />
+        {isTyping ? (
+          <SearchResults isSearching={isSearching} results={results} />
         ) : (
           <>
             <FriendInvites />
@@ -68,8 +60,12 @@ function RightPanel({ expanded }) {
           </>
         )}
       </Section>
-      <Searchbar setLoading={setLoading} setIsSearching={setIsSearching} setResults={setResults} />
-    </StyledSidePanel>
+      <Searchbar
+        setIsSearching={setIsSearching}
+        setIsTyping={setIsTyping}
+        setResults={setResults}
+      />
+    </SidePanel>
   );
 }
 

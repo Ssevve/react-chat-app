@@ -13,10 +13,10 @@ import {
   subscribeToFriendEvents,
 } from 'socketEvents';
 
-import Topbar from 'components/Topbar';
-import LeftPanel from 'components/LeftPanel';
+import Topbar from './components/Topbar';
+import LeftPanel from './components/LeftPanel';
+import RightPanel from './components/RightPanel';
 import MessagesBox from 'features/messages/MessagesBox';
-import RightPanel from 'components/RightPanel';
 
 const Wrapper = styled.div`
   height: 100vh;

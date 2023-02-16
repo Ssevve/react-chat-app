@@ -46,6 +46,10 @@ export const Section = styled.section`
   }
 `;
 
+export const CurrentChatInfo = styled.section`
+  border-bottom: 1px solid var(--clr-light-200);
+`;
+
 export const Messages = styled.section`
   padding: var(--padding);
   max-height: calc(100% - 4rem);
