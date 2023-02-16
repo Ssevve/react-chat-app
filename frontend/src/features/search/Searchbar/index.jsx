@@ -1,37 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { BiSearch } from 'react-icons/bi';
 import { MdClear } from 'react-icons/md';
-import { selectAccessToken, selectUser } from 'features/auth/authSlice';
-import { get } from 'utils/api';
+import { selectUser } from 'features/auth/authSlice';
+import client from 'utils/api';
 
 import { Wrapper, SearchIcon, StyledInput, ClearButton } from './styles';
 
-function Searchbar({ setIsSearching, setIsTyping, setResults }) {
-  const accessToken = useSelector(selectAccessToken);
+function Searchbar({ setIsLoading, query, setQuery, setResults }) {
   const loggedInUser = useSelector(selectUser);
-  const [query, setQuery] = useState('');
 
   const searchFriends = async () => {
-    setIsSearching(true);
+    setIsLoading(true);
     try {
-      const res = await get(`/users/search/${query}`, accessToken);
+      const res = await client.get(`/users/search/${query}`);
       const filteredResults = res.data.filter((user) => user._id !== loggedInUser._id);
       setResults(filteredResults);
     } catch (err) {
       console.error(err);
     } finally {
-      setIsSearching(false);
+      setIsLoading(false);
     }
   };
 
   // Debounce search
   useEffect(() => {
     if (!query) {
-      setIsTyping(false);
-      return setResults([]);
+      return setResults(null);
     }
-    setIsTyping(true);
     const timeout = setTimeout(searchFriends, 250);
 
     return () => clearTimeout(timeout);
@@ -51,11 +47,11 @@ function Searchbar({ setIsSearching, setIsTyping, setResults }) {
         value={query}
         onChange={handleQueryChange}
       />
-      {query ? (
+      {query && (
         <ClearButton onClick={clearInput}>
           <MdClear size="1rem" aria-label="Clear input"></MdClear>
         </ClearButton>
-      ) : null}
+      )}
     </Wrapper>
   );
 }

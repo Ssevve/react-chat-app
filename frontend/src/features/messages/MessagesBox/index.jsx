@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentChat } from 'features/chats/chatsSlice';
 import { fetchMessages } from 'features/messages/messagesSlice';
-import { selectUser, selectAccessToken } from 'features/auth/authSlice';
+import { selectUser } from 'features/auth/authSlice';
 
 import Message from 'features/messages/Message';
 import MessageInput from '../MessageInput';
@@ -13,7 +13,6 @@ import { Section, CurrentChatInfo, Messages } from './styles';
 function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
   const dispatch = useDispatch();
   const currentChat = useSelector(selectCurrentChat);
-  const accessToken = useSelector(selectAccessToken);
   const loggedInUser = useSelector(selectUser);
   const [chatPartner, setChatPartner] = useState(null);
 
@@ -29,7 +28,7 @@ function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    dispatch(fetchMessages({ userId: loggedInUser, accessToken }));
+    dispatch(fetchMessages(loggedInUser._id));
   }, []);
 
   useEffect(() => {

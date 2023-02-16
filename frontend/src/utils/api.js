@@ -1,35 +1,18 @@
 import axios from 'axios';
 
-const get = (url, accessToken = '') => {
-  return axios.get(process.env.REACT_APP_API_URL + url, {
-    headers: {
-      authorization: `Bearer ${accessToken}`,
-    },
-  });
+let store;
+
+export const injectStore = (_store) => {
+  store = _store;
 };
 
-const post = (url, data, accessToken = '') => {
-  return axios.post(process.env.REACT_APP_API_URL + url, data, {
-    headers: {
-      authorization: `Bearer ${accessToken}`,
-    },
-  });
-};
+const client = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+});
 
-const put = (url, data, accessToken = '') => {
-  return axios.put(process.env.REACT_APP_API_URL + url, data, {
-    headers: {
-      authorization: `Bearer ${accessToken}`,
-    },
-  });
-};
+client.interceptors.request.use((config) => {
+  config.headers.authorization = `Bearer ${store.getState().auth.accessToken}`;
+  return config;
+});
 
-const destroy = (url, accessToken = '') => {
-  return axios.delete(process.env.REACT_APP_API_URL + url, {
-    headers: {
-      authorization: `Bearer ${accessToken}`,
-    },
-  });
-};
-
-export { get, post, put, destroy };
+export default client;

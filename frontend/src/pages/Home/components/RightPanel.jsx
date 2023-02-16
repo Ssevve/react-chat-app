@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUser, selectAccessToken } from 'features/auth/authSlice';
+import { selectUser } from 'features/auth/authSlice';
 import { fetchFriendInvites, fetchFriends } from 'features/friends/friendsSlice';
 
-import Spinner from 'components/common/Spinner';
 import SidePanel from 'components/SidePanel';
 import FriendsList from 'features/friends/FriendsList';
 import SearchResults from 'features/search/SearchResults';
@@ -16,8 +15,7 @@ const Title = styled.h2`
   font-size: 1.5rem;
   line-height: 1;
   display: flex;
-  align-items: center;
-  justify-content: ${({ isSearching }) => (isSearching ? 'flex-end' : 'flex-start')};
+  justify-content: ${({ isLoading }) => (isLoading ? 'flex-end' : 'flex-start')};
   gap: 1rem;
 `;
 
@@ -26,33 +24,27 @@ const Section = styled.section`
   overflow-y: auto;
   display: grid;
   row-gap: 1rem;
-  align-content: start;
+  align-content: ${({ isLoading }) => (isLoading ? 'center' : 'start')};
 `;
 
 function RightPanel({ expanded }) {
   const dispatch = useDispatch();
   const loggedInUser = useSelector(selectUser);
-  const accessToken = useSelector(selectAccessToken);
-  const [results, setResults] = useState([]);
-  const [isTyping, setIsTyping] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
-
-  const authData = {
-    userId: loggedInUser._id,
-    accessToken,
-  };
+  const [results, setResults] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
-    dispatch(fetchFriendInvites(authData));
-    dispatch(fetchFriends(authData));
-  }, []);
+    dispatch(fetchFriendInvites(loggedInUser._id));
+    dispatch(fetchFriends(loggedInUser._id));
+  }, [loggedInUser._id]);
 
   return (
     <SidePanel anchor="right" expanded={expanded}>
       <Title>Friends</Title>
       <Section>
-        {isTyping ? (
-          <SearchResults isSearching={isSearching} results={results} />
+        {query ? (
+          <SearchResults isLoading={isLoading} results={results} />
         ) : (
           <>
             <FriendInvites />
@@ -61,8 +53,9 @@ function RightPanel({ expanded }) {
         )}
       </Section>
       <Searchbar
-        setIsSearching={setIsSearching}
-        setIsTyping={setIsTyping}
+        setIsLoading={setIsLoading}
+        query={query}
+        setQuery={setQuery}
         setResults={setResults}
       />
     </SidePanel>

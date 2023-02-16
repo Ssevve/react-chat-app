@@ -1,15 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { get } from 'utils/api';
+import client from 'utils/api';
 
 const initialState = {
-  chats: [],
+  chats: null,
   currentChat: null,
   loading: false,
   error: '',
 };
 
-export const fetchChats = createAsyncThunk('chats/fetchChats', async (accessToken) => {
-  const res = await get('/chats', accessToken);
+export const fetchChats = createAsyncThunk('chats/fetchChats', async () => {
+  const res = await client.get('/chats');
   return res.data;
 });
 

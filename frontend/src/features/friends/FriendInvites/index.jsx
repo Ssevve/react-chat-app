@@ -1,7 +1,7 @@
 import { BsCheck } from 'react-icons/bs';
 import { IoMdClose } from 'react-icons/io';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUser, selectAccessToken } from 'features/auth/authSlice';
+import { selectUser } from 'features/auth/authSlice';
 import {
   selectFriendInvites,
   addFriendById,
@@ -16,19 +16,18 @@ import { Wrapper, AcceptButton, DeclineButton } from './styles';
 function FriendInvites() {
   const dispatch = useDispatch();
   const loggedInUser = useSelector(selectUser);
-  const accessToken = useSelector(selectAccessToken);
   const friendInvites = useSelector(selectFriendInvites);
   const isLoading = useSelector((state) => state.friends.loading);
 
   const cancelInvite = async (invite) => {
-    dispatch(deleteFriendInviteById({ inviteId: invite._id, accessToken }));
+    dispatch(deleteFriendInviteById(invite._id));
   };
 
   const acceptInvite = async (invite) => {
     const friendId =
       invite.receiver._id === loggedInUser._id ? invite.sender._id : invite.receiver._id;
 
-    dispatch(addFriendById({ inviteId: invite._id, friendId, accessToken }));
+    dispatch(addFriendById({ inviteId: invite._id, friendId }));
   };
 
   return (
@@ -42,9 +41,7 @@ function FriendInvites() {
                   user={invite.receiver._id === loggedInUser._id ? invite.sender : invite.receiver}
                 />
                 <Wrapper>
-                  {invite.sender._id !== loggedInUser._id ? (
-                    // Multi click, loading
-                    // Disable on click
+                  {invite.sender._id !== loggedInUser._id && (
                     <AcceptButton
                       type="button"
                       disabled={isLoading}
@@ -52,7 +49,7 @@ function FriendInvites() {
                     >
                       <BsCheck size="1.5rem" />
                     </AcceptButton>
-                  ) : null}
+                  )}
                   <DeclineButton type="button" onClick={() => cancelInvite(invite)}>
                     <IoMdClose size="1.5rem" />
                   </DeclineButton>

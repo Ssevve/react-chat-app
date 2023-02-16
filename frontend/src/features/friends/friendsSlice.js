@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { get, post, put, destroy } from 'utils/api';
+import client from 'utils/api';
 
 const initialState = {
   friends: [],
@@ -8,42 +8,36 @@ const initialState = {
   error: null,
 };
 
-export const fetchFriendInvites = createAsyncThunk(
-  'friends/fetchFriendInvites',
-  async ({ userId, accessToken }) => {
-    const res = await get(`/invites/${userId}`, accessToken);
-    return res.data;
-  },
-);
+export const fetchFriendInvites = createAsyncThunk('friends/fetchFriendInvites', async (userId) => {
+  const res = await client.get(`/invites/${userId}`);
+  return res.data;
+});
 
 export const addFriendById = createAsyncThunk(
   'friends/addFriendById',
-  async ({ friendId, inviteId, accessToken }) => {
-    const res = await put(`/users/addFriend/${friendId}`, { inviteId }, accessToken);
+  async ({ friendId, inviteId }) => {
+    const res = await client.put(`/users/addFriend/${friendId}`, { inviteId });
     return res.data;
   },
 );
 
-export const fetchFriends = createAsyncThunk(
-  'friends/fetchFriends',
-  async ({ userId, accessToken }) => {
-    const res = await get(`/users/friends/${userId}`, accessToken);
-    return res.data;
-  },
-);
+export const fetchFriends = createAsyncThunk('friends/fetchFriends', async (userId) => {
+  const res = await client.get(`/users/friends/${userId}`);
+  return res.data;
+});
 
 export const createFriendInvite = createAsyncThunk(
   'friends/createFriendInvite',
-  async ({ friendId, accessToken }) => {
-    const res = await post(`/invites`, { friendId }, accessToken);
+  async ({ friendId }) => {
+    const res = await client.post(`/invites`, { friendId });
     return res.data;
   },
 );
 
 export const deleteFriendInviteById = createAsyncThunk(
   'friends/deleteFriendInviteByUserId',
-  async ({ inviteId, accessToken }) => {
-    const res = await destroy(`/invites/${inviteId}`, accessToken);
+  async (inviteId) => {
+    const res = await client.delete(`/invites/${inviteId}`);
     if (res.status === 204) return inviteId;
   },
 );

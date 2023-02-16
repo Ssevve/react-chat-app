@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectAccessToken } from 'features/auth/authSlice';
 import { fetchChats, setCurrentChat, selectAllChats, selectCurrentChat } from './chatsSlice';
 import breakpoints from 'utils/breakpoints';
 
@@ -18,31 +16,24 @@ const Wrapper = styled.section`
 
 function ChatsList() {
   const dispatch = useDispatch();
-  const accessToken = useSelector(selectAccessToken);
   const chats = useSelector(selectAllChats);
-  // const sortedChats = chats.slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   const currentChat = useSelector(selectCurrentChat);
 
-  console.log(chats.length);
-  useEffect(() => {
-    if (!accessToken) return;
-
-    if (!chats.length) {
-      dispatch(fetchChats(accessToken));
-    }
-  }, [accessToken, dispatch]);
+  if (!chats) dispatch(fetchChats());
 
   return (
     <Wrapper>
       <DropdownList title="Direct messages">
-        {chats.map((chat) => (
-          <Chat
-            key={chat._id}
-            chat={chat}
-            currentChat={currentChat}
-            onClick={() => dispatch(setCurrentChat(chat))}
-          />
-        ))}
+        {chats?.length
+          ? chats.map((chat) => (
+              <Chat
+                key={chat._id}
+                chat={chat}
+                currentChat={currentChat}
+                onClick={() => dispatch(setCurrentChat(chat))}
+              />
+            ))
+          : null}
       </DropdownList>
     </Wrapper>
   );

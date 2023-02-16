@@ -1,23 +1,22 @@
 import { IoMdAdd } from 'react-icons/io';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectAccessToken } from 'features/auth/authSlice';
+import { useDispatch } from 'react-redux';
 import { createFriendInvite } from 'features/friends/friendsSlice';
 
 import Spinner from 'components/common/Spinner';
 import User from 'components/common/User';
 
-import { Results, Result, InviteButton } from './styles';
+import { Results, Result, InviteButton, NoUsers } from './styles';
 
-function SearchResults({ isSearching, results }) {
+function SearchResults({ isLoading, results }) {
   const dispatch = useDispatch();
-  const accessToken = useSelector(selectAccessToken);
 
   const handleClick = async (resultId) => {
-    dispatch(createFriendInvite({ friendId: resultId, accessToken }));
+    dispatch(createFriendInvite(resultId));
   };
 
-  if (isSearching) return <Spinner text="Searching" />;
-  if (results.length === 0) return <p>No users found.</p>;
+  if (isLoading) return <Spinner text="Searching" />;
+  if (!results) return null;
+  if (results.length === 0) return <NoUsers>No users found.</NoUsers>;
   return (
     <Results>
       {results.map((result) => (

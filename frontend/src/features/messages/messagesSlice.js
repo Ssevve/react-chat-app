@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { get, post } from 'utils/api';
+import client from 'utils/api';
 
 const initialState = {
   messages: [],
@@ -9,19 +9,16 @@ const initialState = {
 
 export const createNewMessage = createAsyncThunk(
   'messages/createNewMessage',
-  async ({ chatId, content, receiverId, accessToken }) => {
-    const res = await post(`/messages`, { chatId, content, receiverId }, accessToken);
+  async ({ chatId, content, receiverId }) => {
+    const res = await client.post(`/messages`, { chatId, content, receiverId });
     return res.data;
   },
 );
 
-export const fetchMessages = createAsyncThunk(
-  'messages/fetchMessages',
-  async ({ userId, accessToken }) => {
-    const res = await get(`/messages/user/${userId}`, accessToken);
-    return res.data;
-  },
-);
+export const fetchMessages = createAsyncThunk('messages/fetchMessages', async (userId) => {
+  const res = await client.get(`/messages/user/${userId}`);
+  return res.data;
+});
 
 export const messagesSlice = createSlice({
   name: 'messages',

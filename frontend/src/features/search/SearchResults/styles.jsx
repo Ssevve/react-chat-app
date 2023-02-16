@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro';
-import { ReactComponent as Loader } from 'assets/loader.svg';
 
 export const Results = styled.ul`
   overflow: hidden;
@@ -27,7 +26,6 @@ export const InviteButton = styled.button`
   }
 `;
 
-export const StyledLoader = styled(Loader)`
-  width: 100%;
-  height: 2rem;
+export const NoUsers = styled.p`
+  margin-left: var(--padding);
 `;
