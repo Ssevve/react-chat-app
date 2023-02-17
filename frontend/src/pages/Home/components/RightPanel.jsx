@@ -14,6 +14,7 @@ const Title = styled.h2`
   padding: var(--padding);
   font-size: 1.5rem;
   line-height: 1;
+  align-items: center;
   display: flex;
   justify-content: ${({ isLoading }) => (isLoading ? 'flex-end' : 'flex-start')};
   gap: 1rem;
