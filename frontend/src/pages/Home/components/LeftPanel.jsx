@@ -12,7 +12,6 @@ const StyledSidePanel = styled(SidePanel)`
   @media ${breakpoints.medium} {
     grid-template-rows: 1fr 4rem;
     left: 0;
-    border: none;
   }
 `;
 
