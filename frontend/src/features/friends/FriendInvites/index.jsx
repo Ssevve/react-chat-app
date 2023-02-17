@@ -33,7 +33,7 @@ function FriendInvites() {
   return (
     <>
       <DropdownList title="Friend invites">
-        {friendInvites.length
+        {friendInvites?.length
           ? friendInvites.map((invite) => (
               <Wrapper key={invite._id}>
                 <User

@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import client from 'utils/api';
 
 const initialState = {
-  friends: [],
-  friendInvites: [],
+  friends: null,
+  friendInvites: null,
   loading: false,
   error: null,
 };

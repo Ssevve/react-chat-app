@@ -9,6 +9,9 @@ import FriendsList from 'features/friends/FriendsList';
 import SearchResults from 'features/search/SearchResults';
 import Searchbar from 'features/search/Searchbar';
 import FriendInvites from 'features/friends/FriendInvites';
+import { selectFriends } from 'features/friends/friendsSlice';
+import { selectFriendInvites } from 'features/friends/friendsSlice';
+import Spinner from 'components/common/Spinner';
 
 const Title = styled.h2`
   padding: var(--padding);
@@ -25,10 +28,12 @@ const Section = styled.section`
   overflow-y: auto;
   display: grid;
   row-gap: 1rem;
-  align-content: ${({ isLoading }) => (isLoading ? 'center' : 'start')};
 `;
 
 function RightPanel({ expanded }) {
+  const friends = useSelector(selectFriends);
+  const friendInvites = useSelector(selectFriendInvites);
+  const friendsLoading = useSelector((state) => state.friends.loading);
   const dispatch = useDispatch();
   const loggedInUser = useSelector(selectUser);
   const [results, setResults] = useState(null);
@@ -40,19 +45,21 @@ function RightPanel({ expanded }) {
     dispatch(fetchFriends(loggedInUser._id));
   }, [loggedInUser._id]);
 
+  const fetchingFriends = !friends && !friendInvites && friendsLoading;
+
+  const sectionContent = query ? (
+    <SearchResults isLoading={isLoading} results={results} />
+  ) : (
+    <>
+      <FriendInvites />
+      <FriendsList />
+    </>
+  );
+
   return (
     <SidePanel anchor="right" expanded={expanded}>
       <Title>Friends</Title>
-      <Section>
-        {query ? (
-          <SearchResults isLoading={isLoading} results={results} />
-        ) : (
-          <>
-            <FriendInvites />
-            <FriendsList />
-          </>
-        )}
-      </Section>
+      <Section>{fetchingFriends ? <Spinner text="Loading friends" /> : sectionContent}</Section>
       <Searchbar
         setIsLoading={setIsLoading}
         query={query}
