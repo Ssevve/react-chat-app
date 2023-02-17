@@ -3,30 +3,19 @@ import { HiMenu } from 'react-icons/hi';
 import { FaUserFriends } from 'react-icons/fa';
 import breakpoints from 'utils/breakpoints';
 
+import Logo from 'components/common/Logo';
+
 const Header = styled.header`
   height: 4rem;
   width: 100vw;
   padding: var(--padding);
   display: grid;
   align-content: center;
-  justify-items: center;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1;
   background: var(--clr-accent);
-
-  @media ${breakpoints.medium} {
-    grid-template-columns: auto 1fr auto;
-    width: calc(100vw - 18.75rem);
-    position: relative;
-    left: 18.75rem;
-  }
-
-  @media ${breakpoints.xl} {
-    position: relative;
-    left: 18.75rem;
-  }
 `;
 
 const Button = styled.button`
@@ -67,6 +56,7 @@ function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
 
   return (
     <Header>
+      <Logo hideOnMobile={true} />
       <LeftPanelButton type="button" onClick={handleLeftPanelExpand}>
         <HiMenu size="1.5rem" />
       </LeftPanelButton>
