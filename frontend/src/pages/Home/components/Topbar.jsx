@@ -1,13 +1,7 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components/macro';
 import { HiMenu } from 'react-icons/hi';
 import { FaUserFriends } from 'react-icons/fa';
-import { selectCurrentChat } from 'features/chats/chatsSlice';
 import breakpoints from 'utils/breakpoints';
-
-import User from 'components/common/User';
-import { selectUser } from 'features/auth/authSlice';
 
 const Header = styled.header`
   height: 4rem;
