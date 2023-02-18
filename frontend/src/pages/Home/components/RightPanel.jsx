@@ -28,6 +28,7 @@ const Section = styled.section`
   overflow-y: auto;
   display: grid;
   row-gap: 1rem;
+  align-content: ${({ fetchingFriends }) => (fetchingFriends ? 'center' : 'start')};
 `;
 
 function RightPanel({ expanded }) {
@@ -59,7 +60,9 @@ function RightPanel({ expanded }) {
   return (
     <SidePanel anchor="right" expanded={expanded}>
       <Title>Friends</Title>
-      <Section>{fetchingFriends ? <Spinner text="Loading friends" /> : sectionContent}</Section>
+      <Section fetchingFriends={fetchingFriends}>
+        {fetchingFriends ? <Spinner text="Loading friends" /> : sectionContent}
+      </Section>
       <Searchbar
         setIsLoading={setIsLoading}
         query={query}
