@@ -28,7 +28,7 @@ export const fetchFriends = createAsyncThunk('friends/fetchFriends', async (user
 
 export const createFriendInvite = createAsyncThunk(
   'friends/createFriendInvite',
-  async ({ friendId }) => {
+  async (friendId) => {
     const res = await client.post(`/invites`, { friendId });
     return res.data;
   },
