@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import client from 'utils/api';
 
 const initialState = {
-  chats: null,
+  chats: [],
   currentChat: null,
   loading: false,
   error: '',
@@ -36,7 +36,6 @@ export const chatsSlice = createSlice({
       state.loading = false;
       state.error = null;
       state.chats = action.payload;
-      // state.chats.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
     });
     builder.addCase(fetchChats.rejected, (state, action) => {
       state.loading = false;

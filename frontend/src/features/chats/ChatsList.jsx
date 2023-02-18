@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchChats, setCurrentChat, selectAllChats, selectCurrentChat } from './chatsSlice';
+import { setCurrentChat, selectAllChats, selectCurrentChat } from './chatsSlice';
 import breakpoints from 'utils/breakpoints';
 
 import DropdownList from 'components/common/DropdownList';
@@ -19,21 +19,17 @@ function ChatsList() {
   const chats = useSelector(selectAllChats);
   const currentChat = useSelector(selectCurrentChat);
 
-  if (!chats) dispatch(fetchChats());
-
   return (
     <Wrapper>
       <DropdownList title="Direct messages">
-        {chats?.length
-          ? chats.map((chat) => (
-              <Chat
-                key={chat._id}
-                chat={chat}
-                currentChat={currentChat}
-                onClick={() => dispatch(setCurrentChat(chat))}
-              />
-            ))
-          : null}
+        {chats.map((chat) => (
+          <Chat
+            key={chat._id}
+            chat={chat}
+            currentChat={currentChat}
+            onClick={() => dispatch(setCurrentChat(chat))}
+          />
+        ))}
       </DropdownList>
     </Wrapper>
   );

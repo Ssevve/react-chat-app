@@ -1,6 +1,8 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/macro';
 import breakpoints from 'utils/breakpoints';
+import { fetchChats } from 'features/chats/chatsSlice';
 
 import SidePanel from 'components/SidePanel';
 import Spinner from 'components/common/Spinner';
@@ -16,7 +18,14 @@ const StyledSidePanel = styled(SidePanel)`
 `;
 
 function LeftPanel({ expanded }) {
+  const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.chats.loading);
+
+  useEffect(() => {
+    // Fetch chats here, not in ChatsList component, to avoid an infinite loop
+    dispatch(fetchChats());
+  }, []);
+
   return (
     <StyledSidePanel anchor="left" expanded={expanded}>
       <Logo hideOnTablet={true} textColor="var(--clr-dark)" iconColor="var(--clr-accent)" />
