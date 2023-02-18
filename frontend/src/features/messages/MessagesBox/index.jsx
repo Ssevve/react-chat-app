@@ -49,7 +49,7 @@ function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
         <WelcomeWrapper>
           <WelcomeTitle>Welcome to Chat App!</WelcomeTitle>
           <WelcomeCopy>
-            Select existing chat from the left panel or add a friend to start a new one.
+            Select an existing chat from the left panel or add a friend to start a new one.
           </WelcomeCopy>
         </WelcomeWrapper>
       ) : (
