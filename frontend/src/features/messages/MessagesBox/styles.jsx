@@ -46,6 +46,24 @@ export const Section = styled.section`
   }
 `;
 
+export const WelcomeWrapper = styled.section`
+  color: var(--clr-dark);
+  padding: var(--padding);
+  text-align: center;
+  display: grid;
+  row-gap: 2rem;
+  width: 50%;
+  margin: 0 auto;
+  align-content: center;
+  height: 100%;
+`;
+export const WelcomeTitle = styled.h2`
+  font-size: 2rem;
+`;
+export const WelcomeCopy = styled.p`
+  font-size: 1.5rem;
+`;
+
 export const CurrentChatInfo = styled.section`
   border-bottom: 1px solid var(--clr-light-200);
 `;

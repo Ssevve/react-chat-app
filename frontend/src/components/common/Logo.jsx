@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BsFillChatFill } from 'react-icons/bs';
 import breakpoints from 'utils/breakpoints';
 
-const StyledLogo = styled(Link)`
+const StyledLogo = styled.h1`
   display: ${({ hideOnMobile }) => (hideOnMobile ? 'none' : 'flex')};
   padding: var(--padding);
   line-height: 1;
@@ -13,7 +12,7 @@ const StyledLogo = styled(Link)`
   text-decoration: none;
   font-weight: 700;
   @media ${breakpoints.medium} {
-    display: ${({ hideOnMobile }) => (hideOnMobile ? 'flex' : 'none')};
+    display: ${({ hideOnTablet }) => (hideOnTablet ? 'none' : 'flex')};
   }
 `;
 
@@ -34,7 +33,6 @@ Logo.defaultProps = {
   textColor: 'var(--clr-light-400)',
   iconColor: 'var(--clr-light-400)',
   hideOnMobile: false,
-  hideOnTablet: false,
 };
 
 export default Logo;
