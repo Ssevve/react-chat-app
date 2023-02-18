@@ -33,6 +33,7 @@ Logo.defaultProps = {
   textColor: 'var(--clr-light-400)',
   iconColor: 'var(--clr-light-400)',
   hideOnMobile: false,
+  hideOnTablet: false,
 };
 
 export default Logo;
