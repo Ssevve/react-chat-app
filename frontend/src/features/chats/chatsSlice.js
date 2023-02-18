@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import client from 'utils/api';
 
 const initialState = {
@@ -47,6 +47,11 @@ export const chatsSlice = createSlice({
 
 export const selectAllChats = (state) => state.chats.chats;
 export const selectCurrentChat = (state) => state.chats.currentChat;
+
+export const selectSortedChats = createSelector([selectAllChats], (chats) => {
+  const newChats = [...chats];
+  return newChats.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+});
 
 export const { setChats, updateChat, setCurrentChat } = chatsSlice.actions;
 

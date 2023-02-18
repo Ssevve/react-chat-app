@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentChat, selectAllChats, selectCurrentChat } from './chatsSlice';
+import { setCurrentChat, selectSortedChats, selectCurrentChat } from './chatsSlice';
 import breakpoints from 'utils/breakpoints';
 
 import DropdownList from 'components/common/DropdownList';
@@ -16,7 +16,7 @@ const Wrapper = styled.section`
 
 function ChatsList() {
   const dispatch = useDispatch();
-  const chats = useSelector(selectAllChats);
+  const chats = useSelector(selectSortedChats);
   const currentChat = useSelector(selectCurrentChat);
 
   return (
