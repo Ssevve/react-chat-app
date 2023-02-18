@@ -8,7 +8,14 @@ import Message from 'features/messages/Message';
 import MessageInput from '../MessageInput';
 import User from 'components/common/User';
 
-import { Section, CurrentChatInfo, Messages } from './styles';
+import {
+  Section,
+  CurrentChatInfo,
+  Messages,
+  WelcomeWrapper,
+  WelcomeTitle,
+  WelcomeCopy,
+} from './styles';
 
 function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
   const dispatch = useDispatch();
@@ -38,21 +45,28 @@ function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
 
   return (
     <Section sidePanelExpanded={sidePanelExpanded} expandRightPanel={expandRightPanel}>
-      {currentChat && (
+      {!currentChat ? (
+        <WelcomeWrapper>
+          <WelcomeTitle>Welcome to Chat App!</WelcomeTitle>
+          <WelcomeCopy>
+            Select existing chat from the left panel or add a friend to start a new one.
+          </WelcomeCopy>
+        </WelcomeWrapper>
+      ) : (
         <CurrentChatInfo>
           <User user={chatPartner} events={false} />
         </CurrentChatInfo>
       )}
-      {currentChatMessages && (
+      {currentChatMessages.length ? (
         <>
           <Messages ref={scrollRef}>
             {currentChatMessages.map((message) => (
               <Message key={message._id} message={message} />
             ))}
           </Messages>
-          <MessageInput />
         </>
-      )}
+      ) : null}
+      {currentChat && <MessageInput />}
     </Section>
   );
 }
