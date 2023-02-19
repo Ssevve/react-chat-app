@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 
 const StyledDiv = styled.div`
   height: 1px;
-  background: var(--clr-dark);
+  background: ${({ theme }) => theme.inverted};
   opacity: 0.2;
 `;
 

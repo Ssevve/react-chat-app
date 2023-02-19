@@ -6,8 +6,8 @@ const StyledSpan = styled.span`
   height: var(--size);
   width: var(--size);
   border-radius: 50%;
-  border: 2px solid var(--clr-light-400);
-  background: ${({ online }) => (online ? 'var(--clr-success)' : 'var(--clr-danger)')};
+  border: 2px solid ${({ theme }) => theme.primary};
+  background: ${({ online, theme }) => (online ? theme.success : theme.danger)};
   position: absolute;
   bottom: 0;
   right: 0;

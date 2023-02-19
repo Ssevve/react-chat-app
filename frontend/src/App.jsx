@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components/macro';
+import { ThemeProvider } from 'styled-components';
+import theme from 'shared/theme';
 
 import AuthRoutes from 'components/AuthRoutes';
 import GuestRoutes from 'components/GuestRoutes';
@@ -13,18 +16,21 @@ const StyledApp = styled.div`
 `;
 
 function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
   return (
-    <StyledApp>
-      <Routes>
-        <Route element={<GuestRoutes />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-        </Route>
-        <Route element={<AuthRoutes />}>
-          <Route path="/" element={<Home />} />
-        </Route>
-      </Routes>
-    </StyledApp>
+    <ThemeProvider theme={isDarkMode ? theme.dark : theme.light}>
+      <StyledApp>
+        <Routes>
+          <Route element={<GuestRoutes />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </Route>
+          <Route element={<AuthRoutes />}>
+            <Route path="/" element={<Home />} />
+          </Route>
+        </Routes>
+      </StyledApp>
+    </ThemeProvider>
   );
 }
 

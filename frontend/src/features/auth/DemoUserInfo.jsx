@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import AlertBox from './form/AlertBox';
 
 const Text = styled.p`
-  color: var(--clr-accent);
+  color: ${({ theme }) => theme.accent};
   font-size: 0.875rem;
   font-weight: ${({ bold }) => (bold ? '700' : '400')};
   margin-bottom: ${({ mb }) => mb};
@@ -11,7 +11,7 @@ const Text = styled.p`
 
 function DemoUserInfo() {
   return (
-    <AlertBox type="info">
+    <AlertBox variant="info">
       <Text bold mb="0.25rem">
         Demo user credentials:
       </Text>

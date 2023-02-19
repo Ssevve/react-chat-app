@@ -12,8 +12,8 @@ const StyledDiv = styled.div`
   max-width: 18.75rem;
   position: fixed;
   top: 4rem;
-  background: var(--clr-light-400);
-  ${({ anchor }) => `${borderMap[anchor]}: 1px solid var(--clr-light-200)}`};
+  background: ${({ theme }) => theme.primary};
+  ${({ anchor, theme }) => `${borderMap[anchor]}: 1px solid ${theme.tertiary}`};
   ${({ anchor, expanded }) => `${anchor}: ${expanded ? '0' : '-18.75rem'}`};
   transition: ${({ anchor }) => `${anchor} 0.1s ease-in-out`};
   display: grid;

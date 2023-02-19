@@ -17,21 +17,25 @@ const StyledLogo = styled.h1`
 `;
 
 const LogoText = styled.span`
-  color: ${({ color }) => color};
+  color: ${({ color, theme }) => theme[color]};
+`;
+
+const LogoIcon = styled(BsFillChatFill)`
+  color: ${({ color, theme }) => theme[color]};
 `;
 
 function Logo({ textColor, iconColor, hideOnMobile, hideOnTablet }) {
   return (
     <StyledLogo hideOnMobile={hideOnMobile} hideOnTablet={hideOnTablet}>
       <LogoText color={textColor}>Chat App</LogoText>
-      <BsFillChatFill color={iconColor} />
+      <LogoIcon color={iconColor} />
     </StyledLogo>
   );
 }
 
 Logo.defaultProps = {
-  textColor: 'var(--clr-light-400)',
-  iconColor: 'var(--clr-light-400)',
+  textColor: 'primary',
+  iconColor: 'primary',
   hideOnMobile: false,
   hideOnTablet: false,
 };

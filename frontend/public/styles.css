@@ -1,21 +1,6 @@
 :root {
-  --clr-light-200: hsl(0, 0%, 85%);
-  --clr-light-300: hsl(0, 0%, 95%);
-  --clr-light-400: hsl(0, 0%, 100%);
-  --clr-dark: hsl(224, 39%, 11%);
-  --clr-accent: hsl(220, 100%, 46%);
-  --clr-danger: hsl(350, 87%, 55%);
-  --clr-success: hsl(110, 63%, 44%);
-
   --border-radius: 0.25rem;
-
   --padding: 0.5rem;
-
-  --hover-opacity: 0.9;
-  --hover-accent: hsl(220, 100%, 90%);
-  --hover-danger: hsl(348, 96%, 90%);
-  --hover-success: hsl(108, 100%, 88%);
-
   --font-family: 'Open Sans', sans-serif;
 }
 

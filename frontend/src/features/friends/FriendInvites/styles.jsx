@@ -8,7 +8,6 @@ const Button = styled.button`
   justify-content: center;
   border: 1px solid currentColor;
   cursor: pointer;
-  transition: background 0.1s ease-in-out;
   padding: 0.15rem;
 `;
 
@@ -21,15 +20,15 @@ export const Wrapper = styled.div`
 `;
 
 export const AcceptButton = styled(Button)`
-  color: green;
+  color: ${({ theme }) => theme.success};
   &:hover {
-    background: var(--hover-success);
+    background: ${({ theme }) => theme.successHover};
   }
 `;
 
 export const DeclineButton = styled(Button)`
-  color: var(--clr-danger);
+  color: ${({ theme }) => theme.danger};
   &:hover {
-    background: var(--hover-danger);
+    background: ${({ theme }) => theme.dangerHover};
   }
 `;

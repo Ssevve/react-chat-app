@@ -14,17 +14,17 @@ const MessageForm = styled.form`
   gap: 0.5rem;
   padding: var(--padding);
   height: 4rem;
-  background: var(--clr-light-400);
+  background: ${({ theme }) => theme.primary};
 `;
 
 const Input = styled.input`
   padding: 1rem;
   border-radius: var(--border-radius);
-  border: 1px solid var(--clr-light-200);
+  border: 1px solid ${({ theme }) => theme.tertiary};
   flex: 1;
   font-size: 1rem;
-  color: var(--clr-dark);
-  font-family: var(--font-family);
+  color: ${({ theme }) => theme.inverted};
+  font-family: font-family);
 `;
 
 function MessageInput() {

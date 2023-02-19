@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex: 1;
   align-items: center;
-  border-top: 1px solid var(--clr-light-200);
+  border-top: 1px solid ${({ theme }) => theme.tertiary};
   height: 4rem;
 `;
 
@@ -19,7 +19,7 @@ export const StyledInput = styled.input`
   padding: 1rem;
   border: none;
   font-size: 1rem;
-  color: var(--clr-dark);
+  color: ${({ theme }) => theme.inverted};
   padding-left: 2.75rem;
   align-self: stretch;
   flex: 1;

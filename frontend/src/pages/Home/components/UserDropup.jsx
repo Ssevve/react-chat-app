@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   z-index: 1;
   position: relative;
   @media ${breakpoints.medium} {
-    border-right: 1px solid var(--clr-light-200);
+    border-right: 1px solid ${({ theme }) => theme.tertiary};
   }
 `;
 
@@ -25,19 +25,19 @@ const StyledButton = styled.button`
   justify-content: space-between;
   padding: var(--padding);
   border: none;
-  border-top: 1px solid var(--clr-light-200);
-  background: var(--clr-light-400);
-  color: var(--clr-dark);
+  border-top: 1px solid ${({ theme }) => theme.tertiary};
+  background: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.inverted};
   cursor: pointer;
   &:hover {
-    background: ${({ showDropup }) => (showDropup ? 'var(--clr-accent)' : 'var(--clr-light-200)')};
+    background: ${({ showDropup, theme }) => (showDropup ? theme.accent : theme.tertiary)};
   }
 
-  ${({ showDropup }) =>
+  ${({ showDropup, theme }) =>
     showDropup && {
-      borderTop: '1px solid var(--clr-accent)',
-      background: 'var(--clr-accent)',
-      color: 'var(--clr-light-400)',
+      borderTopColor: theme.accent,
+      background: theme.accent,
+      color: theme.primary,
     }};
 `;
 
@@ -52,20 +52,20 @@ const DropupMenu = styled.ul`
   gap: var(--padding);
   transition: bottom 0.1s ease-in-out;
   z-index: -1;
-  border: 1px solid var(--clr-accent);
-  background: var(--clr-light-400);
+  border: 1px solid ${({ theme }) => theme.accent};
+  background: ${({ theme }) => theme.primary};
 `;
 
 const DropupItem = styled.li`
-  background: var(--clr-light-400);
-  color: var(--clr-accent);
+  background: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.accent};
   border-radius: var(--border-radius);
   font-size: 0.875rem;
   font-weight: 700;
   display: flex;
   &:hover {
-    background: var(--clr-accent);
-    color: var(--clr-light-400);
+    background: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.primary};
   }
 `;
 

@@ -15,7 +15,7 @@ const Header = styled.header`
   top: 0;
   left: 0;
   z-index: 1;
-  background: var(--clr-accent);
+  background: ${({ theme }) => theme.accent};
 `;
 
 const Button = styled.button`
@@ -25,7 +25,7 @@ const Button = styled.button`
   display: flex;
   align-items: center;
   padding: var(--padding);
-  color: var(--clr-light-400);
+  color: ${({ theme }) => theme.primary};
 `;
 
 const LeftPanelButton = styled(Button)`

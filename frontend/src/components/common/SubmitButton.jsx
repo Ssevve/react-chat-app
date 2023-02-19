@@ -3,8 +3,8 @@ import styled from 'styled-components/macro';
 import Spinner from 'components/common/Spinner';
 
 const Button = styled.button`
-  background: var(--clr-accent);
-  color: var(--clr-light-400);
+  background: ${({ theme }) => theme.accent};
+  color: ${({ theme }) => theme.primary};
   font-weight: 700;
   border-radius: var(--border-radius);
   border: none;
@@ -14,15 +14,16 @@ const Button = styled.button`
   align-items: center;
   line-height: 1;
   cursor: pointer;
+  transition: background 0.1s ease-in-out;
   &:hover {
-    opacity: var(--hover-opacity);
+    background: ${({ theme }) => theme.accentHover};
   }
 `;
 
 function SubmitButton({ isLoading, children }) {
   return (
     <Button type="submit" disabled={isLoading}>
-      {isLoading ? <Spinner size="1rem" stroke="var(--clr-light-400)" /> : children}
+      {isLoading ? <Spinner size="1rem" stroke="primary" /> : children}
     </Button>
   );
 }

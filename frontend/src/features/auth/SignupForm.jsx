@@ -22,7 +22,7 @@ const HaveAccount = styled.p`
 `;
 
 const StyledLink = styled(Link)`
-  color: var(--clr-accent);
+  color: ${({ theme }) => theme.accent};
   margin-left: 0.5rem;
   text-decoration: none;
   &:hover {
