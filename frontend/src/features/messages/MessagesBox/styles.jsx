@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import breakpoints from 'utils/breakpoints';
+import breakpoints from 'shared/breakpoints';
 
 export const Section = styled.section`
   flex: 2.5;

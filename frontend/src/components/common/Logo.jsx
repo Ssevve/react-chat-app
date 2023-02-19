@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { BsFillChatFill } from 'react-icons/bs';
-import breakpoints from 'utils/breakpoints';
+import breakpoints from 'shared/breakpoints';
 
 const StyledLogo = styled.h1`
   display: ${({ hideOnMobile }) => (hideOnMobile ? 'none' : 'flex')};

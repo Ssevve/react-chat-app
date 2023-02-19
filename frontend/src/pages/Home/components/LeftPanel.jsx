@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/macro';
-import breakpoints from 'utils/breakpoints';
+import breakpoints from 'shared/breakpoints';
 import { fetchChats } from 'features/chats/chatsSlice';
 
 import SidePanel from 'components/SidePanel';

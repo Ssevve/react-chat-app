@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentChat, selectSortedChats, selectCurrentChat } from './chatsSlice';
-import breakpoints from 'utils/breakpoints';
+import breakpoints from 'shared/breakpoints';
 
 import DropdownList from 'components/common/DropdownList';
 import Chat from './Chat';

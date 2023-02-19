@@ -6,7 +6,7 @@ import { RiLogoutCircleLine } from 'react-icons/ri';
 import UserAvatar from 'components/common/UserAvatar';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
-import breakpoints from 'utils/breakpoints';
+import breakpoints from 'shared/breakpoints';
 
 const Wrapper = styled.div`
   display: flex;
