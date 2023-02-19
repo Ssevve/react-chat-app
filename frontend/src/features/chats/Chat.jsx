@@ -18,10 +18,10 @@ const Button = styled.button`
   transition: all 0.1s ease-in-out;
   cursor: pointer;
 
-  ${({ currentChat, chat }) =>
+  ${({ currentChat, chat, theme }) =>
     currentChat?._id === chat?._id && {
-      background: 'var(--clr-light-300)',
-      borderLeft: '6px solid var(--clr-accent)',
+      background: theme.secondary,
+      borderLeft: `6px solid ${theme.accent}`,
     }};
 `;
 

@@ -12,10 +12,11 @@ const Wrapper = styled.div`
 
 const StyledLoader = styled(Loader)`
   margin: 0 auto;
+  stroke: ${({ stroke, theme }) => theme[stroke]};
 `;
 
 const Text = styled.span`
-  color: var(--clr-dark);
+  color: ${({ theme }) => theme.inverted};
   font-size: 1rem;
 `;
 
@@ -30,7 +31,7 @@ function Spinner({ size, stroke, text }) {
 
 Spinner.defaultProps = {
   size: '2rem',
-  stroke: 'var(--clr-light-200)',
+  stroke: 'tertiary',
   text: '',
 };
 

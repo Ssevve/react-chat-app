@@ -47,7 +47,7 @@ export const Section = styled.section`
 `;
 
 export const WelcomeWrapper = styled.section`
-  color: var(--clr-dark);
+  color: ${({ theme }) => theme.inverted};
   padding: var(--padding);
   text-align: center;
   display: grid;
@@ -65,7 +65,7 @@ export const WelcomeCopy = styled.p`
 `;
 
 export const CurrentChatInfo = styled.section`
-  border-bottom: 1px solid var(--clr-light-200);
+  border-bottom: 1px solid ${({ theme }) => theme.tertiary};
 `;
 
 export const Messages = styled.section`

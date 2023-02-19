@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 
 export const Button = styled.button`
   padding: var(--padding);
-  color: var(--clr-light-200);
+  color: ${({ theme }) => theme.tertiary};
   background: none;
   border: none;
   cursor: pointer;
@@ -21,7 +21,7 @@ export const DotsIcon = styled(BsThreeDotsVertical)`
 `;
 
 export const DropdownMenu = styled.ul`
-  background: var(--clr-light-400);
+  background: ${({ theme }) => theme.primary};
   list-style: none;
   position: absolute;
   right: 2.5rem;
@@ -32,15 +32,15 @@ export const DropdownMenu = styled.ul`
 `;
 
 export const MenuItem = styled.li`
-  background: var(--clr-light-400);
-  color: var(--clr-accent);
+  background: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.accent};
   border-radius: var(--border-radius);
   font-size: 0.875rem;
   font-weight: 700;
   display: flex;
   &:hover {
-    background: var(--clr-accent);
-    color: var(--clr-light-400);
+    background: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.primary};
   }
 `;
 

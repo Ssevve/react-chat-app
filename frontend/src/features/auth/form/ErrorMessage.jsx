@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 
 const StyledSpan = styled.span`
-  color: var(--clr-danger);
+  color: ${({ theme }) => theme.danger};
   font-size: 0.75rem;
   height: 1.125rem;
 `;

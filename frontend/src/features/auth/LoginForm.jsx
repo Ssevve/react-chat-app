@@ -23,7 +23,7 @@ const NeedAccount = styled.p`
 `;
 
 const StyledLink = styled(Link)`
-  color: var(--clr-accent);
+  color: ${({ theme }) => theme.accent};
   margin-left: 0.5rem;
   text-decoration: none;
   &:hover {
@@ -78,7 +78,7 @@ function LoginForm() {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormTitle title="Log in" />
-      {showAlertBox ? <AlertBox type={alertBoxType}>{alertMessage}</AlertBox> : null}
+      {showAlertBox ? <AlertBox variant={alertBoxType}>{alertMessage}</AlertBox> : null}
       <DemoUserInfo />
       <Label label="Username">
         <Input error={invalidCredentials} name="username" register={register} />

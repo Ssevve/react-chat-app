@@ -10,7 +10,7 @@ const Wrapper = styled.section`
   overflow-y: auto;
   padding-top: 1rem;
   @media ${breakpoints.medium} {
-    border-right: 1px solid var(--clr-light-200);
+    border-right: 1px solid ${({ theme }) => theme.tertiary};
   }
 `;
 

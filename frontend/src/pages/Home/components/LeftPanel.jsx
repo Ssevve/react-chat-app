@@ -28,7 +28,7 @@ function LeftPanel({ expanded }) {
 
   return (
     <StyledSidePanel anchor="left" expanded={expanded}>
-      <Logo hideOnTablet={true} textColor="var(--clr-dark)" iconColor="var(--clr-accent)" />
+      <Logo hideOnTablet={true} textColor="inverted" iconColor="accent" />
       {isLoading ? <Spinner text="Loading chats" /> : <ChatsList />}
       <UserDropup />
     </StyledSidePanel>

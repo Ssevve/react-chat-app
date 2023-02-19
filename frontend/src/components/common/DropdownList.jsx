@@ -39,10 +39,9 @@ const List = styled.ul`
 `;
 
 const ListItem = styled.li`
-  background: var(--clr-light-400);
-  transition: background 0.1s ease-in-out;
+  background: ${({ theme }) => theme.primary};
   &:hover {
-    background: var(--clr-light-300);
+    background: ${({ theme }) => theme.secondary};
   }
 `;
 

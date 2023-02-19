@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 import breakpoints from 'shared/breakpoints';
 
 const Main = styled.main`
-  background: var(--clr-light-300);
+  background: ${({ theme }) => theme.secondary};
 `;
 
 const Container = styled.div`
@@ -30,7 +30,7 @@ const Section = styled.section`
 
 const Heading = styled.h1`
   font-size: clamp(3rem, 10vw, 4rem);
-  color: var(--clr-accent);
+  color: ${({ theme }) => theme.accent};
   font-weight: 700;
   line-height: 1.1;
   text-align: center;

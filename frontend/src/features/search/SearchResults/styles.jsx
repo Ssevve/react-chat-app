@@ -11,7 +11,7 @@ export const Result = styled.li`
 `;
 
 export const InviteButton = styled.button`
-  color: var(--clr-accent);
+  color: ${({ theme }) => theme.accent};
   border: 1px solid currentColor;
   margin-right: var(--padding);
   background: none;
@@ -22,7 +22,7 @@ export const InviteButton = styled.button`
   cursor: pointer;
   transition: all 0.1s ease-in-out;
   &:hover {
-    background: var(--hover-accent);
+    background: ${({ theme }) => theme.accentHover};
   }
 `;
 

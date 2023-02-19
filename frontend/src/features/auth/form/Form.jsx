@@ -9,7 +9,7 @@ const StyledForm = styled.form`
   border-radius: var(--border-radius);
   display: grid;
   gap: 1rem;
-  background: var(--clr-light-400);
+  background: ${({ theme }) => theme.primary};
   @media ${breakpoints.medium} {
     flex: 1;
   }

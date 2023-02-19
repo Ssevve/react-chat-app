@@ -1,26 +1,26 @@
 import { FiInfo, FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
 import styled from 'styled-components/macro';
 
-const types = {
+const variants = {
   info: {
     icon: <FiInfo size="1.25rem" />,
     title: 'Info',
-    color: 'var(--clr-accent)',
+    color: 'accent',
   },
   success: {
     icon: <FiCheckCircle size="1.25rem" />,
     title: 'Success',
-    color: 'var(--clr-success)',
+    color: 'success',
   },
   error: {
     icon: <FiAlertCircle size="1.25rem" />,
     title: 'Error',
-    color: 'var(--clr-danger)',
+    color: 'danger',
   },
 };
 
 const Div = styled.div`
-  color: ${({ type }) => types[type].color};
+  color: ${({ variant, theme }) => theme[variants[variant].color]};
   border: 1px solid currentColor;
   border-radius: var(--border-radius);
   padding: var(--padding);
@@ -40,18 +40,18 @@ const Title = styled.h3`
 `;
 
 const Alert = styled.span`
-  color: ${({ type }) => types[type].color};
+  color: ${({ type }) => variants[type].color};
   font-size: 0.85rem;
 `;
 
-function AlertBox({ type, children }) {
+function AlertBox({ variant, children }) {
   return (
-    <Div type={type}>
+    <Div variant={variant}>
       <Header>
-        {types[type].icon}
-        <Title>{types[type].title}</Title>
+        {variants[variant].icon}
+        <Title>{variants[variant].title}</Title>
       </Header>
-      <Alert type={type}>{children}</Alert>
+      <Alert type={variant}>{children}</Alert>
     </Div>
   );
 }
