@@ -16,6 +16,7 @@ const Button = styled.button`
   gap: 1rem;
   padding: 1rem var(--padding);
   transition: all 0.1s ease-in-out;
+  color: ${({ theme }) => theme.inverted};
   cursor: pointer;
 
   ${({ currentChat, chat, theme }) =>

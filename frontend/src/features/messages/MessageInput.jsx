@@ -24,7 +24,12 @@ const Input = styled.input`
   flex: 1;
   font-size: 1rem;
   color: ${({ theme }) => theme.inverted};
-  font-family: font-family);
+  font-family: var(--font-family);
+  background: inherit;
+  &::placeholder {
+    color: ${({ theme }) => theme.inverted};
+    opacity: 0.6;
+  }
 `;
 
 function MessageInput() {

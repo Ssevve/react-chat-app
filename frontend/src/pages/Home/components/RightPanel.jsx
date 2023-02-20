@@ -21,6 +21,7 @@ const Title = styled.h2`
   display: flex;
   justify-content: ${({ isLoading }) => (isLoading ? 'flex-end' : 'flex-start')};
   gap: 1rem;
+  color: ${({ theme }) => theme.inverted};
 `;
 
 const Section = styled.section`

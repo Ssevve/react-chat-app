@@ -9,7 +9,6 @@ export const Section = styled.section`
   position: fixed;
   width: 100%;
   height: calc(100% - 4rem);
-  top: 4rem;
   transition: all 0.1s ease-in-out;
 
   ${({ sidePanelExpanded }) =>
@@ -44,24 +43,6 @@ export const Section = styled.section`
     right: 18.75rem;
     transition: none;
   }
-`;
-
-export const WelcomeWrapper = styled.section`
-  color: ${({ theme }) => theme.inverted};
-  padding: var(--padding);
-  text-align: center;
-  display: grid;
-  row-gap: 2rem;
-  width: 50%;
-  margin: 0 auto;
-  align-content: center;
-  height: 100%;
-`;
-export const WelcomeTitle = styled.h2`
-  font-size: 2rem;
-`;
-export const WelcomeCopy = styled.p`
-  font-size: 1.5rem;
 `;
 
 export const CurrentChatInfo = styled.section`

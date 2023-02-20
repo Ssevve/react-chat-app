@@ -25,10 +25,15 @@ const Button = styled.button`
 `;
 
 const Arrow = styled.span`
+  color: ${({ theme }) => theme.inverted};
   display: flex;
   justify-content: flex-start;
   transition: transform 0.1s ease-in-out;
   transform: ${({ expand }) => (expand ? 'rotate(0deg)' : 'rotate(-90deg)')};
+`;
+
+const Title = styled.span`
+  color: ${({ theme }) => theme.inverted};
 `;
 
 const List = styled.ul`
@@ -54,7 +59,7 @@ function DropdownList({ title, children }) {
         <Arrow expand={expand}>
           <RxTriangleDown size="1.5rem" />
         </Arrow>
-        {title}
+        <Title>{title}</Title>
       </Button>
       {children && (
         <List expand={expand}>

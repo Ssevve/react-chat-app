@@ -16,6 +16,7 @@ const Header = styled.header`
   left: 0;
   z-index: 1;
   background: ${({ theme }) => theme.accent};
+  border-bottom: 1px solid ${({ theme }) => theme.primary};
 `;
 
 const Button = styled.button`

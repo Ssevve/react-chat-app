@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
 import { setCurrentChat, selectAllChats } from 'features/chats/chatsSlice';
+import { setShowSettings } from 'features/settings/settingsSlice';
 
 import User from 'components/common/User';
 
@@ -29,6 +30,7 @@ function Friend({ friend }) {
     if (!selectedChat) selectedChat = { members: [loggedInUser, friend] };
 
     setShowDropdown(false);
+    dispatch(setShowSettings(false));
     dispatch(setCurrentChat(selectedChat));
   };
 

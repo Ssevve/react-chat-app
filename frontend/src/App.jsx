@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import { ThemeProvider } from 'styled-components';
-import theme from 'shared/theme';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import themes from 'features/settings/themes';
 
 import AuthRoutes from 'components/AuthRoutes';
 import GuestRoutes from 'components/GuestRoutes';
@@ -11,14 +11,34 @@ import Login from 'pages/Login';
 import Home from 'pages/Home';
 import Signup from 'pages/Signup';
 
+const GlobalStyle = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    color: ${({ theme }) => theme.inverted};
+    background: ${({ theme }) => theme.primary};
+    line-height: 1.5;
+  }
+ 
+  #root {
+    min-height: 100vh;
+  }
+`;
+
 const StyledApp = styled.div`
   min-height: 100vh;
 `;
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const theme = useSelector((state) => state.settings.theme);
+  console.log(theme);
   return (
-    <ThemeProvider theme={isDarkMode ? theme.dark : theme.light}>
+    <ThemeProvider theme={themes[theme]}>
+      <GlobalStyle />
       <StyledApp>
         <Routes>
           <Route element={<GuestRoutes />}>

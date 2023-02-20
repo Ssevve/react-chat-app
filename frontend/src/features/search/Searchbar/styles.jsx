@@ -7,12 +7,14 @@ export const Wrapper = styled.div`
   align-items: center;
   border-top: 1px solid ${({ theme }) => theme.tertiary};
   height: 4rem;
+  background: ${({ theme }) => theme.primary};
 `;
 
 export const SearchIcon = styled.span`
   position: absolute;
   left: var(--padding);
   display: flex;
+  color: ${({ theme }) => theme.inverted};
 `;
 
 export const StyledInput = styled.input`
@@ -23,6 +25,11 @@ export const StyledInput = styled.input`
   padding-left: 2.75rem;
   align-self: stretch;
   flex: 1;
+  background: inherit;
+  &::placeholder {
+    color: ${({ theme }) => theme.inverted};
+    opacity: 0.6;
+  }
 `;
 
 export const ClearButton = styled.button`
@@ -33,4 +40,5 @@ export const ClearButton = styled.button`
   padding: var(--padding);
   position: absolute;
   right: 0;
+  color: ${({ theme }) => theme.inverted};
 `;

@@ -6,8 +6,8 @@ export const StyledDiv = styled.div`
   flex-direction: ${({ own }) => (own ? 'row-reverse' : 'row')};
   gap: 0.5rem;
   justify-self: ${({ own }) => (own ? 'flex-end' : 'flex-start')};
+  color: ${({ theme }) => theme.inverted};
   max-width: 75%;
-  padding: var(--padding);
 
   @media ${breakpoints.xl} {
     max-width: 50%;
@@ -34,6 +34,6 @@ export const Content = styled.p`
   margin-top: 0.25rem;
   border-radius: var(--border-radius);
   background: ${({ own, theme }) => (own ? theme.accent : theme.tertiary)};
-  color: ${({ own, theme }) => (own ? theme.primary : 'inherit')};
+  color: ${({ own, theme }) => (own ? theme.primary : theme.inverted)};
   padding: var(--padding);
 `;

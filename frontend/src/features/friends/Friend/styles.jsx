@@ -18,6 +18,7 @@ export const Button = styled.button`
 
 export const DotsIcon = styled(BsThreeDotsVertical)`
   pointer-events: none;
+  color: ${({ theme }) => theme.inverted};
 `;
 
 export const DropdownMenu = styled.ul`
