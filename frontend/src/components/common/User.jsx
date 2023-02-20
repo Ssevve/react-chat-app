@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro';
 
-import UserAvatarWithStatus from './UserAvatarWithConnectionStatus';
+import UserAvatarWithConnectionStatus from './UserAvatarWithConnectionStatus';
+import UserAvatar from './UserAvatar';
 
 const Button = styled.button`
   display: flex;
@@ -11,7 +12,7 @@ const Button = styled.button`
   gap: 1rem;
   padding: var(--padding);
   transition: background 0.1s ease-in-out;
-  pointer-events: ${({ events }) => (events ? 'auto' : 'none')};
+  color: ${({ theme }) => theme.inverted};
 `;
 
 const Details = styled.section`
@@ -31,16 +32,26 @@ const StatusText = styled.span`
   opacity: 0.6;
 `;
 
-function User({ user, events = true, onClick, className }) {
-  return user ? (
-    <Button type="button" onClick={onClick} events={events} className={className}>
-      <UserAvatarWithStatus user={user} />
-      <Details>
-        <Username>{user.username}</Username>
-        {user.statusText ? <StatusText>{user.statusText}</StatusText> : null}
-      </Details>
-    </Button>
-  ) : null;
+function User({ user, onClick, showConnectionStatus, className }) {
+  return (
+    user && (
+      <Button type="button" onClick={onClick} className={className}>
+        {showConnectionStatus ? (
+          <UserAvatarWithConnectionStatus user={user} />
+        ) : (
+          <UserAvatar user={user} />
+        )}
+        <Details>
+          <Username>{user.username}</Username>
+          {user.statusText ? <StatusText>{user.statusText}</StatusText> : null}
+        </Details>
+      </Button>
+    )
+  );
 }
+
+User.defaultProps = {
+  showConnectionStatus: true,
+};
 
 export default User;
