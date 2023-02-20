@@ -7,7 +7,7 @@ const StyledLabel = styled.label`
   font-size: 0.875rem;
 `;
 
-function FormGroup({ label, children }) {
+function Label({ label, children }) {
   return (
     <StyledLabel>
       {label}
@@ -16,4 +16,4 @@ function FormGroup({ label, children }) {
   );
 }
 
-export default FormGroup;
+export default Label;
