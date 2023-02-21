@@ -5,8 +5,11 @@ import { setTheme } from 'features/settings/settingsSlice';
 import { setShowSettings } from './settingsSlice';
 
 const Wrapper = styled.div`
-  height: calc(100% - 4rem);
-  top: 4rem;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
   row-gap: 2rem;
   padding: 0.5rem;
   flex: 1;
