@@ -1,11 +1,11 @@
-import { IoMdAdd } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
+import { FiPlusCircle } from 'react-icons/fi';
 import { createFriendInvite } from 'features/friends/friendsSlice';
 
 import Spinner from 'components/common/Spinner';
 import User from 'components/common/User';
 
-import { Results, Result, InviteButton, NoUsers } from './styles';
+import { Results, Result, InviteButton, AddIcon, NoUsers } from './styles';
 
 function SearchResults({ isLoading, results }) {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ function SearchResults({ isLoading, results }) {
         <Result key={result._id}>
           <User events={false} user={result} />
           <InviteButton type="button" onClick={() => handleClick(result._id)}>
-            <IoMdAdd size="1.5rem" />
+            <FiPlusCircle size="1.75rem" />
           </InviteButton>
         </Result>
       ))}

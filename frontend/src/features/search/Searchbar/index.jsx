@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { BiSearch } from 'react-icons/bi';
+import { FiSearch } from 'react-icons/fi';
 import { MdClear } from 'react-icons/md';
 import { selectUser } from 'features/auth/authSlice';
 import client from 'utils/api';
@@ -39,7 +39,7 @@ function Searchbar({ setIsLoading, query, setQuery, setResults }) {
   return (
     <Wrapper>
       <SearchIcon>
-        <BiSearch size="1.5rem" />
+        <FiSearch size="1.35rem" />
       </SearchIcon>
       <StyledInput
         aria-label="Search for friends by username"

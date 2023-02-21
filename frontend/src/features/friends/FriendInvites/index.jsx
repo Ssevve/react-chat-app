@@ -1,5 +1,4 @@
-import { BsCheck } from 'react-icons/bs';
-import { IoMdClose } from 'react-icons/io';
+import { FiXCircle, FiCheckCircle } from 'react-icons/fi';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
 import {
@@ -11,7 +10,7 @@ import {
 import DropdownList from 'components/common/DropdownList';
 import User from 'components/common/User';
 
-import { Wrapper, AcceptButton, DeclineButton } from './styles';
+import { Wrapper, ButtonsWrapper, AcceptButton, DeclineButton } from './styles';
 
 function FriendInvites() {
   const dispatch = useDispatch();
@@ -40,20 +39,20 @@ function FriendInvites() {
                   events={false}
                   user={invite.receiver._id === loggedInUser._id ? invite.sender : invite.receiver}
                 />
-                <Wrapper>
+                <ButtonsWrapper>
                   {invite.sender._id !== loggedInUser._id && (
                     <AcceptButton
                       type="button"
                       disabled={isLoading}
                       onClick={() => acceptInvite(invite)}
                     >
-                      <BsCheck size="1.5rem" />
+                      <FiCheckCircle size="1.75rem" />
                     </AcceptButton>
                   )}
                   <DeclineButton type="button" onClick={() => cancelInvite(invite)}>
-                    <IoMdClose size="1.5rem" />
+                    <FiXCircle size="1.75rem" />
                   </DeclineButton>
-                </Wrapper>
+                </ButtonsWrapper>
               </Wrapper>
             ))
           : null}

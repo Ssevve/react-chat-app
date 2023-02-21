@@ -60,7 +60,7 @@ function RightPanel({ expanded }) {
 
   return (
     <SidePanel anchor="right" expanded={expanded}>
-      <Title>Friends</Title>
+      <Title>{query ? 'Search Friends' : 'Friends'}</Title>
       <Section fetchingFriends={fetchingFriends}>
         {fetchingFriends ? <Spinner text="Loading friends" /> : sectionContent}
       </Section>

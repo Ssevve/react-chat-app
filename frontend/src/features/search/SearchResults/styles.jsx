@@ -12,18 +12,12 @@ export const Result = styled.li`
 
 export const InviteButton = styled.button`
   color: ${({ theme }) => theme.accent};
-  border: 1px solid currentColor;
   margin-right: var(--padding);
   background: none;
-  border-radius: var(--border-radius);
   display: flex;
-  align-items: center;
-  padding: 0.15rem;
   cursor: pointer;
-  transition: all 0.1s ease-in-out;
-  &:hover {
-    background: ${({ theme }) => theme.accentHover};
-  }
+  border: none;
+  border-radius: 50%;
 `;
 
 export const NoUsers = styled.p`
