@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import client from 'utils/api';
 
 const initialState = {
@@ -59,7 +59,15 @@ export const messagesSlice = createSlice({
   },
 });
 
-export const selectMessages = (state) => state.messages;
+export const selectMessages = (state) => state.messages.messages;
+
+export const selectMessagesByChatId = createSelector(
+  selectMessages,
+  (_, chatId) => chatId,
+  (messages, id) => {
+    return messages.filter((message) => message.chatId === id);
+  },
+);
 
 export const { addMessage } = messagesSlice.actions;
 

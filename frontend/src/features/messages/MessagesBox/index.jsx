@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentChat } from 'features/chats/chatsSlice';
-import { fetchMessages } from 'features/messages/messagesSlice';
+import { fetchMessages, selectMessagesByChatId } from 'features/messages/messagesSlice';
 import { selectUser } from 'features/auth/authSlice';
 
 import Message from 'features/messages/Message';
@@ -15,6 +15,9 @@ function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
   const currentChat = useSelector(selectCurrentChat);
   const loggedInUser = useSelector(selectUser);
   const [chatPartner, setChatPartner] = useState(null);
+  const currentChatMessages = useSelector((state) =>
+    selectMessagesByChatId(state, currentChat._id),
+  );
 
   useEffect(() => {
     if (!currentChat) return;
@@ -22,9 +25,6 @@ function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
     setChatPartner(partner);
   }, [currentChat, loggedInUser._id]);
 
-  const currentChatMessages = useSelector((state) =>
-    state.messages.messages.filter((message) => message.chatId === currentChat?._id),
-  );
   const scrollRef = useRef(null);
 
   useEffect(() => {
