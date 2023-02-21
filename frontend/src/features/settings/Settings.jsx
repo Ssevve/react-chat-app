@@ -1,16 +1,33 @@
 import styled from 'styled-components/macro';
 import { useDispatch, useSelector } from 'react-redux';
+import { FiArrowLeftCircle } from 'react-icons/fi';
 import { setTheme } from 'features/settings/settingsSlice';
+import { setShowSettings } from './settingsSlice';
 
 const Wrapper = styled.div`
   height: calc(100% - 4rem);
   top: 4rem;
   row-gap: 2rem;
   padding: 0.5rem;
+  flex: 1;
+  z-index: 1;
+  background: ${({ theme }) => theme.primary};
+`;
+
+const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Title = styled.h2`
   font-size: 2rem;
+`;
+
+const BackButton = styled.button`
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.inverted};
+  cursor: pointer;
 `;
 
 const Section = styled.section`
@@ -34,24 +51,30 @@ const Label = styled.label`
   cursor: pointer;
 `;
 
+const RadioInput = styled.input`
+  cursor: pointer;
+`;
+
 function Settings() {
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.settings.theme);
 
-  const handleThemeChange = (e) => {
-    console.log(e.target.value);
-    dispatch(setTheme(e.target.value));
-  };
-
+  const handleThemeChange = (e) => dispatch(setTheme(e.target.value));
+  const handleBackButtonClick = () => dispatch(setShowSettings(false));
   return (
     <Wrapper>
-      <Title>Settings</Title>
+      <Header>
+        <Title>Settings</Title>
+        <BackButton onClick={handleBackButtonClick}>
+          <FiArrowLeftCircle size="1.75rem" />
+        </BackButton>
+      </Header>
       <Section>
         <SectionTitle>Theme</SectionTitle>
         <ThemeSettingsWrapper>
           <Label>
             Light
-            <input
+            <RadioInput
               type="radio"
               id="light"
               value="light"
@@ -63,7 +86,7 @@ function Settings() {
 
           <Label>
             Dark
-            <input
+            <RadioInput
               type="radio"
               id="dark"
               value="dark"

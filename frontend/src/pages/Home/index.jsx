@@ -91,10 +91,11 @@ function Home() {
       <Topbar setExpandLeftPanel={setExpandLeftPanel} setExpandRightPanel={setExpandRightPanel} />
       <Main expandRightPanel={expandRightPanel}>
         <LeftPanel anchor="left" expanded={expandLeftPanel} />
-        {!showSettings && currentChat && (
+        {currentChat ? (
           <MessagesBox sidePanelExpanded={sidePanelExpanded} expandRightPanel={expandRightPanel} />
+        ) : (
+          <WelcomeMessage />
         )}
-        {!showSettings && !currentChat && <WelcomeMessage />}
         {showSettings && <Settings />}
         <RightPanel expanded={expandRightPanel} />
       </Main>
