@@ -35,7 +35,6 @@ const StyledApp = styled.div`
 
 function App() {
   const theme = useSelector((state) => state.settings.theme);
-  console.log(theme);
   return (
     <ThemeProvider theme={themes[theme]}>
       <GlobalStyle />
