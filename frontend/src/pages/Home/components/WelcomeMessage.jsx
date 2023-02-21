@@ -6,7 +6,7 @@ export const WelcomeWrapper = styled.section`
   text-align: center;
   display: grid;
   row-gap: 2rem;
-  width: 100%;
+  width: 50%;
   margin: 0 auto;
   align-content: center;
   height: 100%;
