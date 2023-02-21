@@ -8,6 +8,7 @@ export const StyledDiv = styled.div`
   justify-self: ${({ own }) => (own ? 'flex-end' : 'flex-start')};
   color: ${({ theme }) => theme.inverted};
   max-width: 75%;
+  padding: var(--padding);
 
   @media ${breakpoints.xl} {
     max-width: 50%;
