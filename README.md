@@ -14,6 +14,7 @@ Full stack real-time one-on-one messaging app.
 - User can add other users as friends
 - User can see offline and online friends
 - User can chat with friends in real-time
+- User can change color theme (light/dark)
 - Fully responsive
 - Mobile first approach
 
