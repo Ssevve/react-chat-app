@@ -1,11 +1,12 @@
 import styled from 'styled-components/macro';
+import styleConstants from 'shared/styleConstants';
 
 export const WelcomeWrapper = styled.section`
   color: ${({ theme }) => theme.inverted};
-  padding: var(--padding);
+  padding: ${styleConstants.paddingS};
   text-align: center;
   display: grid;
-  row-gap: 2rem;
+  row-gap: ${styleConstants.gapXXL};
   width: 75%;
   margin: 0 auto;
   align-content: center;

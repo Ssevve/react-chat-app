@@ -1,23 +1,24 @@
 import styled from 'styled-components/macro';
 import breakpoints from 'shared/breakpoints';
+import styleConstants from 'shared/styleConstants';
 
 export const StyledDiv = styled.div`
   display: flex;
   flex-direction: ${({ own }) => (own ? 'row-reverse' : 'row')};
-  gap: 0.5rem;
   justify-self: ${({ own }) => (own ? 'flex-end' : 'flex-start')};
-  color: ${({ theme }) => theme.inverted};
-  max-width: 75%;
-  padding: var(--padding);
+  gap: ${styleConstants.gapM};
+  color: ${({ theme }) => theme.text};
+  width: 75%;
+  background: inherit;
 
   @media ${breakpoints.xl} {
-    max-width: 50%;
+    width: 50%;
   }
 `;
 
 export const Meta = styled.div`
   display: flex;
-  gap: 0.25rem;
+  gap: ${styleConstants.gapS};
   justify-content: space-between;
   align-items: center;
 `;
@@ -34,7 +35,9 @@ export const Time = styled.span`
 export const Content = styled.p`
   margin-top: 0.25rem;
   border-radius: var(--border-radius);
-  background: ${({ own, theme }) => (own ? theme.accent : theme.tertiary)};
-  color: ${({ own, theme }) => (own ? theme.primary : theme.inverted)};
-  padding: var(--padding);
+  background: ${({ own, theme }) => (own ? theme.primary : theme.background500)};
+  color: ${({ own, theme }) => (own ? theme.ownMessageText : theme.text)};
+  padding: ${styleConstants.paddingS};
+  word-wrap: break-word;
+  max-width: 500px; // TODO: temp fix: messages overflow, try to make it better
 `;

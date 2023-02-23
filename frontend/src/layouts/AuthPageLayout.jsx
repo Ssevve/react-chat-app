@@ -1,8 +1,9 @@
 import styled from 'styled-components/macro';
 import breakpoints from 'shared/breakpoints';
+import styleConstants from 'shared/styleConstants';
 
 const Main = styled.main`
-  background: ${({ theme }) => theme.secondary};
+  background: ${({ theme }) => theme.background500};
 `;
 
 const Container = styled.div`
@@ -14,7 +15,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: ${styleConstants.gapXXL};
   @media ${breakpoints.medium} {
     flex-direction: row;
   }
@@ -22,7 +23,7 @@ const Container = styled.div`
 
 const Section = styled.section`
   display: grid;
-  gap: 2rem;
+  gap: ${styleConstants.gapXXL};
   @media ${breakpoints.medium} {
     flex: 1;
   }
@@ -30,9 +31,8 @@ const Section = styled.section`
 
 const Heading = styled.h1`
   font-size: clamp(3rem, 10vw, 4rem);
-  color: ${({ theme }) => theme.accent};
+  color: ${({ theme }) => theme.primary};
   font-weight: 700;
-  line-height: 1.1;
   text-align: center;
   @media ${breakpoints.medium} {
     text-align: left;

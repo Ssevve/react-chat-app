@@ -13,6 +13,7 @@ import {
   subscribeToFriendEvents,
 } from 'socketEvents';
 import breakpoints from 'shared/breakpoints';
+import styleConstants from 'shared/styleConstants';
 
 import Topbar from './components/Topbar';
 import LeftPanel from './components/LeftPanel';
@@ -28,13 +29,11 @@ const Wrapper = styled.div`
 const Main = styled.main`
   display: flex;
   position: fixed;
-  top: 4rem;
-  background: ${({ theme }) => theme.primary};
+  top: ${styleConstants.pageHeaderHeight};
+  background: ${({ theme }) => theme.background400};
   color: ${({ theme }) => theme.inverted};
   width: 100vw;
   height: 100%;
-  padding: var(--padding);
-  padding-top: 0;
   @media ${breakpoints.medium} {
     width: calc(100vw - 18.75rem);
     left: 18.75rem;

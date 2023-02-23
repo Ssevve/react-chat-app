@@ -6,10 +6,12 @@ import ConnectionStatus from './ConnectionStatus';
 
 const AvatarWrapper = styled.div`
   position: relative;
+  background: inherit;
+  display: flex;
   height: max-content;
 `;
 
-function UserAvatarWithStatus({ user }) {
+function UserAvatarWithConnectionStatus({ user }) {
   return user ? (
     <AvatarWrapper>
       <UserAvatar user={user} />
@@ -18,4 +20,4 @@ function UserAvatarWithStatus({ user }) {
   ) : null;
 }
 
-export default UserAvatarWithStatus;
+export default UserAvatarWithConnectionStatus;

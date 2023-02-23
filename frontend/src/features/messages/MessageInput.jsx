@@ -1,34 +1,42 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { FiSend } from 'react-icons/fi';
 import { selectAccessToken } from 'features/auth/authSlice';
 import styled from 'styled-components';
 import { selectUser } from 'features/auth/authSlice';
 import { selectCurrentChat, setCurrentChat, updateChat } from 'features/chats/chatsSlice';
 import { createNewMessage } from './messagesSlice';
+import styleConstants from 'shared/styleConstants';
 
 import SubmitButton from 'components/common/SubmitButton';
 
+const Wrapper = styled.section`
+  padding: ${styleConstants.paddingS} ${styleConstants.paddingL};
+`;
+
 const MessageForm = styled.form`
   display: flex;
-  align-content: center;
-  gap: 0.5rem;
-  padding: var(--padding);
-  height: 4rem;
-  background: ${({ theme }) => theme.primary};
+  align-items: center;
+  gap: ${styleConstants.gapM};
+  padding: ${styleConstants.paddingS};
+  background: ${({ theme }) => theme.background500};
+  border-radius: var(--border-radius);
 `;
 
 const Input = styled.input`
-  padding: 1rem;
-  border-radius: var(--border-radius);
-  border: 1px solid ${({ theme }) => theme.tertiary};
+  height: 100%;
+  background: inherit;
+  border: none;
   flex: 1;
   font-size: 1rem;
   color: ${({ theme }) => theme.inverted};
   font-family: var(--font-family);
-  background: inherit;
   &::placeholder {
     color: ${({ theme }) => theme.inverted};
-    opacity: 0.6;
+    opacity: ${styleConstants.placeholderOpacity};
+  }
+  &:focus {
+    outline: none;
   }
 `;
 
@@ -62,15 +70,19 @@ function MessageInput() {
   };
 
   return (
-    <MessageForm onSubmit={handleSubmit}>
-      <Input
-        ref={inputRef}
-        type="text"
-        aria-label="Write a new message here"
-        placeholder="Write a message here..."
-      />
-      <SubmitButton>Send</SubmitButton>
-    </MessageForm>
+    <Wrapper>
+      <MessageForm onSubmit={handleSubmit}>
+        <Input
+          ref={inputRef}
+          type="text"
+          aria-label="Write a new message here"
+          placeholder="Write a message here..."
+        />
+        <SubmitButton aria-label="Send message">
+          <FiSend aria-hidden="true" size="1.25rem" />
+        </SubmitButton>
+      </MessageForm>
+    </Wrapper>
   );
 }
 

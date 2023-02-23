@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { signup, clearFetchError } from './authSlice';
 import styled from 'styled-components/macro';
 import signupSchema from './schemas/signupSchema';
+import styleConstants from 'shared/styleConstants';
 
 import SubmitButton from 'components/common/SubmitButton';
 import AlertBox from './form/AlertBox';
@@ -22,12 +23,17 @@ const HaveAccount = styled.p`
 `;
 
 const StyledLink = styled(Link)`
-  color: ${({ theme }) => theme.accent};
+  color: ${({ theme }) => theme.primary};
   margin-left: 0.5rem;
   text-decoration: none;
   &:hover {
     text-decoration: underline;
   }
+`;
+
+const StyledSubmitButton = styled(SubmitButton)`
+  padding: ${styleConstants.paddingM};
+  min-height: ${styleConstants.authSubmitButtonMinHeight};
 `;
 
 function SignupForm() {
@@ -65,19 +71,22 @@ function SignupForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormTitle title="Sign up" />
+      <FormTitle>Sign up</FormTitle>
       {fetchError ? (
         <AlertBox variant="error">Something went wrong. Please try again.</AlertBox>
       ) : null}
-      <Label label="Username">
+      <Label>
+        Username
         <Input error={errors.username} name="username" register={register} />
         {errors.username ? <ErrorMessage message={errors.username.message} /> : null}
       </Label>
-      <Label label="Password">
+      <Label>
+        Password
         <Input error={errors.password} name="password" register={register} type="password" />
         {errors.password ? <ErrorMessage message={errors.password.message} /> : null}
       </Label>
-      <Label label="Repeat password">
+      <Label>
+        Repeat password
         <Input
           error={errors.repeatPassword}
           name="repeatPassword"
@@ -86,7 +95,7 @@ function SignupForm() {
         />
         {errors.repeatPassword ? <ErrorMessage message={errors.repeatPassword.message} /> : null}
       </Label>
-      <SubmitButton isLoading={isLoading}>Sign up</SubmitButton>
+      <StyledSubmitButton isLoading={isLoading}>Sign up</StyledSubmitButton>
       <Divider />
       <HaveAccount>
         Have an account?

@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro';
 import breakpoints from 'shared/breakpoints';
+import styleConstants from 'shared/styleConstants';
 
 export const Section = styled.section`
   flex: 2.5;
@@ -10,6 +11,7 @@ export const Section = styled.section`
   width: 100%;
   height: calc(100% - 4rem);
   transition: all 0.1s ease-in-out;
+  background: ${({ theme }) => theme.background300};
 
   ${({ sidePanelExpanded }) =>
     sidePanelExpanded && {
@@ -46,18 +48,23 @@ export const Section = styled.section`
 `;
 
 export const CurrentChatInfo = styled.section`
-  border-bottom: 1px solid ${({ theme }) => theme.tertiary};
+  box-shadow: ${styleConstants.boxShadow};
+  background: ${({ theme }) => theme.background600};
+  padding: ${styleConstants.paddingL};
+  z-index: 1;
 `;
 
 export const Messages = styled.section`
-  padding: var(--padding);
-  max-height: calc(100% - 4rem);
-  top: 4rem;
-  bottom: 4rem;
+  --footer-height: ${styleConstants.pageFooterHeight}
+  max-height: calc(100% - var(--footer-height));
+  padding: ${styleConstants.paddingL};
+  padding-bottom: 0;
+  background: inherit;
+  bottom: ${styleConstants.pageFooterHeight};
   width: 100%;
   display: grid;
   align-content: flex-start;
   flex: 1;
-  gap: 2rem;
+  gap: ${styleConstants.gapXXL};
   overflow-y: auto;
 `;

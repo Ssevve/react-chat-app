@@ -2,38 +2,46 @@ import React from 'react';
 import { RxTriangleDown } from 'react-icons/rx';
 import { useState } from 'react';
 import styled from 'styled-components/macro';
+import styleConstants from 'shared/styleConstants';
 
 const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 0.5rem;
+  background: inherit;
+  gap: ${styleConstants.gapM};
+  margin-top: 1rem;
 `;
 
 const Button = styled.button`
   text-align: left;
-  padding-left: var(--padding);
+  padding-left: ${styleConstants.paddingS};
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: ${styleConstants.gapS};
   text-transform: uppercase;
-  font-weight: 700;
-  background: none;
+  background: inherit;
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
+  color: ${({ theme }) => theme.text};
+  opacity: ${styleConstants.dimOpacity};
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 const Arrow = styled.span`
-  color: ${({ theme }) => theme.inverted};
   display: flex;
   justify-content: flex-start;
   transition: transform 0.1s ease-in-out;
   transform: ${({ expand }) => (expand ? 'rotate(0deg)' : 'rotate(-90deg)')};
 `;
 
-const Title = styled.span`
-  color: ${({ theme }) => theme.inverted};
+const Title = styled.h3`
+  font-family: var(--font-family);
+  font-size: 0.875rem;
+  font-weight: 700;
 `;
 
 const List = styled.ul`
@@ -41,16 +49,19 @@ const List = styled.ul`
   flex-direction: column;
   display: ${({ expand }) => (expand ? 'flex' : 'none')};
   overflow: hidden;
+  background: inherit;
 `;
 
 const ListItem = styled.li`
-  background: ${({ theme }) => theme.primary};
+  background: inherit;
+  padding: ${({ noItemPadding }) => (noItemPadding ? 0 : styleConstants.paddingL)};
+  opacity: ${({ dim }) => (dim ? styleConstants.dimOpacity : 1)};
   &:hover {
-    background: ${({ theme }) => theme.secondary};
+    opacity: 1;
   }
 `;
 
-function DropdownList({ title, children }) {
+function DropdownList({ title, dim, noItemPadding, children }) {
   const [expand, setExpand] = useState(true);
 
   return (
@@ -64,12 +75,18 @@ function DropdownList({ title, children }) {
       {children && (
         <List expand={expand}>
           {React.Children.map(children, (child) => (
-            <ListItem>{child}</ListItem> // Does not need a key, because the children have their own keys already
+            <ListItem dim={dim} noItemPadding={noItemPadding}>
+              {child}
+            </ListItem> // Does not need a key, because the children have their own keys already
           ))}
         </List>
       )}
     </Wrapper>
   );
 }
+
+DropdownList.defaultProps = {
+  dim: false,
+};
 
 export default DropdownList;

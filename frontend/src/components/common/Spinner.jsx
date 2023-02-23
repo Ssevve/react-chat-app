@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import { ReactComponent as Loader } from 'assets/loader.svg';
+import styleConstants from 'shared/styleConstants';
 
 const Wrapper = styled.div`
   display: grid;
   align-content: center;
   justify-content: center;
-  row-gap: var(--padding);
+  row-gap: ${styleConstants.gapM};
   padding: 0;
   margin: 0;
 `;
@@ -16,7 +17,7 @@ const StyledLoader = styled(Loader)`
 `;
 
 const Text = styled.span`
-  color: ${({ theme }) => theme.inverted};
+  color: ${({ theme }) => theme.text};
   font-size: 1rem;
 `;
 
@@ -31,7 +32,7 @@ function Spinner({ size, stroke, text }) {
 
 Spinner.defaultProps = {
   size: '2rem',
-  stroke: 'tertiary',
+  stroke: 'text',
   text: '',
 };
 

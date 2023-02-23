@@ -2,21 +2,23 @@ import styled from 'styled-components/macro';
 import { HiMenu } from 'react-icons/hi';
 import { FaUserFriends } from 'react-icons/fa';
 import breakpoints from 'shared/breakpoints';
+import styleConstants from 'shared/styleConstants';
 
 import Logo from 'components/common/Logo';
 
 const Header = styled.header`
-  height: 4rem;
+  min-height: ${styleConstants.pageHeaderHeight};
   width: 100vw;
-  padding: var(--padding);
+  padding: ${styleConstants.paddingL};
   display: grid;
   align-content: center;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1;
-  background: ${({ theme }) => theme.accent};
-  border-bottom: 1px solid ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.topbarText};
+  background: ${({ theme }) => theme.primary};
+  box-shadow: ${styleConstants.boxShadow};
 `;
 
 const Button = styled.button`
@@ -25,8 +27,7 @@ const Button = styled.button`
   background: none;
   display: flex;
   align-items: center;
-  padding: var(--padding);
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.topbarText};
 `;
 
 const LeftPanelButton = styled(Button)`
@@ -57,7 +58,7 @@ function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
 
   return (
     <Header>
-      <Logo hideOnMobile={true} />
+      <Logo hideOnMobile />
       <LeftPanelButton type="button" onClick={handleLeftPanelExpand}>
         <HiMenu size="1.5rem" />
       </LeftPanelButton>

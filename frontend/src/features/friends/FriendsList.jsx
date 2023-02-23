@@ -20,7 +20,7 @@ function FriendsList() {
           ? online.map((friend) => <Friend key={friend._id} friend={friend} />)
           : null}
       </DropdownList>
-      <DropdownList title="Offline">
+      <DropdownList dim title="Offline">
         {offline?.length
           ? offline.map((friend) => <Friend key={friend._id} friend={friend} />)
           : null}

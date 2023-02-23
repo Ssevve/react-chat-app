@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import AlertBox from './form/AlertBox';
 
 const Text = styled.p`
-  color: ${({ theme }) => theme.accent};
+  color: ${({ theme }) => theme.info};
   font-size: 0.875rem;
   font-weight: ${({ bold }) => (bold ? '700' : '400')};
   margin-bottom: ${({ mb }) => mb};
+  line-height: 1.5;
 `;
 
 function DemoUserInfo() {

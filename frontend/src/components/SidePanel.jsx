@@ -1,16 +1,15 @@
 import styled from 'styled-components/macro';
 import breakpoints from 'shared/breakpoints';
+import styleConstants from 'shared/styleConstants';
 
 function setStylesByAnchor(anchor, theme, expanded) {
   if (anchor === 'left') {
     return {
-      borderRight: `1px solid ${theme.tertiary}`,
       left: `${expanded ? '0' : '-18.75rem'}`,
       transition: `left 0.1s ease-in-out`,
     };
   } else {
     return {
-      borderLeft: `1px solid ${theme.tertiary}`,
       right: `${expanded ? '0' : '-18.75rem'}`,
       transition: `right 0.1s ease-in-out`,
     };
@@ -18,14 +17,16 @@ function setStylesByAnchor(anchor, theme, expanded) {
 }
 
 const StyledDiv = styled.div`
-  height: calc(100% - 4rem); // topbar height = 4rem
+  --header-height: ${styleConstants.pageHeaderHeight};
+  height: calc(100% - var(--header-height));
   width: 90%;
   max-width: 18.75rem;
   position: fixed;
-  background: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.background400};
   display: grid;
-  grid-template-rows: 4rem 1fr 4rem;
-  z-index: 1;
+  grid-template-rows: ${styleConstants.pageHeaderHeight} 1fr ${styleConstants.pageFooterHeight};
+  z-index: 2;
+  box-shadow: ${styleConstants.boxShadow};
   @media ${breakpoints.xl} {
     ${({ anchor }) => `${anchor}: 0`};
   }

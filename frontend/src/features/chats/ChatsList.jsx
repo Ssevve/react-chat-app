@@ -1,14 +1,14 @@
 import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentChat, selectSortedChats, selectCurrentChat } from './chatsSlice';
-import { setShowSettings } from 'features/settings/settingsSlice';
+import { closeSettings } from 'features/settings/settingsSlice';
 
 import DropdownList from 'components/common/DropdownList';
 import Chat from './Chat';
 
 const Wrapper = styled.section`
+  background: inherit;
   overflow-y: auto;
-  padding-top: 1rem;
 `;
 
 function ChatsList() {
@@ -17,13 +17,13 @@ function ChatsList() {
   const currentChat = useSelector(selectCurrentChat);
 
   const handleFriendClick = (chat) => {
-    dispatch(setShowSettings(false));
+    dispatch(closeSettings());
     dispatch(setCurrentChat(chat));
   };
 
   return (
     <Wrapper>
-      <DropdownList title="Direct messages">
+      <DropdownList title="Direct messages" noItemPadding>
         {chats.map((chat) => (
           <Chat
             key={chat._id}

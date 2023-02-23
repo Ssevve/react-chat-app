@@ -2,7 +2,8 @@ import styled from 'styled-components/macro';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiArrowLeftCircle } from 'react-icons/fi';
 import { setTheme } from 'features/settings/settingsSlice';
-import { setShowSettings } from './settingsSlice';
+import { toggleSettings } from './settingsSlice';
+import styleConstants from 'shared/styleConstants';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -10,11 +11,11 @@ const Wrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  row-gap: 2rem;
-  padding: var(--padding);
+  row-gap: ${styleConstants.gapXXL};
+  padding: ${styleConstants.paddingS};
   flex: 1;
   z-index: 1;
-  background: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.background400};
 `;
 
 const Header = styled.header`
@@ -46,13 +47,13 @@ const SectionTitle = styled.h3`
 
 const ThemeSettingsWrapper = styled.section`
   display: flex;
-  gap: 2rem;
+  gap: ${styleConstants.gapXXL};
   margin-top: var(--padding);
 `;
 
 const Label = styled.label`
   display: flex;
-  gap: var(--padding);
+  gap: ${styleConstants.gapM};
   cursor: pointer;
 `;
 
@@ -65,7 +66,7 @@ function Settings() {
   const theme = useSelector((state) => state.settings.theme);
 
   const handleThemeChange = (e) => dispatch(setTheme(e.target.value));
-  const handleBackButtonClick = () => dispatch(setShowSettings(false));
+  const handleBackButtonClick = () => dispatch(toggleSettings());
   return (
     <Wrapper>
       <Header>

@@ -20,8 +20,8 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     color: ${({ theme }) => theme.inverted};
-    background: ${({ theme }) => theme.primary};
-    line-height: 1.5;
+    background: ${({ theme }) => theme.background500};
+    line-height: 1;
   }
  
   #root {

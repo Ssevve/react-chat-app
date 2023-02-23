@@ -1,13 +1,9 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
-const StyledDiv = styled.div`
+const Divider = styled.div`
   height: 1px;
   background: ${({ theme }) => theme.inverted};
   opacity: 0.2;
 `;
-
-function Divider() {
-  return <StyledDiv />;
-}
 
 export default Divider;

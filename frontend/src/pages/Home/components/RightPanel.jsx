@@ -12,23 +12,23 @@ import FriendInvites from 'features/friends/FriendInvites';
 import { selectFriends } from 'features/friends/friendsSlice';
 import { selectFriendInvites } from 'features/friends/friendsSlice';
 import Spinner from 'components/common/Spinner';
+import styleConstants from 'shared/styleConstants';
 
 const Title = styled.h2`
-  padding: var(--padding);
+  padding: ${styleConstants.paddingL};
   font-size: 1.5rem;
-  line-height: 1;
   align-items: center;
   display: flex;
   justify-content: ${({ isLoading }) => (isLoading ? 'flex-end' : 'flex-start')};
-  gap: 1rem;
+  gap: ${styleConstants.gapXL};
   color: ${({ theme }) => theme.inverted};
 `;
 
 const Section = styled.section`
-  padding: 1rem 0 0;
+  background: inherit;
   overflow-y: auto;
   display: grid;
-  row-gap: 1rem;
+  row-gap: ${styleConstants.gapXL};
   align-content: ${({ fetchingFriends }) => (fetchingFriends ? 'center' : 'start')};
 `;
 

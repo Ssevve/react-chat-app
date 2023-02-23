@@ -1,34 +1,34 @@
 import styled from 'styled-components/macro';
+import { FiSearch } from 'react-icons/fi';
+import styleConstants from 'shared/styleConstants';
 
 export const Wrapper = styled.div`
   position: relative;
   display: flex;
   flex: 1;
   align-items: center;
-  border-top: 1px solid ${({ theme }) => theme.tertiary};
-  height: 4rem;
-  background: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.background600};
+  padding: ${styleConstants.paddingL};
 `;
 
-export const SearchIcon = styled.span`
+export const SearchIcon = styled(FiSearch)`
   position: absolute;
-  left: var(--padding);
-  display: flex;
-  color: ${({ theme }) => theme.inverted};
+  right: 1.5rem;
+  color: ${({ theme }) => theme.text};
+  opacity: ${styleConstants.dimOpacity};
 `;
 
 export const StyledInput = styled.input`
-  padding: 1rem;
   border: none;
   font-size: 1rem;
-  color: ${({ theme }) => theme.inverted};
-  padding-left: 2.75rem;
+  color: ${({ theme }) => theme.text};
   align-self: stretch;
+  padding: ${styleConstants.paddingS};
+  border-radius: var(--border-radius);
   flex: 1;
-  background: inherit;
+  background: ${({ theme }) => theme.background400};
   &::placeholder {
-    color: ${({ theme }) => theme.inverted};
-    opacity: 0.6;
+    opacity: ${styleConstants.dimOpacity};
   }
 `;
 
@@ -37,8 +37,12 @@ export const ClearButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  padding: var(--padding);
   position: absolute;
-  right: 0;
-  color: ${({ theme }) => theme.inverted};
+  right: 1.5rem;
+  background: ${({ theme }) => theme.background400};
+  color: ${({ theme }) => theme.text};
+  opacity: ${styleConstants.dimOpacity};
+  &:hover {
+    opacity: 1;
+  }
 `;

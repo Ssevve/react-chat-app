@@ -1,29 +1,29 @@
 import styled from 'styled-components/macro';
+import styleConstants from 'shared/styleConstants';
 
 import Spinner from 'components/common/Spinner';
 
 const Button = styled.button`
-  background: ${({ theme }) => theme.accent};
-  color: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.submitButtonText};
   font-weight: 700;
   border-radius: var(--border-radius);
   border: none;
-  padding: 0.875rem;
+  padding: ${styleConstants.paddingS};
   font-size: 1rem;
   display: grid;
   align-items: center;
-  line-height: 1;
   cursor: pointer;
   transition: background 0.1s ease-in-out;
   &:hover {
-    background: ${({ theme }) => theme.accentHover};
+    background: ${({ theme }) => theme.primaryHover};
   }
 `;
 
-function SubmitButton({ isLoading, children }) {
+function SubmitButton({ isLoading, className, children, ...rest }) {
   return (
-    <Button type="submit" disabled={isLoading}>
-      {isLoading ? <Spinner size="1rem" stroke="primary" /> : children}
+    <Button type="submit" disabled={isLoading} className={className} {...rest}>
+      {isLoading ? <Spinner size="1rem" stroke="submitButtonText" /> : children}
     </Button>
   );
 }

@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro';
 import breakpoints from 'shared/breakpoints';
+import styleConstants from 'shared/styleConstants';
 
 const StyledForm = styled.form`
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
@@ -8,8 +9,8 @@ const StyledForm = styled.form`
   padding: 2rem;
   border-radius: var(--border-radius);
   display: grid;
-  gap: 1rem;
-  background: ${({ theme }) => theme.primary};
+  gap: ${styleConstants.gapXL};
+  background: ${({ theme }) => theme.background300};
   @media ${breakpoints.medium} {
     flex: 1;
   }

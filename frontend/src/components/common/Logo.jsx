@@ -1,41 +1,36 @@
-import styled from 'styled-components';
-import { BsFillChatFill } from 'react-icons/bs';
+import { useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
+import { FiMessageCircle } from 'react-icons/fi';
 import breakpoints from 'shared/breakpoints';
+import styleConstants from 'shared/styleConstants';
 
 const StyledLogo = styled.h1`
   display: ${({ hideOnMobile }) => (hideOnMobile ? 'none' : 'flex')};
-  padding: var(--padding);
-  line-height: 1;
+  color: inherit;
   align-items: center;
-  gap: 0.5rem;
+  gap: ${styleConstants.gapM};
   font-size: 1.5rem;
   text-decoration: none;
   font-weight: 700;
+  padding: ${({ applyPadding }) => applyPadding && styleConstants.paddingL};
   @media ${breakpoints.medium} {
     display: ${({ hideOnTablet }) => (hideOnTablet ? 'none' : 'flex')};
   }
 `;
 
-const LogoText = styled.span`
-  color: ${({ color, theme }) => theme[color]};
-`;
+function Logo({ colorIcon, applyPadding, hideOnMobile, hideOnTablet }) {
+  const theme = useContext(ThemeContext);
+  const iconFillColor = colorIcon ? theme.primary : theme.topbarText;
 
-const LogoIcon = styled(BsFillChatFill)`
-  color: ${({ color, theme }) => theme[color]};
-`;
-
-function Logo({ textColor, iconColor, hideOnMobile, hideOnTablet }) {
   return (
-    <StyledLogo hideOnMobile={hideOnMobile} hideOnTablet={hideOnTablet}>
-      <LogoText color={textColor}>Chat App</LogoText>
-      <LogoIcon color={iconColor} />
+    <StyledLogo applyPadding={applyPadding} hideOnMobile={hideOnMobile} hideOnTablet={hideOnTablet}>
+      <span>Chat App</span>
+      <FiMessageCircle stroke={iconFillColor} aria-hidden="true" />
     </StyledLogo>
   );
 }
 
 Logo.defaultProps = {
-  textColor: 'primary',
-  iconColor: 'primary',
   hideOnMobile: false,
   hideOnTablet: false,
 };

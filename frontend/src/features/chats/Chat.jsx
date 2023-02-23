@@ -2,6 +2,7 @@ import styled from 'styled-components/macro';
 import { useEffect, useState } from 'react';
 import { format } from 'timeago.js';
 import { useSelector } from 'react-redux';
+import styleConstants from 'shared/styleConstants';
 
 import UserAvatarWithStatus from 'components/common/UserAvatarWithConnectionStatus';
 import { selectUser } from 'features/auth/authSlice';
@@ -9,20 +10,27 @@ import { selectCurrentChat } from './chatsSlice';
 
 const Button = styled.button`
   display: flex;
+  font-family: var(--font-family);
   min-width: 100%;
   align-items: center;
   background: inherit;
   border: none;
-  gap: 1rem;
-  padding: 1rem var(--padding);
-  transition: all 0.1s ease-in-out;
-  color: ${({ theme }) => theme.inverted};
+  gap: ${styleConstants.gapXL};
+  padding: ${styleConstants.paddingL};
+  transition: border-left 0.1s ease-in-out;
+  color: ${({ theme }) => theme.text};
+  opacity: ${styleConstants.dimOpacity};
   cursor: pointer;
+  &:hover {
+    opacity: 1;
+    background: ${({ theme }) => theme.itemHoverBackground};
+  }
 
   ${({ currentChat, chat, theme }) =>
     currentChat?._id === chat?._id && {
-      background: theme.secondary,
-      borderLeft: `6px solid ${theme.accent}`,
+      opacity: 1,
+      background: theme.itemHoverBackground,
+      borderLeft: `6px solid ${theme.primary}`,
     }};
 `;
 
@@ -30,12 +38,11 @@ const Details = styled.section`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
 `;
 
 const Meta = styled.section`
   display: flex;
-  gap: 0.5rem;
+  gap: ${styleConstants.gapM};
   justify-content: space-between;
 `;
 

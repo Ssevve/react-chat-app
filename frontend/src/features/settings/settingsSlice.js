@@ -12,12 +12,15 @@ export const settings = createSlice({
     setTheme(state, action) {
       state.theme = action.payload;
     },
-    setShowSettings(state, action) {
-      state.showSettings = action.payload;
+    toggleSettings(state) {
+      state.showSettings = !state.showSettings;
+    },
+    closeSettings(state) {
+      state.showSettings = false;
     },
   },
 });
 
-export const { setTheme, setShowSettings } = settings.actions;
+export const { setTheme, toggleSettings, closeSettings } = settings.actions;
 
 export default settings.reducer;

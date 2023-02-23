@@ -1,19 +1,10 @@
-import React from 'react';
+import styleConstants from 'shared/styleConstants';
 import styled from 'styled-components/macro';
 
-const StyledLabel = styled.label`
+const Label = styled.label`
   display: grid;
-  gap: 0.2rem;
+  gap: ${styleConstants.gapS};
   font-size: 0.875rem;
 `;
-
-function Label({ label, children }) {
-  return (
-    <StyledLabel>
-      {label}
-      {children}
-    </StyledLabel>
-  );
-}
 
 export default Label;

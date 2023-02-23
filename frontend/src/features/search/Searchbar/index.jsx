@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { FiSearch } from 'react-icons/fi';
-import { MdClear } from 'react-icons/md';
+import { FiX } from 'react-icons/fi';
 import { selectUser } from 'features/auth/authSlice';
 import client from 'utils/api';
 
@@ -38,19 +37,18 @@ function Searchbar({ setIsLoading, query, setQuery, setResults }) {
 
   return (
     <Wrapper>
-      <SearchIcon>
-        <FiSearch size="1.35rem" />
-      </SearchIcon>
       <StyledInput
         aria-label="Search for friends by username"
         placeholder="Search friends"
         value={query}
         onChange={handleQueryChange}
       />
-      {query && (
-        <ClearButton onClick={clearInput}>
-          <MdClear size="1rem" aria-label="Clear input"></MdClear>
+      {query ? (
+        <ClearButton aria-label="Clear input" onClick={clearInput}>
+          <FiX size="1.25rem" aria-hidden="true" />
         </ClearButton>
+      ) : (
+        <SearchIcon aria-hidden="true" size="1.25rem" />
       )}
     </Wrapper>
   );

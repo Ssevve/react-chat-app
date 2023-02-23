@@ -6,6 +6,7 @@ import styled from 'styled-components/macro';
 import loginSchema from './schemas/loginSchema';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from './authSlice';
+import styleConstants from 'shared/styleConstants';
 
 import SubmitButton from 'components/common/SubmitButton';
 import AlertBox from './form/AlertBox';
@@ -23,12 +24,17 @@ const NeedAccount = styled.p`
 `;
 
 const StyledLink = styled(Link)`
-  color: ${({ theme }) => theme.accent};
+  color: ${({ theme }) => theme.primary};
   margin-left: 0.5rem;
   text-decoration: none;
   &:hover {
     text-decoration: underline;
   }
+`;
+
+const StyledSubmitButton = styled(SubmitButton)`
+  padding: ${styleConstants.paddingM};
+  min-height: 2.625rem; // 42px
 `;
 
 function LoginForm() {
@@ -77,18 +83,20 @@ function LoginForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormTitle title="Log in" />
+      <FormTitle>Log in</FormTitle>
       {showAlertBox ? <AlertBox variant={alertBoxType}>{alertMessage}</AlertBox> : null}
       <DemoUserInfo />
-      <Label label="Username">
+      <Label>
+        Username
         <Input error={invalidCredentials} name="username" register={register} />
         {invalidCredentials && <ErrorMessage message="Invalid username or password" />}
       </Label>
-      <Label label="Password">
+      <Label>
+        Password
         <Input error={invalidCredentials} name="password" register={register} type="password" />
         {invalidCredentials && <ErrorMessage message="Invalid username or password" />}
       </Label>
-      <SubmitButton isLoading={isLoading}>Log in</SubmitButton>
+      <StyledSubmitButton isLoading={isLoading}>Log in</StyledSubmitButton>
       <Divider />
       <NeedAccount>
         Need an account?

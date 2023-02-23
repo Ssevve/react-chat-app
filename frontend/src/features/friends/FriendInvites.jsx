@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { FiXCircle, FiCheckCircle } from 'react-icons/fi';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
@@ -9,8 +10,17 @@ import {
 
 import DropdownList from 'components/common/DropdownList';
 import User from 'components/common/User';
+import Button from 'components/common/Button';
 
-import { Wrapper, ButtonsWrapper, AcceptButton, DeclineButton } from './styles';
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Buttons = styled.div`
+  display: flex;
+`;
 
 function FriendInvites() {
   const dispatch = useDispatch();
@@ -31,7 +41,7 @@ function FriendInvites() {
 
   return (
     <>
-      <DropdownList title="Friend invites">
+      <DropdownList dim title="Friend invites">
         {friendInvites?.length
           ? friendInvites.map((invite) => (
               <Wrapper key={invite._id}>
@@ -39,20 +49,20 @@ function FriendInvites() {
                   events={false}
                   user={invite.receiver._id === loggedInUser._id ? invite.sender : invite.receiver}
                 />
-                <ButtonsWrapper>
+                <Buttons>
                   {invite.sender._id !== loggedInUser._id && (
-                    <AcceptButton
-                      type="button"
+                    <Button
+                      variant="success"
                       disabled={isLoading}
                       onClick={() => acceptInvite(invite)}
                     >
-                      <FiCheckCircle size="1.75rem" />
-                    </AcceptButton>
+                      <FiCheckCircle size="1.5rem" />
+                    </Button>
                   )}
-                  <DeclineButton type="button" onClick={() => cancelInvite(invite)}>
-                    <FiXCircle size="1.75rem" />
-                  </DeclineButton>
-                </ButtonsWrapper>
+                  <Button variant="danger" onClick={() => cancelInvite(invite)}>
+                    <FiXCircle size="1.5rem" />
+                  </Button>
+                </Buttons>
               </Wrapper>
             ))
           : null}
