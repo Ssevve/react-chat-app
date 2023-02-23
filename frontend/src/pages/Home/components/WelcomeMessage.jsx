@@ -6,10 +6,11 @@ export const WelcomeWrapper = styled.section`
   text-align: center;
   display: grid;
   row-gap: 2rem;
-  width: 50%;
+  width: 75%;
   margin: 0 auto;
   align-content: center;
   height: 100%;
+  max-width: 600px;
 `;
 export const WelcomeTitle = styled.h2`
   font-size: 2rem;
@@ -21,7 +22,7 @@ export const WelcomeCopy = styled.p`
 function WelcomeMessage() {
   return (
     <WelcomeWrapper>
-      <WelcomeTitle>Welcome to Chat App!</WelcomeTitle>
+      <WelcomeTitle>Welcome!</WelcomeTitle>
       <WelcomeCopy>
         Select an existing chat from the left panel or add a friend to start a new one.
       </WelcomeCopy>

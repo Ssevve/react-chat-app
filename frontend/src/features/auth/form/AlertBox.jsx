@@ -19,7 +19,7 @@ const variants = {
   },
 };
 
-const Div = styled.div`
+const Wrapper = styled.div`
   color: ${({ variant, theme }) => theme[variants[variant].color]};
   border: 1px solid currentColor;
   border-radius: var(--border-radius);
@@ -46,13 +46,13 @@ const Alert = styled.span`
 
 function AlertBox({ variant, children }) {
   return (
-    <Div variant={variant}>
+    <Wrapper variant={variant}>
       <Header>
         {variants[variant].icon}
         <Title>{variants[variant].title}</Title>
       </Header>
       <Alert type={variant}>{children}</Alert>
-    </Div>
+    </Wrapper>
   );
 }
 

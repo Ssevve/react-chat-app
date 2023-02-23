@@ -43,11 +43,11 @@ const Main = styled.main`
   @media ${breakpoints.large} {
     right: 0;
     transition: right 0.1s ease-in-out, max-width 0.1s ease-in-out;
+    ${({ expandRightPanel }) =>
+      expandRightPanel && {
+        maxWidth: 'calc(100vw - 37.5rem)',
+      }};
   }
-  ${({ expandRightPanel }) =>
-    expandRightPanel && {
-      maxWidth: 'calc(100vw - 37.5rem)',
-    }};
 
   @media ${breakpoints.xl} {
     max-width: calc(100vw - 37.5rem);

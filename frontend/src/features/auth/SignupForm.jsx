@@ -67,7 +67,7 @@ function SignupForm() {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormTitle title="Sign up" />
       {fetchError ? (
-        <AlertBox type="error">Something went wrong. Please try again.</AlertBox>
+        <AlertBox variant="error">Something went wrong. Please try again.</AlertBox>
       ) : null}
       <Label label="Username">
         <Input error={errors.username} name="username" register={register} />

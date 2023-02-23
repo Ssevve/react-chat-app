@@ -2,6 +2,7 @@ import styled from 'styled-components/macro';
 
 const StyledInput = styled.input`
   border-radius: var(--border-radius);
+  background: ${({ theme }) => theme.primary};
   font-size: 1rem;
   padding: 0.75rem;
   color: ${({ theme }) => theme.inverted};

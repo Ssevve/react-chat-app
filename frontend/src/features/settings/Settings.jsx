@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   top: 0;
   left: 0;
   row-gap: 2rem;
-  padding: 0.5rem;
+  padding: var(--padding);
   flex: 1;
   z-index: 1;
   background: ${({ theme }) => theme.primary};
@@ -20,6 +20,7 @@ const Wrapper = styled.div`
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Title = styled.h2`
@@ -29,6 +30,7 @@ const Title = styled.h2`
 const BackButton = styled.button`
   background: none;
   border: none;
+  display: flex;
   color: ${({ theme }) => theme.inverted};
   cursor: pointer;
 `;
