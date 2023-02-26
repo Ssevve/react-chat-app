@@ -16,7 +16,7 @@ function Message({ message }) {
       <StyledDiv own={ownMessage}>
         {ownMessage ? <UserAvatar user={sender} /> : <UserAvatarWithStatus user={sender} />}
         <div>
-          <Meta>
+          <Meta own={ownMessage}>
             <Username>{ownMessage ? 'You' : sender.username}</Username>
             <Time>{format(message.createdAt)}</Time>
           </Meta>

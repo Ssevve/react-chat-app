@@ -9,17 +9,19 @@ export const StyledDiv = styled.div`
   gap: ${styleConstants.gapM};
   color: ${({ theme }) => theme.text};
   width: 75%;
+  max-width: 300px; // TODO: temp fix: messages overflow, try to make it better
   background: inherit;
 
   @media ${breakpoints.xl} {
     width: 50%;
+    max-width: 500px;
   }
 `;
 
 export const Meta = styled.div`
   display: flex;
-  gap: ${styleConstants.gapS};
-  justify-content: space-between;
+  gap: ${styleConstants.gapM};
+  justify-content: ${({ own }) => (own ? 'flex-end' : 'flex-start')};
   align-items: center;
 `;
 
@@ -33,11 +35,15 @@ export const Time = styled.span`
 `;
 
 export const Content = styled.p`
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
   border-radius: var(--border-radius);
   background: ${({ own, theme }) => (own ? theme.primary : theme.background500)};
   color: ${({ own, theme }) => (own ? theme.ownMessageText : theme.text)};
-  padding: ${styleConstants.paddingS};
+  padding: ${styleConstants.paddingM};
   word-wrap: break-word;
-  max-width: 500px; // TODO: temp fix: messages overflow, try to make it better
+  max-width: 300px; // TODO: temp fix: messages overflow, try to make it better
+
+  @media ${breakpoints.xl} {
+    max-width: 500px;
+  }
 `;

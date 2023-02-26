@@ -8,7 +8,7 @@ const styleConstants = {
   paddingM: '0.75rem',
   paddingS: '0.5rem',
 
-  gapXXL: '2rem',
+  gapXXL: '3rem',
   gapXL: '1rem',
   gapL: '0.75rem',
   gapM: '0.5rem',
