@@ -34,7 +34,7 @@ const Buttons = styled.section`
   display: flex;
 `;
 
-function LeftPanel({ expanded }) {
+function LeftPanel({ expanded, setExpandLeftPanel, setExpandRightPanel }) {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.chats.loading);
   const loggedInUser = useSelector(selectUser);
@@ -53,7 +53,11 @@ function LeftPanel({ expanded }) {
     }
   };
 
-  const handleShowSettings = () => dispatch(toggleSettings());
+  const handleShowSettings = () => {
+    setExpandLeftPanel(false);
+    setExpandRightPanel(false);
+    dispatch(toggleSettings());
+  };
 
   return (
     <StyledSidePanel anchor="left" expanded={expanded}>

@@ -89,7 +89,12 @@ function Home() {
     <Wrapper>
       <Topbar setExpandLeftPanel={setExpandLeftPanel} setExpandRightPanel={setExpandRightPanel} />
       <Main expandRightPanel={expandRightPanel}>
-        <LeftPanel anchor="left" expanded={expandLeftPanel} />
+        <LeftPanel
+          setExpandLeftPanel={setExpandLeftPanel}
+          setExpandRightPanel={setExpandRightPanel}
+          anchor="left"
+          expanded={expandLeftPanel}
+        />
         {currentChat ? (
           <MessagesBox sidePanelExpanded={sidePanelExpanded} expandRightPanel={expandRightPanel} />
         ) : (
