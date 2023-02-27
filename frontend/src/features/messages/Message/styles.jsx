@@ -41,6 +41,7 @@ export const Content = styled.p`
   color: ${({ own, theme }) => (own ? theme.ownMessageText : theme.text)};
   padding: ${styleConstants.paddingM};
   word-wrap: break-word;
+  line-height: 1.5;
   max-width: 300px; // TODO: temp fix: messages overflow, try to make it better
 
   @media ${breakpoints.xl} {
