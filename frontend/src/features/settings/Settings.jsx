@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiArrowLeftCircle } from 'react-icons/fi';
 import { setTheme } from 'features/settings/settingsSlice';
-import { toggleSettings } from './settingsSlice';
+import { closeSettings } from './settingsSlice';
 import styleConstants from 'shared/styleConstants';
 
 const Wrapper = styled.div`
@@ -66,7 +66,7 @@ function Settings() {
   const theme = useSelector((state) => state.settings.theme);
 
   const handleThemeChange = (e) => dispatch(setTheme(e.target.value));
-  const handleBackButtonClick = () => dispatch(toggleSettings());
+  const handleBackButtonClick = () => dispatch(closeSettings());
   return (
     <Wrapper>
       <Header>
