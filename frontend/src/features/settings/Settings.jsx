@@ -32,7 +32,7 @@ const BackButton = styled.button`
   background: none;
   border: none;
   display: flex;
-  color: ${({ theme }) => theme.inverted};
+  color: ${({ theme }) => theme.text};
   cursor: pointer;
 `;
 

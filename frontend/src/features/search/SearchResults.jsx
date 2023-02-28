@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { FiPlusCircle } from 'react-icons/fi';
-import { createFriendInvite } from 'features/friends/friendsSlice';
+import { createFriendInvite } from 'features/friendInvites/friendInvitesSlice';
 
 import Spinner from 'components/common/Spinner';
 import User from 'components/common/User';
@@ -32,9 +32,7 @@ const NoUsers = styled.p`
 function SearchResults({ isLoading, results }) {
   const dispatch = useDispatch();
 
-  const handleClick = async (resultId) => {
-    dispatch(createFriendInvite(resultId));
-  };
+  const handleClick = (resultId) => dispatch(createFriendInvite(resultId)); // TODO: pickup from here, invite is not being added to the invites list on the inviting user's side
 
   if (isLoading) return <Spinner text="Searching" />;
   if (!results) return null;

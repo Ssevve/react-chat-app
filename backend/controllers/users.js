@@ -1,5 +1,4 @@
 const User = require('../models/User');
-const FriendInvite = require('../models/FriendInvite');
 
 const getUserById = async (req, res) => {
   try {
@@ -51,8 +50,6 @@ const addFriend = async (req, res) => {
     );
     newFriend.friends.push(req.user._id);
     await newFriend.save();
-
-    await FriendInvite.findOneAndDelete({ _id: req.body.inviteId });
 
     io.to(connectedUsers[senderId]).emit('addFriend', acceptingUser);
     res.status(200).json(newFriend);
