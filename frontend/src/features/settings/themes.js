@@ -8,7 +8,6 @@ const themes = {
 
     secondary: 'hsl(214, 7%, 19%)',
     tertiary: 'hsl(225, 6%, 25%)',
-    inverted: 'hsl(144, 16%, 94%)',
 
     text: 'hsl(144, 16%, 94%)',
     topbarText: 'hsl(144, 16%, 94%)',

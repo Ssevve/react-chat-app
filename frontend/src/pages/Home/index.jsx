@@ -6,7 +6,8 @@ import { addMessage, fetchMessages } from 'features/messages/messagesSlice';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
-import { addFriend, addFriendInvite, removeFriendInvite } from 'features/friends/friendsSlice';
+import { addFriend } from 'features/friends/friendsSlice';
+import { addFriendInvite, removeFriendInvite } from 'features/friendInvites/friendInvitesSlice';
 import {
   subscribeToMessageEvents,
   subscribeToUserEvents,
@@ -31,7 +32,7 @@ const Main = styled.main`
   position: fixed;
   top: ${styleConstants.pageHeaderHeight};
   background: ${({ theme }) => theme.background300};
-  color: ${({ theme }) => theme.inverted};
+  color: ${({ theme }) => theme.text};
   width: 100vw;
   height: 100%;
   @media ${breakpoints.medium} {

@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 import styleConstants from 'shared/styleConstants';
 
 export const WelcomeWrapper = styled.section`
-  color: ${({ theme }) => theme.inverted};
+  color: ${({ theme }) => theme.text};
   padding: ${styleConstants.paddingS};
   text-align: center;
   display: grid;

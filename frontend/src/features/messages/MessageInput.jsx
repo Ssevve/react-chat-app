@@ -29,10 +29,10 @@ const Input = styled.input`
   border: none;
   flex: 1;
   font-size: 1rem;
-  color: ${({ theme }) => theme.inverted};
+  color: ${({ theme }) => theme.text};
   font-family: var(--font-family);
   &::placeholder {
-    color: ${({ theme }) => theme.inverted};
+    color: ${({ theme }) => theme.text};
     opacity: ${styleConstants.placeholderOpacity};
   }
   &:focus {

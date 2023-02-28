@@ -6,7 +6,7 @@ const StyledInput = styled.input`
   background: ${({ theme }) => theme.background500};
   font-size: 1rem;
   padding: ${styleConstants.paddingM};
-  color: ${({ theme }) => theme.inverted};
+  color: ${({ theme }) => theme.text};
   min-width: 100%;
   width: 0;
   border: none;

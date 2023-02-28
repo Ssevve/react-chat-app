@@ -23,6 +23,7 @@ const Username = styled.span`
 
 const StatusText = styled.span`
   font-size: 0.8rem;
+  color: ${({ theme }) => theme.text};
   opacity: ${styleConstants.dimOpacity};
 `;
 

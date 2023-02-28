@@ -2,15 +2,16 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
-import { fetchFriendInvites, fetchFriends } from 'features/friends/friendsSlice';
+import { fetchFriends } from 'features/friends/friendsSlice';
+import { fetchFriendInvites } from 'features/friendInvites/friendInvitesSlice';
 
 import SidePanel from 'components/SidePanel';
 import FriendsList from 'features/friends/FriendsList';
 import SearchResults from 'features/search/SearchResults';
 import Searchbar from 'features/search/Searchbar';
-import FriendInvites from 'features/friends/FriendInvites';
+import FriendInvites from 'features/friendInvites/FriendInvites';
 import { selectFriends } from 'features/friends/friendsSlice';
-import { selectFriendInvites } from 'features/friends/friendsSlice';
+import { selectFriendInvites } from 'features/friendInvites/friendInvitesSlice';
 import Spinner from 'components/common/Spinner';
 import styleConstants from 'shared/styleConstants';
 
@@ -21,7 +22,7 @@ const Title = styled.h2`
   display: flex;
   justify-content: ${({ isLoading }) => (isLoading ? 'flex-end' : 'flex-start')};
   gap: ${styleConstants.gapXL};
-  color: ${({ theme }) => theme.inverted};
+  color: ${({ theme }) => theme.text};
 `;
 
 const Section = styled.section`
