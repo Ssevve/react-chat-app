@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   padding: ${styleConstants.paddingS};
   flex: 1;
   z-index: 1;
-  background: ${({ theme }) => theme.background400};
+  background: ${({ theme }) => theme.background300};
 `;
 
 const Header = styled.header`

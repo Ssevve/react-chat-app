@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components/macro';
 import { io } from 'socket.io-client';
 import { updateChat, selectCurrentChat } from 'features/chats/chatsSlice';
-import { addMessage } from 'features/messages/messagesSlice';
+import { addMessage, fetchMessages } from 'features/messages/messagesSlice';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
@@ -30,7 +30,7 @@ const Main = styled.main`
   display: flex;
   position: fixed;
   top: ${styleConstants.pageHeaderHeight};
-  background: ${({ theme }) => theme.background400};
+  background: ${({ theme }) => theme.background300};
   color: ${({ theme }) => theme.inverted};
   width: 100vw;
   height: 100%;
@@ -66,6 +66,7 @@ function Home() {
   const socket = useRef(null);
 
   useEffect(() => {
+    dispatch(fetchMessages(loggedInUser._id));
     socket.current = io(process.env.REACT_APP_SOCKET_URL, { auth: { userId: loggedInUser._id } });
     subscribeToMessageEvents({ socket: socket.current, dispatch, addMessage, updateChat });
     subscribeToUserEvents({ socket: socket.current, setConnectedUsers });

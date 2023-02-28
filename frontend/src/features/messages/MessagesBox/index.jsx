@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectCurrentChat } from 'features/chats/chatsSlice';
-import { fetchMessages, selectMessagesByChatId } from 'features/messages/messagesSlice';
+import { selectMessagesByChatId } from 'features/messages/messagesSlice';
 import { selectUser } from 'features/auth/authSlice';
 
 import Message from 'features/messages/Message';
@@ -12,7 +12,6 @@ import Spinner from 'components/common/Spinner';
 import { Section, CurrentChatInfo, Messages } from './styles';
 
 function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
-  const dispatch = useDispatch();
   const currentChat = useSelector(selectCurrentChat);
   const loggedInUser = useSelector(selectUser);
   const [chatPartner, setChatPartner] = useState(null);
@@ -29,9 +28,7 @@ function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
 
   const scrollRef = useRef(null);
 
-  useEffect(() => {
-    dispatch(fetchMessages(loggedInUser._id));
-  }, []);
+  useEffect(() => {}, []);
 
   useEffect(() => {
     if (!scrollRef.current) return;
