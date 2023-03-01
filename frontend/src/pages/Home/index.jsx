@@ -6,7 +6,7 @@ import { addMessage, fetchMessages } from 'features/messages/messagesSlice';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
-import { addFriend } from 'features/friends/friendsSlice';
+import { addFriend, removeFriend } from 'features/friends/friendsSlice';
 import { addFriendInvite, removeFriendInvite } from 'features/friendInvites/friendInvitesSlice';
 import {
   subscribeToMessageEvents,
@@ -75,6 +75,7 @@ function Home() {
       socket: socket.current,
       dispatch,
       addFriend,
+      removeFriend,
       addFriendInvite,
       removeFriendInvite,
     });

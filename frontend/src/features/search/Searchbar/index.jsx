@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { FiX } from 'react-icons/fi';
 import useDebounce from '../hooks/useDebounce';
 import { clearSearchResults, searchFriends } from 'features/search/searchSlice';

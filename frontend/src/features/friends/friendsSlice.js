@@ -7,8 +7,8 @@ export const addFriendById = createAsyncThunk('friends/addFriendById', async (fr
 });
 
 export const removeFriendById = createAsyncThunk('friends/removeFriendById', async (friendId) => {
-  await client.delete(`/users/deleteFriend/${friendId}`);
-  return friendId;
+  const res = await client.delete(`/users/deleteFriend/${friendId}`);
+  return res.data;
 });
 
 export const fetchFriends = createAsyncThunk('friends/fetchFriends', async (userId) => {
@@ -52,7 +52,7 @@ export const friendsSlice = createSlice({
     builder.addCase(addFriendById.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-      friendsAdapter.addOne(state, action.payload);
+      friendsAdapter.addOne(state, action);
     });
     builder.addCase(addFriendById.rejected, (state, action) => {
       state.loading = false;
@@ -65,8 +65,7 @@ export const friendsSlice = createSlice({
     builder.addCase(removeFriendById.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-      console.log(action.payload);
-      state.friends = state.friends.filter((friend) => friend._id !== action.payload);
+      friendsAdapter.removeOne(state, action);
     });
     builder.addCase(removeFriendById.rejected, (state, action) => {
       state.loading = false;

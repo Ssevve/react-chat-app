@@ -13,8 +13,6 @@ function FriendsList() {
     ? friends.filter((friend) => !(friend._id in connectedUsers))
     : [];
 
-  console.log(friends);
-
   return (
     <>
       <DropdownList title="Online">

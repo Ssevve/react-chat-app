@@ -59,6 +59,34 @@ const addFriend = async (req, res) => {
   }
 };
 
+const deleteFriend = async (req, res) => {
+  const io = req.app.get('socketio');
+  const connectedUsers = req.app.get('connectedUsers');
+  const { friendId } = req.params;
+  try {
+    const user = await User.findById(req.user._id);
+    console.log(user);
+    if (user) {
+      const newFriends = user.friends.filter((friend) => friend !== friendId);
+      user.friends = newFriends;
+      await user.save();
+    }
+
+    const removedFriend = await User.findById(friendId);
+    if (removedFriend) {
+      const filteredFriends = removedFriend.friends.filter((friend) => friend !== req.user._id);
+      removedFriend.friends = filteredFriends;
+      await removedFriend.save();
+    }
+
+    io.to(connectedUsers[friendId]).emit('removeFriend', req.user._id);
+    res.status(200).json(friendId);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+};
+
 const getUsersByQuery = async (req, res) => {
   const { query } = req.params;
   const reg = `^${query}`;
@@ -72,4 +100,4 @@ const getUsersByQuery = async (req, res) => {
   }
 };
 
-module.exports = { getFriendsByUserId, getUserById, getUsersByQuery, addFriend };
+module.exports = { getFriendsByUserId, getUserById, getUsersByQuery, addFriend, deleteFriend };

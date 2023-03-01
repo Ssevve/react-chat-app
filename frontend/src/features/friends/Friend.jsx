@@ -1,18 +1,24 @@
 import styled from 'styled-components/macro';
 import { useDispatch, useSelector } from 'react-redux';
-import { FiMessageCircle } from 'react-icons/fi';
+import { FiMessageCircle, FiUserMinus } from 'react-icons/fi';
 import { selectUser } from 'features/auth/authSlice';
 import { closeSettings } from 'features/settings/settingsSlice';
 import { selectAllChats, setCurrentChat } from 'features/chats/chatsSlice';
+import { removeFriendById } from './friendsSlice';
 
 import User from 'components/common/User';
 import Button from 'components/common/Button';
 
-export const Wrapper = styled.section`
+const Wrapper = styled.section`
   display: flex;
   justify-content: space-between;
   position: relative;
   background: inherit;
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 function Friend({ friend }) {
@@ -20,13 +26,13 @@ function Friend({ friend }) {
   const loggedInUser = useSelector(selectUser);
   const chats = useSelector(selectAllChats);
 
-  const handleChatChange = (friend) => {
+  const handleChatChange = (friendId) => {
     let selectedChat;
 
     if (chats.length) {
       const chatsMembers = chats.map((chat) => chat.members);
       const chatIndex = chatsMembers.findIndex(
-        (members) => members[0]._id === friend._id || members[1]._id === friend._id,
+        (members) => members[0]._id === friendId || members[1]._id === friendId,
       );
       selectedChat = chats[chatIndex];
     }
@@ -36,12 +42,26 @@ function Friend({ friend }) {
     dispatch(closeSettings());
     dispatch(setCurrentChat(selectedChat));
   };
+
   return (
     <Wrapper>
       <User user={friend} />
-      <Button variant="primary" onClick={() => handleChatChange(friend)}>
-        <FiMessageCircle size="1.5rem" />
-      </Button>
+      <Buttons>
+        <Button
+          aria-label={`Message ${friend.username}`}
+          variant="primary"
+          onClick={() => handleChatChange(friend._id)}
+        >
+          <FiMessageCircle aria-hidden="true" size="1.5rem" />
+        </Button>
+        <Button
+          aria-label={`Remove ${friend.username}`}
+          variant="danger"
+          onClick={() => dispatch(removeFriendById(friend._id))}
+        >
+          <FiUserMinus aria-hidden="true" size="1.5rem" />
+        </Button>
+      </Buttons>
     </Wrapper>
   );
 }

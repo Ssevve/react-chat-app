@@ -15,6 +15,7 @@ const subscribeToFriendEvents = ({
   socket,
   dispatch,
   addFriend,
+  removeFriend,
   addFriendInvite,
   removeFriendInvite,
 }) => {
@@ -29,6 +30,8 @@ const subscribeToFriendEvents = ({
   socket.on('addFriend', (acceptingUser) => {
     dispatch(addFriend(acceptingUser));
   });
+
+  socket.on('removeFriend', (friendId) => dispatch(removeFriend(friendId)));
 };
 
 export { subscribeToMessageEvents, subscribeToUserEvents, subscribeToFriendEvents };
