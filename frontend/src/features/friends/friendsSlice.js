@@ -24,6 +24,8 @@ export const friendsSlice = createSlice({
   name: 'friends',
   initialState: friendsAdapter.getInitialState({
     loading: false,
+    removingFriend: false,
+    addingFriend: false,
     error: null,
   }),
   reducers: {
@@ -33,42 +35,60 @@ export const friendsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchFriends.pending, (state) => {
       state.loading = true;
+      state.removingFriend = false;
+      state.addingFriend = false;
       state.error = null;
     });
     builder.addCase(fetchFriends.fulfilled, (state, action) => {
       state.loading = false;
+      state.removingFriend = false;
+      state.addingFriend = false;
       state.error = null;
       friendsAdapter.addMany(state, action.payload);
     });
     builder.addCase(fetchFriends.rejected, (state, action) => {
       state.loading = false;
+      state.removingFriend = false;
+      state.addingFriend = false;
       state.error = action.error.message;
       state.friends = [];
     });
     builder.addCase(addFriendById.pending, (state) => {
-      state.loading = true;
+      state.loading = false;
+      state.removingFriend = false;
+      state.addingFriend = true;
       state.error = null;
     });
     builder.addCase(addFriendById.fulfilled, (state, action) => {
       state.loading = false;
+      state.removingFriend = false;
+      state.addingFriend = false;
       state.error = null;
       friendsAdapter.addOne(state, action);
     });
     builder.addCase(addFriendById.rejected, (state, action) => {
       state.loading = false;
+      state.removingFriend = false;
+      state.addingFriend = false;
       state.error = action.error.message;
     });
     builder.addCase(removeFriendById.pending, (state) => {
-      state.loading = true;
+      state.loading = false;
+      state.removingFriend = true;
+      state.addingFriend = false;
       state.error = null;
     });
     builder.addCase(removeFriendById.fulfilled, (state, action) => {
       state.loading = false;
+      state.removingFriend = false;
+      state.addingFriend = false;
       state.error = null;
       friendsAdapter.removeOne(state, action);
     });
     builder.addCase(removeFriendById.rejected, (state, action) => {
       state.loading = false;
+      state.removingFriend = false;
+      state.addingFriend = false;
       state.error = action.error.message;
     });
   },

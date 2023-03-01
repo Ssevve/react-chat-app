@@ -41,10 +41,18 @@ export const searchSlice = createSlice({
 export const selectSearchResults = (state) => state.search.results;
 
 const selectFriendIds = (state) => state.friends.ids;
+const selectFriendInvites = (state) => state.friendInvites.friendInvites;
+const loggedInUserId = (state) => state.auth.user._id;
 export const selectFilteredSearchResults = createSelector(
-  [selectSearchResults, selectFriendIds],
-  (results, friendIds) => {
-    return results.filter((result) => !friendIds.includes(result._id));
+  [selectSearchResults, selectFriendIds, selectFriendInvites],
+  (results, friendIds, friendInvites) => {
+    const userIdsFromInvites = friendInvites.map((invite) =>
+      invite.sender === loggedInUserId ? invite.receiver : invite.sender,
+    );
+
+    return results.filter(
+      (result) => !friendIds.includes(result._id) && !userIdsFromInvites.includes(result._id),
+    );
   },
 );
 

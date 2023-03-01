@@ -25,6 +25,7 @@ function Friend({ friend }) {
   const dispatch = useDispatch();
   const loggedInUser = useSelector(selectUser);
   const chats = useSelector(selectAllChats);
+  const removingFriend = useSelector((state) => state.friends.removingFriend);
 
   const handleChatChange = (friendId) => {
     let selectedChat;
@@ -51,6 +52,7 @@ function Friend({ friend }) {
           aria-label={`Message ${friend.username}`}
           variant="primary"
           onClick={() => handleChatChange(friend._id)}
+          disabled={removingFriend}
         >
           <FiMessageCircle aria-hidden="true" size="1.5rem" />
         </Button>
@@ -58,6 +60,7 @@ function Friend({ friend }) {
           aria-label={`Remove ${friend.username}`}
           variant="danger"
           onClick={() => dispatch(removeFriendById(friend._id))}
+          disabled={removingFriend}
         >
           <FiUserMinus aria-hidden="true" size="1.5rem" />
         </Button>
