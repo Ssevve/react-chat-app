@@ -1,15 +1,6 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 import client from 'utils/api';
 
-const friendsAdapter = createEntityAdapter({
-  selectId: (friend) => friend._id,
-});
-
-const initialState = friendsAdapter.getInitialState({
-  loading: false,
-  error: null,
-});
-
 export const addFriendById = createAsyncThunk('friends/addFriendById', async (friendId) => {
   const res = await client.put(`/users/addFriend/${friendId}`);
   return res.data;
@@ -20,19 +11,18 @@ export const fetchFriends = createAsyncThunk('friends/fetchFriends', async (user
   return res.data;
 });
 
+const friendsAdapter = createEntityAdapter({
+  selectId: (friend) => friend._id,
+});
+
 export const friendsSlice = createSlice({
   name: 'friends',
-  initialState,
+  initialState: friendsAdapter.getInitialState({
+    loading: false,
+    error: null,
+  }),
   reducers: {
-    addFriend(state, action) {
-      state.friends.push(action.payload);
-    },
-    addFriendInvite(state, action) {
-      state.friendInvites.push(action.payload);
-    },
-    removeFriendInvite(state, action) {
-      state.friendInvites = state.friendInvites.filter((invite) => invite._id !== action.payload);
-    },
+    friendAdded: friendsAdapter.addOne,
   },
   extraReducers: (builder) => {
     builder.addCase(fetchFriends.pending, (state) => {
@@ -42,7 +32,8 @@ export const friendsSlice = createSlice({
     builder.addCase(fetchFriends.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-      state.friends = action.payload;
+      console.log(action);
+      friendsAdapter.addMany(state, action.payload);
     });
     builder.addCase(fetchFriends.rejected, (state, action) => {
       state.loading = false;
@@ -68,7 +59,8 @@ export const friendsSlice = createSlice({
   },
 });
 
-export const selectFriends = (state) => state.friends.friends;
+export const selectFriendIds = (state) => state.friends.ids;
+export const selectFriends = (state) => state.friends.entities;
 
 export const { addFriend } = friendsSlice.actions;
 
