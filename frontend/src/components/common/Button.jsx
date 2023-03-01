@@ -7,7 +7,7 @@ const StyledButton = styled.button`
   border: none;
   border-radius: var(--border-radius);
   background: inherit;
-  opacity: ${styleConstants.dimOpacity};
+  opacity: ${({ dim }) => dim && styleConstants.dimOpacity};
   color: ${({ theme }) => theme.text};
   font-size: 0.875rem;
   font-weight: 700;
@@ -25,9 +25,9 @@ const StyledButton = styled.button`
   }
 `;
 
-function Button({ onClick, variant, className, children }) {
+function Button({ onClick, dim, variant, className, children }) {
   return (
-    <StyledButton type="button" onClick={onClick} variant={variant} className={className}>
+    <StyledButton dim={dim} type="button" onClick={onClick} variant={variant} className={className}>
       {children}
     </StyledButton>
   );

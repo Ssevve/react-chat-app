@@ -66,10 +66,10 @@ function LeftPanel({ expanded, setExpandLeftPanel, setExpandRightPanel }) {
       <UserPanel>
         <User user={loggedInUser} />
         <Buttons>
-          <Button aria-label="Settings" onClick={handleShowSettings}>
+          <Button dim aria-label="Settings" onClick={handleShowSettings}>
             <FiSettings aria-hidden="true" size="1.25rem" />
           </Button>
-          <Button variant="danger" aria-label="Logout" onClick={handleLogout}>
+          <Button dim variant="danger" aria-label="Logout" onClick={handleLogout}>
             <FiLogOut aria-hidden="true" size="1.25rem" />
           </Button>
         </Buttons>

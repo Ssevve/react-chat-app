@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { FiPlusCircle, FiUser } from 'react-icons/fi';
+import { FiUserPlus } from 'react-icons/fi';
 import { createFriendInvite } from 'features/friendInvites/friendInvitesSlice';
 import { selectFriendIds } from 'features/friends/friendsSlice';
 
@@ -26,10 +26,6 @@ const Result = styled.li`
   }
 `;
 
-const FriendIcon = styled(FiUser)`
-  margin-right: 0.5rem;
-`;
-
 const NoUsers = styled.p`
   margin-left: var(--padding);
 `;
@@ -38,6 +34,8 @@ function SearchResults({ isLoading, results }) {
   const dispatch = useDispatch();
   const friendIds = useSelector(selectFriendIds);
 
+  const filteredResults = results.filter((result) => !friendIds.includes(result._id));
+
   const handleClick = (resultId) => dispatch(createFriendInvite(resultId));
 
   if (isLoading) return <Spinner text="Searching" />;
@@ -45,20 +43,16 @@ function SearchResults({ isLoading, results }) {
   if (results.length === 0) return <NoUsers>No users found.</NoUsers>;
   return (
     <Results>
-      {results.map((result) => (
+      {filteredResults.map((result) => (
         <Result key={result._id}>
           <User user={result} />
-          {friendIds.includes(result._id) ? (
-            <FriendIcon size="1.5rem" />
-          ) : (
-            <Button
-              variant="success"
-              aria-label="Send friend invite"
-              onClick={() => handleClick(result._id)}
-            >
-              <FiPlusCircle aria-hidden="true" size="1.5rem" />
-            </Button>
-          )}
+          <Button
+            variant="success"
+            aria-label="Send friend invite"
+            onClick={() => handleClick(result._id)}
+          >
+            <FiUserPlus aria-hidden="true" size="1.5rem" />
+          </Button>
         </Result>
       ))}
     </Results>
