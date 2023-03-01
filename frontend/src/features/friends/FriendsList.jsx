@@ -15,12 +15,12 @@ function FriendsList() {
 
   return (
     <>
-      <DropdownList title="Online">
+      <DropdownList title={`Online (${online.length})`}>
         {online.map((friend) => (
           <Friend key={friend._id} friend={friend} />
         ))}
       </DropdownList>
-      <DropdownList dim title="Offline">
+      <DropdownList dim title={`Offline (${offline.length})`}>
         {offline.map((friend) => (
           <Friend key={friend._id} friend={friend} />
         ))}

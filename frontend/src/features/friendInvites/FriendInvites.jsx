@@ -37,7 +37,7 @@ function FriendInvites() {
 
   return (
     <>
-      <DropdownList dim title="Friend invites">
+      <DropdownList dim title={`Friend invites (${friendInvites.length})`}>
         {friendInvites?.length
           ? friendInvites.map((invite) => (
               <Wrapper key={invite._id}>
