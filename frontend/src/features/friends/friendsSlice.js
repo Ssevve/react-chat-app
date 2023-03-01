@@ -6,6 +6,11 @@ export const addFriendById = createAsyncThunk('friends/addFriendById', async (fr
   return res.data;
 });
 
+export const removeFriendById = createAsyncThunk('friends/removeFriendById', async (friendId) => {
+  await client.delete(`/users/deleteFriend/${friendId}`);
+  return friendId;
+});
+
 export const fetchFriends = createAsyncThunk('friends/fetchFriends', async (userId) => {
   const res = await client.get(`/users/friends/${userId}`);
   return res.data;
@@ -22,7 +27,8 @@ export const friendsSlice = createSlice({
     error: null,
   }),
   reducers: {
-    friendAdded: friendsAdapter.addOne,
+    addFriend: friendsAdapter.addOne,
+    removeFriend: (state, action) => friendsAdapter.removeOne(state, action),
   },
   extraReducers: (builder) => {
     builder.addCase(fetchFriends.pending, (state) => {
@@ -32,7 +38,6 @@ export const friendsSlice = createSlice({
     builder.addCase(fetchFriends.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-      console.log(action);
       friendsAdapter.addMany(state, action.payload);
     });
     builder.addCase(fetchFriends.rejected, (state, action) => {
@@ -47,12 +52,23 @@ export const friendsSlice = createSlice({
     builder.addCase(addFriendById.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-      state.friends.push(action.payload);
-      state.friendInvites = state.friendInvites.filter(
-        (invite) => invite.sender._id !== action.payload._id,
-      );
+      friendsAdapter.addOne(state, action.payload);
     });
     builder.addCase(addFriendById.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    });
+    builder.addCase(removeFriendById.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(removeFriendById.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      console.log(action.payload);
+      state.friends = state.friends.filter((friend) => friend._id !== action.payload);
+    });
+    builder.addCase(removeFriendById.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
     });
@@ -62,6 +78,6 @@ export const friendsSlice = createSlice({
 export const selectFriendIds = (state) => state.friends.ids;
 export const selectFriends = (state) => state.friends.entities;
 
-export const { addFriend } = friendsSlice.actions;
+export const { addFriend, removeFriend } = friendsSlice.actions;
 
 export default friendsSlice.reducer;
