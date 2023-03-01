@@ -4,6 +4,7 @@ import authReducer from 'features/auth/authSlice';
 import messagesReducer from 'features/messages/messagesSlice';
 import friendsReducer from 'features/friends/friendsSlice';
 import friendInvitesReducer from 'features/friendInvites/friendInvitesSlice';
+import searchReducer from 'features/search/searchSlice';
 import settingsReducer from 'features/settings/settingsSlice';
 
 const reducers = {
@@ -12,6 +13,7 @@ const reducers = {
   auth: authReducer,
   friends: friendsReducer,
   friendInvites: friendInvitesReducer,
+  search: searchReducer,
   settings: settingsReducer,
 };
 

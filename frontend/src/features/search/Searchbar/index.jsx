@@ -1,50 +1,39 @@
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FiX } from 'react-icons/fi';
-import { selectUser } from 'features/auth/authSlice';
-import client from 'utils/api';
+import useDebounce from '../hooks/useDebounce';
+import { clearSearchResults, searchFriends } from 'features/search/searchSlice';
 
 import { Wrapper, SearchIcon, StyledInput, ClearButton } from './styles';
 
-function Searchbar({ setIsLoading, query, setQuery, setResults }) {
-  const loggedInUser = useSelector(selectUser);
+function Searchbar() {
+  const dispatch = useDispatch();
+  const [query, setQuery] = useState('');
+  const debouncedQuery = useDebounce(query, 250);
 
-  const searchFriends = async () => {
-    setIsLoading(true);
-    try {
-      const res = await client.get(`/users/search/${query}`);
-      const filteredResults = res.data.filter((user) => user._id !== loggedInUser._id);
-      setResults(filteredResults);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const handleQueryChange = (e) => setQuery(e.target.value);
+  const clearQuery = () => setQuery('');
 
   // Debounce search
   useEffect(() => {
-    if (!query) {
-      return setResults(null);
+    if (debouncedQuery) {
+      dispatch(searchFriends(debouncedQuery));
+    } else {
+      dispatch(clearSearchResults());
     }
-    const timeout = setTimeout(searchFriends, 250);
-
-    return () => clearTimeout(timeout);
-  }, [query]);
-
-  const clearInput = () => setQuery('');
-  const handleQueryChange = (e) => setQuery(e.target.value);
+  }, [debouncedQuery]);
 
   return (
     <Wrapper>
       <StyledInput
+        type="text"
         aria-label="Search for friends by username"
         placeholder="Search friends"
         value={query}
         onChange={handleQueryChange}
       />
       {query ? (
-        <ClearButton aria-label="Clear input" onClick={clearInput}>
+        <ClearButton aria-label="Clear input" onClick={clearQuery}>
           <FiX size="1.25rem" aria-hidden="true" />
         </ClearButton>
       ) : (

@@ -65,7 +65,8 @@ const getUsersByQuery = async (req, res) => {
   const regex = new RegExp(reg, 'i');
   try {
     const users = await User.find({ username: regex }, 'username avatar.url');
-    res.status(200).json(users);
+    const filteredUsers = users.filter((user) => user._id !== req.user._id);
+    res.status(200).json(filteredUsers);
   } catch (err) {
     res.status(500).json(err);
   }

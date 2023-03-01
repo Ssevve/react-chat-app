@@ -1,19 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
 import { fetchFriends } from 'features/friends/friendsSlice';
 import { fetchFriendInvites } from 'features/friendInvites/friendInvitesSlice';
+import { selectFilteredSearchResults } from 'features/search/searchSlice';
+import { selectFriendInvites } from 'features/friendInvites/friendInvitesSlice';
+import { selectFriends } from 'features/friends/friendsSlice';
+import styleConstants from 'shared/styleConstants';
 
 import SidePanel from 'components/SidePanel';
 import FriendsList from 'features/friends/FriendsList';
 import SearchResults from 'features/search/SearchResults';
 import Searchbar from 'features/search/Searchbar';
 import FriendInvites from 'features/friendInvites/FriendInvites';
-import { selectFriends } from 'features/friends/friendsSlice';
-import { selectFriendInvites } from 'features/friendInvites/friendInvitesSlice';
 import Spinner from 'components/common/Spinner';
-import styleConstants from 'shared/styleConstants';
 
 const Title = styled.h2`
   padding: ${styleConstants.paddingL};
@@ -39,9 +40,8 @@ function RightPanel({ expanded }) {
   const friendsLoading = useSelector((state) => state.friends.loading);
   const dispatch = useDispatch();
   const loggedInUser = useSelector(selectUser);
-  const [results, setResults] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [query, setQuery] = useState('');
+  const results = useSelector(selectFilteredSearchResults);
+  const isLoading = useSelector((state) => state.search.loading);
 
   useEffect(() => {
     dispatch(fetchFriendInvites(loggedInUser._id));
@@ -50,27 +50,23 @@ function RightPanel({ expanded }) {
 
   const fetchingFriends = !friends && !friendInvites && friendsLoading;
 
-  const sectionContent = query ? (
-    <SearchResults isLoading={isLoading} results={results} />
-  ) : (
-    <>
-      <FriendInvites />
-      <FriendsList />
-    </>
-  );
+  const sectionContent =
+    results.length > 0 ? (
+      <SearchResults isLoading={isLoading} results={results} />
+    ) : (
+      <>
+        <FriendInvites />
+        <FriendsList />
+      </>
+    );
 
   return (
     <SidePanel anchor="right" expanded={expanded}>
-      <Title>{query ? 'Search Friends' : 'Friends'}</Title>
+      <Title>{results.length > 0 ? 'Search Friends' : 'Friends'}</Title>
       <Section fetchingFriends={fetchingFriends}>
         {fetchingFriends ? <Spinner text="Loading friends" /> : sectionContent}
       </Section>
-      <Searchbar
-        setIsLoading={setIsLoading}
-        query={query}
-        setQuery={setQuery}
-        setResults={setResults}
-      />
+      <Searchbar />
     </SidePanel>
   );
 }
