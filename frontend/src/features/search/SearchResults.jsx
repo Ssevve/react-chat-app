@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiUserPlus } from 'react-icons/fi';
 import { createFriendInvite } from 'features/friendInvites/friendInvitesSlice';
-import { selectFriendIds } from 'features/friends/friendsSlice';
 import { selectFilteredSearchResults } from './searchSlice';
 
 import Spinner from 'components/common/Spinner';
@@ -33,16 +32,16 @@ const NoUsers = styled.p`
 
 function SearchResults() {
   const dispatch = useDispatch();
-  const results = useSelector(selectFilteredSearchResults);
-  const isLoading = useSelector((state) => state.search.loading);
+  const searchResults = useSelector(selectFilteredSearchResults);
+  const isSearching = useSelector((state) => state.search.loading);
 
   const handleClick = (resultId) => dispatch(createFriendInvite(resultId));
 
-  if (isLoading) return <Spinner text="Searching" />;
-  if (!isLoading && results.length === 0) return <NoUsers>No users found.</NoUsers>;
+  if (isSearching) return <Spinner text="Searching" />;
+  if (!isSearching && searchResults.length === 0) return <NoUsers>No users found.</NoUsers>;
   return (
     <Results>
-      {results.map((result) => (
+      {searchResults.map((result) => (
         <Result key={result._id}>
           <User user={result} />
           <Button

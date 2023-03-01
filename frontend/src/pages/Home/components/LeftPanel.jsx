@@ -1,15 +1,12 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiSettings, FiLogOut } from 'react-icons/fi';
 import styled from 'styled-components/macro';
 import breakpoints from 'shared/breakpoints';
-import { fetchChats } from 'features/chats/chatsSlice';
 import { selectUser } from 'features/auth/authSlice';
 import { toggleSettings } from 'features/settings/settingsSlice';
 import styleConstants from 'shared/styleConstants';
 
 import SidePanel from 'components/SidePanel';
-import Spinner from 'components/common/Spinner';
 import ChatsList from 'features/chats/ChatsList';
 import Logo from 'components/common/Logo';
 import User from 'components/common/User';
@@ -36,13 +33,7 @@ const Buttons = styled.section`
 
 function LeftPanel({ expanded, setExpandLeftPanel, setExpandRightPanel }) {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.chats.loading);
   const loggedInUser = useSelector(selectUser);
-
-  useEffect(() => {
-    // Fetch chats here, not in ChatsList component, to avoid an infinite loop
-    dispatch(fetchChats());
-  }, []);
 
   const handleLogout = async () => {
     try {
@@ -62,7 +53,7 @@ function LeftPanel({ expanded, setExpandLeftPanel, setExpandRightPanel }) {
   return (
     <StyledSidePanel anchor="left" expanded={expanded}>
       <Logo applyPadding colorIcon hideOnTablet />
-      {isLoading ? <Spinner text="Loading chats" /> : <ChatsList />}
+      <ChatsList />
       <UserPanel>
         <User user={loggedInUser} />
         <Buttons>

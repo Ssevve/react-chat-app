@@ -6,8 +6,14 @@ import { addMessage, fetchMessages } from 'features/messages/messagesSlice';
 import useConnectedUsers from 'hooks/useConnectedUsers';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
-import { addFriend, removeFriend } from 'features/friends/friendsSlice';
-import { addFriendInvite, removeFriendInvite } from 'features/friendInvites/friendInvitesSlice';
+import { addFriend, removeFriend, fetchFriends } from 'features/friends/friendsSlice';
+import {
+  addFriendInvite,
+  removeFriendInvite,
+  fetchFriendInvites,
+} from 'features/friendInvites/friendInvitesSlice';
+import { fetchChats } from 'features/chats/chatsSlice';
+
 import {
   subscribeToMessageEvents,
   subscribeToUserEvents,
@@ -22,9 +28,15 @@ import RightPanel from './components/RightPanel';
 import MessagesBox from 'features/messages/MessagesBox';
 import WelcomeMessage from './components/WelcomeMessage';
 import Settings from 'features/settings/Settings';
+import Spinner from 'components/common/Spinner';
 
 const Wrapper = styled.div`
   height: 100vh;
+`;
+
+const SpinnerWrapper = styled(Wrapper)`
+  display: grid;
+  place-items: center;
 `;
 
 const Main = styled.main`
@@ -61,13 +73,26 @@ function Home() {
   const showSettings = useSelector((state) => state.settings.showSettings);
   const currentChat = useSelector(selectCurrentChat);
   const loggedInUser = useSelector(selectUser);
+  const fetchingChats = useSelector((state) => state.chats.loading);
+  const fetchingFriends = useSelector((state) => state.friends.loading);
+  const fetchingFriendInvites = useSelector((state) => state.friendInvites.loading);
+  const fetchingMessages = useSelector((state) => state.messages.loading);
   const { setConnectedUsers } = useConnectedUsers();
   const [expandLeftPanel, setExpandLeftPanel] = useState(false);
   const [expandRightPanel, setExpandRightPanel] = useState(false);
   const socket = useRef(null);
+  const [appLoading, setAppLoading] = useState(true);
+
+  const isAppLoading =
+    fetchingChats || fetchingFriends || fetchingFriendInvites || fetchingMessages;
 
   useEffect(() => {
+    // Fetch initial data
     dispatch(fetchMessages(loggedInUser._id));
+    dispatch(fetchChats());
+    dispatch(fetchFriends(loggedInUser._id));
+    dispatch(fetchFriendInvites(loggedInUser._id));
+
     socket.current = io(process.env.REACT_APP_SOCKET_URL, { auth: { userId: loggedInUser._id } });
     subscribeToMessageEvents({ socket: socket.current, dispatch, addMessage, updateChat });
     subscribeToUserEvents({ socket: socket.current, setConnectedUsers });
@@ -86,7 +111,23 @@ function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    if (isAppLoading) setAppLoading(true);
+    if (!isAppLoading) {
+      const timeout = setTimeout(() => setAppLoading(false), 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [isAppLoading]);
+
   const sidePanelExpanded = expandLeftPanel || expandRightPanel;
+
+  if (appLoading) {
+    return (
+      <SpinnerWrapper>
+        <Spinner text="Loading..." />
+      </SpinnerWrapper>
+    );
+  }
 
   return (
     <Wrapper>
