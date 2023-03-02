@@ -30,19 +30,18 @@ const Section = styled.section`
 function RightPanel({ expanded }) {
   const searchResults = useSelector(selectFilteredSearchResults);
 
-  const sectionContent =
-    searchResults.length > 0 ? (
-      <SearchResults />
-    ) : (
-      <>
-        <FriendInvites />
-        <FriendsList />
-      </>
-    );
+  const sectionContent = searchResults ? (
+    <SearchResults />
+  ) : (
+    <>
+      <FriendInvites />
+      <FriendsList />
+    </>
+  );
 
   return (
     <SidePanel anchor="right" expanded={expanded}>
-      <Title>{searchResults.length > 0 ? 'Search Friends' : 'Friends'}</Title>
+      <Title>{searchResults ? 'Search Friends' : 'Friends'}</Title>
       <Section>{sectionContent}</Section>
       <Searchbar />
     </SidePanel>

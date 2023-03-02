@@ -27,7 +27,7 @@ const Result = styled.li`
 `;
 
 const NoUsers = styled.p`
-  margin-left: var(--padding);
+  margin-left: 1rem;
 `;
 
 function SearchResults() {
@@ -38,7 +38,7 @@ function SearchResults() {
   const handleClick = (resultId) => dispatch(createFriendInvite(resultId));
 
   if (isSearching) return <Spinner text="Searching" />;
-  if (!isSearching && searchResults.length === 0) return <NoUsers>No users found.</NoUsers>;
+  if (searchResults.length === 0) return <NoUsers>No users found.</NoUsers>;
   return (
     <Results>
       {searchResults.map((result) => (

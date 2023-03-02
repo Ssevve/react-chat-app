@@ -7,7 +7,7 @@ export const searchFriends = createAsyncThunk('search/searchFriends', async (que
 });
 
 const initialState = {
-  results: [],
+  results: null,
   loading: false,
   error: null,
 };
@@ -17,7 +17,7 @@ export const searchSlice = createSlice({
   initialState,
   reducers: {
     clearSearchResults: (state) => {
-      state.results = [];
+      state.results = null;
     },
   },
   extraReducers: (builder) => {
@@ -33,7 +33,7 @@ export const searchSlice = createSlice({
     builder.addCase(searchFriends.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
-      state.search = [];
+      state.results = [];
     });
   },
 });
@@ -46,13 +46,15 @@ const loggedInUserId = (state) => state.auth.user._id;
 export const selectFilteredSearchResults = createSelector(
   [selectSearchResults, selectFriendIds, selectFriendInvites],
   (results, friendIds, friendInvites) => {
-    const userIdsFromInvites = friendInvites.map((invite) =>
-      invite.sender === loggedInUserId ? invite.receiver : invite.sender,
-    );
+    if (results) {
+      const userIdsFromInvites = friendInvites.map((invite) =>
+        invite.sender === loggedInUserId ? invite.receiver : invite.sender,
+      );
 
-    return results.filter(
-      (result) => !friendIds.includes(result._id) && !userIdsFromInvites.includes(result._id),
-    );
+      return results.filter(
+        (result) => !friendIds.includes(result._id) && !userIdsFromInvites.includes(result._id),
+      );
+    }
   },
 );
 
