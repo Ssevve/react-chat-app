@@ -1,6 +1,5 @@
 import styled from 'styled-components/macro';
-import { HiMenu } from 'react-icons/hi';
-import { FaUserFriends } from 'react-icons/fa';
+import { FiMenu, FiUsers } from 'react-icons/fi';
 import breakpoints from 'shared/breakpoints';
 import styleConstants from 'shared/styleConstants';
 
@@ -60,10 +59,11 @@ function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
     <Header>
       <Logo hideOnMobile />
       <LeftPanelButton type="button" onClick={handleLeftPanelExpand}>
-        <HiMenu size="1.5rem" />
+        <FiMenu size="1.5rem" />
       </LeftPanelButton>
+      <Logo hideOnTablet />
       <RightPanelButton type="button" onClick={handleRightPanelExpand}>
-        <FaUserFriends size="1.5rem" />
+        <FiUsers size="1.5rem" />
       </RightPanelButton>
     </Header>
   );

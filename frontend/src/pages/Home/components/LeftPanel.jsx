@@ -8,13 +8,12 @@ import styleConstants from 'shared/styleConstants';
 
 import SidePanel from 'components/SidePanel';
 import ChatsList from 'features/chats/ChatsList';
-import Logo from 'components/common/Logo';
 import User from 'components/common/User';
 import Button from 'components/common/Button';
 
 const StyledSidePanel = styled(SidePanel)`
+  grid-template-rows: 1fr ${styleConstants.pageFooterHeight};
   @media ${breakpoints.medium} {
-    grid-template-rows: 1fr auto;
     left: 0;
   }
 `;
@@ -52,7 +51,6 @@ function LeftPanel({ expanded, setExpandLeftPanel, setExpandRightPanel }) {
 
   return (
     <StyledSidePanel anchor="left" expanded={expanded}>
-      <Logo applyPadding colorIcon hideOnTablet />
       <ChatsList />
       <UserPanel>
         <User user={loggedInUser} />
