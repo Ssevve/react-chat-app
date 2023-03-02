@@ -12,8 +12,9 @@ const StyledLogo = styled.h1`
   font-size: 1.5rem;
   text-decoration: none;
   font-weight: 700;
-  padding: ${({ applyPadding }) => applyPadding && styleConstants.paddingL};
+  justify-content: center;
   @media ${breakpoints.medium} {
+    justify-content: start;
     display: ${({ hideOnTablet }) => (hideOnTablet ? 'none' : 'flex')};
   }
 `;
