@@ -10,6 +10,7 @@ const Header = styled.header`
   width: 100vw;
   padding: ${styleConstants.paddingL};
   display: grid;
+  column-gap: ${styleConstants.gapM};
   align-content: center;
   position: fixed;
   top: 0;
