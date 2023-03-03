@@ -28,8 +28,6 @@ function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
 
   const scrollRef = useRef(null);
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
     if (!scrollRef.current) return;
     scrollRef.current.scrollTo(0, scrollRef.current.scrollHeight);

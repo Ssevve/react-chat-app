@@ -14,7 +14,8 @@ import Button from 'components/common/Button';
 const StyledSidePanel = styled(SidePanel)`
   grid-template-rows: 1fr ${styleConstants.pageFooterHeight};
   @media ${breakpoints.medium} {
-    left: 0;
+    transform: translateX(0);
+    position: static;
   }
 `;
 

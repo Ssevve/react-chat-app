@@ -1,42 +1,40 @@
 import styled from 'styled-components/macro';
-import breakpoints from 'shared/breakpoints';
 import styleConstants from 'shared/styleConstants';
 
-function setStylesByAnchor(anchor, theme, expanded) {
+function setStylesByAnchor(anchor, expanded) {
   if (anchor === 'left') {
     return {
-      left: `${expanded ? '0' : '-18.75rem'}`,
-      transition: `left 0.1s ease-in-out`,
+      left: 0,
+      transform: !expanded && 'translateX(-100%)',
     };
   } else {
     return {
-      right: `${expanded ? '0' : '-18.75rem'}`,
-      transition: `right 0.1s ease-in-out`,
+      right: 0,
+      transform: !expanded && 'translateX(100%)',
     };
   }
 }
 
 const StyledDiv = styled.div`
   --header-height: ${styleConstants.pageHeaderHeight};
-  height: calc(100% - var(--header-height));
+  height: 100%;
+  position: absolute;
   width: 90%;
-  max-width: 18.75rem;
-  position: fixed;
+  max-width: ${styleConstants.sidePanelMaxWidth};
   background: ${({ theme }) => theme.background400};
   display: grid;
   grid-template-rows: ${styleConstants.pageHeaderHeight} 1fr ${styleConstants.pageFooterHeight};
   z-index: 2;
   box-shadow: ${styleConstants.boxShadow};
-  @media ${breakpoints.xl} {
-    ${({ anchor }) => `${anchor}: 0`};
-  }
+  transform: translateX(0);
+  transition: transform 0.1s ease-in-out;
 
-  ${({ anchor, theme, expanded }) => anchor && setStylesByAnchor(anchor, theme, expanded)}
+  ${({ anchor, expanded }) => anchor && setStylesByAnchor(anchor, expanded)}
 `;
 
 function SidePanel({ anchor, expanded, className, children }) {
   return (
-    <StyledDiv anchor={anchor} expanded={expanded} className={className}>
+    <StyledDiv aria-hidden={!expanded} anchor={anchor} expanded={expanded} className={className}>
       {children}
     </StyledDiv>
   );

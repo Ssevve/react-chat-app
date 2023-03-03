@@ -12,7 +12,6 @@ const Header = styled.header`
   display: grid;
   column-gap: ${styleConstants.gapM};
   align-content: center;
-  position: fixed;
   top: 0;
   left: 0;
   z-index: 1;

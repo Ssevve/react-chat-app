@@ -2,12 +2,20 @@ import styled from 'styled-components/macro';
 import { useSelector } from 'react-redux';
 import { selectFilteredSearchResults } from 'features/search/searchSlice';
 import styleConstants from 'shared/styleConstants';
+import breakpoints from 'shared/breakpoints';
 
 import SidePanel from 'components/SidePanel';
 import FriendsList from 'features/friends/FriendsList';
 import SearchResults from 'features/search/SearchResults';
 import Searchbar from 'features/search/Searchbar';
 import FriendInvites from 'features/friendInvites/FriendInvites';
+
+const StyledSidePanel = styled(SidePanel)`
+  @media ${breakpoints.xl} {
+    transform: translateX(0);
+    position: static;
+  }
+`;
 
 const Title = styled.h2`
   padding: ${styleConstants.paddingL};
@@ -27,7 +35,7 @@ const Section = styled.section`
   align-content: start;
 `;
 
-function RightPanel({ expanded }) {
+function RightPanel({ expanded, setExpandRightPanel }) {
   const searchResults = useSelector(selectFilteredSearchResults);
 
   const sectionContent = searchResults ? (
@@ -35,16 +43,16 @@ function RightPanel({ expanded }) {
   ) : (
     <>
       <FriendInvites />
-      <FriendsList />
+      <FriendsList setExpandRightPanel={setExpandRightPanel} />
     </>
   );
 
   return (
-    <SidePanel anchor="right" expanded={expanded}>
+    <StyledSidePanel anchor="right" expanded={expanded}>
       <Title>{searchResults ? 'Search Friends' : 'Friends'}</Title>
       <Section>{sectionContent}</Section>
       <Searchbar />
-    </SidePanel>
+    </StyledSidePanel>
   );
 }
 

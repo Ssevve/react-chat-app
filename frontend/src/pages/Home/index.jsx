@@ -19,8 +19,6 @@ import {
   subscribeToUserEvents,
   subscribeToFriendEvents,
 } from 'socketEvents';
-import breakpoints from 'shared/breakpoints';
-import styleConstants from 'shared/styleConstants';
 
 import Topbar from './components/Topbar';
 import LeftPanel from './components/LeftPanel';
@@ -32,6 +30,8 @@ import Spinner from 'components/common/Spinner';
 
 const Wrapper = styled.div`
   height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
 
 const SpinnerWrapper = styled(Wrapper)`
@@ -41,31 +41,12 @@ const SpinnerWrapper = styled(Wrapper)`
 
 const Main = styled.main`
   display: flex;
-  position: fixed;
-  top: ${styleConstants.pageHeaderHeight};
+  justify-content: center;
+  height: 100%;
+  position: relative;
   background: ${({ theme }) => theme.background300};
   color: ${({ theme }) => theme.text};
-  width: 100vw;
-  height: 100%;
-  @media ${breakpoints.medium} {
-    width: calc(100vw - 18.75rem);
-    left: 18.75rem;
-  }
-
-  @media ${breakpoints.large} {
-    right: 0;
-    transition: right 0.1s ease-in-out, max-width 0.1s ease-in-out;
-    ${({ expandRightPanel }) =>
-      expandRightPanel && {
-        maxWidth: 'calc(100vw - 37.5rem)',
-      }};
-  }
-
-  @media ${breakpoints.xl} {
-    max-width: calc(100vw - 37.5rem);
-    right: 18.75rem;
-    transition: none;
-  }
+  overflow-x: hidden;
 `;
 
 function Home() {
@@ -85,6 +66,8 @@ function Home() {
 
   const isAppLoading =
     fetchingChats || fetchingFriends || fetchingFriendInvites || fetchingMessages;
+
+  const sidePanelExpanded = expandLeftPanel || expandRightPanel;
 
   useEffect(() => {
     // Fetch initial data
@@ -119,8 +102,6 @@ function Home() {
     }
   }, [isAppLoading]);
 
-  const sidePanelExpanded = expandLeftPanel || expandRightPanel;
-
   if (appLoading) {
     return (
       <SpinnerWrapper>
@@ -140,12 +121,12 @@ function Home() {
           expanded={expandLeftPanel}
         />
         {currentChat ? (
-          <MessagesBox sidePanelExpanded={sidePanelExpanded} expandRightPanel={expandRightPanel} />
+          <MessagesBox sidePanelExpanded={sidePanelExpanded} />
         ) : (
-          <WelcomeMessage />
+          <WelcomeMessage sidePanelExpanded={sidePanelExpanded} />
         )}
         {showSettings && <Settings />}
-        <RightPanel expanded={expandRightPanel} />
+        <RightPanel expanded={expandRightPanel} setExpandRightPanel={setExpandRightPanel} />
       </Main>
     </Wrapper>
   );

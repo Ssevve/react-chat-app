@@ -1,17 +1,14 @@
 import styled from 'styled-components/macro';
-import breakpoints from 'shared/breakpoints';
 import styleConstants from 'shared/styleConstants';
+import breakpoints from 'shared/breakpoints';
 
 export const Section = styled.section`
-  flex: 2.5;
+  flex: 1;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  position: fixed;
-  width: 100%;
-  height: calc(100% - 4rem);
-  transition: all 0.1s ease-in-out;
   background: ${({ theme }) => theme.background300};
+  transition: opacity 0.1s ease-in-out;
 
   ${({ sidePanelExpanded }) =>
     sidePanelExpanded && {
@@ -19,31 +16,12 @@ export const Section = styled.section`
       pointerEvents: 'none',
     }};
 
-  @media ${breakpoints.medium} {
-    left: 18.75rem;
-    max-width: calc(100vw - 18.75rem);
-  }
-
   @media ${breakpoints.large} {
-    right: 0;
-    transition: right 0.1s ease-in-out, max-width 0.1s ease-in-out;
-
-    ${({ expandRightPanel }) =>
-      expandRightPanel && {
-        maxWidth: 'calc(100vw - 37.5rem)',
-      }};
-
     ${({ sidePanelExpanded }) =>
       sidePanelExpanded && {
         opacity: '1',
         pointerEvents: 'initial',
       }};
-  }
-
-  @media ${breakpoints.xl} {
-    max-width: calc(100vw - 37.5rem);
-    right: 18.75rem;
-    transition: none;
   }
 `;
 
