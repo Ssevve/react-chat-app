@@ -14,6 +14,7 @@ const styleConstants = {
   gapM: '0.5rem',
   gapS: '0.25rem',
 
+  sidePanelMaxWidth: '18.75rem', // 300px
   authSubmitButtonMinHeight: '2.625rem', // 42px
   pageHeaderHeight: '4rem', // 64px
   pageFooterHeight: '4.25rem', // 68px

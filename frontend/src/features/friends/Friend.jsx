@@ -21,7 +21,7 @@ const Buttons = styled.div`
   align-items: center;
 `;
 
-function Friend({ friend }) {
+function Friend({ friend, setExpandRightPanel }) {
   const dispatch = useDispatch();
   const loggedInUser = useSelector(selectUser);
   const chats = useSelector(selectAllChats);
@@ -42,6 +42,7 @@ function Friend({ friend }) {
 
     dispatch(closeSettings());
     dispatch(setCurrentChat(selectedChat));
+    setExpandRightPanel(false);
   };
 
   return (
