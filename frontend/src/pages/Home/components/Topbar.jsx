@@ -7,14 +7,10 @@ import Logo from 'components/common/Logo';
 
 const Header = styled.header`
   min-height: ${styleConstants.pageHeaderHeight};
-  width: 100vw;
   padding: ${styleConstants.paddingL};
-  display: grid;
+  display: flex;
+  justify-content: space-between;
   column-gap: ${styleConstants.gapM};
-  align-content: center;
-  top: 0;
-  left: 0;
-  z-index: 1;
   color: ${({ theme }) => theme.topbarText};
   background: ${({ theme }) => theme.primary};
   box-shadow: ${styleConstants.boxShadow};
@@ -26,19 +22,16 @@ const Button = styled.button`
   background: none;
   display: flex;
   align-items: center;
-  color: ${({ theme }) => theme.topbarText};
+  color: inherit;
 `;
 
 const LeftPanelButton = styled(Button)`
-  justify-self: start;
   @media ${breakpoints.medium} {
     display: none;
   }
 `;
 
 const RightPanelButton = styled(Button)`
-  grid-column: 3/4;
-  justify-self: end;
   @media ${breakpoints.xl} {
     display: none;
   }
