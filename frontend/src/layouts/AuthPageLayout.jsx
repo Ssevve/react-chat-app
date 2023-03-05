@@ -16,7 +16,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: ${styleConstants.gapXXL};
-  @media ${breakpoints.medium} {
+  @media (min-width: ${breakpoints.medium}) {
     flex-direction: row;
   }
 `;
@@ -24,7 +24,7 @@ const Container = styled.div`
 const Section = styled.section`
   display: grid;
   gap: ${styleConstants.gapXXL};
-  @media ${breakpoints.medium} {
+  @media (min-width: ${breakpoints.medium}) {
     flex: 1;
   }
 `;
@@ -34,7 +34,7 @@ const Heading = styled.h1`
   color: ${({ theme }) => theme.primary};
   font-weight: 700;
   text-align: center;
-  @media ${breakpoints.medium} {
+  @media (min-width: ${breakpoints.medium}) {
     text-align: left;
   }
 `;
@@ -43,7 +43,7 @@ const Paragraph = styled.p`
   font-size: clamp(1.3rem, 4vw, 1.5rem);
   text-align: center;
   margin-bottom: 2rem;
-  @media ${breakpoints.medium} {
+  @media (min-width: ${breakpoints.medium}) {
     text-align: left;
     margin-bottom: 0;
   }
