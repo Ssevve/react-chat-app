@@ -1,9 +1,8 @@
+import { useState, useEffect, useRef } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components/macro';
 import styleConstants from 'shared/styleConstants';
-import { CSSTransition } from 'react-transition-group';
-import { useState } from 'react';
 import useWindowWidth from 'hooks/useWindowWidth';
-import { useEffect } from 'react';
 
 const StyledDiv = styled.div`
   --header-height: ${styleConstants.pageHeaderHeight};
@@ -93,6 +92,8 @@ const Backdrop = styled.div`
 function SidePanel({ anchor, forceExpandWidth, expanded, className, children }) {
   const [showBackdrop, setShowBackdrop] = useState(true);
   const [isExpanded, setIsExpanded] = useState(expanded);
+  const panelRef = useRef();
+  const backdropRef = useRef();
   const windowWidth = useWindowWidth();
 
   useEffect(() => {
@@ -108,19 +109,26 @@ function SidePanel({ anchor, forceExpandWidth, expanded, className, children }) 
   return (
     <>
       {showBackdrop && (
-        <CSSTransition in={isExpanded} appear={true} timeout={225} classNames="fade" unmountOnExit>
-          <Backdrop aria-hidden="true" expanded={expanded} />
+        <CSSTransition
+          nodeRef={backdropRef}
+          in={isExpanded}
+          appear={true}
+          timeout={225}
+          classNames="fade"
+          unmountOnExit
+        >
+          <Backdrop ref={backdropRef} aria-hidden="true" expanded={expanded} />
         </CSSTransition>
       )}
       <CSSTransition
         in={isExpanded}
+        nodeRef={panelRef}
         appear={true}
         timeout={225}
         classNames="slide"
-        transitionAppear={true}
         unmountOnExit
       >
-        <StyledDiv anchor={anchor} expanded={expanded} className={className}>
+        <StyledDiv ref={panelRef} anchor={anchor} expanded={expanded} className={className}>
           {children}
         </StyledDiv>
       </CSSTransition>
