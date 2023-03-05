@@ -32,7 +32,7 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledSubmitButton = styled(SubmitButton)`
-  padding: ${styleConstants.paddingM};
+  padding: ${styleConstants.padding300};
   min-height: ${styleConstants.authSubmitButtonMinHeight};
 `;
 

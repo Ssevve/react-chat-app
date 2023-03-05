@@ -8,7 +8,7 @@ const StyledLogo = styled.h1`
   display: ${({ hideOnMobile }) => (hideOnMobile ? 'none' : 'flex')};
   color: inherit;
   align-items: center;
-  gap: ${styleConstants.gapM};
+  gap: ${styleConstants.gap200};
   font-size: clamp(0.8rem, 7vw, 1.5rem);
   text-decoration: none;
   font-weight: 700;

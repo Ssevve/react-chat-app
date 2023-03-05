@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 
 const Label = styled.label`
   display: grid;
-  gap: ${styleConstants.gapS};
+  gap: ${styleConstants.gap100};
   font-size: 0.875rem;
 `;
 

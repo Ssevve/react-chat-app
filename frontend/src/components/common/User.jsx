@@ -5,7 +5,7 @@ import UserAvatarWithConnectionStatus from './UserAvatarWithConnectionStatus';
 
 const Wrapper = styled.section`
   display: flex;
-  gap: ${styleConstants.gapL};
+  gap: ${styleConstants.gap300};
   background: inherit;
 `;
 

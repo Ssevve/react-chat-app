@@ -7,10 +7,10 @@ import Logo from 'components/common/Logo';
 
 const Header = styled.header`
   min-height: ${styleConstants.pageHeaderHeight};
-  padding: ${styleConstants.paddingL};
+  padding: ${styleConstants.padding400};
   display: flex;
   justify-content: space-between;
-  column-gap: ${styleConstants.gapM};
+  column-gap: ${styleConstants.gap200};
   color: ${({ theme }) => theme.topbarText};
   background: ${({ theme }) => theme.primary};
   box-shadow: ${styleConstants.boxShadow};

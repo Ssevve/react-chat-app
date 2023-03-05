@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   display: grid;
   align-content: center;
   justify-content: center;
-  row-gap: ${styleConstants.gapM};
+  row-gap: ${styleConstants.gap200};
   padding: 0;
   margin: 0;
 `;

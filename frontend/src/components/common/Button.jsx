@@ -11,7 +11,7 @@ const StyledButton = styled.button`
   color: ${({ theme }) => theme.text};
   font-size: 0.875rem;
   font-weight: 700;
-  padding: ${styleConstants.paddingS};
+  padding: ${styleConstants.padding200};
   font-family: var(--font-family);
   cursor: pointer;
   &:hover {

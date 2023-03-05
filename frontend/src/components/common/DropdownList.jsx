@@ -9,16 +9,16 @@ const Wrapper = styled.section`
   flex-direction: column;
   flex: 1;
   background: inherit;
-  gap: ${styleConstants.gapM};
+  gap: ${styleConstants.gap200};
   margin-top: 1rem;
 `;
 
 const Button = styled.button`
   text-align: left;
-  padding-left: ${styleConstants.paddingS};
+  padding-left: ${styleConstants.padding200};
   display: flex;
   align-items: center;
-  gap: ${styleConstants.gapS};
+  gap: ${styleConstants.gap100};
   text-transform: uppercase;
   background: inherit;
   border: none;
@@ -54,7 +54,7 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   background: inherit;
-  padding: ${({ noItemPadding }) => (noItemPadding ? 0 : styleConstants.paddingL)};
+  padding: ${({ noItemPadding }) => (noItemPadding ? 0 : styleConstants.padding400)};
   opacity: ${({ dim }) => (dim ? styleConstants.dimOpacity : 1)};
   &:hover {
     opacity: 1;

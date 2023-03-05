@@ -9,7 +9,7 @@ const Button = styled.button`
   font-weight: 700;
   border-radius: var(--border-radius);
   border: none;
-  padding: ${styleConstants.paddingS};
+  padding: ${styleConstants.padding200};
   font-size: 1rem;
   display: grid;
   align-items: center;

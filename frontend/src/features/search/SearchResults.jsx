@@ -19,7 +19,7 @@ const Result = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: ${styleConstants.paddingL};
+  padding: ${styleConstants.padding400};
   opacity: ${styleConstants.dimOpacity};
   &:hover {
     opacity: 1;

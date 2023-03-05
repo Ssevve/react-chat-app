@@ -17,12 +17,12 @@ const StyledSidePanel = styled(SidePanel)`
 `;
 
 const Title = styled.h2`
-  padding: ${styleConstants.paddingL};
+  padding: ${styleConstants.padding400};
   font-size: 1.5rem;
   align-items: center;
   display: flex;
   justify-content: ${({ isLoading }) => (isLoading ? 'flex-end' : 'flex-start')};
-  gap: ${styleConstants.gapXL};
+  gap: ${styleConstants.gap400};
   color: ${({ theme }) => theme.text};
 `;
 
@@ -30,7 +30,7 @@ const Section = styled.section`
   background: inherit;
   overflow-y: auto;
   display: grid;
-  row-gap: ${styleConstants.gapXL};
+  row-gap: ${styleConstants.gap400};
   align-content: start;
 `;
 

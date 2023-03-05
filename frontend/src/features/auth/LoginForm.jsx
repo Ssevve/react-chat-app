@@ -33,7 +33,7 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledSubmitButton = styled(SubmitButton)`
-  padding: ${styleConstants.paddingM};
+  padding: ${styleConstants.padding300};
   min-height: 2.625rem; // 42px
 `;
 
