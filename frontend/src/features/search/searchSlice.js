@@ -42,15 +42,14 @@ export const selectSearchResults = (state) => state.search.results;
 
 const selectFriendIds = (state) => state.friends.ids;
 const selectFriendInvites = (state) => state.friendInvites.friendInvites;
-const loggedInUserId = (state) => state.auth.user._id;
+const selectLoggedInUserId = (state) => state.auth.user._id;
 export const selectFilteredSearchResults = createSelector(
-  [selectSearchResults, selectFriendIds, selectFriendInvites],
-  (results, friendIds, friendInvites) => {
+  [selectSearchResults, selectFriendIds, selectFriendInvites, selectLoggedInUserId],
+  (results, friendIds, friendInvites, loggedInUserId) => {
     if (results) {
       const userIdsFromInvites = friendInvites.map((invite) =>
-        invite.sender._id === loggedInUserId ? invite.receiver._id : invite.sender._id,
+        loggedInUserId === invite.sender._id ? invite.receiver._id : invite.sender._id,
       );
-
       return results.filter(
         (result) => !friendIds.includes(result._id) && !userIdsFromInvites.includes(result._id),
       );
