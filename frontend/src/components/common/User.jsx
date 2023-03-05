@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import styleConstants from 'shared/styleConstants';
 
-import UserAvatarWithConnectionStatus from './UserAvatarWithConnectionStatus';
+import UserAvatar from './UserAvatar';
 
 const Wrapper = styled.section`
   display: flex;
@@ -31,7 +31,7 @@ function User({ user, className }) {
   return (
     user && (
       <Wrapper className={className}>
-        <UserAvatarWithConnectionStatus user={user} />
+        <UserAvatar showConnectionStatus user={user} />
         <Details>
           <Username>{user.username}</Username>
           {user.statusText ? <StatusText>{user.statusText}</StatusText> : null}

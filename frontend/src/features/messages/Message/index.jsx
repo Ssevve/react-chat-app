@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
 
 import UserAvatar from 'components/common/UserAvatar';
-import UserAvatarWithStatus from 'components/common/UserAvatarWithConnectionStatus';
 
 import { StyledDiv, Meta, Username, Time, Content } from './styles';
 
@@ -14,7 +13,11 @@ function Message({ message }) {
   return (
     message && (
       <StyledDiv own={ownMessage}>
-        {ownMessage ? <UserAvatar user={sender} /> : <UserAvatarWithStatus user={sender} />}
+        {ownMessage ? (
+          <UserAvatar user={sender} />
+        ) : (
+          <UserAvatar showConnectionStatus user={sender} />
+        )}
         <div>
           <Meta own={ownMessage}>
             <Username>{ownMessage ? 'You' : sender.username}</Username>

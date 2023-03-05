@@ -4,7 +4,7 @@ import { format } from 'timeago.js';
 import { useSelector } from 'react-redux';
 import styleConstants from 'shared/styleConstants';
 
-import UserAvatarWithStatus from 'components/common/UserAvatarWithConnectionStatus';
+import UserAvatar from 'components/common/UserAvatar';
 import { selectUser } from 'features/auth/authSlice';
 import { selectCurrentChat } from './chatsSlice';
 
@@ -78,7 +78,7 @@ function Chat({ chat, onClick }) {
   return chatPartner ? (
     <>
       <Button currentChat={currentChat} chat={chat} type="button" onClick={onClick}>
-        <UserAvatarWithStatus user={chatPartner} />
+        <UserAvatar showConnectionStatus user={chatPartner} />
         <Details>
           <Meta>
             <Username>{chatPartner.username}</Username>
