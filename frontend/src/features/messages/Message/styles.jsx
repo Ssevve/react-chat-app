@@ -12,7 +12,7 @@ export const StyledDiv = styled.div`
   max-width: 300px; // TODO: temp fix: messages overflow, try to make it better
   background: inherit;
 
-  @media ${breakpoints.xl} {
+  @media (min-width: ${breakpoints.xl}) {
     width: 50%;
     max-width: 500px;
   }
@@ -44,7 +44,7 @@ export const Content = styled.p`
   line-height: 1.5;
   max-width: 300px; // TODO: temp fix: messages overflow, try to make it better
 
-  @media ${breakpoints.xl} {
+  @media (min-width: ${breakpoints.xl}) {
     max-width: 500px;
   }
 `;

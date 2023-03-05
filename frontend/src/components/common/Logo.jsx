@@ -13,7 +13,7 @@ const StyledLogo = styled.h1`
   text-decoration: none;
   font-weight: 700;
   justify-content: center;
-  @media ${breakpoints.medium} {
+  @media (min-width: ${breakpoints.medium}) {
     justify-content: start;
     display: ${({ hideOnTablet }) => (hideOnTablet ? 'none' : 'flex')};
   }

@@ -11,7 +11,7 @@ const StyledForm = styled.form`
   display: grid;
   gap: ${styleConstants.gapXL};
   background: ${({ theme }) => theme.background300};
-  @media ${breakpoints.medium} {
+  @media (min-width: ${breakpoints.medium}) {
     flex: 1;
   }
 `;

@@ -26,13 +26,13 @@ const Button = styled.button`
 `;
 
 const LeftPanelButton = styled(Button)`
-  @media ${breakpoints.medium} {
+  @media (min-width: ${breakpoints.medium}) {
     display: none;
   }
 `;
 
 const RightPanelButton = styled(Button)`
-  @media ${breakpoints.xl} {
+  @media (min-width: ${breakpoints.xl}) {
     display: none;
   }
 `;
