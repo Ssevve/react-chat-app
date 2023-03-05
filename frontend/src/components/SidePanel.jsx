@@ -90,7 +90,7 @@ const Backdrop = styled.div`
   }
 `;
 
-function SidePanel({ anchor, forceExpandWidth, expanded, className, children }) {
+function SidePanel({ anchor, onBackdropClick, forceExpandWidth, expanded, className, children }) {
   const [showBackdrop, setShowBackdrop] = useState(true);
   const [isExpanded, setIsExpanded] = useState(expanded);
   const panelRef = useRef();
@@ -118,7 +118,12 @@ function SidePanel({ anchor, forceExpandWidth, expanded, className, children }) 
           classNames="fade"
           unmountOnExit
         >
-          <Backdrop ref={backdropRef} aria-hidden="true" expanded={expanded} />
+          <Backdrop
+            ref={backdropRef}
+            onClick={onBackdropClick}
+            aria-hidden="true"
+            expanded={expanded}
+          />
         </CSSTransition>
       )}
       <CSSTransition

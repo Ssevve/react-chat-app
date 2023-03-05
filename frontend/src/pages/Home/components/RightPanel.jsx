@@ -37,6 +37,8 @@ const Section = styled.section`
 function RightPanel({ expanded, forceExpandWidth, setExpandRightPanel }) {
   const searchResults = useSelector(selectFilteredSearchResults);
 
+  const handleHidePanel = () => setExpandRightPanel(false);
+
   const sectionContent = searchResults ? (
     <SearchResults />
   ) : (
@@ -47,7 +49,12 @@ function RightPanel({ expanded, forceExpandWidth, setExpandRightPanel }) {
   );
 
   return (
-    <StyledSidePanel anchor="right" forceExpandWidth={forceExpandWidth} expanded={expanded}>
+    <StyledSidePanel
+      anchor="right"
+      onBackdropClick={handleHidePanel}
+      forceExpandWidth={forceExpandWidth}
+      expanded={expanded}
+    >
       <Title>{searchResults ? 'Search Friends' : 'Friends'}</Title>
       <Section>{sectionContent}</Section>
       <Searchbar />
