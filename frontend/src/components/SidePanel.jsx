@@ -96,13 +96,10 @@ function SidePanel({ anchor, forceExpandWidth, expanded, className, children }) 
   const windowWidth = useWindowWidth();
 
   useEffect(() => {
-    console.log(forceExpandWidth);
     if (window.matchMedia(`(min-width: ${forceExpandWidth})`).matches) {
-      console.log('matches');
       setIsExpanded(true);
       setShowBackdrop(false);
     } else {
-      console.log('does not match');
       setIsExpanded(expanded);
       setShowBackdrop(true);
     }

@@ -50,7 +50,6 @@ export const selectFilteredSearchResults = createSelector(
       const userIdsFromInvites = friendInvites.map((invite) =>
         invite.sender._id === loggedInUserId ? invite.receiver._id : invite.sender._id,
       );
-      console.log(userIdsFromInvites);
 
       return results.filter(
         (result) => !friendIds.includes(result._id) && !userIdsFromInvites.includes(result._id),
