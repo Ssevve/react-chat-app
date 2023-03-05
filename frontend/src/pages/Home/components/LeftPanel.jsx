@@ -10,11 +10,11 @@ import SidePanel from 'components/SidePanel';
 import ChatsList from 'features/chats/ChatsList';
 import User from 'components/common/User';
 import Button from 'components/common/Button';
+import useWindowWidth from 'hooks/useWindowWidth';
 
 const StyledSidePanel = styled(SidePanel)`
   grid-template-rows: 1fr ${styleConstants.pageFooterHeight};
-  @media ${breakpoints.medium} {
-    transform: translateX(0);
+  @media (min-width: ${breakpoints.medium}) {
     position: static;
   }
 `;
@@ -31,7 +31,7 @@ const Buttons = styled.section`
   display: flex;
 `;
 
-function LeftPanel({ expanded, setExpandLeftPanel, setExpandRightPanel }) {
+function LeftPanel({ expanded, forceExpandWidth, setExpandLeftPanel, setExpandRightPanel }) {
   const dispatch = useDispatch();
   const loggedInUser = useSelector(selectUser);
 
@@ -51,7 +51,7 @@ function LeftPanel({ expanded, setExpandLeftPanel, setExpandRightPanel }) {
   };
 
   return (
-    <StyledSidePanel anchor="left" expanded={expanded}>
+    <StyledSidePanel anchor="left" forceExpandWidth={forceExpandWidth} expanded={expanded}>
       <ChatsList />
       <UserPanel>
         <User user={loggedInUser} />
