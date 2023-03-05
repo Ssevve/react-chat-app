@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   flex: 1;
   align-items: center;
   background: ${({ theme }) => theme.background600};
-  padding: ${styleConstants.paddingL};
+  padding: ${styleConstants.padding400};
 `;
 
 export const SearchIcon = styled(FiSearch)`
@@ -23,7 +23,7 @@ export const StyledInput = styled.input`
   font-size: 1rem;
   color: ${({ theme }) => theme.text};
   align-self: stretch;
-  padding: ${styleConstants.paddingS};
+  padding: ${styleConstants.padding200};
   border-radius: var(--border-radius);
   flex: 1;
   background: ${({ theme }) => theme.background400};

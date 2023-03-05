@@ -6,7 +6,7 @@ export const StyledDiv = styled.div`
   display: flex;
   flex-direction: ${({ own }) => (own ? 'row-reverse' : 'row')};
   justify-self: ${({ own }) => (own ? 'flex-end' : 'flex-start')};
-  gap: ${styleConstants.gapM};
+  gap: ${styleConstants.gap200};
   color: ${({ theme }) => theme.text};
   width: 75%;
   max-width: 300px; // TODO: temp fix: messages overflow, try to make it better
@@ -20,7 +20,7 @@ export const StyledDiv = styled.div`
 
 export const Meta = styled.div`
   display: flex;
-  gap: ${styleConstants.gapM};
+  gap: ${styleConstants.gap200};
   justify-content: ${({ own }) => (own ? 'flex-end' : 'flex-start')};
   align-items: center;
 `;
@@ -39,7 +39,7 @@ export const Content = styled.p`
   border-radius: var(--border-radius);
   background: ${({ own, theme }) => (own ? theme.primary : theme.background500)};
   color: ${({ own, theme }) => (own ? theme.ownMessageText : theme.text)};
-  padding: ${styleConstants.paddingM};
+  padding: ${styleConstants.padding300};
   word-wrap: break-word;
   line-height: 1.5;
   max-width: 300px; // TODO: temp fix: messages overflow, try to make it better

@@ -3,11 +3,11 @@ import styleConstants from 'shared/styleConstants';
 
 export const WelcomeWrapper = styled.section`
   color: ${({ theme }) => theme.text};
-  padding: ${styleConstants.paddingL};
+  padding: ${styleConstants.padding400};
   text-align: center;
   display: grid;
   place-content: center;
-  row-gap: ${styleConstants.gapXXL};
+  row-gap: ${styleConstants.gap1200};
   flex: 1;
 `;
 

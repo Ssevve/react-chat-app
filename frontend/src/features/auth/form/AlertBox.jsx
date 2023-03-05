@@ -24,13 +24,13 @@ const Wrapper = styled.div`
   color: ${({ variant, theme }) => theme[variants[variant].color]};
   border: 1px solid currentColor;
   border-radius: var(--border-radius);
-  padding: ${styleConstants.paddingS};
+  padding: ${styleConstants.padding200};
 `;
 
 const Header = styled.header`
   display: flex;
   align-items: center;
-  gap: ${styleConstants.gapM};
+  gap: ${styleConstants.gap200};
   margin-bottom: var(--padding);
 `;
 

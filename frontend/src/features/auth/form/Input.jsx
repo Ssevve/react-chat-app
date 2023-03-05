@@ -5,7 +5,7 @@ const StyledInput = styled.input`
   border-radius: var(--border-radius);
   background: ${({ theme }) => theme.background500};
   font-size: 1rem;
-  padding: ${styleConstants.paddingM};
+  padding: ${styleConstants.padding300};
   color: ${({ theme }) => theme.text};
   min-width: 100%;
   width: 0;

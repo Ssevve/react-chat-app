@@ -15,8 +15,8 @@ const Button = styled.button`
   align-items: center;
   background: inherit;
   border: none;
-  gap: ${styleConstants.gapXL};
-  padding: ${styleConstants.paddingL};
+  gap: ${styleConstants.gap400};
+  padding: ${styleConstants.padding400};
   transition: border-left 0.1s ease-in-out;
   color: ${({ theme }) => theme.text};
   opacity: ${styleConstants.dimOpacity};
@@ -42,7 +42,7 @@ const Details = styled.section`
 
 const Meta = styled.section`
   display: flex;
-  gap: ${styleConstants.gapM};
+  gap: ${styleConstants.gap200};
   justify-content: space-between;
 `;
 

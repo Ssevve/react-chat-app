@@ -23,7 +23,7 @@ const UserPanel = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: ${styleConstants.paddingL};
+  padding: ${styleConstants.padding400};
   background: ${({ theme }) => theme.background600};
 `;
 

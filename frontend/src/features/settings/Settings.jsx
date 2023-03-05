@@ -11,10 +11,9 @@ const Wrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  row-gap: ${styleConstants.gapXXL};
-  padding: ${styleConstants.paddingS};
+  row-gap: ${styleConstants.gap1200};
+  padding: ${styleConstants.padding400};
   flex: 1;
-  z-index: 1;
   background: ${({ theme }) => theme.background300};
 `;
 
@@ -47,13 +46,13 @@ const SectionTitle = styled.h3`
 
 const ThemeSettingsWrapper = styled.section`
   display: flex;
-  gap: ${styleConstants.gapXXL};
+  gap: ${styleConstants.gap1200};
   margin-top: var(--padding);
 `;
 
 const Label = styled.label`
   display: flex;
-  gap: ${styleConstants.gapM};
+  gap: ${styleConstants.gap200};
   cursor: pointer;
 `;
 

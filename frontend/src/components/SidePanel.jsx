@@ -56,6 +56,7 @@ const Backdrop = styled.div`
   position: fixed;
   height: 100%;
   width: 100%;
+  z-index: 1;
 
   &.fade-appear {
     opacity: 0;

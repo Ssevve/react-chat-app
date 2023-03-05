@@ -15,7 +15,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: ${styleConstants.gapXXL};
+  gap: ${styleConstants.gap1200};
   @media (min-width: ${breakpoints.medium}) {
     flex-direction: row;
   }
@@ -23,7 +23,7 @@ const Container = styled.div`
 
 const Section = styled.section`
   display: grid;
-  gap: ${styleConstants.gapXXL};
+  gap: ${styleConstants.gap1200};
   @media (min-width: ${breakpoints.medium}) {
     flex: 1;
   }

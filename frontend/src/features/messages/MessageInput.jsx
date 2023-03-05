@@ -11,14 +11,14 @@ import styleConstants from 'shared/styleConstants';
 import SubmitButton from 'components/common/SubmitButton';
 
 const Wrapper = styled.section`
-  padding: ${styleConstants.paddingS} ${styleConstants.paddingL};
+  padding: ${styleConstants.padding200} ${styleConstants.padding400};
 `;
 
 const MessageForm = styled.form`
   display: flex;
   align-items: center;
-  gap: ${styleConstants.gapM};
-  padding: ${styleConstants.paddingS};
+  gap: ${styleConstants.gap200};
+  padding: ${styleConstants.padding200};
   background: ${({ theme }) => theme.background500};
   border-radius: var(--border-radius);
 `;

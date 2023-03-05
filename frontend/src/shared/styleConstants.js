@@ -4,15 +4,15 @@ const styleConstants = {
 
   boxShadow: '0 0 5px rgba(0, 0, 0, 0.2);',
 
-  paddingL: '1rem',
-  paddingM: '0.75rem',
-  paddingS: '0.5rem',
+  padding400: '1rem',
+  padding300: '0.75rem',
+  padding200: '0.5rem',
 
-  gapXXL: '3rem',
-  gapXL: '1rem',
-  gapL: '0.75rem',
-  gapM: '0.5rem',
-  gapS: '0.25rem',
+  gap1200: '3rem',
+  gap400: '1rem',
+  gap300: '0.75rem',
+  gap200: '0.5rem',
+  gap100: '0.25rem',
 
   sidePanelMaxWidth: '18.75rem', // 300px
   authSubmitButtonMinHeight: '2.625rem', // 42px

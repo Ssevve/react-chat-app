@@ -12,13 +12,13 @@ export const Section = styled.section`
 export const CurrentChatInfo = styled.section`
   box-shadow: ${styleConstants.boxShadow};
   background: ${({ theme }) => theme.background600};
-  padding: ${styleConstants.paddingL};
+  padding: ${styleConstants.padding400};
 `;
 
 export const Messages = styled.section`
   --footer-height: ${styleConstants.pageFooterHeight}
   max-height: calc(100% - var(--footer-height));
-  padding: ${styleConstants.paddingL};
+  padding: ${styleConstants.padding400};
   padding-bottom: 0;
   background: inherit;
   bottom: ${styleConstants.pageFooterHeight};
@@ -26,6 +26,6 @@ export const Messages = styled.section`
   display: grid;
   align-content: flex-start;
   flex: 1;
-  gap: ${styleConstants.gapXXL};
+  gap: ${styleConstants.gap1200};
   overflow-y: auto;
 `;
