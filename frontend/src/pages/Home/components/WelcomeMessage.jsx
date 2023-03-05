@@ -1,6 +1,5 @@
 import styled from 'styled-components/macro';
 import styleConstants from 'shared/styleConstants';
-import breakpoints from 'shared/breakpoints';
 
 export const WelcomeWrapper = styled.section`
   color: ${({ theme }) => theme.text};
@@ -10,21 +9,6 @@ export const WelcomeWrapper = styled.section`
   place-content: center;
   row-gap: ${styleConstants.gapXXL};
   flex: 1;
-  transition: opacity 0.1s ease-in-out;
-
-  ${({ sidePanelExpanded }) =>
-    sidePanelExpanded && {
-      opacity: '0.1',
-      pointerEvents: 'none',
-    }};
-
-  @media ${breakpoints.large} {
-    ${({ sidePanelExpanded }) =>
-      sidePanelExpanded && {
-        opacity: '1',
-        pointerEvents: 'initial',
-      }};
-  }
 `;
 
 export const WelcomeTitle = styled.h2`

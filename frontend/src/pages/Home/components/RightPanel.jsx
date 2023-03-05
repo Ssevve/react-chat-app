@@ -11,8 +11,7 @@ import Searchbar from 'features/search/Searchbar';
 import FriendInvites from 'features/friendInvites/FriendInvites';
 
 const StyledSidePanel = styled(SidePanel)`
-  @media ${breakpoints.xl} {
-    transform: translateX(0);
+  @media (min-width: ${breakpoints.xl}) {
     position: static;
   }
 `;
@@ -35,7 +34,7 @@ const Section = styled.section`
   align-content: start;
 `;
 
-function RightPanel({ expanded, setExpandRightPanel }) {
+function RightPanel({ expanded, forceExpandWidth, setExpandRightPanel }) {
   const searchResults = useSelector(selectFilteredSearchResults);
 
   const sectionContent = searchResults ? (
@@ -48,7 +47,7 @@ function RightPanel({ expanded, setExpandRightPanel }) {
   );
 
   return (
-    <StyledSidePanel anchor="right" expanded={expanded}>
+    <StyledSidePanel anchor="right" forceExpandWidth={forceExpandWidth} expanded={expanded}>
       <Title>{searchResults ? 'Search Friends' : 'Friends'}</Title>
       <Section>{sectionContent}</Section>
       <Searchbar />

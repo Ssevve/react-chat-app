@@ -19,6 +19,7 @@ import {
   subscribeToUserEvents,
   subscribeToFriendEvents,
 } from 'socketEvents';
+import breakpoints from 'shared/breakpoints';
 
 import Topbar from './components/Topbar';
 import LeftPanel from './components/LeftPanel';
@@ -66,8 +67,6 @@ function Home() {
 
   const isAppLoading =
     fetchingChats || fetchingFriends || fetchingFriendInvites || fetchingMessages;
-
-  const sidePanelExpanded = expandLeftPanel || expandRightPanel;
 
   useEffect(() => {
     // Fetch initial data
@@ -119,14 +118,16 @@ function Home() {
           setExpandRightPanel={setExpandRightPanel}
           anchor="left"
           expanded={expandLeftPanel}
+          forceExpandWidth={breakpoints.medium}
         />
-        {currentChat ? (
-          <MessagesBox sidePanelExpanded={sidePanelExpanded} />
-        ) : (
-          <WelcomeMessage sidePanelExpanded={sidePanelExpanded} />
-        )}
+
+        {currentChat ? <MessagesBox /> : <WelcomeMessage />}
         {showSettings && <Settings />}
-        <RightPanel expanded={expandRightPanel} setExpandRightPanel={setExpandRightPanel} />
+        <RightPanel
+          expanded={expandRightPanel}
+          setExpandRightPanel={setExpandRightPanel}
+          forceExpandWidth={breakpoints.xl}
+        />
       </Main>
     </Wrapper>
   );
