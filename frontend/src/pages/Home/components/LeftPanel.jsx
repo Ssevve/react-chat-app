@@ -10,7 +10,6 @@ import SidePanel from 'components/SidePanel';
 import ChatsList from 'features/chats/ChatsList';
 import User from 'components/common/User';
 import Button from 'components/common/Button';
-import useWindowWidth from 'hooks/useWindowWidth';
 
 const StyledSidePanel = styled(SidePanel)`
   grid-template-rows: 1fr ${styleConstants.pageFooterHeight};
@@ -44,14 +43,21 @@ function LeftPanel({ expanded, forceExpandWidth, setExpandLeftPanel, setExpandRi
     }
   };
 
+  const handleHidePanel = () => setExpandLeftPanel(false);
+
   const handleShowSettings = () => {
-    setExpandLeftPanel(false);
+    handleHidePanel();
     setExpandRightPanel(false);
     dispatch(toggleSettings());
   };
 
   return (
-    <StyledSidePanel anchor="left" forceExpandWidth={forceExpandWidth} expanded={expanded}>
+    <StyledSidePanel
+      anchor="left"
+      onBackdropClick={handleHidePanel}
+      forceExpandWidth={forceExpandWidth}
+      expanded={expanded}
+    >
       <ChatsList />
       <UserPanel>
         <User user={loggedInUser} />
