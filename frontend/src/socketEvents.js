@@ -5,9 +5,9 @@ const subscribeToMessageEvents = ({ socket, dispatch, addMessage, updateChat }) 
   });
 };
 
-const subscribeToUserEvents = ({ socket, setConnectedUsers }) => {
+const subscribeToUserEvents = ({ socket, dispatch, setConnectedUsers }) => {
   socket.on('receiveConnectedUsers', ({ users }) => {
-    setConnectedUsers(users);
+    dispatch(setConnectedUsers(users));
   });
 };
 

@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { io } from 'socket.io-client';
 import { updateChat, selectCurrentChat } from 'features/chats/chatsSlice';
 import { addMessage, fetchMessages } from 'features/messages/messagesSlice';
-import useConnectedUsers from 'hooks/useConnectedUsers';
+import { setConnectedUsers } from 'features/users/usersSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
 import { addFriend, removeFriend, fetchFriends } from 'features/friends/friendsSlice';
@@ -59,7 +59,6 @@ function Home() {
   const fetchingFriends = useSelector((state) => state.friends.loading);
   const fetchingFriendInvites = useSelector((state) => state.friendInvites.loading);
   const fetchingMessages = useSelector((state) => state.messages.loading);
-  const { setConnectedUsers } = useConnectedUsers();
   const [expandLeftPanel, setExpandLeftPanel] = useState(false);
   const [expandRightPanel, setExpandRightPanel] = useState(false);
   const socket = useRef(null);
@@ -77,7 +76,7 @@ function Home() {
 
     socket.current = io(process.env.REACT_APP_SOCKET_URL, { auth: { userId: loggedInUser._id } });
     subscribeToMessageEvents({ socket: socket.current, dispatch, addMessage, updateChat });
-    subscribeToUserEvents({ socket: socket.current, setConnectedUsers });
+    subscribeToUserEvents({ socket: socket.current, dispatch, setConnectedUsers });
     subscribeToFriendEvents({
       socket: socket.current,
       dispatch,

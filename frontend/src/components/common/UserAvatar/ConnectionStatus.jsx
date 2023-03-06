@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro';
-import useConnectedUsers from 'hooks/useConnectedUsers';
+import { useSelector } from 'react-redux';
+import { selectConnectedUsers } from 'features/users/usersSlice';
 
 const Wrapper = styled.div`
   --size: 0.8rem;
@@ -23,7 +24,7 @@ const StyledSpan = styled.span`
 `;
 
 function ConnectionStatus({ userId }) {
-  const { connectedUsers } = useConnectedUsers();
+  const connectedUsers = useSelector(selectConnectedUsers);
 
   const isOnline = userId in connectedUsers;
 
