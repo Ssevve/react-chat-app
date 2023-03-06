@@ -21,12 +21,6 @@ const Username = styled.span`
   color: ${({ theme }) => theme.text};
 `;
 
-const StatusText = styled.span`
-  font-size: 0.8rem;
-  color: ${({ theme }) => theme.text};
-  opacity: ${styleConstants.dimOpacity};
-`;
-
 function User({ user, className }) {
   return (
     user && (
@@ -34,7 +28,6 @@ function User({ user, className }) {
         <UserAvatar showConnectionStatus user={user} />
         <Details>
           <Username>{user.username}</Username>
-          {user.statusText ? <StatusText>{user.statusText}</StatusText> : null}
         </Details>
       </Wrapper>
     )

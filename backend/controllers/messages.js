@@ -54,7 +54,7 @@ const createNewMessage = async (req, res) => {
     await newMessage.save();
     await newMessage.populate('sender', 'username avatar.url');
     await updatedChat.populate('lastMessage', 'content sender createdAt');
-    await updatedChat.populate('members', 'username avatar.url statusText');
+    await updatedChat.populate('members', 'username avatar.url');
 
     const responseData = {
       newMessage,
