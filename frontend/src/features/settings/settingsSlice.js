@@ -5,7 +5,7 @@ const initialState = {
   showSettings: false,
 };
 
-export const settings = createSlice({
+export const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
@@ -21,6 +21,6 @@ export const settings = createSlice({
   },
 });
 
-export const { setTheme, toggleSettings, closeSettings } = settings.actions;
+export const { setTheme, toggleSettings, closeSettings } = settingsSlice.actions;
 
-export default settings.reducer;
+export default settingsSlice.reducer;
