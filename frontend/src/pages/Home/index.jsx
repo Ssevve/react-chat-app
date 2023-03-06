@@ -50,6 +50,13 @@ const Main = styled.main`
   overflow-x: hidden;
 `;
 
+const MidSection = styled.section`
+  display: flex;
+  justify-content: center;
+  position: relative;
+  flex: 1;
+`;
+
 function Home() {
   const dispatch = useDispatch();
   const showSettings = useSelector((state) => state.settings.showSettings);
@@ -119,9 +126,10 @@ function Home() {
           expanded={expandLeftPanel}
           forceExpandWidth={breakpoints.medium}
         />
-
-        {currentChat ? <MessagesBox /> : <WelcomeMessage />}
-        {showSettings && <Settings />}
+        <MidSection>
+          {currentChat ? <MessagesBox /> : <WelcomeMessage />}
+          {showSettings && <Settings />}
+        </MidSection>
         <RightPanel
           expanded={expandRightPanel}
           setExpandRightPanel={setExpandRightPanel}
