@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 import { selectFriends } from 'features/friends/friendsSlice';
-import useConnectedUsers from 'hooks/useConnectedUsers';
+import { selectConnectedUsers } from 'features/users/usersSlice';
 
 import DropdownList from 'components/common/DropdownList';
 import Friend from 'features/friends/Friend';
 
 function FriendsList({ setExpandRightPanel }) {
   const friends = Object.values(useSelector(selectFriends));
-  const { connectedUsers } = useConnectedUsers();
+  const connectedUsers = useSelector(selectConnectedUsers);
   const online = friends.filter((friend) => friend._id in connectedUsers);
   const offline = friends.filter((friend) => !(friend._id in connectedUsers));
 
