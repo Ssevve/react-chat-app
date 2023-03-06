@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro';
-import breakpoints from 'shared/breakpoints';
 import styleConstants from 'shared/styleConstants';
 
 export const StyledDiv = styled.div`
@@ -9,13 +8,7 @@ export const StyledDiv = styled.div`
   gap: ${styleConstants.gap200};
   color: ${({ theme }) => theme.text};
   width: 75%;
-  max-width: 300px; // TODO: temp fix: messages overflow, try to make it better
   background: inherit;
-
-  @media (min-width: ${breakpoints.xl}) {
-    width: 50%;
-    max-width: 500px;
-  }
 `;
 
 export const Meta = styled.div`
@@ -41,10 +34,7 @@ export const Content = styled.p`
   color: ${({ own, theme }) => (own ? theme.ownMessageText : theme.text)};
   padding: ${styleConstants.padding300};
   word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
   line-height: 1.5;
-  max-width: 300px; // TODO: temp fix: messages overflow, try to make it better
-
-  @media (min-width: ${breakpoints.xl}) {
-    max-width: 500px;
-  }
 `;
