@@ -27,19 +27,6 @@ const userSchema = mongoose.Schema(
         type: String,
         default: '',
       },
-      cloudinaryId: {
-        type: String,
-        default: '',
-      },
-    },
-    statusText: {
-      type: String,
-      default: '',
-    },
-    role: {
-      type: String,
-      enum: ['admin', 'user'],
-      default: 'user',
     },
   },
   {

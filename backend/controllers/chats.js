@@ -11,7 +11,7 @@ const getChatsForCurrentUser = async (req, res) => {
         },
         {
           path: 'members',
-          select: 'username avatar.url statusText',
+          select: 'username avatar.url',
         },
       ])
       .exec();
@@ -36,17 +36,5 @@ const createNewChat = async (req, res) => {
     res.status(500).json(err);
   }
 };
-
-// const updateLastMessage = async (req, res) => {
-//   try {
-//     const chat = await Chat.findOne({ _id: req.params.chatId });
-//     if (!chat) res.status(404).json({ message: 'Chat with provided ID not found' });
-//     chat.lastMessage = req.body.lastMessageId;
-//     chat.save();
-//     res.status(200).json(chat);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// };
 
 module.exports = { getChatsForCurrentUser, createNewChat };

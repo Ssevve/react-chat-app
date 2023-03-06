@@ -7,7 +7,6 @@ const getUserById = async (req, res) => {
     res.status(200).json({
       _id: user._id,
       avatar: user.avatar,
-      statusText: user.statusText,
       username: user.username,
     });
   } catch (err) {
@@ -22,7 +21,7 @@ const getFriendsByUserId = async (req, res) => {
 
     const friendsData = await Promise.all(
       user.friends.map((friendId) => {
-        return User.findOne({ _id: friendId }, 'username statusText avatar.url');
+        return User.findOne({ _id: friendId }, 'username avatar.url');
       }),
     );
     res.status(200).json(friendsData);
@@ -36,18 +35,12 @@ const addFriend = async (req, res) => {
   const connectedUsers = req.app.get('connectedUsers');
   const { senderId } = req.params;
   try {
-    const acceptingUser = await User.findOne(
-      { _id: req.user._id },
-      'username statusText avatar.url friends',
-    );
+    const acceptingUser = await User.findOne({ _id: req.user._id }, 'username avatar.url friends');
     acceptingUser.friends.push(senderId);
     await acceptingUser.save();
     delete acceptingUser.friends; // Don't need friends in the response
 
-    const newFriend = await User.findOne(
-      { _id: senderId },
-      'username statusText avatar.url friends',
-    );
+    const newFriend = await User.findOne({ _id: senderId }, 'username avatar.url friends');
     newFriend.friends.push(req.user._id);
     await newFriend.save();
 
