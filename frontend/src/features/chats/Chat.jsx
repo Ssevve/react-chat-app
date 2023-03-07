@@ -4,7 +4,7 @@ import { format } from 'timeago.js';
 import { useSelector } from 'react-redux';
 import styleConstants from 'shared/styleConstants';
 
-import UserAvatar from 'components/common/UserAvatar';
+import UserAvatar from 'features/users/UserAvatar';
 import { selectUser } from 'features/auth/authSlice';
 import { selectCurrentChat } from './chatsSlice';
 

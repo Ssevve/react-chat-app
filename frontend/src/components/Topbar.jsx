@@ -3,7 +3,7 @@ import { FiMenu, FiUsers } from 'react-icons/fi';
 import breakpoints from 'shared/breakpoints';
 import styleConstants from 'shared/styleConstants';
 
-import Logo from 'components/common/Logo';
+import Logo from 'components/Logo';
 
 const Header = styled.header`
   min-height: ${styleConstants.pageHeaderHeight};

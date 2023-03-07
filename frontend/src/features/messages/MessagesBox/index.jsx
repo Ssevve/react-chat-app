@@ -6,7 +6,7 @@ import { selectUser } from 'features/auth/authSlice';
 
 import Message from 'features/messages/Message';
 import MessageInput from '../MessageInput';
-import User from 'components/common/User';
+import User from 'features/users/User';
 import Spinner from 'components/common/Spinner';
 
 import { Section, CurrentChatInfo, Messages } from './styles';

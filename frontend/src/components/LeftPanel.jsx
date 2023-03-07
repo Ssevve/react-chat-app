@@ -8,7 +8,7 @@ import styleConstants from 'shared/styleConstants';
 
 import SidePanel from 'components/SidePanel';
 import ChatsList from 'features/chats/ChatsList';
-import User from 'components/common/User';
+import User from 'features/users/User';
 import Button from 'components/common/Button';
 
 const StyledSidePanel = styled(SidePanel)`
