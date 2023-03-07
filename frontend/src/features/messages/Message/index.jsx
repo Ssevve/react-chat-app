@@ -2,7 +2,7 @@ import { format } from 'timeago.js';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
 
-import UserAvatar from 'components/common/UserAvatar';
+import UserAvatar from 'features/users/UserAvatar';
 
 import { StyledDiv, Meta, Username, Time, Content } from './styles';
 

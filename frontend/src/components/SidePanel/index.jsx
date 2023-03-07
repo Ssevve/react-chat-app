@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components/macro';
 import styleConstants from 'shared/styleConstants';
-import useWindowWidth from 'hooks/useWindowWidth';
+import useWindowWidth from './useWindowWidth';
 
 const StyledDiv = styled.div`
   --header-height: ${styleConstants.pageHeaderHeight};

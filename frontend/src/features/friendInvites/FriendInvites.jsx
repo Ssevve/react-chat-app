@@ -6,7 +6,7 @@ import { addFriendById } from 'features/friends/friendsSlice';
 import { selectFriendInvites, deleteFriendInvite } from 'features/friendInvites/friendInvitesSlice';
 
 import DropdownList from 'components/common/DropdownList';
-import User from 'components/common/User';
+import User from 'features/users/User';
 import Button from 'components/common/Button';
 
 const Wrapper = styled.div`

@@ -6,7 +6,7 @@ import { closeSettings } from 'features/settings/settingsSlice';
 import { selectAllChats, setCurrentChat } from 'features/chats/chatsSlice';
 import { removeFriendById } from './friendsSlice';
 
-import User from 'components/common/User';
+import User from 'features/users/User';
 import Button from 'components/common/Button';
 
 const Wrapper = styled.section`

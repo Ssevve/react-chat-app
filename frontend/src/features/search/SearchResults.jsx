@@ -5,7 +5,7 @@ import { createFriendInvite } from 'features/friendInvites/friendInvitesSlice';
 import { selectFilteredSearchResults } from './searchSlice';
 
 import Spinner from 'components/common/Spinner';
-import User from 'components/common/User';
+import User from 'features/users/User';
 import Button from 'components/common/Button';
 import styleConstants from 'shared/styleConstants';
 
