@@ -4,6 +4,7 @@ import client from 'utils/api';
 const initialState = {
   messages: [],
   loading: false,
+  sendingMessage: false,
   error: null,
 };
 
@@ -44,16 +45,19 @@ export const messagesSlice = createSlice({
       state.messages = [];
     });
     builder.addCase(createNewMessage.pending, (state) => {
-      state.loading = true;
+      state.loading = false;
+      state.sendingMessage = true;
       state.error = null;
     });
     builder.addCase(createNewMessage.fulfilled, (state, action) => {
       state.loading = false;
+      state.sendingMessage = false;
       state.error = null;
       state.messages.push(action.payload.newMessage);
     });
     builder.addCase(createNewMessage.rejected, (state, action) => {
       state.loading = false;
+      state.sendingMessage = false;
       state.error = action.error.message;
     });
   },
