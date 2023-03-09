@@ -5,7 +5,7 @@ import { selectAccessToken } from 'features/auth/authSlice';
 import styled from 'styled-components';
 import { selectUser } from 'features/auth/authSlice';
 import { selectCurrentChat, setCurrentChat, updateChat } from 'features/chats/chatsSlice';
-import { createNewMessage } from './messagesSlice';
+import { createNewMessage } from '../messagesSlice';
 import styleConstants from 'shared/styleConstants';
 
 import SubmitButton from 'components/common/SubmitButton';
@@ -47,7 +47,11 @@ function MessageInput() {
   const accessToken = useSelector(selectAccessToken);
   const inputRef = useRef('');
 
-  const handleSubmit = async (e) => {
+  console.log(useDispatch);
+  console.log(useDispatch());
+  console.log(dispatch);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!inputRef.current.value) return;
 
@@ -59,7 +63,8 @@ function MessageInput() {
       accessToken,
     };
 
-    const { payload } = await dispatch(createNewMessage(data));
+    console.log(dispatch);
+    const { payload } = dispatch(createNewMessage(data));
     const { updatedChat } = payload;
 
     dispatch(updateChat(updatedChat));
