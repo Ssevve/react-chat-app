@@ -1,15 +1,15 @@
+import React from 'react';
 import { render } from '@testing-library/react';
-import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-
-import usersReducer from 'features/users/usersSlice';
+// As a basic setup, import your same slice reducers
+import { setupStore } from 'app/store';
 
 export function renderWithProviders(
   ui,
   {
     preloadedState = {},
     // Automatically create a store instance if no store was passed in
-    store = configureStore({ reducer: { users: usersReducer }, preloadedState }),
+    store = setupStore(preloadedState),
     ...renderOptions
   } = {},
 ) {

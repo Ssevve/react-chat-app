@@ -6,7 +6,7 @@ import styleConstants from 'shared/styleConstants';
 
 import UserAvatar from 'features/users/UserAvatar';
 import { selectUser } from 'features/auth/authSlice';
-import { selectCurrentChat } from './chatsSlice';
+import { selectCurrentChat } from '../chatsSlice';
 
 const Button = styled.button`
   display: flex;
