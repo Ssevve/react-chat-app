@@ -31,3 +31,10 @@ const resettableRootReducer = (state, action) => {
 export const store = configureStore({
   reducer: resettableRootReducer,
 });
+
+export const setupStore = (preloadedState) => {
+  return configureStore({
+    reducer: resettableRootReducer,
+    preloadedState,
+  });
+};
