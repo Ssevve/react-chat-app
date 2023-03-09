@@ -1,9 +1,9 @@
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-
+import '__mocks__/matchMediaMock';
 import { renderWithProviders } from 'utils/testUtils';
 
-import UserAvatar from '../UserAvatar';
+import UserAvatar from '../index';
 import avatarPlaceholder from 'assets/no-avatar.jpg';
 
 const testUser = {
