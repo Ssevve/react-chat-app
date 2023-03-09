@@ -134,7 +134,13 @@ function SidePanel({ anchor, onBackdropClick, forceExpandWidth, expanded, classN
         classNames="slide"
         unmountOnExit
       >
-        <StyledDiv ref={panelRef} anchor={anchor} expanded={expanded} className={className}>
+        <StyledDiv
+          ref={panelRef}
+          anchor={anchor}
+          expanded={expanded}
+          className={className}
+          data-testid="sidePanel"
+        >
           {children}
         </StyledDiv>
       </CSSTransition>
