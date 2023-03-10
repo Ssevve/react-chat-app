@@ -25,9 +25,16 @@ const StyledButton = styled.button`
   }
 `;
 
-function Button({ onClick, dim, variant, className, children }) {
+function Button({ onClick, dim, variant, className, children, ...rest }) {
   return (
-    <StyledButton dim={dim} type="button" onClick={onClick} variant={variant} className={className}>
+    <StyledButton
+      dim={dim}
+      type="button"
+      onClick={onClick}
+      variant={variant}
+      className={className}
+      {...rest}
+    >
       {children}
     </StyledButton>
   );

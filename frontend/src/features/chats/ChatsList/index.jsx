@@ -1,10 +1,10 @@
 import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentChat, selectSortedChats, selectCurrentChat } from './chatsSlice';
+import { setCurrentChat, selectSortedChats, selectCurrentChat } from '../chatsSlice';
 import { closeSettings } from 'features/settings/settingsSlice';
 
 import DropdownList from 'components/common/DropdownList';
-import Chat from './Chat';
+import Chat from '../Chat';
 
 const Wrapper = styled.section`
   background: inherit;
@@ -24,14 +24,16 @@ function ChatsList() {
   return (
     <Wrapper>
       <DropdownList title="Direct messages" noItemPadding>
-        {chats.map((chat) => (
-          <Chat
-            key={chat._id}
-            chat={chat}
-            currentChat={currentChat}
-            onClick={() => handleFriendClick(chat)}
-          />
-        ))}
+        {chats.length
+          ? chats.map((chat) => (
+              <Chat
+                key={chat._id}
+                chat={chat}
+                currentChat={currentChat}
+                onClick={() => handleFriendClick(chat)}
+              />
+            ))
+          : null}
       </DropdownList>
     </Wrapper>
   );
