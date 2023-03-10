@@ -47,10 +47,6 @@ function MessageInput() {
   const accessToken = useSelector(selectAccessToken);
   const inputRef = useRef('');
 
-  console.log(useDispatch);
-  console.log(useDispatch());
-  console.log(dispatch);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!inputRef.current.value) return;
