@@ -2,54 +2,30 @@ import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import '__mocks__/matchMediaMock';
 import { renderWithProviders } from 'utils/testUtils';
+import singleChatMock from '__mocks__/singlechatMock';
+import authMock from '__mocks__/authMock';
 
 import Chat from '..';
 
-const testChat = {
-  _id: '1',
-  members: [
-    {
-      _id: '2',
-      username: 'TestUser',
-      avatar: {
-        url: '',
-      },
-    },
-    {
-      _id: '3',
-      username: 'TestUser2',
-      avatar: {
-        url: '',
-      },
-    },
-  ],
-  lastMessage: {
-    id: '4',
-    content: 'Hello',
-    sender: '2',
-    createdAt: Date.now(),
-  },
+const preloadedState = {
+  auth: authMock,
 };
 
-const preloadedState = {
-  auth: {
-    user: { _id: '2' },
-  },
-};
+const testChat = singleChatMock[0];
 
 test('renders an avatar of a chat partner', () => {
   renderWithProviders(<Chat chat={testChat} />, { preloadedState });
-  expect(screen.getByAltText('TestUser2')).toBeInTheDocument();
+  expect(screen.getByAltText('TestUser')).toBeInTheDocument();
 });
 
 test('renders a username of a chat partner', () => {
   renderWithProviders(<Chat chat={testChat} />, { preloadedState });
-  expect(screen.getByText('TestUser2')).toBeInTheDocument();
+  expect(screen.getByText('TestUser')).toBeInTheDocument();
 });
 
-test('renders last messages content', () => {
+test("renders last message's content", () => {
   renderWithProviders(<Chat chat={testChat} />, { preloadedState });
-  expect(screen.getByText('Hello')).toBeInTheDocument();
+  expect(screen.getByText('Test message')).toBeInTheDocument();
 });
 
 test('renders the time passed from the last message', () => {

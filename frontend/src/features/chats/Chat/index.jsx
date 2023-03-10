@@ -77,7 +77,13 @@ function Chat({ chat, onClick }) {
 
   return chatPartner ? (
     <>
-      <Button currentChat={currentChat} chat={chat} type="button" onClick={onClick}>
+      <Button
+        aria-label={`Chat with ${chatPartner.username}`}
+        currentChat={currentChat}
+        chat={chat}
+        type="button"
+        onClick={onClick}
+      >
         <UserAvatar showConnectionStatus user={chatPartner} />
         <Details>
           <Meta>
