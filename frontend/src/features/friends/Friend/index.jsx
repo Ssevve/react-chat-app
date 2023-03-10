@@ -4,7 +4,7 @@ import { FiMessageCircle, FiUserMinus } from 'react-icons/fi';
 import { selectUser } from 'features/auth/authSlice';
 import { closeSettings } from 'features/settings/settingsSlice';
 import { selectAllChats, setCurrentChat } from 'features/chats/chatsSlice';
-import { removeFriendById } from './friendsSlice';
+import { removeFriendById } from '../friendsSlice';
 
 import User from 'features/users/User';
 import Button from 'components/common/Button';
