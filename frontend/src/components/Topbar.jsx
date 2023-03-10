@@ -37,7 +37,7 @@ const RightPanelButton = styled(Button)`
   }
 `;
 
-function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
+function Topbar({ expandLeftPanel, expandRightPanel, setExpandLeftPanel, setExpandRightPanel }) {
   const handleLeftPanelExpand = () => {
     setExpandRightPanel(false);
     setExpandLeftPanel((prev) => !prev);
@@ -51,12 +51,20 @@ function Topbar({ setExpandLeftPanel, setExpandRightPanel }) {
   return (
     <Header>
       <Logo hideOnMobile />
-      <LeftPanelButton type="button" onClick={handleLeftPanelExpand}>
-        <FiMenu size="1.5rem" />
+      <LeftPanelButton
+        type="button"
+        aria-label={expandLeftPanel ? 'Show direct messages' : 'Hide direct messages'}
+        onClick={handleLeftPanelExpand}
+      >
+        <FiMenu aria-hidden="true" size="1.5rem" />
       </LeftPanelButton>
       <Logo hideOnTablet />
-      <RightPanelButton type="button" onClick={handleRightPanelExpand}>
-        <FiUsers size="1.5rem" />
+      <RightPanelButton
+        type="button"
+        aria-label={expandRightPanel ? 'Show friends' : 'Hide friends'}
+        onClick={handleRightPanelExpand}
+      >
+        <FiUsers aria-hidden="true" size="1.5rem" />
       </RightPanelButton>
     </Header>
   );

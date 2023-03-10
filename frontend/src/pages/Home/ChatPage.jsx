@@ -42,7 +42,12 @@ function ChatPage() {
 
   return (
     <Wrapper>
-      <Topbar setExpandLeftPanel={setExpandLeftPanel} setExpandRightPanel={setExpandRightPanel} />
+      <Topbar
+        expandLeftPanel={expandLeftPanel}
+        expandRightPanel={expandRightPanel}
+        setExpandLeftPanel={setExpandLeftPanel}
+        setExpandRightPanel={setExpandRightPanel}
+      />
       <Main expandRightPanel={expandRightPanel}>
         <LeftPanel
           setExpandLeftPanel={setExpandLeftPanel}
