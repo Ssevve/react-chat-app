@@ -24,7 +24,7 @@ function FriendInvites() {
   const dispatch = useDispatch();
   const loggedInUser = useSelector(selectUser);
   const friendInvites = useSelector(selectFriendInvites);
-  const isLoading = useSelector((state) => state.friends.loading);
+  const deletingFriendInvite = useSelector((state) => state.friendInvites.deletingFriendInvite);
 
   const cancelInvite = (invite) => dispatch(deleteFriendInvite(invite._id));
   const acceptInvite = (invite) => {
@@ -48,15 +48,21 @@ function FriendInvites() {
                 <Buttons>
                   {invite.sender._id !== loggedInUser._id && (
                     <Button
+                      aria-label="Accept invite"
                       variant="success"
-                      disabled={isLoading}
+                      disabled={deletingFriendInvite}
                       onClick={() => acceptInvite(invite)}
                     >
-                      <FiCheckCircle size="1.5rem" />
+                      <FiCheckCircle aria-hidden="true" size="1.5rem" />
                     </Button>
                   )}
-                  <Button variant="danger" onClick={() => cancelInvite(invite)}>
-                    <FiXCircle size="1.5rem" />
+                  <Button
+                    aria-label="Cancel invite"
+                    disabled={deletingFriendInvite}
+                    variant="danger"
+                    onClick={() => cancelInvite(invite)}
+                  >
+                    <FiXCircle aria-hidden="true" size="1.5rem" />
                   </Button>
                 </Buttons>
               </Wrapper>
