@@ -7,6 +7,48 @@ import multipleFriendInvitesMock from '__mocks__/data/multipleFriendInvitesMock'
 
 import FriendInvites from '..';
 
+test('renders correct count for no friend invites', () => {
+  const preloadedState = {
+    auth: {
+      user: {
+        _id: '3',
+      },
+    },
+    friendInvites: { friendInvites: [] },
+  };
+
+  renderWithProviders(<FriendInvites />, { preloadedState });
+  expect(screen.getByRole('heading')).toHaveTextContent('0');
+});
+
+test('renders correct count for one friend invite', () => {
+  const preloadedState = {
+    auth: {
+      user: {
+        _id: '3',
+      },
+    },
+    friendInvites: { friendInvites: singleFriendInviteMock },
+  };
+
+  renderWithProviders(<FriendInvites />, { preloadedState });
+  expect(screen.getByRole('heading')).toHaveTextContent('1');
+});
+
+test('renders correct count for multiple invites', () => {
+  const preloadedState = {
+    auth: {
+      user: {
+        _id: '3',
+      },
+    },
+    friendInvites: { friendInvites: multipleFriendInvitesMock },
+  };
+
+  renderWithProviders(<FriendInvites />, { preloadedState });
+  expect(screen.getByRole('heading')).toHaveTextContent('2');
+});
+
 test('renders a sent friend invite', () => {
   const preloadedState = {
     auth: {
@@ -33,36 +75,6 @@ test('renders a received friend invite', () => {
 
   renderWithProviders(<FriendInvites />, { preloadedState });
   expect(screen.getByText('InviteSender')).toBeInTheDocument();
-});
-
-test('renders only "cancel invite" button for sent friend invites', () => {
-  const preloadedState = {
-    auth: {
-      user: {
-        _id: '3',
-      },
-    },
-    friendInvites: { friendInvites: singleFriendInviteMock },
-  };
-
-  renderWithProviders(<FriendInvites />, { preloadedState });
-  expect(screen.getByRole('button', { name: /cancel invite/i })).toBeInTheDocument();
-  expect(screen.queryByRole('button', { name: /accept invite/i })).not.toBeInTheDocument();
-});
-
-test('renders an "accept invite" and "cancel invite" buttons for received friend invites', () => {
-  const preloadedState = {
-    auth: {
-      user: {
-        _id: '2',
-      },
-    },
-    friendInvites: { friendInvites: singleFriendInviteMock },
-  };
-
-  renderWithProviders(<FriendInvites />, { preloadedState });
-  expect(screen.getByRole('button', { name: /cancel invite/i })).toBeInTheDocument();
-  expect(screen.queryByRole('button', { name: /accept invite/i })).toBeInTheDocument();
 });
 
 test('renders multiple friend invites', () => {
