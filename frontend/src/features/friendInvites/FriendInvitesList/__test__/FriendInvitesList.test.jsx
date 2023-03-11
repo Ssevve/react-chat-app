@@ -2,8 +2,7 @@ import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import '__mocks__/matchMediaMock';
 import { renderWithProviders } from 'utils/testUtils';
-import singleFriendInviteMock from '__mocks__/data/singleFriendInviteMock';
-import multipleFriendInvitesMock from '__mocks__/data/multipleFriendInvitesMock';
+import friendInvitesMock from '__mocks__/data/friendInvitesMock';
 
 import FriendInvites from '..';
 
@@ -28,7 +27,7 @@ test('renders correct count for one friend invite', () => {
         _id: '3',
       },
     },
-    friendInvites: { friendInvites: singleFriendInviteMock },
+    friendInvites: { friendInvites: [friendInvitesMock[0]] },
   };
 
   renderWithProviders(<FriendInvites />, { preloadedState });
@@ -42,7 +41,7 @@ test('renders correct count for multiple invites', () => {
         _id: '3',
       },
     },
-    friendInvites: { friendInvites: multipleFriendInvitesMock },
+    friendInvites: { friendInvites: friendInvitesMock },
   };
 
   renderWithProviders(<FriendInvites />, { preloadedState });
@@ -56,11 +55,11 @@ test('renders a sent friend invite', () => {
         _id: '3',
       },
     },
-    friendInvites: { friendInvites: singleFriendInviteMock },
+    friendInvites: { friendInvites: [friendInvitesMock[0]] },
   };
 
   renderWithProviders(<FriendInvites />, { preloadedState });
-  expect(screen.getByText('InviteReceiver')).toBeInTheDocument();
+  expect(screen.getByText('FirstInviteReceiver')).toBeInTheDocument();
 });
 
 test('renders a received friend invite', () => {
@@ -70,11 +69,11 @@ test('renders a received friend invite', () => {
         _id: '2',
       },
     },
-    friendInvites: { friendInvites: singleFriendInviteMock },
+    friendInvites: { friendInvites: [friendInvitesMock[0]] },
   };
 
   renderWithProviders(<FriendInvites />, { preloadedState });
-  expect(screen.getByText('InviteSender')).toBeInTheDocument();
+  expect(screen.getByText('FirstInviteSender')).toBeInTheDocument();
 });
 
 test('renders multiple friend invites', () => {
@@ -84,7 +83,7 @@ test('renders multiple friend invites', () => {
         _id: '2',
       },
     },
-    friendInvites: { friendInvites: multipleFriendInvitesMock },
+    friendInvites: { friendInvites: friendInvitesMock },
   };
 
   renderWithProviders(<FriendInvites />, { preloadedState });
