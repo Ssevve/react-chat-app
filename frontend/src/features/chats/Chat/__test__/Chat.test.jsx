@@ -2,13 +2,16 @@ import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import '__mocks__/matchMediaMock';
 import { renderWithProviders } from 'utils/testUtils';
-import singleChatMock from '__mocks__/singlechatMock';
-import authMock from '__mocks__/authMock';
+import singleChatMock from '__mocks__/data/singlechatMock';
 
 import Chat from '..';
 
 const preloadedState = {
-  auth: authMock,
+  auth: {
+    user: {
+      _id: '3',
+    },
+  },
 };
 
 const testChat = singleChatMock[0];
