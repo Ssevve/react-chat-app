@@ -2,8 +2,8 @@ import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import '__mocks__/matchMediaMock';
 import { renderWithProviders } from 'utils/testUtils';
-import singleChatMock from '__mocks__/data/singleChatMock';
-import multipleChatsMock from '__mocks__/data/multipleChatsMock';
+// import singleChatMock from '__mocks__/data/singleChatMock';
+import chatsMock from '__mocks__/data/chatsMock';
 
 import ChatsList from '..';
 
@@ -14,11 +14,11 @@ test('renders single chat', () => {
         _id: '3',
       },
     },
-    chats: { chats: singleChatMock },
+    chats: { chats: [chatsMock[0]] },
   };
 
   renderWithProviders(<ChatsList />, { preloadedState });
-  expect(screen.getByText('Test message')).toBeInTheDocument();
+  expect(screen.getByText('First test message')).toBeInTheDocument();
 });
 
 test('renders multiple chats', () => {
@@ -28,7 +28,7 @@ test('renders multiple chats', () => {
         _id: '3',
       },
     },
-    chats: { chats: multipleChatsMock },
+    chats: { chats: chatsMock },
   };
 
   renderWithProviders(<ChatsList />, { preloadedState });
