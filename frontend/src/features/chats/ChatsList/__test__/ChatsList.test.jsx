@@ -2,7 +2,6 @@ import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import '__mocks__/matchMediaMock';
 import { renderWithProviders } from 'utils/testUtils';
-// import singleChatMock from '__mocks__/data/singleChatMock';
 import chatsMock from '__mocks__/data/chatsMock';
 
 import ChatsList from '..';

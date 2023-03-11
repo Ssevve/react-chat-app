@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import '__mocks__/matchMediaMock';
 import { renderWithProviders } from 'utils/testUtils';
-import singleChatMock from '__mocks__/data/singlechatMock';
+import chatsMock from '__mocks__/data/chatsMock';
 
 import Chat from '..';
 
@@ -14,7 +14,7 @@ const preloadedState = {
   },
 };
 
-const testChat = singleChatMock[0];
+const testChat = chatsMock[0];
 
 test('renders an avatar of a chat partner', () => {
   renderWithProviders(<Chat chat={testChat} />, { preloadedState });
@@ -28,7 +28,7 @@ test('renders a username of a chat partner', () => {
 
 test("renders last message's content", () => {
   renderWithProviders(<Chat chat={testChat} />, { preloadedState });
-  expect(screen.getByText('Test message')).toBeInTheDocument();
+  expect(screen.getByText('First test message')).toBeInTheDocument();
 });
 
 test('renders the time passed from the last message', () => {
