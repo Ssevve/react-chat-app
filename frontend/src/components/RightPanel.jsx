@@ -8,7 +8,7 @@ import SidePanel from 'components/SidePanel';
 import FriendsList from 'features/friends/FriendsList';
 import SearchResults from 'features/search/SearchResults';
 import Searchbar from 'features/search/Searchbar';
-import FriendInvites from 'features/friendInvites/FriendInvites';
+import FriendInvites from 'features/friendInvites/FriendInvitesList';
 
 const StyledSidePanel = styled(SidePanel)`
   @media (min-width: ${breakpoints.xl}) {
