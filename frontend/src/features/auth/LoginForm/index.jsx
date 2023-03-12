@@ -3,20 +3,20 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import loginSchema from './schemas/loginSchema';
+import loginSchema from '../schemas/loginSchema';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from './authSlice';
+import { login } from '../authSlice';
 import styleConstants from 'shared/styleConstants';
 
 import SubmitButton from 'components/common/SubmitButton';
-import AlertBox from './form/AlertBox';
-import FormTitle from './form/FormTitle';
-import Form from './form/Form';
-import Label from './form/Label';
-import Input from './form/Input';
-import ErrorMessage from './form/ErrorMessage';
-import Divider from './form/Divider';
-import DemoUserInfo from './DemoUserInfo';
+import AlertBox from '../form/AlertBox';
+import FormTitle from '../form/FormTitle';
+import Form from '../form/Form';
+import Label from '../form/Label';
+import Input from '../form/Input';
+import ErrorMessage from '../form/ErrorMessage';
+import Divider from '../form/Divider';
+import DemoUserInfo from '../DemoUserInfo';
 
 const NeedAccount = styled.p`
   font-size: 0.875rem;
@@ -82,7 +82,7 @@ function LoginForm() {
     : 'Account created successfully. You can now log in.';
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)} ariaLabel="Log in">
       <FormTitle>Log in</FormTitle>
       {showAlertBox ? <AlertBox variant={alertBoxType}>{alertMessage}</AlertBox> : null}
       <DemoUserInfo />

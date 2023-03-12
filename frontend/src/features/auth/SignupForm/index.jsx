@@ -3,19 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import { signup, clearFetchError } from './authSlice';
+import { signup, clearFetchError } from '../authSlice';
 import styled from 'styled-components/macro';
-import signupSchema from './schemas/signupSchema';
+import signupSchema from '../schemas/signupSchema';
 import styleConstants from 'shared/styleConstants';
 
 import SubmitButton from 'components/common/SubmitButton';
-import AlertBox from './form/AlertBox';
-import FormTitle from './form/FormTitle';
-import Form from './form/Form';
-import Label from './form/Label';
-import Input from './form/Input';
-import ErrorMessage from './form/ErrorMessage';
-import Divider from './form/Divider';
+import AlertBox from '../form/AlertBox';
+import FormTitle from '../form/FormTitle';
+import Form from '../form/Form';
+import Label from '../form/Label';
+import Input from '../form/Input';
+import ErrorMessage from '../form/ErrorMessage';
+import Divider from '../form/Divider';
 
 const HaveAccount = styled.p`
   font-size: 0.875rem;
@@ -70,7 +70,7 @@ function SignupForm() {
   const fetchError = !usernameTaken && signupError;
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)} ariaLabel="Sign up">
       <FormTitle>Sign up</FormTitle>
       {fetchError ? (
         <AlertBox variant="error">Something went wrong. Please try again.</AlertBox>
