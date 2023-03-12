@@ -35,7 +35,7 @@ const messagesMock = [
       },
     },
     chatId: '2',
-    content: 'Own message from different chat',
+    content: 'Own message from a different chat',
     createdAt: Date.now().toString(),
   },
 ];
