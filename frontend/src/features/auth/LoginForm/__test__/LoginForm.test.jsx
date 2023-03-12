@@ -1,7 +1,5 @@
 import { screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
-import '__mocks__/matchMediaMock';
 import { renderWithProviders } from 'utils/testUtils';
 
 import LoginForm from '..';
