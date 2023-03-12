@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import AlertBox from './form/AlertBox';
+import AlertBox from '../form/AlertBox';
 
 const Text = styled.p`
   color: ${({ theme }) => theme.info};
