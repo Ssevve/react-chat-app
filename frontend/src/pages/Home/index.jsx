@@ -32,7 +32,7 @@ function Home() {
   const socket = useRef(null);
   const [appLoading, setAppLoading] = useState(true);
 
-  const isAppLoading =
+  const isFetchingData =
     fetchingChats || fetchingFriends || fetchingFriendInvites || fetchingMessages;
 
   useEffect(() => {
@@ -61,12 +61,12 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    if (isAppLoading) setAppLoading(true);
-    if (!isAppLoading) {
+    if (isFetchingData) setAppLoading(true);
+    if (!isFetchingData) {
       const timeout = setTimeout(() => setAppLoading(false), 2000);
       return () => clearTimeout(timeout);
     }
-  }, [isAppLoading]);
+  }, [isFetchingData]);
 
   return appLoading ? <Loading /> : <ChatPage />;
 }
