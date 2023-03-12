@@ -5,7 +5,7 @@ import MessageInput from '..';
 
 test('renders an input element', () => {
   renderWithProviders(<MessageInput />);
-  expect(screen.getByLabelText('Write a new message here')).toBeInTheDocument();
+  expect(screen.getByLabelText(/new message/i)).toBeInTheDocument();
 });
 
 test('renders a submit button', () => {

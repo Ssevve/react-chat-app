@@ -76,7 +76,7 @@ function MessageInput() {
         <Input
           ref={inputRef}
           type="text"
-          aria-label="Write a new message here"
+          aria-label="New message"
           placeholder="Write a message here..."
         />
         <SubmitButton aria-label="Send message">

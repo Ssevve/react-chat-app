@@ -7,15 +7,13 @@ import { selectUser } from 'features/auth/authSlice';
 import Message from 'features/messages/Message';
 import MessageInput from '../MessageInput';
 import User from 'features/users/User';
-import Spinner from 'components/common/Spinner';
 
 import { Section, CurrentChatInfo, Messages } from './styles';
 
-function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
+function MessagesBox() {
   const currentChat = useSelector(selectCurrentChat);
   const loggedInUser = useSelector(selectUser);
   const [chatPartner, setChatPartner] = useState(null);
-  const loadingMessages = useSelector((state) => state.messages.loading);
   const currentChatMessages = useSelector((state) =>
     selectMessagesByChatId(state, currentChat._id),
   );
@@ -34,11 +32,10 @@ function MessagesBox({ sidePanelExpanded, expandRightPanel }) {
   }, [currentChatMessages, currentChat]);
 
   return (
-    <Section sidePanelExpanded={sidePanelExpanded} expandRightPanel={expandRightPanel}>
+    <Section>
       <CurrentChatInfo>
-        <User user={chatPartner} events={false} />
+        <User user={chatPartner} />
       </CurrentChatInfo>
-      {loadingMessages && <Spinner text="Loading messages" />}
       {currentChatMessages.length ? (
         <>
           <Messages ref={scrollRef}>
