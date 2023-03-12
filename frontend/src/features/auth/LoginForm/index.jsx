@@ -16,7 +16,7 @@ import Label from '../form/Label';
 import Input from '../form/Input';
 import ErrorMessage from '../form/ErrorMessage';
 import Divider from '../form/Divider';
-import DemoUserInfo from '../DemoUserInfo';
+import DemoUserInfo from './DemoUserInfo';
 
 const NeedAccount = styled.p`
   font-size: 0.875rem;
