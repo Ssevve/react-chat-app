@@ -16,8 +16,12 @@ const StyledForm = styled.form`
   }
 `;
 
-function Form({ children, onSubmit }) {
-  return <StyledForm onSubmit={onSubmit}>{children}</StyledForm>;
+function Form({ ariaLabel, children, onSubmit }) {
+  return (
+    <StyledForm aria-label={ariaLabel} onSubmit={onSubmit}>
+      {children}
+    </StyledForm>
+  );
 }
 
 export default Form;
