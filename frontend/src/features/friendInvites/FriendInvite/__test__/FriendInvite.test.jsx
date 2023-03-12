@@ -2,9 +2,11 @@ import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import '__mocks__/matchMediaMock';
 import { renderWithProviders } from 'utils/testUtils';
-import singleFriendInviteMock from '__mocks__/data/singleFriendInviteMock';
+import friendInvitesMock from '__mocks__/data/friendInvitesMock';
 
 import FriendInvite from '..';
+
+const invite = friendInvitesMock[0];
 
 test("renders invited user's avatar", () => {
   const preloadedState = {
@@ -14,8 +16,8 @@ test("renders invited user's avatar", () => {
       },
     },
   };
-  renderWithProviders(<FriendInvite invite={singleFriendInviteMock[0]} />, { preloadedState });
-  expect(screen.getByAltText('InviteReceiver')).toBeInTheDocument();
+  renderWithProviders(<FriendInvite invite={invite} />, { preloadedState });
+  expect(screen.getByAltText('FirstInviteReceiver')).toBeInTheDocument();
 });
 
 test("renders invited user's username", () => {
@@ -26,8 +28,8 @@ test("renders invited user's username", () => {
       },
     },
   };
-  renderWithProviders(<FriendInvite invite={singleFriendInviteMock[0]} />, { preloadedState });
-  expect(screen.getByText('InviteReceiver')).toBeInTheDocument();
+  renderWithProviders(<FriendInvite invite={invite} />, { preloadedState });
+  expect(screen.getByText('FirstInviteReceiver')).toBeInTheDocument();
 });
 
 test('renders only "cancel invite" button for sent friend invites', () => {
@@ -39,7 +41,7 @@ test('renders only "cancel invite" button for sent friend invites', () => {
     },
   };
 
-  renderWithProviders(<FriendInvite invite={singleFriendInviteMock[0]} />, { preloadedState });
+  renderWithProviders(<FriendInvite invite={invite} />, { preloadedState });
   expect(screen.getByRole('button', { name: /cancel invite/i })).toBeInTheDocument();
   expect(screen.queryByRole('button', { name: /accept invite/i })).not.toBeInTheDocument();
 });
@@ -52,8 +54,8 @@ test("renders inviting user's avatar", () => {
       },
     },
   };
-  renderWithProviders(<FriendInvite invite={singleFriendInviteMock[0]} />, { preloadedState });
-  expect(screen.getByAltText('InviteSender')).toBeInTheDocument();
+  renderWithProviders(<FriendInvite invite={invite} />, { preloadedState });
+  expect(screen.getByAltText('FirstInviteSender')).toBeInTheDocument();
 });
 
 test("renders inviting user's username", () => {
@@ -64,8 +66,8 @@ test("renders inviting user's username", () => {
       },
     },
   };
-  renderWithProviders(<FriendInvite invite={singleFriendInviteMock[0]} />, { preloadedState });
-  expect(screen.getByText('InviteSender')).toBeInTheDocument();
+  renderWithProviders(<FriendInvite invite={invite} />, { preloadedState });
+  expect(screen.getByText('FirstInviteSender')).toBeInTheDocument();
 });
 
 test('renders an "accept invite" and "cancel invite" buttons for received friend invites', () => {
@@ -77,7 +79,7 @@ test('renders an "accept invite" and "cancel invite" buttons for received friend
     },
   };
 
-  renderWithProviders(<FriendInvite invite={singleFriendInviteMock[0]} />, { preloadedState });
+  renderWithProviders(<FriendInvite invite={invite} />, { preloadedState });
   expect(screen.getByRole('button', { name: /cancel invite/i })).toBeInTheDocument();
   expect(screen.queryByRole('button', { name: /accept invite/i })).toBeInTheDocument();
 });
