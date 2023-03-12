@@ -1,6 +1,4 @@
 import { screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import '__mocks__/matchMediaMock';
 import { renderWithProviders } from 'utils/testUtils';
 
 import SidePanel from '..';

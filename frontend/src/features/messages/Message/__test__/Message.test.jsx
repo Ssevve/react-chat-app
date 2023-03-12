@@ -1,34 +1,11 @@
 import { screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import '__mocks__/matchMediaMock';
 import { renderWithProviders } from 'utils/testUtils';
+import messagesMock from '__mocks__/data/messagesMock';
 
 import Message from '..';
 
-const ownMessage = {
-  _id: '1',
-  sender: {
-    _id: '2',
-    username: 'Test',
-    avatar: {
-      url: '',
-    },
-  },
-  content: 'Own message',
-};
-
-const friendMessage = {
-  _id: '1',
-  sender: {
-    _id: '3',
-    username: 'Friend',
-    avatar: {
-      url: '',
-    },
-  },
-  content: "Friend's message",
-  createdAt: Date.now().toString(),
-};
+const ownMessage = messagesMock[0];
+const friendMessage = messagesMock[1];
 
 const preloadedState = {
   auth: {
