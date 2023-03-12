@@ -17,6 +17,7 @@ import {
   subscribeToMessageEvents,
   subscribeToUserEvents,
   subscribeToFriendEvents,
+  subscribeToFriendInviteEvents,
 } from 'socketEvents';
 
 import ChatPage from './ChatPage';
@@ -45,11 +46,10 @@ function Home() {
     socket.current = io(process.env.REACT_APP_SOCKET_URL, { auth: { userId: loggedInUser._id } });
     subscribeToMessageEvents({ socket: socket.current, dispatch, addMessage, updateChat });
     subscribeToUserEvents({ socket: socket.current, dispatch, setConnectedUsers });
-    subscribeToFriendEvents({
+    subscribeToFriendEvents({ socket: socket.current, dispatch, addFriend, removeFriend });
+    subscribeToFriendInviteEvents({
       socket: socket.current,
       dispatch,
-      addFriend,
-      removeFriend,
       addFriendInvite,
       removeFriendInvite,
     });
