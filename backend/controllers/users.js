@@ -10,7 +10,7 @@ const getUserById = async (req, res) => {
       username: user.username,
     });
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 };
 
@@ -26,7 +26,7 @@ const getFriendsByUserId = async (req, res) => {
     );
     res.status(200).json(friendsData);
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 };
 
@@ -48,7 +48,7 @@ const addFriend = async (req, res) => {
     res.status(200).json(newFriend);
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    next(err);
   }
 };
 
@@ -75,8 +75,7 @@ const deleteFriend = async (req, res) => {
     io.to(connectedUsers[friendId]).emit('removeFriend', req.user._id);
     res.status(200).json(friendId);
   } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
+    next(err);
   }
 };
 
@@ -89,7 +88,7 @@ const getUsersByQuery = async (req, res) => {
     const filteredUsers = users.filter((user) => user._id !== req.user._id);
     res.status(200).json(filteredUsers);
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 };
 

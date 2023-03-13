@@ -28,7 +28,7 @@ const handleLogin = async (req, res) => {
       accessToken,
     });
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 };
 
@@ -48,7 +48,7 @@ const handleSignup = async (req, res) => {
 
     res.status(201).json(newUser);
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 };
 

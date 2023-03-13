@@ -11,7 +11,7 @@ const getMessageById = async (req, res) => {
       content: message.content,
     });
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 };
 
@@ -24,7 +24,7 @@ const getMessagesByUserId = async (req, res) => {
 
     res.status(200).json(messages);
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 };
 
@@ -64,7 +64,7 @@ const createNewMessage = async (req, res) => {
     io.to(connectedUsers[receiverId]).emit('receiveMessage', responseData);
     res.status(201).json(responseData);
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 };
 
