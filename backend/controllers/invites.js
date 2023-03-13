@@ -16,7 +16,7 @@ const getFriendInvitesByUserId = async (req, res) => {
     ]);
     res.status(200).json(friendInvites);
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 };
 
@@ -50,7 +50,7 @@ const createNewFriendInvite = async (req, res) => {
     io.to(connectedUsers[newInvite.receiver._id]).emit('receiveFriendInvite', newInvite);
     res.status(201).json(newInvite);
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 };
 
@@ -65,7 +65,7 @@ const deleteFriendInvite = async (req, res) => {
     io.to(connectedUsers[emitTo]).emit('cancelFriendInvite', id);
     res.sendStatus(204);
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 };
 

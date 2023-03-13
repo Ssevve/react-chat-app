@@ -37,6 +37,9 @@ app.use('/chats', verifyJWT, require('./routes/chats'));
 app.use('/messages', verifyJWT, require('./routes/messages'));
 app.use('/invites', verifyJWT, require('./routes/invites'));
 
+// Error Handler
+app.use(require('./middleware/errorHandler'));
+
 // Socket events
 initializeSocketEvents(server, app);
 
