@@ -7,6 +7,7 @@ import friendInvitesReducer from 'features/friendInvites/friendInvitesSlice';
 import usersReducer from 'features/users/usersSlice';
 import searchReducer from 'features/search/searchSlice';
 import settingsReducer from 'features/settings/settingsSlice';
+import socketMiddleware from 'socketMiddleware';
 
 const reducers = {
   chats: chatsReducer,
@@ -21,20 +22,16 @@ const reducers = {
 
 const rootReducer = combineReducers(reducers);
 
-const resettableRootReducer = (state, action) => {
-  if (action.type === 'store/reset') {
-    return rootReducer(undefined, action);
-  }
-  return rootReducer(state, action);
-};
-
 export const store = configureStore({
-  reducer: resettableRootReducer,
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(socketMiddleware);
+  },
 });
 
 export const setupStore = (preloadedState) => {
   return configureStore({
-    reducer: resettableRootReducer,
+    reducer: rootReducer,
     preloadedState,
   });
 };

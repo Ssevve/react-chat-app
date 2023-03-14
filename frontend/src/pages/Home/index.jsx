@@ -1,24 +1,10 @@
-import { useEffect, useState, useRef } from 'react';
-import { io } from 'socket.io-client';
-import { updateChat } from 'features/chats/chatsSlice';
-import { addMessage, fetchMessages } from 'features/messages/messagesSlice';
-import { setConnectedUsers } from 'features/users/usersSlice';
+import { useEffect, useState } from 'react';
+import { fetchMessages } from 'features/messages/messagesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from 'features/auth/authSlice';
-import { addFriend, removeFriend, fetchFriends } from 'features/friends/friendsSlice';
-import {
-  addFriendInvite,
-  removeFriendInvite,
-  fetchFriendInvites,
-} from 'features/friendInvites/friendInvitesSlice';
+import { fetchFriends } from 'features/friends/friendsSlice';
+import { fetchFriendInvites } from 'features/friendInvites/friendInvitesSlice';
 import { fetchChats } from 'features/chats/chatsSlice';
-
-import {
-  subscribeToMessageEvents,
-  subscribeToUserEvents,
-  subscribeToFriendEvents,
-  subscribeToFriendInviteEvents,
-} from 'socketEvents';
 
 import ChatPage from './ChatPage';
 import Loading from './Loading';
@@ -30,7 +16,6 @@ function Home() {
   const fetchingFriends = useSelector((state) => state.friends.loading);
   const fetchingFriendInvites = useSelector((state) => state.friendInvites.loading);
   const fetchingMessages = useSelector((state) => state.messages.loading);
-  const socket = useRef(null);
   const [appLoading, setAppLoading] = useState(true);
 
   const isFetchingData =
@@ -42,22 +27,6 @@ function Home() {
     dispatch(fetchChats());
     dispatch(fetchFriends(loggedInUser._id));
     dispatch(fetchFriendInvites(loggedInUser._id));
-
-    socket.current = io(process.env.REACT_APP_SOCKET_URL, { auth: { userId: loggedInUser._id } });
-    subscribeToMessageEvents({ socket: socket.current, dispatch, addMessage, updateChat });
-    subscribeToUserEvents({ socket: socket.current, dispatch, setConnectedUsers });
-    subscribeToFriendEvents({ socket: socket.current, dispatch, addFriend, removeFriend });
-    subscribeToFriendInviteEvents({
-      socket: socket.current,
-      dispatch,
-      addFriendInvite,
-      removeFriendInvite,
-    });
-
-    return () => {
-      socket.current.off();
-      socket.current.disconnect();
-    };
   }, []);
 
   useEffect(() => {

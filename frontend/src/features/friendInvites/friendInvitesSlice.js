@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import client from 'utils/api';
+import { logout } from 'features/auth/authSlice';
 
 const initialState = {
   friendInvites: [],
@@ -99,6 +100,9 @@ export const friendInvitesSlice = createSlice({
       state.deletingFriendInvite = false;
       state.creatingFriendInvite = false;
       state.error = action.error.message;
+    });
+    builder.addCase(logout, () => {
+      return initialState;
     });
   },
 });

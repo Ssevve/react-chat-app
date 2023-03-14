@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { logout } from 'features/auth/authSlice';
 
 const initialState = {
   connectedUsers: [],
@@ -11,6 +12,11 @@ export const usersSlice = createSlice({
     setConnectedUsers(state, action) {
       state.connectedUsers = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout, () => {
+      return initialState;
+    });
   },
 });
 

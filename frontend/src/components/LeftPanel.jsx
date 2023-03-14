@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FiSettings, FiLogOut } from 'react-icons/fi';
 import styled from 'styled-components/macro';
 import breakpoints from 'shared/breakpoints';
-import { selectUser } from 'features/auth/authSlice';
+import { selectUser, logout } from 'features/auth/authSlice';
 import { toggleSettings } from 'features/settings/settingsSlice';
 import styleConstants from 'shared/styleConstants';
 
@@ -34,15 +34,7 @@ function LeftPanel({ expanded, forceExpandWidth, setExpandLeftPanel, setExpandRi
   const dispatch = useDispatch();
   const loggedInUser = useSelector(selectUser);
 
-  const handleLogout = async () => {
-    try {
-      // Reset whole app state
-      dispatch({ type: 'store/reset' });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+  const handleLogout = async () => dispatch(logout());
   const handleHidePanel = () => setExpandLeftPanel(false);
 
   const handleShowSettings = () => {
