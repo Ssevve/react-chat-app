@@ -1,4 +1,5 @@
 const { Server } = require('socket.io');
+const socketVerifyJWT = require('./middleware/socketVerifyJWT');
 
 const connectedUsers = {};
 
@@ -20,14 +21,17 @@ const initializeSocketEvents = (server, app) => {
   app.set('socketio', io);
   app.set('connectedUsers', connectedUsers);
 
+  io.use((socket, next) => socketVerifyJWT(socket, next));
+
   io.on('connection', (socket) => {
-    const { userId } = socket.handshake.auth;
-    addUser(userId, socket.id);
-    io.emit('receiveConnectedUsers', { users: connectedUsers });
+    if (socket.user) {
+      addUser(socket.user._id, socket.id);
+    }
+    io.emit('receiveConnectedUsers', connectedUsers);
 
     socket.on('disconnect', () => {
-      removeUser(userId);
-      io.emit('receiveConnectedUsers', { users: connectedUsers });
+      removeUser(socket.user._id);
+      io.emit('receiveConnectedUsers', connectedUsers);
     });
   });
 };

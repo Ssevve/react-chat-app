@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import client from 'utils/api';
+import { logout } from 'features/auth/authSlice';
 
 const initialState = {
   messages: [],
@@ -27,6 +28,9 @@ export const messagesSlice = createSlice({
   reducers: {
     addMessage(state, action) {
       state.messages.push(action.payload);
+    },
+    sendMessage(state, action) {
+      return;
     },
   },
   extraReducers: (builder) => {
@@ -60,6 +64,9 @@ export const messagesSlice = createSlice({
       state.sendingMessage = false;
       state.error = action.error.message;
     });
+    builder.addCase(logout, () => {
+      return initialState;
+    });
   },
 });
 
@@ -73,6 +80,6 @@ export const selectMessagesByChatId = createSelector(
   },
 );
 
-export const { addMessage } = messagesSlice.actions;
+export const { addMessage, sendMessage } = messagesSlice.actions;
 
 export default messagesSlice.reducer;

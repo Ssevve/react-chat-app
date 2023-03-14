@@ -1,14 +1,15 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiSend } from 'react-icons/fi';
-import { selectAccessToken } from 'features/auth/authSlice';
 import styled from 'styled-components';
-import { selectUser } from 'features/auth/authSlice';
-import { selectCurrentChat, setCurrentChat, updateChat } from 'features/chats/chatsSlice';
+import { selectAccessToken, selectUser } from 'features/auth/authSlice';
+import { selectCurrentChat } from 'features/chats/chatsSlice';
 import { createNewMessage } from '../messagesSlice';
 import styleConstants from 'shared/styleConstants';
 
 import SubmitButton from 'components/common/SubmitButton';
+import { updateChat } from 'features/chats/chatsSlice';
+import { setCurrentChat } from 'features/chats/chatsSlice';
 
 const Wrapper = styled.section`
   padding: ${styleConstants.padding200} ${styleConstants.padding400};
@@ -47,7 +48,7 @@ function MessageInput() {
   const accessToken = useSelector(selectAccessToken);
   const inputRef = useRef('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!inputRef.current.value) return;
 
@@ -59,13 +60,11 @@ function MessageInput() {
       accessToken,
     };
 
-    console.log(dispatch);
-    const { payload } = dispatch(createNewMessage(data));
+    const { payload } = await dispatch(createNewMessage(data));
     const { updatedChat } = payload;
 
     dispatch(updateChat(updatedChat));
     dispatch(setCurrentChat(updatedChat));
-
     inputRef.current.value = '';
     inputRef.current.focus();
   };

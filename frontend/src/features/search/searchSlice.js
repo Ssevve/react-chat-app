@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import client from 'utils/api';
+import { logout } from 'features/auth/authSlice';
 
 export const searchFriends = createAsyncThunk('search/searchFriends', async (query) => {
   const res = await await client.get(`/users/search/${query}`);
@@ -34,6 +35,9 @@ export const searchSlice = createSlice({
       state.loading = false;
       state.error = action.error.message;
       state.results = [];
+    });
+    builder.addCase(logout, () => {
+      return initialState;
     });
   },
 });

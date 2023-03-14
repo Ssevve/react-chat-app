@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import client from 'utils/api';
+import { logout } from 'features/auth/authSlice';
 
 const initialState = {
   chats: [],
@@ -41,6 +42,9 @@ export const chatsSlice = createSlice({
       state.loading = false;
       state.chats = [];
       state.error = action.error.message;
+    });
+    builder.addCase(logout, () => {
+      return initialState;
     });
   },
 });

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 import client from 'utils/api';
+import { logout } from 'features/auth/authSlice';
 
 export const addFriendById = createAsyncThunk('friends/addFriendById', async (friendId) => {
   const res = await client.put(`/users/addFriend/${friendId}`);
@@ -20,14 +21,16 @@ const friendsAdapter = createEntityAdapter({
   selectId: (friend) => friend._id,
 });
 
+const initialState = friendsAdapter.getInitialState({
+  loading: false,
+  removingFriend: false,
+  addingFriend: false,
+  error: null,
+});
+
 export const friendsSlice = createSlice({
   name: 'friends',
-  initialState: friendsAdapter.getInitialState({
-    loading: false,
-    removingFriend: false,
-    addingFriend: false,
-    error: null,
-  }),
+  initialState,
   reducers: {
     addFriend: friendsAdapter.addOne,
     removeFriend: (state, action) => friendsAdapter.removeOne(state, action),
@@ -90,6 +93,9 @@ export const friendsSlice = createSlice({
       state.removingFriend = false;
       state.addingFriend = false;
       state.error = action.error.message;
+    });
+    builder.addCase(logout, () => {
+      return initialState;
     });
   },
 });

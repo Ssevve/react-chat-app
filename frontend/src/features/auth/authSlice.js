@@ -5,6 +5,7 @@ const initialState = {
   user: null,
   accessToken: null,
   loading: false,
+  isLoggedIn: false,
   error: null,
   signupSuccess: false,
 };
@@ -50,6 +51,9 @@ export const authSlice = createSlice({
     clearFetchError(state) {
       state.error = false;
     },
+    logout(state) {
+      return initialState;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {
@@ -61,6 +65,7 @@ export const authSlice = createSlice({
       state.user = action.payload.user;
       state.accessToken = action.payload.accessToken;
       state.signupSuccess = false;
+      state.isLoggedIn = true;
     });
     builder.addCase(login.rejected, (state, action) => {
       state.loading = false;
@@ -84,12 +89,15 @@ export const authSlice = createSlice({
       state.signupSuccess = false;
       state.signupSuccess = false;
     });
+    builder.addCase(logout, (state, action) => {
+      return initialState;
+    });
   },
 });
 
 export const selectUser = (state) => state.auth.user;
 export const selectAccessToken = (state) => state.auth.accessToken;
 
-export const { clearFetchError, resetSignupSuccess } = authSlice.actions;
+export const { clearFetchError, logout } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { logout } from 'features/auth/authSlice';
 
 const initialState = {
   theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
@@ -18,6 +19,11 @@ export const settingsSlice = createSlice({
     closeSettings(state) {
       state.showSettings = false;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout, () => {
+      return initialState;
+    });
   },
 });
 
