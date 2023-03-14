@@ -43,6 +43,7 @@ const Paragraph = styled.p`
   font-size: clamp(1.3rem, 4vw, 1.5rem);
   text-align: center;
   margin-bottom: 2rem;
+  line-height: 1.4;
   @media (min-width: ${breakpoints.medium}) {
     text-align: left;
     margin-bottom: 0;
