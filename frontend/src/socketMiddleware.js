@@ -16,10 +16,6 @@ const socketMiddleware = (store) => {
         },
       });
 
-      socket.on('connect', () => {
-        console.log('connected');
-      });
-
       socket.on('receiveConnectedUsers', (connectedUsers) => {
         store.dispatch(setConnectedUsers(connectedUsers));
       });
