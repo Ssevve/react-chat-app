@@ -3,12 +3,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import loginSchema from '../schemas/loginSchema';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../authSlice';
 import styleConstants from 'shared/styleConstants';
 
 import SubmitButton from 'components/common/SubmitButton';
+import { login } from '../authSlice';
+import loginSchema from '../schemas/loginSchema';
 import AlertBox from '../form/AlertBox';
 import FormTitle from '../form/FormTitle';
 import Form from '../form/Form';
@@ -84,17 +84,28 @@ function LoginForm() {
   return (
     <Form onSubmit={handleSubmit(onSubmit)} ariaLabel="Log in">
       <FormTitle>Log in</FormTitle>
-      {showAlertBox ? <AlertBox variant={alertBoxType}>{alertMessage}</AlertBox> : null}
+      {showAlertBox ? (
+        <AlertBox variant={alertBoxType}>{alertMessage}</AlertBox>
+      ) : null}
       <DemoUserInfo />
       <Label>
         Username
         <Input error={invalidCredentials} name="username" register={register} />
-        {invalidCredentials && <ErrorMessage message="Invalid username or password" />}
+        {invalidCredentials && (
+          <ErrorMessage message="Invalid username or password" />
+        )}
       </Label>
       <Label>
         Password
-        <Input error={invalidCredentials} name="password" register={register} type="password" />
-        {invalidCredentials && <ErrorMessage message="Invalid username or password" />}
+        <Input
+          error={invalidCredentials}
+          name="password"
+          register={register}
+          type="password"
+        />
+        {invalidCredentials && (
+          <ErrorMessage message="Invalid username or password" />
+        )}
       </Label>
       <StyledSubmitButton isLoading={isLoading}>Log in</StyledSubmitButton>
       <Divider />

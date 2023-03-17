@@ -14,9 +14,7 @@ export const usersSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(logout, () => {
-      return initialState;
-    });
+    builder.addCase(logout, () => initialState);
   },
 });
 

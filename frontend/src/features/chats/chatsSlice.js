@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit';
 import client from 'utils/api';
 import { logout } from 'features/auth/authSlice';
 
@@ -22,7 +26,9 @@ export const chatsSlice = createSlice({
       state.chats = action.payload;
     },
     updateChat(state, action) {
-      const filteredChats = state.chats.filter((chat) => chat._id !== action.payload._id);
+      const filteredChats = state.chats.filter(
+        (chat) => chat._id !== action.payload._id
+      );
       state.chats = [...filteredChats, action.payload];
     },
     setCurrentChat(state, action) {
@@ -43,9 +49,7 @@ export const chatsSlice = createSlice({
       state.chats = [];
       state.error = action.error.message;
     });
-    builder.addCase(logout, () => {
-      return initialState;
-    });
+    builder.addCase(logout, () => initialState);
   },
 });
 

@@ -24,14 +24,12 @@ const rootReducer = combineReducers(reducers);
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(socketMiddleware);
-  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(socketMiddleware),
 });
 
-export const setupStore = (preloadedState) => {
-  return configureStore({
+export const setupStore = (preloadedState) =>
+  configureStore({
     reducer: rootReducer,
     preloadedState,
   });
-};

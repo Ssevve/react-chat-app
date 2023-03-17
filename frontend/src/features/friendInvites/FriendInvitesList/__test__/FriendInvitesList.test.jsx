@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
-import { renderWithProviders } from 'utils/testUtils';
-import friendInvitesMock from '__mocks__/data/friendInvitesMock';
+import renderWithProviders from 'utils/testUtils';
+import friendInvitesMock from '__mocks__/friendInvitesMock';
 
 import FriendInvites from '..';
 

@@ -30,7 +30,12 @@ const Buttons = styled.section`
   display: flex;
 `;
 
-function LeftPanel({ expanded, forceExpandWidth, setExpandLeftPanel, setExpandRightPanel }) {
+function LeftPanel({
+  expanded,
+  forceExpandWidth,
+  setExpandLeftPanel,
+  setExpandRightPanel,
+}) {
   const dispatch = useDispatch();
   const loggedInUser = useSelector(selectUser);
 
@@ -57,7 +62,12 @@ function LeftPanel({ expanded, forceExpandWidth, setExpandLeftPanel, setExpandRi
           <Button dim aria-label="Settings" onClick={handleShowSettings}>
             <FiSettings aria-hidden="true" size="1.25rem" />
           </Button>
-          <Button dim variant="danger" aria-label="Logout" onClick={handleLogout}>
+          <Button
+            dim
+            variant="danger"
+            ariaLabel="Logout"
+            onClick={handleLogout}
+          >
             <FiLogOut aria-hidden="true" size="1.25rem" />
           </Button>
         </Buttons>

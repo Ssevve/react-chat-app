@@ -25,7 +25,7 @@ const StyledButton = styled.button`
   }
 `;
 
-function Button({ onClick, dim, variant, className, children, ...rest }) {
+function Button({ onClick, dim, variant, className, children, ariaLabel }) {
   return (
     <StyledButton
       dim={dim}
@@ -33,7 +33,7 @@ function Button({ onClick, dim, variant, className, children, ...rest }) {
       onClick={onClick}
       variant={variant}
       className={className}
-      {...rest}
+      aria-label={ariaLabel}
     >
       {children}
     </StyledButton>

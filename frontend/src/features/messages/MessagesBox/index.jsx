@@ -5,8 +5,8 @@ import { selectMessagesByChatId } from 'features/messages/messagesSlice';
 import { selectUser } from 'features/auth/authSlice';
 
 import Message from 'features/messages/Message';
-import MessageInput from '../MessageInput';
 import User from 'features/users/User';
+import MessageInput from '../MessageInput';
 
 import { Section, CurrentChatInfo, Messages } from './styles';
 
@@ -15,12 +15,14 @@ function MessagesBox() {
   const loggedInUser = useSelector(selectUser);
   const [chatPartner, setChatPartner] = useState(null);
   const currentChatMessages = useSelector((state) =>
-    selectMessagesByChatId(state, currentChat._id),
+    selectMessagesByChatId(state, currentChat._id)
   );
 
   useEffect(() => {
     if (!currentChat) return;
-    const partner = currentChat.members.find((member) => member._id !== loggedInUser._id);
+    const partner = currentChat.members.find(
+      (member) => member._id !== loggedInUser._id
+    );
     setChatPartner(partner);
   }, [currentChat, loggedInUser._id]);
 
@@ -37,13 +39,11 @@ function MessagesBox() {
         <User user={chatPartner} />
       </CurrentChatInfo>
       {currentChatMessages.length ? (
-        <>
-          <Messages ref={scrollRef}>
-            {currentChatMessages.map((message) => (
-              <Message key={message._id} message={message} />
-            ))}
-          </Messages>
-        </>
+        <Messages ref={scrollRef}>
+          {currentChatMessages.map((message) => (
+            <Message key={message._id} message={message} />
+          ))}
+        </Messages>
       ) : null}
       <MessageInput />
     </Section>

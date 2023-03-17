@@ -4,10 +4,10 @@ import { FiMessageCircle, FiUserMinus } from 'react-icons/fi';
 import { selectUser } from 'features/auth/authSlice';
 import { closeSettings } from 'features/settings/settingsSlice';
 import { selectAllChats, setCurrentChat } from 'features/chats/chatsSlice';
-import { removeFriendById } from '../friendsSlice';
 
 import User from 'features/users/User';
 import Button from 'components/common/Button';
+import { removeFriendById } from '../friendsSlice';
 
 const Wrapper = styled.section`
   display: flex;
@@ -33,7 +33,7 @@ function Friend({ friend, setExpandRightPanel }) {
     if (chats.length) {
       const chatsMembers = chats.map((chat) => chat.members);
       const chatIndex = chatsMembers.findIndex(
-        (members) => members[0]._id === friendId || members[1]._id === friendId,
+        (members) => members[0]._id === friendId || members[1]._id === friendId
       );
       selectedChat = chats[chatIndex];
     }
@@ -50,7 +50,7 @@ function Friend({ friend, setExpandRightPanel }) {
       <User user={friend} />
       <Buttons>
         <Button
-          aria-label={`Message ${friend.username}`}
+          ariaLabel={`Message ${friend.username}`}
           variant="primary"
           onClick={() => handleChatChange(friend._id)}
           disabled={removingFriend}
@@ -58,7 +58,7 @@ function Friend({ friend, setExpandRightPanel }) {
           <FiMessageCircle aria-hidden="true" size="1.5rem" />
         </Button>
         <Button
-          aria-label={`Remove ${friend.username}`}
+          ariaLabel={`Remove ${friend.username}`}
           variant="danger"
           onClick={() => dispatch(removeFriendById(friend._id))}
           disabled={removingFriend}

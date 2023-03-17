@@ -1,8 +1,8 @@
 import { screen } from '@testing-library/react';
-import { renderWithProviders } from 'utils/testUtils';
+import renderWithProviders from 'utils/testUtils';
 
-import UserAvatar from '../index';
 import avatarPlaceholder from 'assets/no-avatar.jpg';
+import UserAvatar from '../index';
 
 const testUser = {
   username: 'Test',

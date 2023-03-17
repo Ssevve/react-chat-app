@@ -56,7 +56,9 @@ function AuthPageLayout({ children }) {
       <Container>
         <Section>
           <Heading>Chat app</Heading>
-          <Paragraph>Stay connected with your friends. Anywhere, anytime.</Paragraph>
+          <Paragraph>
+            Stay connected with your friends. Anywhere, anytime.
+          </Paragraph>
         </Section>
         {children}
       </Container>

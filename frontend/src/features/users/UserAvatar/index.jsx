@@ -22,7 +22,10 @@ function UserAvatar({ user, showConnectionStatus }) {
   return (
     user && (
       <AvatarWrapper>
-        <Avatar src={user.avatar.url || avatarPlaceholder} alt={user.username} />
+        <Avatar
+          src={user.avatar.url || avatarPlaceholder}
+          alt={user.username}
+        />
         {showConnectionStatus && <ConnectionStatus userId={user._id} />}
       </AvatarWrapper>
     )

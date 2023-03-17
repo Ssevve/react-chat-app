@@ -20,11 +20,15 @@ const StyledLogo = styled.h1`
 `;
 
 function Logo({ colorIcon, applyPadding, hideOnMobile, hideOnTablet }) {
-  const theme = useContext(ThemeContext);
-  const iconFillColor = colorIcon ? theme.primary : theme.topbarText;
+  const { primary, topbarText } = useContext(ThemeContext);
+  const iconFillColor = colorIcon ? primary : topbarText;
 
   return (
-    <StyledLogo applyPadding={applyPadding} hideOnMobile={hideOnMobile} hideOnTablet={hideOnTablet}>
+    <StyledLogo
+      applyPadding={applyPadding}
+      hideOnMobile={hideOnMobile}
+      hideOnTablet={hideOnTablet}
+    >
       <span>Chat App</span>
       <FiMessageCircle stroke={iconFillColor} aria-hidden="true" />
     </StyledLogo>

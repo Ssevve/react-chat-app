@@ -14,12 +14,17 @@ function Home() {
   const loggedInUser = useSelector(selectUser);
   const fetchingChats = useSelector((state) => state.chats.loading);
   const fetchingFriends = useSelector((state) => state.friends.loading);
-  const fetchingFriendInvites = useSelector((state) => state.friendInvites.loading);
+  const fetchingFriendInvites = useSelector(
+    (state) => state.friendInvites.loading
+  );
   const fetchingMessages = useSelector((state) => state.messages.loading);
   const [appLoading, setAppLoading] = useState(true);
 
   const isFetchingData =
-    fetchingChats || fetchingFriends || fetchingFriendInvites || fetchingMessages;
+    fetchingChats ||
+    fetchingFriends ||
+    fetchingFriendInvites ||
+    fetchingMessages;
 
   useEffect(() => {
     // Fetch initial data
@@ -29,6 +34,7 @@ function Home() {
     dispatch(fetchFriendInvites(loggedInUser._id));
   }, []);
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (isFetchingData) setAppLoading(true);
     if (!isFetchingData) {

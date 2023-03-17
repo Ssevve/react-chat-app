@@ -24,7 +24,8 @@ const StyledDiv = styled.div`
       : { right: 0 }};
 
   &.slide-appear {
-    transform: ${({ anchor }) => (anchor === 'left' ? 'translateX(-100%)' : 'translateX(100%)')};
+    transform: ${({ anchor }) =>
+      anchor === 'left' ? 'translateX(-100%)' : 'translateX(100%)'};
   }
 
   &.slide-appear-active {
@@ -33,7 +34,8 @@ const StyledDiv = styled.div`
   }
 
   &.slide-enter {
-    transform: ${({ anchor }) => (anchor === 'left' ? 'translateX(-100%)' : 'translateX(100%)')};
+    transform: ${({ anchor }) =>
+      anchor === 'left' ? 'translateX(-100%)' : 'translateX(100%)'};
   }
 
   &.slide-enter-active {
@@ -46,7 +48,8 @@ const StyledDiv = styled.div`
   }
 
   &.slide-exit-active {
-    transform: ${({ anchor }) => (anchor === 'left' ? 'translateX(-100%)' : 'translateX(100%)')};
+    transform: ${({ anchor }) =>
+      anchor === 'left' ? 'translateX(-100%)' : 'translateX(100%)'};
     transition: transform 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   }
 `;
@@ -90,7 +93,14 @@ const Backdrop = styled.div`
   }
 `;
 
-function SidePanel({ anchor, onBackdropClick, forceExpandWidth, expanded, className, children }) {
+function SidePanel({
+  anchor,
+  onBackdropClick,
+  forceExpandWidth,
+  expanded,
+  className,
+  children,
+}) {
   const [showBackdrop, setShowBackdrop] = useState(true);
   const [isExpanded, setIsExpanded] = useState(expanded);
   const panelRef = useRef();
@@ -113,7 +123,7 @@ function SidePanel({ anchor, onBackdropClick, forceExpandWidth, expanded, classN
         <CSSTransition
           nodeRef={backdropRef}
           in={isExpanded}
-          appear={true}
+          appear
           timeout={225}
           classNames="fade"
           unmountOnExit
@@ -129,7 +139,7 @@ function SidePanel({ anchor, onBackdropClick, forceExpandWidth, expanded, classN
       <CSSTransition
         in={isExpanded}
         nodeRef={panelRef}
-        appear={true}
+        appear
         timeout={225}
         classNames="slide"
         unmountOnExit

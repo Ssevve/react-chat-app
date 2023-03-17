@@ -24,7 +24,12 @@ const Text = styled.span`
 function Spinner({ size, stroke, text }) {
   return (
     <Wrapper>
-      <StyledLoader width={size} height={size} stroke={stroke} aria-hidden="true" />
+      <StyledLoader
+        width={size}
+        height={size}
+        stroke={stroke}
+        aria-hidden="true"
+      />
       {text && <Text>{text}</Text>}
     </Wrapper>
   );

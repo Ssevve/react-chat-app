@@ -3,7 +3,10 @@ import { addMessage } from 'features/messages/messagesSlice';
 import { updateChat } from 'features/chats/chatsSlice';
 import { setConnectedUsers } from 'features/users/usersSlice';
 import { addFriend, removeFriend } from 'features/friends/friendsSlice';
-import { addFriendInvite, removeFriendInvite } from 'features/friendInvites/friendInvitesSlice';
+import {
+  addFriendInvite,
+  removeFriendInvite,
+} from 'features/friendInvites/friendInvitesSlice';
 
 const socketMiddleware = (store) => {
   let socket = null;
@@ -29,7 +32,9 @@ const socketMiddleware = (store) => {
         store.dispatch(addFriend(acceptingUser));
       });
 
-      socket.on('removeFriend', (friendId) => store.dispatch(removeFriend(friendId)));
+      socket.on('removeFriend', (friendId) =>
+        store.dispatch(removeFriend(friendId))
+      );
 
       socket.on('receiveFriendInvite', (newFriendInvite) => {
         store.dispatch(addFriendInvite(newFriendInvite));

@@ -10,17 +10,20 @@ const initialState = {
   error: null,
 };
 
-export const fetchFriendInvites = createAsyncThunk('friends/fetchFriendInvites', async (userId) => {
-  const res = await client.get(`/invites/${userId}`);
-  return res.data;
-});
+export const fetchFriendInvites = createAsyncThunk(
+  'friends/fetchFriendInvites',
+  async (userId) => {
+    const res = await client.get(`/invites/${userId}`);
+    return res.data;
+  }
+);
 
 export const createFriendInvite = createAsyncThunk(
   'friends/createFriendInvite',
   async (friendId) => {
-    const res = await client.post(`/invites`, { friendId });
+    const res = await client.post('/invites', { friendId });
     return res.data;
-  },
+  }
 );
 
 export const deleteFriendInvite = createAsyncThunk(
@@ -28,7 +31,8 @@ export const deleteFriendInvite = createAsyncThunk(
   async (inviteId) => {
     const res = await client.delete(`/invites/${inviteId}`);
     if (res.status === 204) return inviteId;
-  },
+    return res.data;
+  }
 );
 
 export const friendInvitesSlice = createSlice({
@@ -39,7 +43,9 @@ export const friendInvitesSlice = createSlice({
       state.friendInvites.push(action.payload);
     },
     removeFriendInvite(state, action) {
-      state.friendInvites = state.friendInvites.filter((invite) => invite._id !== action.payload);
+      state.friendInvites = state.friendInvites.filter(
+        (invite) => invite._id !== action.payload
+      );
     },
   },
   extraReducers: (builder) => {
@@ -93,7 +99,9 @@ export const friendInvitesSlice = createSlice({
       state.deletingFriendInvite = false;
       state.creatingFriendInvite = false;
       state.error = null;
-      state.friendInvites = state.friendInvites.filter((invite) => invite._id !== action.payload);
+      state.friendInvites = state.friendInvites.filter(
+        (invite) => invite._id !== action.payload
+      );
     });
     builder.addCase(deleteFriendInvite.rejected, (state, action) => {
       state.loading = false;
@@ -101,14 +109,13 @@ export const friendInvitesSlice = createSlice({
       state.creatingFriendInvite = false;
       state.error = action.error.message;
     });
-    builder.addCase(logout, () => {
-      return initialState;
-    });
+    builder.addCase(logout, () => initialState);
   },
 });
 
 export const selectFriendInvites = (state) => state.friendInvites.friendInvites;
 
-export const { addFriendInvite, removeFriendInvite } = friendInvitesSlice.actions;
+export const { addFriendInvite, removeFriendInvite } =
+  friendInvitesSlice.actions;
 
 export default friendInvitesSlice.reducer;
