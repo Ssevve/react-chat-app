@@ -3,12 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import { signup, clearFetchError } from '../authSlice';
 import styled from 'styled-components/macro';
-import signupSchema from '../schemas/signupSchema';
 import styleConstants from 'shared/styleConstants';
 
 import SubmitButton from 'components/common/SubmitButton';
+import signupSchema from '../schemas/signupSchema';
+import { signup, clearFetchError } from '../authSlice';
 import AlertBox from '../form/AlertBox';
 import FormTitle from '../form/FormTitle';
 import Form from '../form/Form';
@@ -53,7 +53,8 @@ function SignupForm() {
   });
 
   useEffect(() => {
-    if (usernameTaken) setError('username', { message: 'Username already taken' });
+    if (usernameTaken)
+      setError('username', { message: 'Username already taken' });
 
     return () => {
       dispatch(clearFetchError());
@@ -64,8 +65,10 @@ function SignupForm() {
     // Making a copy to avoid a TypeError: Cannot assign to read only property 'x' of object '#<Object>
     const credentials = { ...data };
     const res = await dispatch(signup(credentials));
-    if (res.error) return setUsernameTaken(res.payload.usernameTaken);
-    navigate('/login');
+    if (res.error) {
+      return setUsernameTaken(res.payload.usernameTaken);
+    }
+    return navigate('/login');
   };
   const fetchError = !usernameTaken && signupError;
 
@@ -73,17 +76,28 @@ function SignupForm() {
     <Form onSubmit={handleSubmit(onSubmit)} ariaLabel="Sign up">
       <FormTitle>Sign up</FormTitle>
       {fetchError ? (
-        <AlertBox variant="error">Something went wrong. Please try again.</AlertBox>
+        <AlertBox variant="error">
+          Something went wrong. Please try again.
+        </AlertBox>
       ) : null}
       <Label>
         Username
         <Input error={errors.username} name="username" register={register} />
-        {errors.username ? <ErrorMessage message={errors.username.message} /> : null}
+        {errors.username ? (
+          <ErrorMessage message={errors.username.message} />
+        ) : null}
       </Label>
       <Label>
         Password
-        <Input error={errors.password} name="password" register={register} type="password" />
-        {errors.password ? <ErrorMessage message={errors.password.message} /> : null}
+        <Input
+          error={errors.password}
+          name="password"
+          register={register}
+          type="password"
+        />
+        {errors.password ? (
+          <ErrorMessage message={errors.password.message} />
+        ) : null}
       </Label>
       <Label>
         Repeat password
@@ -93,7 +107,9 @@ function SignupForm() {
           register={register}
           type="password"
         />
-        {errors.repeatPassword ? <ErrorMessage message={errors.repeatPassword.message} /> : null}
+        {errors.repeatPassword ? (
+          <ErrorMessage message={errors.repeatPassword.message} />
+        ) : null}
       </Label>
       <StyledSubmitButton isLoading={isLoading}>Sign up</StyledSubmitButton>
       <Divider />

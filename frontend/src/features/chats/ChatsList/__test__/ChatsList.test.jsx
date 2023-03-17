@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
-import { renderWithProviders } from 'utils/testUtils';
-import chatsMock from '__mocks__/data/chatsMock';
+import renderWithProviders from 'utils/testUtils';
+import chatsMock from '__mocks__/chatsMock';
 
 import ChatsList from '..';
 

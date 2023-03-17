@@ -24,7 +24,7 @@ export const signup = createAsyncThunk(
       const usernameTaken = err.response.status === 409;
       return rejectWithValue({ usernameTaken });
     }
-  },
+  }
 );
 
 export const login = createAsyncThunk(
@@ -41,7 +41,7 @@ export const login = createAsyncThunk(
       const unauthorized = err.response.status === 401;
       return rejectWithValue({ unauthorized });
     }
-  },
+  }
 );
 
 export const authSlice = createSlice({
@@ -51,7 +51,7 @@ export const authSlice = createSlice({
     clearFetchError(state) {
       state.error = false;
     },
-    logout(state) {
+    logout() {
       return initialState;
     },
   },
@@ -89,9 +89,8 @@ export const authSlice = createSlice({
       state.signupSuccess = false;
       state.signupSuccess = false;
     });
-    builder.addCase(logout, (state, action) => {
-      return initialState;
-    });
+    // eslint-disable-next-line no-use-before-define
+    builder.addCase(logout, () => initialState);
   },
 });
 

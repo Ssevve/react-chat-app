@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RxTriangleDown } from 'react-icons/rx';
-import { useState } from 'react';
+
 import styled from 'styled-components/macro';
 import styleConstants from 'shared/styleConstants';
 
@@ -54,7 +54,8 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   background: inherit;
-  padding: ${({ noItemPadding }) => (noItemPadding ? 0 : styleConstants.padding400)};
+  padding: ${({ noItemPadding }) =>
+    noItemPadding ? 0 : styleConstants.padding400};
   opacity: ${({ dim }) => (dim ? styleConstants.dimOpacity : 1)};
   &:hover {
     opacity: 1;
@@ -66,8 +67,11 @@ function DropdownList({ title, dim, noItemPadding, children }) {
 
   return (
     <Wrapper>
-      <Button onClick={() => setExpand((prev) => !prev)}>
-        <Arrow expand={expand}>
+      <Button
+        aria-label={`${expand ? 'collapse' : 'expand'} ${title}`}
+        onClick={() => setExpand((prev) => !prev)}
+      >
+        <Arrow aria-hidden="true" expand={expand}>
           <RxTriangleDown size="1.5rem" />
         </Arrow>
         <Title>{title}</Title>
@@ -75,9 +79,10 @@ function DropdownList({ title, dim, noItemPadding, children }) {
       {children && (
         <List expand={expand}>
           {React.Children.map(children, (child) => (
+            // Does not need a key, because the children have their own keys already
             <ListItem dim={dim} noItemPadding={noItemPadding}>
               {child}
-            </ListItem> // Does not need a key, because the children have their own keys already
+            </ListItem>
           ))}
         </List>
       )}

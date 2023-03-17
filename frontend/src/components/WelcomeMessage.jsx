@@ -26,7 +26,8 @@ function WelcomeMessage({ sidePanelExpanded }) {
     <WelcomeWrapper sidePanelExpanded={sidePanelExpanded}>
       <WelcomeTitle>Welcome!</WelcomeTitle>
       <WelcomeCopy>
-        Select an existing chat from the left panel or add a friend to start a new one.
+        Select an existing chat from the left panel or add a friend to start a
+        new one.
       </WelcomeCopy>
     </WelcomeWrapper>
   );

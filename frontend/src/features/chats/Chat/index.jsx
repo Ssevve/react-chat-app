@@ -71,29 +71,29 @@ function Chat({ chat, onClick }) {
   const [chatPartner, setChatPartner] = useState(null);
 
   useEffect(() => {
-    const partner = chat.members.find((member) => member._id !== loggedInUser._id);
+    const partner = chat.members.find(
+      (member) => member._id !== loggedInUser._id
+    );
     setChatPartner(partner);
   }, [chat, loggedInUser._id]);
 
   return chatPartner ? (
-    <>
-      <Button
-        aria-label={`Chat with ${chatPartner.username}`}
-        currentChat={currentChat}
-        chat={chat}
-        type="button"
-        onClick={onClick}
-      >
-        <UserAvatar showConnectionStatus user={chatPartner} />
-        <Details>
-          <Meta>
-            <Username>{chatPartner.username}</Username>
-            <Time>{format(chat.lastMessage.createdAt)}</Time>
-          </Meta>
-          <LastMessage>{chat.lastMessage.content}</LastMessage>
-        </Details>
-      </Button>
-    </>
+    <Button
+      aria-label={`Chat with ${chatPartner.username}`}
+      currentChat={currentChat}
+      chat={chat}
+      type="button"
+      onClick={onClick}
+    >
+      <UserAvatar showConnectionStatus user={chatPartner} />
+      <Details>
+        <Meta>
+          <Username>{chatPartner.username}</Username>
+          <Time>{format(chat.lastMessage.createdAt)}</Time>
+        </Meta>
+        <LastMessage>{chat.lastMessage.content}</LastMessage>
+      </Details>
+    </Button>
   ) : null;
 }
 

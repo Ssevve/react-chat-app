@@ -21,7 +21,8 @@ const Title = styled.h2`
   font-size: 1.5rem;
   align-items: center;
   display: flex;
-  justify-content: ${({ isLoading }) => (isLoading ? 'flex-end' : 'flex-start')};
+  justify-content: ${({ isLoading }) =>
+    isLoading ? 'flex-end' : 'flex-start'};
   gap: ${styleConstants.gap400};
   color: ${({ theme }) => theme.text};
 `;

@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
-import { renderWithProviders } from 'utils/testUtils';
-import friendInvitesMock from '__mocks__/data/friendInvitesMock';
+import renderWithProviders from 'utils/testUtils';
+import friendInvitesMock from '__mocks__/friendInvitesMock';
 
 import FriendInvite from '..';
 
@@ -40,8 +40,12 @@ test('renders only "cancel invite" button for sent friend invites', () => {
   };
 
   renderWithProviders(<FriendInvite invite={invite} />, { preloadedState });
-  expect(screen.getByRole('button', { name: /cancel invite/i })).toBeInTheDocument();
-  expect(screen.queryByRole('button', { name: /accept invite/i })).not.toBeInTheDocument();
+  expect(
+    screen.getByRole('button', { name: /cancel invite/i })
+  ).toBeInTheDocument();
+  expect(
+    screen.queryByRole('button', { name: /accept invite/i })
+  ).not.toBeInTheDocument();
 });
 
 test("renders inviting user's avatar", () => {
@@ -78,6 +82,10 @@ test('renders an "accept invite" and "cancel invite" buttons for received friend
   };
 
   renderWithProviders(<FriendInvite invite={invite} />, { preloadedState });
-  expect(screen.getByRole('button', { name: /cancel invite/i })).toBeInTheDocument();
-  expect(screen.queryByRole('button', { name: /accept invite/i })).toBeInTheDocument();
+  expect(
+    screen.getByRole('button', { name: /cancel invite/i })
+  ).toBeInTheDocument();
+  expect(
+    screen.queryByRole('button', { name: /accept invite/i })
+  ).toBeInTheDocument();
 });

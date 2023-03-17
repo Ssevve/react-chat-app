@@ -1,9 +1,13 @@
 import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentChat, selectSortedChats, selectCurrentChat } from '../chatsSlice';
 import { closeSettings } from 'features/settings/settingsSlice';
 
 import DropdownList from 'components/common/DropdownList';
+import {
+  setCurrentChat,
+  selectSortedChats,
+  selectCurrentChat,
+} from '../chatsSlice';
 import Chat from '../Chat';
 
 const Wrapper = styled.section`

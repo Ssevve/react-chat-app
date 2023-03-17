@@ -16,14 +16,22 @@ function FriendsList({ setExpandRightPanel }) {
       <DropdownList title={`Online (${online.length})`}>
         {online.length
           ? online.map((friend) => (
-              <Friend key={friend._id} friend={friend} setExpandRightPanel={setExpandRightPanel} />
+              <Friend
+                key={friend._id}
+                friend={friend}
+                setExpandRightPanel={setExpandRightPanel}
+              />
             ))
           : null}
       </DropdownList>
       <DropdownList dim title={`Offline (${offline.length})`}>
         {offline.length
           ? offline.map((friend) => (
-              <Friend key={friend._id} friend={friend} setExpandRightPanel={setExpandRightPanel} />
+              <Friend
+                key={friend._id}
+                friend={friend}
+                setExpandRightPanel={setExpandRightPanel}
+              />
             ))
           : null}
       </DropdownList>

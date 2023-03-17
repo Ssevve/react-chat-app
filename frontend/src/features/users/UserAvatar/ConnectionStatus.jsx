@@ -30,7 +30,11 @@ function ConnectionStatus({ userId }) {
 
   return (
     <Wrapper>
-      <StyledSpan role="note" aria-label={isOnline ? 'Online' : 'Offline'} online={isOnline} />
+      <StyledSpan
+        role="note"
+        aria-label={isOnline ? 'Online' : 'Offline'}
+        online={isOnline}
+      />
     </Wrapper>
   );
 }

@@ -1,21 +1,34 @@
-import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  createEntityAdapter,
+} from '@reduxjs/toolkit';
 import client from 'utils/api';
 import { logout } from 'features/auth/authSlice';
 
-export const addFriendById = createAsyncThunk('friends/addFriendById', async (friendId) => {
-  const res = await client.put(`/users/addFriend/${friendId}`);
-  return res.data;
-});
+export const addFriendById = createAsyncThunk(
+  'friends/addFriendById',
+  async (friendId) => {
+    const res = await client.put(`/users/addFriend/${friendId}`);
+    return res.data;
+  }
+);
 
-export const removeFriendById = createAsyncThunk('friends/removeFriendById', async (friendId) => {
-  const res = await client.delete(`/users/deleteFriend/${friendId}`);
-  return res.data;
-});
+export const removeFriendById = createAsyncThunk(
+  'friends/removeFriendById',
+  async (friendId) => {
+    const res = await client.delete(`/users/deleteFriend/${friendId}`);
+    return res.data;
+  }
+);
 
-export const fetchFriends = createAsyncThunk('friends/fetchFriends', async (userId) => {
-  const res = await client.get(`/users/friends/${userId}`);
-  return res.data;
-});
+export const fetchFriends = createAsyncThunk(
+  'friends/fetchFriends',
+  async (userId) => {
+    const res = await client.get(`/users/friends/${userId}`);
+    return res.data;
+  }
+);
 
 const friendsAdapter = createEntityAdapter({
   selectId: (friend) => friend._id,
@@ -94,9 +107,7 @@ export const friendsSlice = createSlice({
       state.addingFriend = false;
       state.error = action.error.message;
     });
-    builder.addCase(logout, () => {
-      return initialState;
-    });
+    builder.addCase(logout, () => initialState);
   },
 });
 

@@ -22,12 +22,18 @@ const Buttons = styled.div`
 function FriendInvite({ invite }) {
   const dispatch = useDispatch();
   const loggedInUser = useSelector(selectUser);
-  const deletingFriendInvite = useSelector((state) => state.friendInvites.deletingFriendInvite);
+  const deletingFriendInvite = useSelector(
+    (state) => state.friendInvites.deletingFriendInvite
+  );
 
-  const cancelInvite = (invite) => dispatch(deleteFriendInvite(invite._id));
-  const acceptInvite = (invite) => {
+  const cancelInvite = (friendInvite) =>
+    dispatch(deleteFriendInvite(friendInvite._id));
+
+  const acceptInvite = (friendInvite) => {
     const friendId =
-      invite.receiver._id === loggedInUser._id ? invite.sender._id : invite.receiver._id;
+      friendInvite.receiver._id === loggedInUser._id
+        ? friendInvite.sender._id
+        : friendInvite.receiver._id;
 
     dispatch(addFriendById(friendId));
     dispatch(deleteFriendInvite(invite._id));
@@ -37,12 +43,16 @@ function FriendInvite({ invite }) {
     <Wrapper>
       <User
         events={false}
-        user={invite.receiver._id === loggedInUser._id ? invite.sender : invite.receiver}
+        user={
+          invite.receiver._id === loggedInUser._id
+            ? invite.sender
+            : invite.receiver
+        }
       />
       <Buttons>
         {invite.sender._id !== loggedInUser._id && (
           <Button
-            aria-label="Accept invite"
+            ariaLabel="Accept invite"
             variant="success"
             disabled={deletingFriendInvite}
             onClick={() => acceptInvite(invite)}
@@ -51,7 +61,7 @@ function FriendInvite({ invite }) {
           </Button>
         )}
         <Button
-          aria-label="Cancel invite"
+          ariaLabel="Cancel invite"
           disabled={deletingFriendInvite}
           variant="danger"
           onClick={() => cancelInvite(invite)}

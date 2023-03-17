@@ -20,9 +20,14 @@ const Button = styled.button`
   }
 `;
 
-function SubmitButton({ isLoading, className, children, ...rest }) {
+function SubmitButton({ isLoading, className, children, ariaLabel }) {
   return (
-    <Button type="submit" disabled={isLoading} className={className} {...rest}>
+    <Button
+      type="submit"
+      disabled={isLoading}
+      className={className}
+      aria-label={ariaLabel}
+    >
       {isLoading ? <Spinner size="1rem" stroke="submitButtonText" /> : children}
     </Button>
   );

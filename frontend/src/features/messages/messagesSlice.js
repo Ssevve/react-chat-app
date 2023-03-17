@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit';
 import client from 'utils/api';
 import { logout } from 'features/auth/authSlice';
 
@@ -12,15 +16,18 @@ const initialState = {
 export const createNewMessage = createAsyncThunk(
   'messages/createNewMessage',
   async ({ chatId, content, receiverId }) => {
-    const res = await client.post(`/messages`, { chatId, content, receiverId });
+    const res = await client.post('/messages', { chatId, content, receiverId });
     return res.data;
-  },
+  }
 );
 
-export const fetchMessages = createAsyncThunk('messages/fetchMessages', async (userId) => {
-  const res = await client.get(`/messages/user/${userId}`);
-  return res.data;
-});
+export const fetchMessages = createAsyncThunk(
+  'messages/fetchMessages',
+  async (userId) => {
+    const res = await client.get(`/messages/user/${userId}`);
+    return res.data;
+  }
+);
 
 export const messagesSlice = createSlice({
   name: 'messages',
@@ -29,9 +36,7 @@ export const messagesSlice = createSlice({
     addMessage(state, action) {
       state.messages.push(action.payload);
     },
-    sendMessage(state, action) {
-      return;
-    },
+    sendMessage(state, action) {},
   },
   extraReducers: (builder) => {
     builder.addCase(fetchMessages.pending, (state) => {
@@ -64,9 +69,7 @@ export const messagesSlice = createSlice({
       state.sendingMessage = false;
       state.error = action.error.message;
     });
-    builder.addCase(logout, () => {
-      return initialState;
-    });
+    builder.addCase(logout, () => initialState);
   },
 });
 
@@ -75,9 +78,7 @@ export const selectMessages = (state) => state.messages.messages;
 export const selectMessagesByChatId = createSelector(
   selectMessages,
   (_, chatId) => chatId,
-  (messages, id) => {
-    return messages.filter((message) => message.chatId === id);
-  },
+  (messages, id) => messages.filter((message) => message.chatId === id)
 );
 
 export const { addMessage, sendMessage } = messagesSlice.actions;

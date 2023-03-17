@@ -1,4 +1,4 @@
-const multipleChatsMock = [
+const chatsMock = [
   {
     _id: '1',
     members: [
@@ -53,4 +53,4 @@ const multipleChatsMock = [
   },
 ];
 
-export default multipleChatsMock;
+export default chatsMock;

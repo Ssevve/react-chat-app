@@ -30,7 +30,8 @@ export const Time = styled.span`
 export const Content = styled.p`
   margin-top: 0.5rem;
   border-radius: var(--border-radius);
-  background: ${({ own, theme }) => (own ? theme.primary : theme.background500)};
+  background: ${({ own, theme }) =>
+    own ? theme.primary : theme.background500};
   color: ${({ own, theme }) => (own ? theme.ownMessageText : theme.text)};
   padding: ${styleConstants.padding300};
   word-wrap: break-word;

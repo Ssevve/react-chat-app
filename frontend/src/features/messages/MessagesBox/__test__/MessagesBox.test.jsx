@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
-import currentChatMock from '__mocks__/data/currentChatMock';
-import messagesMock from '__mocks__/data/messagesMock';
-import { renderWithProviders } from 'utils/testUtils';
+import currentChatMock from '__mocks__/currentChatMock';
+import messagesMock from '__mocks__/messagesMock';
+import renderWithProviders from 'utils/testUtils';
 
 import MessagesBox from '..';
 
@@ -33,7 +33,9 @@ test('renders messages from the current chat', () => {
   renderWithProviders(<MessagesBox />, { preloadedState });
   expect(screen.getByText('Own message')).toBeInTheDocument();
   expect(screen.getByText("Friend's message")).toBeInTheDocument();
-  expect(screen.queryByText('Own message from a different chat')).not.toBeInTheDocument();
+  expect(
+    screen.queryByText('Own message from a different chat')
+  ).not.toBeInTheDocument();
 });
 
 test('renders message input component', () => {

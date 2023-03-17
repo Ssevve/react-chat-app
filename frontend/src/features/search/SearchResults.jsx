@@ -2,12 +2,12 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiUserPlus } from 'react-icons/fi';
 import { createFriendInvite } from 'features/friendInvites/friendInvitesSlice';
-import { selectFilteredSearchResults } from './searchSlice';
 
 import Spinner from 'components/common/Spinner';
 import User from 'features/users/User';
 import Button from 'components/common/Button';
 import styleConstants from 'shared/styleConstants';
+import { selectFilteredSearchResults } from './searchSlice';
 
 const Results = styled.ul`
   overflow: hidden;
@@ -46,7 +46,7 @@ function SearchResults() {
           <User user={result} />
           <Button
             variant="success"
-            aria-label="Send friend invite"
+            ariaLabel="Send friend invite"
             onClick={() => handleClick(result._id)}
           >
             <FiUserPlus aria-hidden="true" size="1.5rem" />

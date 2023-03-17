@@ -13,15 +13,15 @@ const StyledInput = styled.input`
   outline: ${({ error, theme }) => error && `1px solid ${theme.danger}`};
 `;
 
-function Input({ register, name, error, type = 'text', invalidCredentials = false, ...rest }) {
+function Input({ register, name, error, type = 'text' }) {
   return (
     <StyledInput
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...register(name)}
       name={name}
       error={error}
-      aria-invalid={error ? true : false}
+      aria-invalid={!!error}
       type={type}
-      {...rest}
     />
   );
 }

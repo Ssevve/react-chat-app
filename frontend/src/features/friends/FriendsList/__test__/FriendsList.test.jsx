@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import { renderWithProviders } from 'utils/testUtils';
+import renderWithProviders from 'utils/testUtils';
 
 import FriendsList from '..';
 
@@ -54,7 +54,9 @@ test('renders correct count for no online friends', () => {
       },
     },
   });
-  expect(screen.getByRole('heading', { name: /online/i })).toHaveTextContent('0');
+  expect(screen.getByRole('heading', { name: /online/i })).toHaveTextContent(
+    '0'
+  );
 });
 
 test('renders correct count for one online friend', () => {
@@ -66,7 +68,9 @@ test('renders correct count for one online friend', () => {
       },
     },
   });
-  expect(screen.getByRole('heading', { name: /online/i })).toHaveTextContent('1');
+  expect(screen.getByRole('heading', { name: /online/i })).toHaveTextContent(
+    '1'
+  );
 });
 
 test('renders correct count for multiple online friends', () => {
@@ -78,7 +82,9 @@ test('renders correct count for multiple online friends', () => {
       },
     },
   });
-  expect(screen.getByRole('heading', { name: /online/i })).toHaveTextContent('2');
+  expect(screen.getByRole('heading', { name: /online/i })).toHaveTextContent(
+    '2'
+  );
 });
 
 test('renders offline friends', () => {
@@ -104,7 +110,9 @@ test('renders correct count for no offline friends', () => {
       },
     },
   });
-  expect(screen.getByRole('heading', { name: /offline/i })).toHaveTextContent('0');
+  expect(screen.getByRole('heading', { name: /offline/i })).toHaveTextContent(
+    '0'
+  );
 });
 
 test('renders correct count for one offline friend', () => {
@@ -116,7 +124,9 @@ test('renders correct count for one offline friend', () => {
       },
     },
   });
-  expect(screen.getByRole('heading', { name: /offline/i })).toHaveTextContent('1');
+  expect(screen.getByRole('heading', { name: /offline/i })).toHaveTextContent(
+    '1'
+  );
 });
 
 test('renders correct count for multiple offline friends', () => {
@@ -128,5 +138,7 @@ test('renders correct count for multiple offline friends', () => {
       },
     },
   });
-  expect(screen.getByRole('heading', { name: /offline/i })).toHaveTextContent('2');
+  expect(screen.getByRole('heading', { name: /offline/i })).toHaveTextContent(
+    '2'
+  );
 });

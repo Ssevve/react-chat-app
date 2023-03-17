@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
-import { renderWithProviders } from 'utils/testUtils';
-import messagesMock from '__mocks__/data/messagesMock';
+import renderWithProviders from 'utils/testUtils';
+import messagesMock from '__mocks__/messagesMock';
 
 import Message from '..';
 

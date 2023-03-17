@@ -1,11 +1,18 @@
-import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit';
 import client from 'utils/api';
 import { logout } from 'features/auth/authSlice';
 
-export const searchFriends = createAsyncThunk('search/searchFriends', async (query) => {
-  const res = await await client.get(`/users/search/${query}`);
-  return res.data;
-});
+export const searchFriends = createAsyncThunk(
+  'search/searchFriends',
+  async (query) => {
+    const res = await await client.get(`/users/search/${query}`);
+    return res.data;
+  }
+);
 
 const initialState = {
   results: null,
@@ -36,9 +43,7 @@ export const searchSlice = createSlice({
       state.error = action.error.message;
       state.results = [];
     });
-    builder.addCase(logout, () => {
-      return initialState;
-    });
+    builder.addCase(logout, () => initialState);
   },
 });
 
@@ -48,17 +53,27 @@ const selectFriendIds = (state) => state.friends.ids;
 const selectFriendInvites = (state) => state.friendInvites.friendInvites;
 const selectLoggedInUserId = (state) => state.auth.user._id;
 export const selectFilteredSearchResults = createSelector(
-  [selectSearchResults, selectFriendIds, selectFriendInvites, selectLoggedInUserId],
+  [
+    selectSearchResults,
+    selectFriendIds,
+    selectFriendInvites,
+    selectLoggedInUserId,
+  ],
   (results, friendIds, friendInvites, loggedInUserId) => {
     if (results) {
       const userIdsFromInvites = friendInvites.map((invite) =>
-        loggedInUserId === invite.sender._id ? invite.receiver._id : invite.sender._id,
+        loggedInUserId === invite.sender._id
+          ? invite.receiver._id
+          : invite.sender._id
       );
       return results.filter(
-        (result) => !friendIds.includes(result._id) && !userIdsFromInvites.includes(result._id),
+        (result) =>
+          !friendIds.includes(result._id) &&
+          !userIdsFromInvites.includes(result._id)
       );
     }
-  },
+    return null;
+  }
 );
 
 export const { clearSearchResults } = searchSlice.actions;

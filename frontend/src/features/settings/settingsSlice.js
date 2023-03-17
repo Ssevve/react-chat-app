@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import { logout } from 'features/auth/authSlice';
 
 const initialState = {
-  theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+  theme: window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light',
   showSettings: false,
 };
 
@@ -21,12 +23,11 @@ export const settingsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(logout, () => {
-      return initialState;
-    });
+    builder.addCase(logout, () => initialState);
   },
 });
 
-export const { setTheme, toggleSettings, closeSettings } = settingsSlice.actions;
+export const { setTheme, toggleSettings, closeSettings } =
+  settingsSlice.actions;
 
 export default settingsSlice.reducer;

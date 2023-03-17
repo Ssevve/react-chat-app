@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FiSend } from 'react-icons/fi';
 import styled from 'styled-components';
 import { selectAccessToken, selectUser } from 'features/auth/authSlice';
-import { selectCurrentChat } from 'features/chats/chatsSlice';
-import { createNewMessage } from '../messagesSlice';
+import {
+  selectCurrentChat,
+  updateChat,
+  setCurrentChat,
+} from 'features/chats/chatsSlice';
 import styleConstants from 'shared/styleConstants';
 
 import SubmitButton from 'components/common/SubmitButton';
-import { updateChat } from 'features/chats/chatsSlice';
-import { setCurrentChat } from 'features/chats/chatsSlice';
+import { createNewMessage } from '../messagesSlice';
 
 const Wrapper = styled.section`
   padding: ${styleConstants.padding200} ${styleConstants.padding400};
@@ -52,7 +54,9 @@ function MessageInput() {
     e.preventDefault();
     if (!inputRef.current.value) return;
 
-    const receiver = currentChat.members.find((member) => member._id !== loggedInUser._id);
+    const receiver = currentChat.members.find(
+      (member) => member._id !== loggedInUser._id
+    );
     const data = {
       content: inputRef.current.value,
       chatId: currentChat._id,
@@ -78,7 +82,7 @@ function MessageInput() {
           aria-label="New message"
           placeholder="Write a message here..."
         />
-        <SubmitButton aria-label="Send message">
+        <SubmitButton ariaLabel="Send message">
           <FiSend aria-hidden="true" size="1.25rem" />
         </SubmitButton>
       </MessageForm>

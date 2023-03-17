@@ -1,8 +1,8 @@
 import styled from 'styled-components/macro';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiArrowLeftCircle } from 'react-icons/fi';
-import { setTheme } from 'features/settings/settingsSlice';
-import { closeSettings } from './settingsSlice';
+import { setTheme, closeSettings } from 'features/settings/settingsSlice';
+
 import styleConstants from 'shared/styleConstants';
 
 const Wrapper = styled.div`

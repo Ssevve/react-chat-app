@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FiX } from 'react-icons/fi';
-import useDebounce from './useDebounce';
 import { clearSearchResults, searchFriends } from 'features/search/searchSlice';
+import useDebounce from './useDebounce';
 
 import { Wrapper, SearchIcon, StyledInput, ClearButton } from './styles';
 
