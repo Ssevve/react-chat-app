@@ -8,7 +8,7 @@ const socketVerifyJWT = (socket, next) => {
   } catch (err) {
     return next(new Error('Not authorized'));
   }
-  next();
+  return next();
 };
 
 module.exports = socketVerifyJWT;

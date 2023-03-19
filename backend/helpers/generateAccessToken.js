@@ -6,7 +6,7 @@ const generateAccessToken = (user) => {
       _id: user._id,
       username: user.username,
     },
-    process.env.ACCESS_TOKEN_SECRET,
+    process.env.ACCESS_TOKEN_SECRET
   );
   return accessToken;
 };

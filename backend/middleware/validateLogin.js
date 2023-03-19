@@ -16,7 +16,7 @@ const loginSchema = yup.object({
 const validateLogin = async (req, res, next) => {
   try {
     await loginSchema.validate(req.body);
-    next();
+    return next();
   } catch (err) {
     return res.sendStatus(401);
   }

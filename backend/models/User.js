@@ -32,7 +32,7 @@ const userSchema = mongoose.Schema(
   {
     timestamps: true,
     collation: { locale: 'en', strength: 2 }, // Makes the schema case insensitive (for username queries)
-  },
+  }
 );
 
 module.exports = mongoose.model('User', userSchema);
