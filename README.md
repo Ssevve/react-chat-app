@@ -10,8 +10,11 @@ Full stack real-time one-on-one messaging app.
 
 ## Project Specifications
 
+![Project image](https://i.imgur.com/vmYW8EI.png)
+
 - User can create an account
 - User can add other users as friends
+- User can delete friends
 - User can see offline and online friends
 - User can chat with friends in real-time
 - User can change color theme (light/dark)
