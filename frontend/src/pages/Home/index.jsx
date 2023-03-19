@@ -38,7 +38,7 @@ function Home() {
   useEffect(() => {
     if (isFetchingData) setAppLoading(true);
     if (!isFetchingData) {
-      const timeout = setTimeout(() => setAppLoading(false), 2000);
+      const timeout = setTimeout(() => setAppLoading(false), 500);
       return () => clearTimeout(timeout);
     }
   }, [isFetchingData]);
