@@ -1,11 +1,11 @@
 import styled from 'styled-components/macro';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 export const StyledDiv = styled.div`
   display: flex;
   flex-direction: ${({ own }) => (own ? 'row-reverse' : 'row')};
   justify-self: ${({ own }) => (own ? 'flex-end' : 'flex-start')};
-  gap: ${styleConstants.gap200};
+  gap: ${styles.gap.s};
   color: ${({ theme }) => theme.text};
   width: 75%;
   background: inherit;
@@ -13,7 +13,7 @@ export const StyledDiv = styled.div`
 
 export const Meta = styled.div`
   display: flex;
-  gap: ${styleConstants.gap200};
+  gap: ${styles.gap.s};
   justify-content: ${({ own }) => (own ? 'flex-end' : 'flex-start')};
   align-items: center;
 `;
@@ -33,7 +33,7 @@ export const Content = styled.p`
   background: ${({ own, theme }) =>
     own ? theme.primary : theme.background500};
   color: ${({ own, theme }) => (own ? theme.ownMessageText : theme.text)};
-  padding: ${styleConstants.padding300};
+  padding: ${styles.padding.m};
   word-wrap: break-word;
   white-space: pre-wrap;
   word-break: break-word;

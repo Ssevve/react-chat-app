@@ -1,9 +1,9 @@
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 import styled from 'styled-components/macro';
 
 const Label = styled.label`
   display: grid;
-  gap: ${styleConstants.gap100};
+  gap: ${styles.gap.xs};
   font-size: 0.875rem;
 `;
 

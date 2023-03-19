@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components/macro';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 import SubmitButton from 'components/common/SubmitButton';
 import signupSchema from '../schemas/signupSchema';
@@ -32,8 +32,8 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledSubmitButton = styled(SubmitButton)`
-  padding: ${styleConstants.padding300};
-  min-height: ${styleConstants.authSubmitButtonMinHeight};
+  padding: ${styles.padding.m};
+  min-height: 2.625rem;
 `;
 
 function SignupForm() {

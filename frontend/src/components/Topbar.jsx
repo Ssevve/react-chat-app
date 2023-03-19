@@ -1,19 +1,19 @@
 import styled from 'styled-components/macro';
 import { FiMenu, FiUsers } from 'react-icons/fi';
 import breakpoints from 'shared/breakpoints';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 import Logo from 'components/Logo';
 
 const Header = styled.header`
-  min-height: ${styleConstants.pageHeaderHeight};
-  padding: ${styleConstants.padding400};
+  min-height: ${styles.pageHeaderHeight};
+  padding: ${styles.padding.l};
   display: flex;
   justify-content: space-between;
-  column-gap: ${styleConstants.gap200};
+  column-gap: ${styles.gap.s};
   color: ${({ theme }) => theme.topbarText};
   background: ${({ theme }) => theme.primary};
-  box-shadow: ${styleConstants.boxShadow};
+  box-shadow: ${styles.boxShadow};
 `;
 
 const Button = styled.button`

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 import SubmitButton from 'components/common/SubmitButton';
 import { login } from '../authSlice';
@@ -33,7 +33,7 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledSubmitButton = styled(SubmitButton)`
-  padding: ${styleConstants.padding300};
+  padding: ${styles.padding.m};
   min-height: 2.625rem; // 42px
 `;
 

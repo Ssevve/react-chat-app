@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 import { useEffect, useState } from 'react';
 import { format } from 'timeago.js';
 import { useSelector } from 'react-redux';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 import UserAvatar from 'features/users/UserAvatar';
 import { selectUser } from 'features/auth/authSlice';
@@ -15,11 +15,11 @@ const Button = styled.button`
   align-items: center;
   background: inherit;
   border: none;
-  gap: ${styleConstants.gap400};
-  padding: ${styleConstants.padding400};
+  gap: ${styles.gap.l};
+  padding: ${styles.padding.l};
   transition: border-left 0.1s ease-in-out;
   color: ${({ theme }) => theme.text};
-  opacity: ${styleConstants.dimOpacity};
+  opacity: ${styles.dimOpacity};
   cursor: pointer;
   &:hover {
     opacity: 1;
@@ -42,7 +42,7 @@ const Details = styled.section`
 
 const Meta = styled.section`
   display: flex;
-  gap: ${styleConstants.gap200};
+  gap: ${styles.gap.s};
   justify-content: space-between;
 `;
 

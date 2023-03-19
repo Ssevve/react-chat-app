@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 export const Section = styled.section`
   flex: 1;
@@ -10,22 +10,22 @@ export const Section = styled.section`
 `;
 
 export const CurrentChatInfo = styled.section`
-  box-shadow: ${styleConstants.boxShadow};
+  box-shadow: ${styles.boxShadow};
   background: ${({ theme }) => theme.background600};
-  padding: ${styleConstants.padding400};
+  padding: ${styles.padding.l};
 `;
 
 export const Messages = styled.section`
-  --footer-height: ${styleConstants.pageFooterHeight}
+  --footer-height: ${styles.constants.pageHeaderHeight}
   max-height: calc(100% - var(--footer-height));
-  padding: ${styleConstants.padding400};
+  padding: ${styles.padding.l};
   padding-bottom: 0;
   background: inherit;
-  bottom: ${styleConstants.pageFooterHeight};
+  bottom: ${styles.constants.pageHeaderHeight};
   width: 100%;
   display: grid;
   align-content: flex-start;
   flex: 1;
-  gap: ${styleConstants.gap1200};
+  gap: ${styles.gap.xl};
   overflow-y: auto;
 `;

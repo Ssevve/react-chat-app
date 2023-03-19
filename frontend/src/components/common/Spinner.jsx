@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { ReactComponent as Loader } from 'assets/loader.svg';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 const Wrapper = styled.div`
   display: grid;
   align-content: center;
   justify-content: center;
-  row-gap: ${styleConstants.gap200};
+  row-gap: ${styles.gap.s};
   padding: 0;
   margin: 0;
 `;

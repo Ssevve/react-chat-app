@@ -2,13 +2,13 @@ import { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { FiMessageCircle } from 'react-icons/fi';
 import breakpoints from 'shared/breakpoints';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 const StyledLogo = styled.h1`
   display: ${({ hideOnMobile }) => (hideOnMobile ? 'none' : 'flex')};
   color: inherit;
   align-items: center;
-  gap: ${styleConstants.gap200};
+  gap: ${styles.gap.s};
   font-size: clamp(0.8rem, 7vw, 1.5rem);
   text-decoration: none;
   font-weight: 700;

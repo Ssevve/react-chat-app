@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import { useSelector } from 'react-redux';
 import { selectFilteredSearchResults } from 'features/search/searchSlice';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 import breakpoints from 'shared/breakpoints';
 
 import SidePanel from 'components/SidePanel';
@@ -17,13 +17,13 @@ const StyledSidePanel = styled(SidePanel)`
 `;
 
 const Title = styled.h2`
-  padding: ${styleConstants.padding400};
+  padding: ${styles.padding.l};
   font-size: 1.5rem;
   align-items: center;
   display: flex;
   justify-content: ${({ isLoading }) =>
     isLoading ? 'flex-end' : 'flex-start'};
-  gap: ${styleConstants.gap400};
+  gap: ${styles.gap.l};
   color: ${({ theme }) => theme.text};
 `;
 
@@ -31,7 +31,7 @@ const Section = styled.section`
   background: inherit;
   overflow-y: auto;
   display: grid;
-  row-gap: ${styleConstants.gap400};
+  row-gap: ${styles.gap.l};
   align-content: start;
 `;
 

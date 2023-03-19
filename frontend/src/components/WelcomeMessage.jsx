@@ -1,13 +1,13 @@
 import styled from 'styled-components/macro';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 export const WelcomeWrapper = styled.section`
   color: ${({ theme }) => theme.text};
-  padding: ${styleConstants.padding400};
+  padding: ${styles.padding.l};
   text-align: center;
   display: grid;
   place-content: center;
-  row-gap: ${styleConstants.gap1200};
+  row-gap: ${styles.gap.xl};
   flex: 1;
 `;
 
