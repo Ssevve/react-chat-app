@@ -36,7 +36,6 @@ export const messagesSlice = createSlice({
     addMessage(state, action) {
       state.messages.push(action.payload);
     },
-    sendMessage(state, action) {},
   },
   extraReducers: (builder) => {
     builder.addCase(fetchMessages.pending, (state) => {
@@ -81,6 +80,6 @@ export const selectMessagesByChatId = createSelector(
   (messages, id) => messages.filter((message) => message.chatId === id)
 );
 
-export const { addMessage, sendMessage } = messagesSlice.actions;
+export const { addMessage } = messagesSlice.actions;
 
 export default messagesSlice.reducer;
