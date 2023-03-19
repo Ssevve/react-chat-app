@@ -18,6 +18,11 @@ function DemoUserInfo() {
       </Text>
       <Text>username: demo</Text>
       <Text>password: demo1234</Text>
+      <br />
+      <Text>
+        Initial login can take a bit longer because the server may be sleeping.
+        😴😴😴
+      </Text>
     </AlertBox>
   );
 }
