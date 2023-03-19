@@ -1,11 +1,11 @@
 import styled from 'styled-components/macro';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 import UserAvatar from './UserAvatar';
 
 const Wrapper = styled.section`
   display: flex;
-  gap: ${styleConstants.gap300};
+  gap: ${styles.gap.m};
   background: inherit;
 `;
 

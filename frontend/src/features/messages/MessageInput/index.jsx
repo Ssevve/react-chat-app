@@ -8,20 +8,20 @@ import {
   updateChat,
   setCurrentChat,
 } from 'features/chats/chatsSlice';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 import SubmitButton from 'components/common/SubmitButton';
 import { createNewMessage } from '../messagesSlice';
 
 const Wrapper = styled.section`
-  padding: ${styleConstants.padding200} ${styleConstants.padding400};
+  padding: ${styles.padding.s} ${styles.padding.l};
 `;
 
 const MessageForm = styled.form`
   display: flex;
   align-items: center;
-  gap: ${styleConstants.gap200};
-  padding: ${styleConstants.padding200};
+  gap: ${styles.gap.s};
+  padding: ${styles.padding.s};
   background: ${({ theme }) => theme.background500};
   border-radius: var(--border-radius);
 `;
@@ -36,7 +36,7 @@ const Input = styled.input`
   font-family: var(--font-family);
   &::placeholder {
     color: ${({ theme }) => theme.text};
-    opacity: ${styleConstants.placeholderOpacity};
+    opacity: ${styles.placeholderOpacity};
   }
   &:focus {
     outline: none;

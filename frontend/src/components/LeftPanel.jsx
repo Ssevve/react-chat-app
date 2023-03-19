@@ -4,7 +4,7 @@ import styled from 'styled-components/macro';
 import breakpoints from 'shared/breakpoints';
 import { selectUser, logout } from 'features/auth/authSlice';
 import { toggleSettings } from 'features/settings/settingsSlice';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 import SidePanel from 'components/SidePanel';
 import ChatsList from 'features/chats/ChatsList';
@@ -12,7 +12,7 @@ import User from 'features/users/User';
 import Button from 'components/common/Button';
 
 const StyledSidePanel = styled(SidePanel)`
-  grid-template-rows: 1fr ${styleConstants.pageFooterHeight};
+  grid-template-rows: 1fr ${styles.constants.pageHeaderHeight};
   @media (min-width: ${breakpoints.medium}) {
     position: static;
   }
@@ -22,7 +22,7 @@ const UserPanel = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: ${styleConstants.padding400};
+  padding: ${styles.padding.l};
   background: ${({ theme }) => theme.background600};
 `;
 

@@ -1,20 +1,21 @@
 import { useState, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components/macro';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 import useWindowWidth from './useWindowWidth';
 
 const StyledDiv = styled.div`
-  --header-height: ${styleConstants.pageHeaderHeight};
+  --header-height: ${styles.pageHeaderHeight};
   height: 100%;
   position: absolute;
   width: 90%;
-  max-width: ${styleConstants.sidePanelMaxWidth};
+  max-width: 18.75rem;
   background: ${({ theme }) => theme.background400};
   display: grid;
-  grid-template-rows: ${styleConstants.pageHeaderHeight} 1fr ${styleConstants.pageFooterHeight};
+  grid-template-rows: ${styles.constants.pageHeaderHeight} 1fr ${styles
+      .constants.pageFooterHeight};
   z-index: 1;
-  box-shadow: ${styleConstants.boxShadow};
+  box-shadow: ${styles.boxShadow};
 
   ${({ anchor }) =>
     anchor === 'left'

@@ -1,4 +1,4 @@
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 import styled from 'styled-components/macro';
 
 const StyledButton = styled.button`
@@ -7,11 +7,11 @@ const StyledButton = styled.button`
   border: none;
   border-radius: var(--border-radius);
   background: inherit;
-  opacity: ${({ dim }) => dim && styleConstants.dimOpacity};
+  opacity: ${({ dim }) => dim && styles.dimOpacity};
   color: ${({ theme }) => theme.text};
   font-size: 0.875rem;
   font-weight: 700;
-  padding: ${styleConstants.padding200};
+  padding: ${styles.padding.s};
   font-family: var(--font-family);
   cursor: pointer;
   &:hover {

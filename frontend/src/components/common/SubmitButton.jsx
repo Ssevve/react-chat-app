@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 import Spinner from 'components/common/Spinner';
 
@@ -9,7 +9,7 @@ const Button = styled.button`
   font-weight: 700;
   border-radius: var(--border-radius);
   border: none;
-  padding: ${styleConstants.padding200};
+  padding: ${styles.padding.s};
   font-size: 1rem;
   display: grid;
   align-items: center;

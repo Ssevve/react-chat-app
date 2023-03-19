@@ -1,6 +1,6 @@
 import { FiInfo, FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
 import styled from 'styled-components/macro';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 const variants = {
   info: {
@@ -24,13 +24,13 @@ const Wrapper = styled.div`
   color: ${({ variant, theme }) => theme[variants[variant].color]};
   border: 1px solid currentColor;
   border-radius: var(--border-radius);
-  padding: ${styleConstants.padding200};
+  padding: ${styles.padding.s};
 `;
 
 const Header = styled.header`
   display: flex;
   align-items: center;
-  gap: ${styleConstants.gap200};
+  gap: ${styles.gap.s};
   margin-bottom: var(--padding);
 `;
 

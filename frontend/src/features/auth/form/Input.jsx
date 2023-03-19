@@ -1,11 +1,11 @@
 import styled from 'styled-components/macro';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 const StyledInput = styled.input`
   border-radius: var(--border-radius);
   background: ${({ theme }) => theme.background500};
   font-size: 1rem;
-  padding: ${styleConstants.padding300};
+  padding: ${styles.padding.m};
   color: ${({ theme }) => theme.text};
   min-width: 100%;
   width: 0;

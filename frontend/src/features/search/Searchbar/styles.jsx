@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { FiSearch } from 'react-icons/fi';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 export const Wrapper = styled.div`
   position: relative;
@@ -8,14 +8,14 @@ export const Wrapper = styled.div`
   flex: 1;
   align-items: center;
   background: ${({ theme }) => theme.background600};
-  padding: ${styleConstants.padding400};
+  padding: ${styles.padding.l};
 `;
 
 export const SearchIcon = styled(FiSearch)`
   position: absolute;
   right: 1.5rem;
   color: ${({ theme }) => theme.text};
-  opacity: ${styleConstants.dimOpacity};
+  opacity: ${styles.dimOpacity};
 `;
 
 export const StyledInput = styled.input`
@@ -23,12 +23,12 @@ export const StyledInput = styled.input`
   font-size: 1rem;
   color: ${({ theme }) => theme.text};
   align-self: stretch;
-  padding: ${styleConstants.padding200};
+  padding: ${styles.padding.s};
   border-radius: var(--border-radius);
   flex: 1;
   background: ${({ theme }) => theme.background400};
   &::placeholder {
-    opacity: ${styleConstants.dimOpacity};
+    opacity: ${styles.dimOpacity};
   }
 `;
 
@@ -41,7 +41,7 @@ export const ClearButton = styled.button`
   right: 1.5rem;
   background: ${({ theme }) => theme.background400};
   color: ${({ theme }) => theme.text};
-  opacity: ${styleConstants.dimOpacity};
+  opacity: ${styles.dimOpacity};
   &:hover {
     opacity: 1;
   }

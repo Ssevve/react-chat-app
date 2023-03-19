@@ -2,30 +2,30 @@ import React, { useState } from 'react';
 import { RxTriangleDown } from 'react-icons/rx';
 
 import styled from 'styled-components/macro';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   flex: 1;
   background: inherit;
-  gap: ${styleConstants.gap200};
+  gap: ${styles.gap.s};
   margin-top: 1rem;
 `;
 
 const Button = styled.button`
   text-align: left;
-  padding-left: ${styleConstants.padding200};
+  padding-left: ${styles.padding.s};
   display: flex;
   align-items: center;
-  gap: ${styleConstants.gap100};
+  gap: ${styles.gap.xs};
   text-transform: uppercase;
   background: inherit;
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
   color: ${({ theme }) => theme.text};
-  opacity: ${styleConstants.dimOpacity};
+  opacity: ${styles.dimOpacity};
   &:hover {
     opacity: 1;
   }
@@ -54,9 +54,8 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   background: inherit;
-  padding: ${({ noItemPadding }) =>
-    noItemPadding ? 0 : styleConstants.padding400};
-  opacity: ${({ dim }) => (dim ? styleConstants.dimOpacity : 1)};
+  padding: ${({ noItemPadding }) => (noItemPadding ? 0 : styles.padding.l)};
+  opacity: ${({ dim }) => (dim ? styles.dimOpacity : 1)};
   &:hover {
     opacity: 1;
   }

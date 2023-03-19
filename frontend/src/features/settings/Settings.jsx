@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FiArrowLeftCircle } from 'react-icons/fi';
 import { setTheme, closeSettings } from 'features/settings/settingsSlice';
 
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -11,8 +11,8 @@ const Wrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  row-gap: ${styleConstants.gap1200};
-  padding: ${styleConstants.padding400};
+  row-gap: ${styles.gap1200};
+  padding: ${styles.padding.l};
   flex: 1;
   background: ${({ theme }) => theme.background300};
 `;
@@ -46,13 +46,13 @@ const SectionTitle = styled.h3`
 
 const ThemeSettingsWrapper = styled.section`
   display: flex;
-  gap: ${styleConstants.gap1200};
+  gap: ${styles.gap1200};
   margin-top: var(--padding);
 `;
 
 const Label = styled.label`
   display: flex;
-  gap: ${styleConstants.gap200};
+  gap: ${styles.gap.s};
   cursor: pointer;
 `;
 

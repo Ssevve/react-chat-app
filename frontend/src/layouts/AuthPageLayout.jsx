@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import breakpoints from 'shared/breakpoints';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 
 const Main = styled.main`
   background: ${({ theme }) => theme.background500};
@@ -15,7 +15,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: ${styleConstants.gap1200};
+  gap: ${styles.gap1200};
   @media (min-width: ${breakpoints.medium}) {
     flex-direction: row;
   }
@@ -23,7 +23,7 @@ const Container = styled.div`
 
 const Section = styled.section`
   display: grid;
-  gap: ${styleConstants.gap1200};
+  gap: ${styles.gap1200};
   @media (min-width: ${breakpoints.medium}) {
     flex: 1;
   }

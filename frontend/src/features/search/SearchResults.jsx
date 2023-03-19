@@ -6,7 +6,7 @@ import { createFriendInvite } from 'features/friendInvites/friendInvitesSlice';
 import Spinner from 'components/common/Spinner';
 import User from 'features/users/User';
 import Button from 'components/common/Button';
-import styleConstants from 'shared/styleConstants';
+import styles from 'shared/styles';
 import { selectFilteredSearchResults } from './searchSlice';
 
 const Results = styled.ul`
@@ -19,8 +19,8 @@ const Result = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: ${styleConstants.padding400};
-  opacity: ${styleConstants.dimOpacity};
+  padding: ${styles.padding.l};
+  opacity: ${styles.dimOpacity};
   &:hover {
     opacity: 1;
   }
