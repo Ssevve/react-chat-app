@@ -1,6 +1,6 @@
 const FriendInvite = require('../models/FriendInvite');
 
-const getFriendInvitesByUserId = async (req, res) => {
+const getFriendInvitesByUserId = async (req, res, next) => {
   try {
     const friendInvites = await FriendInvite.find({
       $or: [{ sender: req.params.userId }, { receiver: req.params.userId }],
@@ -14,13 +14,13 @@ const getFriendInvitesByUserId = async (req, res) => {
         select: 'avatar.url username',
       },
     ]);
-    res.status(200).json(friendInvites);
+    return res.status(200).json(friendInvites);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
-const createNewFriendInvite = async (req, res) => {
+const createNewFriendInvite = async (req, res, next) => {
   const io = req.app.get('socketio'); // use the exported socketio module
   const connectedUsers = req.app.get('connectedUsers');
 
@@ -40,33 +40,41 @@ const createNewFriendInvite = async (req, res) => {
       ],
     });
 
-    if (duplicate) return res.status(409).json({ message: 'Duplicate friend invite' });
+    if (duplicate)
+      return res.status(409).json({ message: 'Duplicate friend invite' });
 
     const newInvite = await FriendInvite.create(invite);
     await newInvite.populate([
       { path: 'sender', select: 'username avatar.url' },
       { path: 'receiver', select: 'username avatar.url' },
     ]);
-    io.to(connectedUsers[newInvite.receiver._id]).emit('receiveFriendInvite', newInvite);
-    res.status(201).json(newInvite);
+    io.to(connectedUsers[newInvite.receiver._id]).emit(
+      'receiveFriendInvite',
+      newInvite
+    );
+    return res.status(201).json(newInvite);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
-const deleteFriendInvite = async (req, res) => {
+const deleteFriendInvite = async (req, res, next) => {
   const io = req.app.get('socketio');
   const connectedUsers = req.app.get('connectedUsers');
   const { id } = req.params;
   try {
-    const deletedInvite = await FriendInvite.findOneAndDelete({ _id: id });
+    const invite = await FriendInvite.findOneAndDelete({ _id: id });
     const emitTo =
-      deletedInvite.sender === req.user._id ? deletedInvite.receiver : deletedInvite.sender;
+      invite.sender === req.user._id ? invite.receiver : invite.sender;
     io.to(connectedUsers[emitTo]).emit('cancelFriendInvite', id);
-    res.sendStatus(204);
+    return res.sendStatus(204);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
-module.exports = { getFriendInvitesByUserId, createNewFriendInvite, deleteFriendInvite };
+module.exports = {
+  getFriendInvitesByUserId,
+  createNewFriendInvite,
+  deleteFriendInvite,
+};

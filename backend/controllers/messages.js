@@ -1,34 +1,36 @@
 const Message = require('../models/Message');
 const Chat = require('../models/Chat');
 
-const getMessageById = async (req, res) => {
+const getMessageById = async (req, res, next) => {
   try {
     const message = await Message.findOne({ _id: req.params.messageId });
-    if (!message) return res.status(400).json({ message: 'Message with provided ID not found' });
-    res.status(200).json({
+    if (!message)
+      return res
+        .status(400)
+        .json({ message: 'Message with provided ID not found' });
+    return res.status(200).json({
       _id: message._id,
       createdAt: message.createdAt,
       content: message.content,
     });
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
-const getMessagesByUserId = async (req, res) => {
+const getMessagesByUserId = async (req, res, next) => {
   try {
-    const messages = await Message.find({ members: { $in: req.params.userId } }).populate(
-      'sender',
-      '_id username avatar.url',
-    );
+    const messages = await Message.find({
+      members: { $in: req.params.userId },
+    }).populate('sender', '_id username avatar.url');
 
-    res.status(200).json(messages);
+    return res.status(200).json(messages);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
-const createNewMessage = async (req, res) => {
+const createNewMessage = async (req, res, next) => {
   const io = req.app.get('socketio');
   const connectedUsers = req.app.get('connectedUsers');
   try {
@@ -62,9 +64,9 @@ const createNewMessage = async (req, res) => {
     };
 
     io.to(connectedUsers[receiverId]).emit('receiveMessage', responseData);
-    res.status(201).json(responseData);
+    return res.status(201).json(responseData);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 

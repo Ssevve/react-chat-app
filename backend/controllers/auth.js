@@ -1,12 +1,12 @@
-const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const User = require('../models/User');
 const generateAccessToken = require('../helpers/generateAccessToken');
 
 function login401Error(res) {
   return res.status(401).json('Invalid username or password');
 }
 
-const handleLogin = async (req, res) => {
+const handleLogin = async (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) return login401Error(res);
   try {
@@ -18,7 +18,7 @@ const handleLogin = async (req, res) => {
 
     const accessToken = generateAccessToken(user);
 
-    res.status(200).json({
+    return res.status(200).json({
       user: {
         _id: user._id,
         username: user.username,
@@ -28,16 +28,18 @@ const handleLogin = async (req, res) => {
       accessToken,
     });
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
-const handleSignup = async (req, res) => {
+const handleSignup = async (req, res, next) => {
   const { username, password } = req.body;
-  if (!username || !password) return res.status(400).json('Username and password are required');
+  if (!username || !password)
+    return res.status(400).json('Username and password are required');
   try {
     const duplicate = await User.findOne({ username });
-    if (duplicate) return res.status(409).json({ message: 'Username already taken' });
+    if (duplicate)
+      return res.status(409).json({ message: 'Username already taken' });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -46,9 +48,9 @@ const handleSignup = async (req, res) => {
       password: hashedPassword,
     });
 
-    res.status(201).json(newUser);
+    return res.status(201).json(newUser);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 

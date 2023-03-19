@@ -15,7 +15,7 @@ const signupSchema = yup.object({
 const validateSignup = async (req, res, next) => {
   try {
     await signupSchema.validate(req.body, { abortEarly: false });
-    next();
+    return next();
   } catch (err) {
     return res.status(400).json(err.errors);
   }

@@ -1,7 +1,9 @@
 require('dotenv').config();
 const express = require('express');
+
 const app = express();
 const http = require('http');
+
 const server = http.createServer(app);
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -19,7 +21,7 @@ app.use(
   cors({
     origin: ['http://localhost:3000', 'https://react-chat-app-clhf.vercel.app'],
     credentials: true,
-  }),
+  })
 );
 app.use(helmet());
 app.use(morgan('dev'));
